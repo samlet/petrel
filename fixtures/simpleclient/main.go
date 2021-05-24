@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
@@ -9,15 +10,17 @@ import (
 )
 
 /*
-$ just run simpleclient -s performFindList -m 3
+$ just run simpleclient -s find -m 3
 $ just run simpleclient -s find -e Party -m 5
 $ srv find -e PartyGroup -m 2 print
+$ srv routings -m 2 json
 */
 
 func main() {
 	// Create a custom print function for convenience
 	//red := color.New(color.FgRed).PrintfFunc()
 	prompt := color.New(color.FgYellow).PrintfFunc()
+	imp := color.New(color.FgGreen).SprintFunc()
 
 	var service string
 
@@ -36,7 +39,6 @@ func main() {
 				Value: "WebSite"},
 		},
 		Action: func(c *cli.Context) error {
-
 			act := "_none_"
 			if c.NArg() > 0 {
 				act = c.Args().Get(0)
@@ -50,7 +52,24 @@ func main() {
 				fmt.Println(result)
 			} else if service == "routings" {
 				result, _ := FindRoutings(c.Int("size"))
-				fmt.Println(result)
+				if act == "json" {
+					var objmap map[string]json.RawMessage
+					err := json.Unmarshal([]byte(result), &objmap)
+					if err != nil {
+						panic(err)
+					}
+					fmt.Printf("status: %s\n", imp(string(objmap["statusDescription"])))
+					var data map[string]json.RawMessage
+					err = json.Unmarshal(objmap["data"], &data)
+					if err != nil {
+						panic(err)
+					}
+					for k, v := range data {
+						fmt.Printf("%s - %s\n", k, v)
+					}
+				} else {
+					fmt.Println(result)
+				}
 			} else {
 				fmt.Printf("Cannot to execute %s.\n", service)
 			}

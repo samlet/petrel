@@ -3,7 +3,6 @@ module github.com/samlet/petrel
 go 1.16
 
 require (
-	gorm.io/gorm v1.21.10 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239 // indirect
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
@@ -35,6 +34,7 @@ require (
 	github.com/uber/jaeger-client-go v2.18.1+incompatible // indirect
 	github.com/uber/jaeger-lib v2.1.1+incompatible // indirect
 	github.com/uber/tchannel-go v1.14.0 // indirect
+	github.com/urfave/cli/v2 v2.3.0 // indirect
 	go.uber.org/atomic v1.4.0 // indirect
 	go.uber.org/cadence v0.8.9-0.20190711214419-cef99c5ba19e
 	go.uber.org/dig v1.7.0 // indirect
@@ -54,6 +54,6 @@ require (
 	golang.org/x/tools v0.0.0-20190712213246-8b927904ee0d // indirect
 	google.golang.org/grpc v1.23.1 // indirect
 	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
-	gopkg.in/yaml.v2 v2.2.2
+	gopkg.in/yaml.v2 v2.2.3
+	gorm.io/gorm v1.21.10 // indirect
 )
-

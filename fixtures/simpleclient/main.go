@@ -49,27 +49,10 @@ func main() {
 					"entityName":"%s",
 					"maxRows":%d
 				}`, c.String("entity"), c.Int("size")))
-				fmt.Println(result)
+				processResult(act, result, imp)
 			} else if service == "routings" {
 				result, _ := FindRoutings(c.Int("size"))
-				if act == "json" {
-					var objmap map[string]json.RawMessage
-					err := json.Unmarshal([]byte(result), &objmap)
-					if err != nil {
-						panic(err)
-					}
-					fmt.Printf("status: %s\n", imp(string(objmap["statusDescription"])))
-					var data map[string]json.RawMessage
-					err = json.Unmarshal(objmap["data"], &data)
-					if err != nil {
-						panic(err)
-					}
-					for k, v := range data {
-						fmt.Printf("%s - %s\n", k, v)
-					}
-				} else {
-					fmt.Println(result)
-				}
+				processResult(act, result, imp)
 			} else {
 				fmt.Printf("Cannot to execute %s.\n", service)
 			}
@@ -80,5 +63,30 @@ func main() {
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func processResult(act string, result string, imp func(a ...interface{}) string) {
+	if act == "json" {
+		printResponseAsJson(result, imp)
+	} else {
+		fmt.Println(result)
+	}
+}
+
+func printResponseAsJson(result string, imp func(a ...interface{}) string) {
+	var objmap map[string]json.RawMessage
+	err := json.Unmarshal([]byte(result), &objmap)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("status: %s\n", imp(string(objmap["statusDescription"])))
+	var data map[string]json.RawMessage
+	err = json.Unmarshal(objmap["data"], &data)
+	if err != nil {
+		panic(err)
+	}
+	for k, v := range data {
+		fmt.Printf("%s - %s\n", imp(k), v)
 	}
 }

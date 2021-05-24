@@ -7,6 +7,10 @@ run name +FLAGS='':
 	go build -o bin/{{name}} fixtures/{{name}}/*.go
 	./bin/{{name}} {{FLAGS}}
 
+rt name +FLAGS='':
+	go build -o bin/{{name}} routines/{{name}}/*.go
+	./bin/{{name}} {{FLAGS}}
+
 simple:
 	go run fixtures/simpleclient/*.go
 

@@ -1,13 +1,18 @@
 package main
 
 import (
+	"crypto/tls"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strings"
 )
 
-func InvokeService(srv string, reqstr string)(string, error)   {
+func init() {
+	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+}
+
+func InvokeService(srv string, reqstr string) (string, error) {
 	url := fmt.Sprintf("https://localhost:8443/rest/services/%s", srv)
 
 	payload := strings.NewReader(reqstr)
@@ -29,4 +34,14 @@ func InvokeService(srv string, reqstr string)(string, error)   {
 	return string(body), nil
 }
 
-
+func FindRoutings(size int) (string, error) {
+	return InvokeService("performFindList",
+		fmt.Sprintf(`{
+				"entityName":"WorkEffort",
+				"viewIndex": 0,
+				"viewSize": %d,
+				"inputFields":{
+					"workEffortTypeId":"ROUTING"
+				}
+			}`, size))
+}

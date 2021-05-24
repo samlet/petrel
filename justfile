@@ -14,5 +14,10 @@ rt name +FLAGS='':
 simple:
 	go run fixtures/simpleclient/*.go
 
+worker name:
+    go build -o bin/{{name}} routines/{{name}}/*.go
+    ./bin/{{name}} -m worker
 
-
+dsl name filename:
+    go build -o bin/{{name}} routines/{{name}}/*.go
+    ./bin/{{name}} -dslConfig routines/{{name}}/{{filename}}.yaml

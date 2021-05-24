@@ -49,6 +49,7 @@ func main() {
 					"entityName":"%s",
 					"maxRows":%d
 				}`, c.String("entity"), c.Int("size")))
+
 				processResult(act, result, imp)
 			} else if service == "routings" {
 				result, _ := FindRoutings(c.Int("size"))

@@ -1,7 +1,8 @@
-package main
+package services
 
 import (
 	"crypto/tls"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -34,14 +35,10 @@ func InvokeService(srv string, reqstr string) (string, error) {
 	return string(body), nil
 }
 
-func FindRoutings(size int) (string, error) {
-	return InvokeService("performFindList",
-		fmt.Sprintf(`{
-				"entityName":"WorkEffort",
-				"viewIndex": 0,
-				"viewSize": %d,
-				"inputFields":{
-					"workEffortTypeId":"ROUTING"
-				}
-			}`, size))
+func Post(srv string, objmap map[string]interface{}) (string, error) {
+	out, err := json.Marshal(objmap)
+	if err != nil {
+		return "", err
+	}
+	return InvokeService(srv, string(out))
 }

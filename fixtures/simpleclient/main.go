@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/samlet/petrel/services"
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
@@ -45,14 +46,14 @@ func main() {
 				prompt(".. act is %s\n", act)
 			}
 			if service == "find" {
-				result, _ := InvokeService("findCc", fmt.Sprintf(`{
+				result, _ := services.InvokeService("findCc", fmt.Sprintf(`{
 					"entityName":"%s",
 					"maxRows":%d
 				}`, c.String("entity"), c.Int("size")))
 
 				processResult(act, result, imp)
 			} else if service == "routings" {
-				result, _ := FindRoutings(c.Int("size"))
+				result, _ := services.FindRoutings(c.Int("size"))
 				processResult(act, result, imp)
 			} else {
 				fmt.Printf("Cannot to execute %s.\n", service)

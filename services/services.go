@@ -1,4 +1,4 @@
-package main
+package services
 
 import (
 	"bytes"
@@ -27,6 +27,18 @@ func WrapResult(err error, body string, resp Response) (*Response, error) {
 	return &resp, nil
 }
 
+func FindRoutings(size int) (string, error) {
+	return InvokeService("performFindList",
+		fmt.Sprintf(`{
+				"entityName":"WorkEffort",
+				"viewIndex": 0,
+				"viewSize": %d,
+				"inputFields":{
+					"workEffortTypeId":"ROUTING"
+				}
+			}`, size))
+}
+
 func FindOrder(orderId string) (*Response, error) {
 	var resp Response
 	body, err := InvokeService("performFindItem",
@@ -39,7 +51,7 @@ func FindOrder(orderId string) (*Response, error) {
 	return WrapResult(err, body, resp)
 }
 
-func Render(format string, p P) string {
+func Render(format string, p map[string]interface{}) string {
 	b := &bytes.Buffer{}
 	template.Must(template.New("").Parse(format)).Execute(b, p)
 	return b.String()
@@ -57,5 +69,17 @@ func CreateGood(productName string) (*Response, error) {
 					"isVirtual": "N",
 					"isVariant": "N"
 			}`, P{"productName": productName}))
+	return WrapResult(err, body, resp)
+}
+
+func FindProduct(productId string) (*Response, error) {
+	var resp Response
+	body, err := InvokeService("performFindItem",
+		Render(`{
+				"entityName":"Product",
+				"inputFields":{
+					"productId":"{{.productId}}"
+				}
+			}`, P{"productId": productId}))
 	return WrapResult(err, body, resp)
 }

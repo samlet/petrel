@@ -2,19 +2,42 @@ package meta
 
 import (
 	"bytes"
+	"regexp"
+	"strings"
 	"text/template"
 )
 
-const ENTITY_DEF = `
-type {{.Name}} struct {
-{{- range .Fields}}
-	{{.Name}} {{.Type}}
-{{- end}}
+var matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
+var matchAllCap = regexp.MustCompile("([a-z0-9])([A-Z])")
+
+func properTitle(input string) string {
+	words := strings.Fields(input)
+	smallwords := " a an on the to "
+	for index, word := range words {
+		if strings.Contains(smallwords, " "+word+" ") {
+			words[index] = word
+		} else {
+			words[index] = strings.Title(word)
+		}
+	}
+	return strings.Join(words, " ")
 }
-`
+
+func ToSnakeCase(str string) string {
+	snake := matchFirstCap.ReplaceAllString(str, "${1}_${2}")
+	snake = matchAllCap.ReplaceAllString(snake, "${1}_${2}")
+	return strings.ToLower(snake)
+}
 
 func GenEntity(meta *EntityMeta, format string) string {
+	var conv = map[string]interface{}{
+		"title": strings.ToTitle,
+		"lower": strings.ToLower,
+		"snake": ToSnakeCase,
+		"prop":  properTitle,
+	}
+
 	b := &bytes.Buffer{}
-	template.Must(template.New("").Parse(format)).Execute(b, meta)
+	template.Must(template.New("").Funcs(conv).Parse(format)).Execute(b, meta)
 	return b.String()
 }

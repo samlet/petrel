@@ -31,3 +31,10 @@ func TestGenEntityFromFile(t *testing.T) {
 	result := GenEntity(&meta.Data.Entity, string(tplData))
 	println(result)
 }
+
+func TestGenEntityMetaFromTemplate(t *testing.T) {
+	result, _ := GenEntityMetaFromTemplate(
+		"../incls/entity_def.tmpl",
+		"Person")
+	println(result)
+}

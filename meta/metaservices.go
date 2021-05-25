@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"github.com/samlet/petrel/services"
+	"io/ioutil"
 )
 
 type P map[string]interface{}
@@ -51,10 +52,23 @@ func WrapResult(err error, body string, resp *MetaResponse) error {
 
 func GetEntityMeta(entityName string) (*MetaResponse, error) {
 	var resp MetaResponse
-	body, err := services.Post("getEntityMeta", P{"entityName": "Product"})
+	body, err := services.Post("getEntityMeta", P{"entityName": entityName})
 	if err != nil {
 		return nil, err
 	}
 	err = WrapResult(err, body, &resp)
 	return &resp, err
+}
+
+func GenEntityMetaFromTemplate(path string, entityName string) (string, error) {
+	meta, err := GetEntityMeta(entityName)
+	if err != nil {
+		return "", err
+	}
+	tplData, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	result := GenEntity(&meta.Data.Entity, string(tplData))
+	return result, nil
 }

@@ -65,6 +65,7 @@ func main() {
 				archiveFiles(strargs[0], strargs[1], strargs[2], c.Bool("with-datetime"))
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
+				fmt.Println("HOME:", os.Getenv("HOME"))
 			default:
 				fmt.Printf("Cannot to execute %s.\n", imp(service))
 			}

@@ -13,6 +13,8 @@ rt name +FLAGS='':
 
 simple:
 	go run fixtures/simpleclient/*.go
+fileprocessing-test:
+    go test routines/fileprocessing/*.go -v
 
 worker name:
     go build -o bin/{{name}} routines/{{name}}/*.go
@@ -25,3 +27,5 @@ dsl name filename:
 clear:
 	rm -rf output/*
 
+substrate:
+    substrate --dev --rpc-external --ws-external --rpc-methods Unsafe --offchain-worker Always

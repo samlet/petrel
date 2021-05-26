@@ -18,6 +18,13 @@ $ just run store -s users
 	$ curl localhost:3000/users
 	$ curl --request POST \
 	  --url http://localhost:3000/user/samlet/samlet@163.com
+	$ curl --request POST \
+	  --url http://localhost:3000/createUser \
+	  --header 'Content-Type: application/json' \
+	  --data '{
+		"name": "xiaofei.wu",
+		"email": "xiaofei.wu@gmail.com"
+	}'
 */
 
 func main() {

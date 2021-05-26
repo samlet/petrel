@@ -18,6 +18,10 @@ type User struct {
 	Name       string `json:"name"`
 	Email      string `json:"email"`
 }
+type UserDto struct {
+	Name  string `json:"name" xml:"name" form:"name" query:"name"`
+	Email string `json:"email" xml:"email" form:"email" query:"email"`
+}
 
 type dbops struct {
 	db *gorm.DB
@@ -74,6 +78,18 @@ func newUser(dbobj dbops) func(echo.Context) error {
 	}
 }
 
+func newUserWithJson(dbobj dbops) func(echo.Context) error {
+	return func(c echo.Context) error {
+		u := new(UserDto)
+		if err := c.Bind(u); err != nil {
+			return err
+		}
+		dbobj.create(&User{Name: u.Name, Email: u.Email})
+		//return c.String(http.StatusOK, u.Name+" user successfully created")
+		return c.JSON(http.StatusCreated, u)
+	}
+}
+
 func deleteUser(dbobj dbops) func(echo.Context) error {
 	return func(c echo.Context) error {
 		name := c.Param("name")
@@ -110,6 +126,8 @@ func handleRequest(dbgorm *gorm.DB) {
 	e.GET("/users", allUsers(db))
 	e.GET("/user", usersByPage(db))
 	e.POST("/user/:name/:email", newUser(db))
+	// ref: https://echo.labstack.com/guide/binding/
+	e.POST("/createUser", newUserWithJson(db))
 	e.DELETE("/user/:name", deleteUser(db))
 	e.PUT("/user/:name/:email", updateUser(db))
 

@@ -1,5 +1,5 @@
 type {{.Name}} struct {
 {{- range .Fields}}
-    {{prop .Name}} {{.Type}} `json:"{{.Name}},omitempty"`
+    {{title .Name}} {{.Type}} `json:"{{.Name}},omitempty"`
 {{- end}}
 }

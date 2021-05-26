@@ -31,7 +31,7 @@ func ToSnakeCase(str string) string {
 
 func GenEntity(meta *EntityMeta, format string) string {
 	var conv = map[string]interface{}{
-		"title": strings.ToTitle,
+		"title": strings.Title,
 		"lower": strings.ToLower,
 		"snake": ToSnakeCase,
 		"prop":  properTitle,

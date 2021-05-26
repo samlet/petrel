@@ -13,3 +13,4 @@ test
 test.log
 vendor/
 bin/
+*.db

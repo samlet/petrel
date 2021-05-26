@@ -10,6 +10,7 @@ require (
 	github.com/centrifuge/go-substrate-rpc-client/v3 v3.0.0
 	github.com/containerd/containerd v1.5.2 // indirect
 	github.com/crossdock/crossdock-go v0.0.0-20160816171116-049aabb0122b
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/docker/docker v20.10.6+incompatible
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
@@ -21,6 +22,8 @@ require (
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/jessevdk/go-flags v1.4.0 // indirect
 	github.com/kr/pretty v0.2.1
+	github.com/labstack/echo/v4 v4.3.0 // indirect
+	github.com/mattn/go-sqlite3 v1.14.7 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
 	github.com/prashantv/protectmem v0.0.0-20171002184600-e20412882b3a // indirect
@@ -47,6 +50,8 @@ require (
 	google.golang.org/genproto v0.0.0-20210524171403-669157292da3 // indirect
 	google.golang.org/grpc v1.38.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0
+	gorm.io/driver/sqlite v1.1.4
+	gorm.io/gorm v1.21.10
 	k8s.io/apimachinery v0.21.1
 	k8s.io/client-go v0.21.1
 )

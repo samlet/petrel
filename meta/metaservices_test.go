@@ -15,3 +15,13 @@ func TestGetEntityMeta(t *testing.T) {
 		_, _ = pretty.Printf("%d. %s\n", i, rel)
 	}
 }
+
+func TestGetServiceMeta(t *testing.T) {
+	meta, err := GetServiceMeta("createPerson")
+	assert.True(t, err == nil)
+	println(meta.StatusCode)
+	assert.Equal(t, "createPerson", meta.Data.Service.Name)
+	for i, rel := range meta.Data.Service.Parameters {
+		_, _ = pretty.Printf("%d. %s\n", i, rel)
+	}
+}

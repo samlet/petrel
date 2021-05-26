@@ -2,6 +2,7 @@ package meta
 
 import (
 	"bytes"
+	"io/ioutil"
 	"regexp"
 	"strings"
 	"text/template"
@@ -40,4 +41,17 @@ func GenEntity(meta *EntityMeta, format string) string {
 	b := &bytes.Buffer{}
 	template.Must(template.New("").Funcs(conv).Parse(format)).Execute(b, meta)
 	return b.String()
+}
+
+func GenEntityMetaFromTemplate(path string, entityName string) (string, error) {
+	meta, err := GetEntityMeta(entityName)
+	if err != nil {
+		return "", err
+	}
+	tplData, err := ioutil.ReadFile(path)
+	if err != nil {
+		return "", err
+	}
+	result := GenEntity(&meta.Data.Entity, string(tplData))
+	return result, nil
 }

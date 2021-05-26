@@ -12,6 +12,7 @@ import (
 
 /**
 $ just run generator -s type -e Person
+$ just run generator -s service-def createPerson
 */
 
 func main() {
@@ -44,16 +45,11 @@ func main() {
 			case "type":
 				entity := c.String("entity")
 				if entity != "" {
-					meta, err := metagen.GetEntityMeta(entity)
-					if err != nil {
-						panic(err)
-					}
-					tplData, err := ioutil.ReadFile("incls/entity_def.tmpl")
-					if err != nil {
-						panic(err)
-					}
-					result := metagen.GenEntity(&meta.Data.Entity, string(tplData))
-					println(result)
+					printEntityDef(entity)
+				}
+			case "service-def":
+				if act != "" {
+					printServiceDef(act)
 				}
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
@@ -68,5 +64,29 @@ func main() {
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func printEntityDef(entity string) {
+	meta, err := metagen.GetEntityMeta(entity)
+	if err != nil {
+		panic(err)
+	}
+	tplData, err := ioutil.ReadFile("incls/entity_def.tmpl")
+	if err != nil {
+		panic(err)
+	}
+	result := metagen.GenEntity(&meta.Data.Entity, string(tplData))
+	println(result)
+}
+
+func printServiceDef(act string) {
+	meta, err := metagen.GetServiceMeta(act)
+	if err != nil {
+		panic(err)
+	}
+	println(meta.StatusCode)
+	for i, rel := range meta.Data.Service.Parameters {
+		fmt.Printf("%d. %s\n", i, rel)
 	}
 }

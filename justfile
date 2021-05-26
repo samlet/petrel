@@ -21,3 +21,7 @@ worker name:
 dsl name filename:
     go build -o bin/{{name}} routines/{{name}}/*.go
     ./bin/{{name}} -dslConfig routines/{{name}}/{{filename}}.yaml
+
+clear:
+	rm -rf output/*
+

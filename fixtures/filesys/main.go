@@ -6,6 +6,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -13,6 +14,7 @@ import (
 $ just run filesys -s env
 $ just run filesys -s find .. *.sh
 $ just run filesys -s find .. procs*.md
+$ just run filesys -dt -s archive output/doc#dt.zip  .. procs*.md
 */
 
 func main() {
@@ -34,6 +36,7 @@ func main() {
 			&cli.StringFlag{Name: "entity", Aliases: []string{"e"},
 				Usage: "entity name",
 				Value: "WebSite"},
+			&cli.BoolFlag{Name: "with-datetime", Aliases: []string{"dt"}, Value: false},
 		},
 		Action: func(c *cli.Context) error {
 			act := "_none_"
@@ -52,19 +55,14 @@ func main() {
 					ext = c.Args().Get(1)
 				}
 
-				start := time.Now()
-				files, err := WalkMatch(root, ext)
-				if err != nil {
-					panic(err)
+				listFiles(root, ext)
+			case "archive":
+				if c.NArg() != 3 {
+					println("command args: <target> <root> <ext>")
+					return nil
 				}
-
-				fmt.Printf("total %d files\n", len(files))
-				elapsed := time.Since(start)
-				log.Printf("time elapsed %s", elapsed)
-				for i, f := range files {
-					fmt.Printf("%d. %s\n", i, f)
-				}
-
+				strargs := c.Args().Slice()
+				archiveFiles(strargs[0], strargs[1], strargs[2], c.Bool("with-datetime"))
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
 			default:
@@ -79,4 +77,36 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func listFiles(root string, ext string) {
+	start := time.Now()
+	files, err := WalkMatch(root, ext)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("total %d files\n", len(files))
+	elapsed := time.Since(start)
+	log.Printf("time elapsed %s", elapsed)
+	for i, f := range files {
+		fmt.Printf("%d. %s\n", i, f)
+	}
+}
+
+func archiveFiles(targetFile string, root string, ext string, withDt bool) {
+	files, err := WalkMatch(root, ext)
+	if err != nil {
+		panic(err)
+	}
+	if withDt {
+		t := time.Now()
+		year, month, day := t.UTC().Date()
+		dt := fmt.Sprintf("%4d%02d%2d", year, month, day)
+		targetFile = strings.ReplaceAll(targetFile, "#dt", "-"+dt)
+	}
+	if err := ZipFiles(targetFile, files); err != nil {
+		panic(err)
+	}
+	fmt.Printf("total files %d,  zipped file: %s\n", len(files), targetFile)
 }

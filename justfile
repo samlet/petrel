@@ -29,3 +29,10 @@ clear:
 
 substrate:
     substrate --dev --rpc-external --ws-external --rpc-methods Unsafe --offchain-worker Always
+eth:
+    ganache-cli
+
+login:
+	curl -X POST -d 'username=jon' -d 'password=shhh!' localhost:1323/login
+
+

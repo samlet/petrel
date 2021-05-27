@@ -8,6 +8,8 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 /**
@@ -35,6 +37,7 @@ func main() {
 			&cli.StringFlag{Name: "entity", Aliases: []string{"e"},
 				Usage: "entity name",
 				Value: "WebSite"},
+			&cli.BoolFlag{Name: "write", Aliases: []string{"w"}, Value: false},
 		},
 		Action: func(c *cli.Context) error {
 			act := "_none_"
@@ -53,26 +56,10 @@ func main() {
 					printServiceDef(act)
 				}
 			case "flow-def":
-				if c.NArg() < 3 {
-					println("Must specific flow name and activities")
-					return nil
-				}
-				acts := c.Args().Slice()[1:]
-				flowMeta := metagen.CreateFlowMeta(act, acts)
-
-				prompt(".. workflow def %s\n", act)
-				result, err := metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_def.tmpl")
+				err, _ := genFlow(c, act, prompt)
 				if err != nil {
 					panic(err)
 				}
-				println(result)
-
-				prompt(".. workflow test %s\n", act)
-				result, err = metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_test.tmpl")
-				if err != nil {
-					panic(err)
-				}
-				println(result)
 
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
@@ -88,6 +75,58 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func genFlow(c *cli.Context, act string, prompt func(format string, a ...interface{})) (error, bool) {
+	if c.NArg() < 3 {
+		println("Must specific flow name and activities")
+		return nil, false
+	}
+	acts := c.Args().Slice()[1:]
+	flowMeta := metagen.CreateFlowMeta(act, acts)
+
+	prompt(".. workflow def %s\n", act)
+	workflowCnt, err := metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_def.tmpl")
+	if err != nil {
+		panic(err)
+	}
+	println(workflowCnt)
+
+	prompt(".. workflow test %s\n", act)
+	workflowTestCnt, err := metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_test.tmpl")
+	if err != nil {
+		panic(err)
+	}
+	println(workflowTestCnt)
+
+	write_target := c.Bool("write")
+	if write_target {
+		targetDir := fmt.Sprintf("./routines/%s", strings.ToLower(act))
+		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
+			// target dir does not exist
+			err = os.Mkdir(targetDir, 0755)
+			check(err)
+			err := ioutil.WriteFile(filepath.Join(targetDir, "workflow.go"),
+				[]byte(workflowCnt), 0644)
+			check(err)
+			err = ioutil.WriteFile(filepath.Join(targetDir, "workflow_test.go"),
+				[]byte(workflowTestCnt), 0644)
+			check(err)
+
+			println(".. write to target dir", targetDir)
+		} else {
+			prompt("!! target dir '%s' is exists\n", targetDir)
+		}
+
+	}
+
+	return nil, true
 }
 
 func printEntityDef(entity string) {

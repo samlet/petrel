@@ -1,8 +1,8 @@
 package main
 
 import (
-    "fmt"
     "time"
+    "context"
 
     "go.uber.org/cadence/activity"
     "go.uber.org/cadence/workflow"
@@ -29,7 +29,7 @@ func init() {
 }
 
 // {{.Name}}Workflow Workflow Decider.
-func {{.Name}}Workflow(ctx workflow.Context, fInfo flowInfo) error {
+func {{.Name}}Workflow(ctx workflow.Context, fInfo *flowInfo) error {
     ao := workflow.ActivityOptions{
         ScheduleToStartTimeout: time.Minute,
         StartToCloseTimeout:    time.Minute,
@@ -38,10 +38,10 @@ func {{.Name}}Workflow(ctx workflow.Context, fInfo flowInfo) error {
     ctx = workflow.WithActivityOptions(ctx, ao)
 
     logger := workflow.GetLogger(ctx)
-    var fInfo *flowInfo
+    var err error
 {{range .Activities}}
     // Run "{{.Name}}"
-    err = workflow.ExecuteActivity(ctx, {{.Name}}Activity).Get(ctx, &fInfo)
+    err = workflow.ExecuteActivity(ctx, {{.Name}}Activity, *fInfo).Get(ctx, &fInfo)
     if err != nil {
         logger.Error("Activity '{{.Name}}' failed.", zap.Error(err))
         return err

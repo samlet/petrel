@@ -35,4 +35,7 @@ eth:
 login:
 	curl -X POST -d 'username=jon' -d 'password=shhh!' localhost:1323/login
 
+dummy:
+	rm -rf routines/dummy
+	just run generator -w -s flow-def Dummy downloadFile processFile
 

@@ -91,6 +91,8 @@ func genFlow(c *cli.Context, act string, prompt func(format string, a ...interfa
 		return nil, false
 	}
 	acts := c.Args().Slice()[1:]
+	write_target := c.Bool("write")
+
 	flowMeta := metagen.CreateFlowMeta(act, acts)
 
 	prompt(".. workflow def %s\n", act)
@@ -98,16 +100,25 @@ func genFlow(c *cli.Context, act string, prompt func(format string, a ...interfa
 	if err != nil {
 		panic(err)
 	}
-	println(workflowCnt)
+	if !write_target {
+		println(workflowCnt)
+	}
 
 	prompt(".. workflow test %s\n", act)
 	workflowTestCnt, err := metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_test.tmpl")
 	if err != nil {
 		panic(err)
 	}
-	println(workflowTestCnt)
+	if !write_target {
+		println(workflowTestCnt)
+	}
 
-	write_target := c.Bool("write")
+	prompt(".. workflow main %s\n", act)
+	workflowMainCnt, err := metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_main.tmpl")
+	if err != nil {
+		panic(err)
+	}
+
 	if write_target {
 		targetDir := fmt.Sprintf("./routines/%s", strings.ToLower(act))
 		if _, err := os.Stat(targetDir); os.IsNotExist(err) {
@@ -119,6 +130,9 @@ func genFlow(c *cli.Context, act string, prompt func(format string, a ...interfa
 			check(err)
 			err = ioutil.WriteFile(filepath.Join(targetDir, "workflow_test.go"),
 				[]byte(workflowTestCnt), 0644)
+			check(err)
+			err = ioutil.WriteFile(filepath.Join(targetDir, "main.go"),
+				[]byte(workflowMainCnt), 0644)
 			check(err)
 
 			println(".. write to target dir", targetDir)

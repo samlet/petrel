@@ -41,7 +41,7 @@ func init() {
 	)
 }
 
-// DummyWorkflow Workflow Decider.
+// Dummy Workflow Decider.
 func DummyWorkflow(ctx workflow.Context, fInfo *flowInfo) error {
 	ao := workflow.ActivityOptions{
 		ScheduleToStartTimeout: time.Minute,

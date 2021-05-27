@@ -40,7 +40,7 @@ func init() {
 {{- end}}
 }
 
-// {{.Name}}Workflow Workflow Decider.
+// {{.Name}} Workflow Decider.
 func {{.Name}}Workflow(ctx workflow.Context, fInfo *flowInfo) error {
     ao := workflow.ActivityOptions{
         ScheduleToStartTimeout: time.Minute,

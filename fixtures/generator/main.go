@@ -16,6 +16,8 @@ import (
 $ just run generator -s type -e Person
 $ just run generator -s service-def createPerson
 $ just run generator -s flow-def Sample downloadFile processFile
+$ just run generator -w -s flow-def Dummy downloadFile processFile
+$ just dummy  # recreate dummy workflow
 */
 
 func main() {

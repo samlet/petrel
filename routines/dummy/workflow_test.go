@@ -46,8 +46,8 @@ func (s *UnitTestSuite) Test_DummyWorkflow() {
 			s.NoError(args.Get(&input))
 			s.Equal(input.Owner, owner)
 		default:
-			// panic("unexpected activity call")
-			println("unexpected activity call -> " + activityType)
+			panic("unexpected activity call")
+			// println("unexpected activity call -> "+activityType)
 		}
 	})
 
@@ -55,5 +55,5 @@ func (s *UnitTestSuite) Test_DummyWorkflow() {
 
 	s.True(env.IsWorkflowCompleted())
 	s.NoError(env.GetWorkflowError())
-	//? s.Equal(expectedCall, activityCalled)
+	s.Equal(expectedCall, activityCalled)
 }

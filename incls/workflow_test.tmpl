@@ -44,8 +44,8 @@ func (s *UnitTestSuite) Test_{{.Name}}Workflow() {
                 s.Equal(input.Owner, owner)
             {{- end}}
             default:
-                // panic("unexpected activity call")
-                println("unexpected activity call -> "+activityType)
+                panic("unexpected activity call")
+                // println("unexpected activity call -> "+activityType)
         }
     })
 
@@ -53,6 +53,6 @@ func (s *UnitTestSuite) Test_{{.Name}}Workflow() {
 
     s.True(env.IsWorkflowCompleted())
     s.NoError(env.GetWorkflowError())
-    //? s.Equal(expectedCall, activityCalled)
+    s.Equal(expectedCall, activityCalled)
 }
 

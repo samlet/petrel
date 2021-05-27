@@ -19,12 +19,24 @@ type (
 // ApplicationName is the task list for this workflow
 const ApplicationName = "{{.Name}}Group"
 
+/**
+* Activities used by file processing {{.Name}} workflow.
+*/
+const (
+{{- range .Activities}}
+    {{.Name}}ActivityName = "{{.Name}}Activity"
+{{- end}}
+)
+
 // This is registration process where you register all your workflows
 // and activity function handlers.
 func init() {
     workflow.Register({{.Name}}Workflow)
 {{- range .Activities}}
-    activity.Register({{.Name}}Activity)
+    activity.RegisterWithOptions(
+        {{.Name}}Activity,
+        activity.RegisterOptions{Name: {{.Name}}ActivityName},
+    )
 {{- end}}
 }
 
@@ -41,7 +53,7 @@ func {{.Name}}Workflow(ctx workflow.Context, fInfo *flowInfo) error {
     var err error
 {{range .Activities}}
     // Run "{{.Name}}"
-    err = workflow.ExecuteActivity(ctx, {{.Name}}Activity, *fInfo).Get(ctx, &fInfo)
+    err = workflow.ExecuteActivity(ctx, {{.Name}}ActivityName, *fInfo).Get(ctx, &fInfo)
     if err != nil {
         logger.Error("Activity '{{.Name}}' failed.", zap.Error(err))
         return err

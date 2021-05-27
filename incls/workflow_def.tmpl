@@ -1,0 +1,62 @@
+package main
+
+import (
+    "fmt"
+    "time"
+
+    "go.uber.org/cadence/activity"
+    "go.uber.org/cadence/workflow"
+    "go.uber.org/zap"
+)
+
+type (
+    flowInfo struct {
+        Owner string
+        Bindings   map[string]interface{}
+    }
+)
+
+// ApplicationName is the task list for this workflow
+const ApplicationName = "{{.Name}}Group"
+
+// This is registration process where you register all your workflows
+// and activity function handlers.
+func init() {
+    workflow.Register({{.Name}}Workflow)
+{{- range .Activities}}
+    activity.Register({{.Name}}Activity)
+{{- end}}
+}
+
+// {{.Name}}Workflow Workflow Decider.
+func {{.Name}}Workflow(ctx workflow.Context, fInfo flowInfo) error {
+    ao := workflow.ActivityOptions{
+        ScheduleToStartTimeout: time.Minute,
+        StartToCloseTimeout:    time.Minute,
+        HeartbeatTimeout:       time.Second * 20,
+    }
+    ctx = workflow.WithActivityOptions(ctx, ao)
+
+    logger := workflow.GetLogger(ctx)
+    var fInfo *flowInfo
+{{range .Activities}}
+    // Run "{{.Name}}"
+    err = workflow.ExecuteActivity(ctx, {{.Name}}Activity).Get(ctx, &fInfo)
+    if err != nil {
+        logger.Error("Activity '{{.Name}}' failed.", zap.Error(err))
+        return err
+    }
+{{end}}
+
+    logger.Info("Workflow completed.", zap.String("Result", "OK"))
+    return nil
+}
+
+{{range .Activities}}
+// {{.Name}} Activity.
+func {{.Name}}Activity(ctx context.Context, fInfo flowInfo) (*flowInfo, error) {
+    processedInfo := &flowInfo{Owner: fInfo.Owner, Bindings: fInfo.Bindings}
+    return processedInfo, nil
+}
+{{end}}
+

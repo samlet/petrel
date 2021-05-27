@@ -13,6 +13,7 @@ import (
 /**
 $ just run generator -s type -e Person
 $ just run generator -s service-def createPerson
+$ just run generator -s flow-def Sample downloadFile processFile
 */
 
 func main() {
@@ -51,6 +52,28 @@ func main() {
 				if act != "" {
 					printServiceDef(act)
 				}
+			case "flow-def":
+				if c.NArg() < 3 {
+					println("Must specific flow name and activities")
+					return nil
+				}
+				acts := c.Args().Slice()[1:]
+				flowMeta := metagen.CreateFlowMeta(act, acts)
+
+				prompt(".. workflow def %s\n", act)
+				result, err := metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_def.tmpl")
+				if err != nil {
+					panic(err)
+				}
+				println(result)
+
+				prompt(".. workflow test %s\n", act)
+				result, err = metagen.GenFlowFromTemplate(&flowMeta, "incls/workflow_test.tmpl")
+				if err != nil {
+					panic(err)
+				}
+				println(result)
+
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
 			default:

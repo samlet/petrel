@@ -11,6 +11,10 @@ rt name +FLAGS='':
 	go build -o bin/{{name}} routines/{{name}}/*.go
 	./bin/{{name}} {{FLAGS}}
 
+gen name +FLAGS='':
+	go build -o bin/{{name}} codegen/{{name}}/*.go
+	./bin/{{name}} {{FLAGS}}
+
 simple:
 	go run fixtures/simpleclient/*.go
 fileprocessing-test:
@@ -38,4 +42,8 @@ login:
 dummy:
 	rm -rf routines/dummy
 	just run generator -w -s flow-def Dummy downloadFile processFile
+
+gen-alpha:
+	cd fixtures/alphafac && go generate
+
 

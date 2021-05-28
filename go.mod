@@ -3,6 +3,7 @@ module github.com/samlet/petrel
 go 1.16
 
 require (
+	capnproto.org/go/capnp/v3 v3.0.0-alpha.1 // indirect
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239 // indirect
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
@@ -59,6 +60,7 @@ require (
 	gorm.io/gorm v1.21.10
 	k8s.io/apimachinery v0.21.1
 	k8s.io/client-go v0.21.1
+	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
 )
 
 //replace github.com/centrifuge/go-substrate-rpc-client => ../go-substrate-rpc-client-master

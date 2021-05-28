@@ -1,0 +1,5 @@
+stdlib:="pkg/mod/zombiezen.com/go/capnproto2@v2.18.2+incompatible/std"
+
+gen:
+	capnp compile -I{{env_var("GOPATH")}}/{{stdlib}} -ogo books.capnp
+

@@ -4,12 +4,16 @@ import (
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/urfave/cli/v2"
+	"go/build"
 	"log"
 	"os"
 )
 
 /**
 $ just gen parser -s env
+$ just gen parser -s sources ./codegen/parser
+$ just gen parser -s sources ./fixtures/remote/
+$ just gen parser -s interfaces
 */
 
 func main() {
@@ -33,13 +37,32 @@ func main() {
 				Value: "WebSite"},
 		},
 		Action: func(c *cli.Context) error {
-			act := "_none_"
+			act := ""
 			if c.NArg() > 0 {
 				act = c.Args().Get(0)
 				prompt(".. act is %s\n", act)
 			}
 			switch service {
-			case "find":
+			case "sources":
+				if act == "" {
+					act = "./codegen/parser"
+				}
+				pkgInfo, err := build.ImportDir(act, 0)
+				if err != nil {
+					log.Fatal(err)
+				}
+				for i, file := range pkgInfo.GoFiles {
+					fmt.Printf("%d. %s\n", i, file)
+				}
+			case "interfaces":
+				if act == "" {
+					act = "./codegen/parser"
+				}
+				pkgInfo, err := build.ImportDir(act, 0)
+				if err != nil {
+					log.Fatal(err)
+				}
+				GetInterfaces(act, pkgInfo.GoFiles)
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
 			default:

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"go/ast"
 	"go/parser"
@@ -63,5 +64,82 @@ func TestParseConstants(t *testing.T) {
 		return true
 	})
 
-	fmt.Printf("%s\n", typesMap)
+	jsonstr, _ := json.MarshalIndent(typesMap, "", "  ")
+	fmt.Printf("%s\n", jsonstr)
+}
+
+func TestParseSource(t *testing.T) {
+	gofile := "interfaces.go"
+	fset := token.NewFileSet()
+	//解析go文件
+	f, err := parser.ParseFile(fset, gofile, nil, 0)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print the AST.
+	ast.Print(fset, f)
+}
+
+func TestParseInterfaces(t *testing.T) {
+	gofile := "interfaces.go"
+	fset := token.NewFileSet()
+	//解析go文件
+	f, err := parser.ParseFile(fset, gofile, nil, 0)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print the AST.
+	//ast.Print(fset, f)
+
+	// traverse all tokens
+	ast.Inspect(f, func(n ast.Node) bool {
+		switch t := n.(type) {
+		// find variable declarations
+		case *ast.TypeSpec:
+			// which are public
+			if t.Name.IsExported() {
+				switch t.Type.(type) {
+				// and are interfaces
+				case *ast.InterfaceType:
+					fmt.Println(t.Name.Name)
+					ispec := t.Type.(*ast.InterfaceType)
+					fieldsLen := len(ispec.Methods.List)
+					fmt.Printf(".. methods: %d\n", fieldsLen)
+					for _, m := range ispec.Methods.List {
+						//ast.Print(fset, m)
+						ast.Print(fset, m.Names[0].Name)
+					}
+
+					HandleInterface(fset, ispec)
+				}
+			}
+		}
+		return true
+	})
+
+}
+
+func HandleInterface(fset *token.FileSet, iface *ast.InterfaceType) {
+	if iface.Methods != nil || iface.Methods.List != nil {
+		for _, v := range iface.Methods.List {
+			print(v.Names[0].Name, " => ")
+			ft := v.Type.(*ast.FuncType)
+			for _, v := range ft.Params.List {
+				//fmt.Printf("%s: %s, ", v.Names[0].Name, v.Type)
+				fmt.Printf("%s: ", v.Names[0].Name)
+				//ast.Print(fset, v.Type)
+				switch n := v.Type.(type) {
+				case *ast.MapType:
+					ast.Print(fset, n)
+				case *ast.Ident:
+					print(n.Name, ", ")
+				default:
+					// ...
+				}
+			}
+			println()
+		}
+	}
 }

@@ -46,6 +46,15 @@ dummy:
 gen-alpha:
 	cd fixtures/alphafac && go generate
 
+# Web3 Provider from the Environment dropdown, and add “http://127.0.0.1:8545”
+geth:
+	rm -rf test-chain-dir/
+	mkdir test-chain-dir
+	geth --datadir test-chain-dir --http --dev --http.corsdomain "https://remix.ethereum.org,http://remix.ethereum.org"
+
+geth-cli:
+	geth attach ./test-chain-dir/geth.ipc
+
 tokenProcs:
     cd fixtures/eth && go generate
     just run eth -s tokenProcs

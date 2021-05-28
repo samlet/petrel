@@ -2,9 +2,9 @@ version:
 	solc-select use 0.4.24
 
 build:
-	solc --bin Store.sol -o build --overwrite
-	solc --abi Store.sol -o build --overwrite
-	abigen --bin=build/Store.bin --abi=build/Store.abi --pkg=store --out=store/Store.go
+	solc --bin store.sol -o build --overwrite
+	solc --abi store.sol -o build --overwrite
+	abigen --bin=build/store.bin --abi=build/store.abi --pkg=store --out=store/store.go
 
 
 

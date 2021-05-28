@@ -15,3 +15,4 @@ contract Store {
     emit ItemSet(key, value);
   }
 }
+

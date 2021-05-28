@@ -72,7 +72,7 @@ func TestParseSource(t *testing.T) {
 	gofile := "interfaces.go"
 	fset := token.NewFileSet()
 	//解析go文件
-	f, err := parser.ParseFile(fset, gofile, nil, 0)
+	f, err := parser.ParseFile(fset, gofile, nil, parser.ParseComments)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -85,7 +85,7 @@ func TestParseInterfaces(t *testing.T) {
 	gofile := "interfaces.go"
 	fset := token.NewFileSet()
 	//解析go文件
-	f, err := parser.ParseFile(fset, gofile, nil, 0)
+	f, err := parser.ParseFile(fset, gofile, nil, parser.ParseComments)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -103,13 +103,24 @@ func TestParseInterfaces(t *testing.T) {
 				switch t.Type.(type) {
 				// and are interfaces
 				case *ast.InterfaceType:
-					fmt.Println(t.Name.Name)
+					fmt.Println("intf:", t.Name.Name)
 					ispec := t.Type.(*ast.InterfaceType)
 					fieldsLen := len(ispec.Methods.List)
 					fmt.Printf(".. methods: %d\n", fieldsLen)
 					for _, m := range ispec.Methods.List {
 						//ast.Print(fset, m)
-						ast.Print(fset, m.Names[0].Name)
+						print("\t- ", m.Names[0].Name, ":")
+
+						// ?
+						var comments []string
+						if m.Doc != nil {
+							for _, comm := range m.Doc.List {
+								comments = append(comments, comm.Text[2:])
+							}
+							println(strings.Join(comments, "; "))
+						} else {
+							println()
+						}
 					}
 
 					HandleInterface(fset, ispec)
@@ -126,12 +137,15 @@ func HandleInterface(fset *token.FileSet, iface *ast.InterfaceType) {
 		for _, v := range iface.Methods.List {
 			print(v.Names[0].Name, " => ")
 			ft := v.Type.(*ast.FuncType)
+
 			for _, v := range ft.Params.List {
 				//fmt.Printf("%s: %s, ", v.Names[0].Name, v.Type)
 				fmt.Printf("%s: ", v.Names[0].Name)
 				//ast.Print(fset, v.Type)
 				switch n := v.Type.(type) {
 				case *ast.MapType:
+					kt, vt := HandleMapKeyValue(n)
+					fmt.Printf("map(%s:%s), ", kt, vt)
 					ast.Print(fset, n)
 				case *ast.Ident:
 					print(n.Name, ", ")
@@ -142,4 +156,18 @@ func HandleInterface(fset *token.FileSet, iface *ast.InterfaceType) {
 			println()
 		}
 	}
+}
+
+func HandleMapKeyValue(n *ast.MapType) (string, string) {
+	keyType := n.Key.(*ast.Ident).Name
+	var valueType string
+	switch vType := n.Value.(type) {
+	case *ast.InterfaceType:
+		valueType = "interface{}"
+	case *ast.Ident:
+		valueType = vType.Name
+	default:
+		valueType = fmt.Sprintf("%s", vType)
+	}
+	return keyType, valueType
 }

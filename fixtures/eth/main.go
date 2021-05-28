@@ -16,6 +16,7 @@ import (
 /**
 $ just run eth -s info
 $ just run eth -s infura
+$ just run eth -s tokenProcs
 */
 
 func main() {
@@ -56,6 +57,8 @@ func main() {
 				infuraBalance()
 			case "gen":
 				GenerateWallet()
+			case "tokenProcs":
+				TokenProcs()
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
 			default:

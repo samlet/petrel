@@ -109,13 +109,13 @@ func TestParseInterfaces(t *testing.T) {
 					fmt.Printf(".. methods: %d\n", fieldsLen)
 					for _, m := range ispec.Methods.List {
 						//ast.Print(fset, m)
-						print("\t- ", m.Names[0].Name, ":")
+						print("\t- ", m.Names[0].Name, ": ")
 
 						// ?
 						var comments []string
 						if m.Doc != nil {
 							for _, comm := range m.Doc.List {
-								comments = append(comments, comm.Text[2:])
+								comments = append(comments, comm.Text[3:])
 							}
 							println(strings.Join(comments, "; "))
 						} else {

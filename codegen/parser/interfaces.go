@@ -2,9 +2,12 @@ package main
 
 type KeyValueDatabase interface {
 	// Get get a key's value
-	//@timeout 12s
+	// @timeout 12s
 	Get(key string) string
+	// Set a value by the key
+	// @timeout 1s
 	Set(key string, value string)
+	// Inspect all vars
 	Inspect(ctx map[string]interface{})
 }
 

@@ -46,4 +46,7 @@ dummy:
 gen-alpha:
 	cd fixtures/alphafac && go generate
 
+tokenProcs:
+    cd fixtures/eth && go generate
+    just run eth -s tokenProcs
 

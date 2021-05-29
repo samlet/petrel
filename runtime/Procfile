@@ -1,0 +1,6 @@
+datasrv: cd ~/sagas/projs/bluecc/target/debug && ./cc-data-srv
+bridge: cd ~/sagas/projs/bluecc/target/debug && ./bridge
+cadence: cd ~/go/src/github.com/uber/cadence && ./cadence-server start --services=frontend,matching,history,worker
+cadence-web: cd ~/workspace/workflow/cadence/cadence-web && ./run.sh
+
+

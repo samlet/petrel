@@ -1,19 +1,21 @@
+export CADENCE_CLI_DOMAIN:="samples-domain"
+
 list:
 	go list -m all
 
 # $ just run simpleclient --service find
 # $ just run simpleclient -s find
 run name +FLAGS='':
-	go build -o bin/{{name}} fixtures/{{name}}/*.go
-	./bin/{{name}} {{FLAGS}}
+	go build -o bin/ft{{name}} fixtures/{{name}}/*.go
+	./bin/ft{{name}} {{FLAGS}}
 
 rt name +FLAGS='':
-	go build -o bin/{{name}} routines/{{name}}/*.go
-	./bin/{{name}} {{FLAGS}}
+	go build -o bin/rt{{name}} routines/{{name}}/*.go
+	./bin/rt{{name}} {{FLAGS}}
 
 gen name +FLAGS='':
-	go build -o bin/{{name}} codegen/{{name}}/*.go
-	./bin/{{name}} {{FLAGS}}
+	go build -o bin/gn{{name}} codegen/{{name}}/*.go
+	./bin/gn{{name}} {{FLAGS}}
 
 simple:
 	go run fixtures/simpleclient/*.go
@@ -59,3 +61,7 @@ tokenProcs:
     cd fixtures/eth && go generate
     just run eth -s tokenProcs
 
+# just wf Seed '"cadence"'
+# omit parameter: --domain samples-domain
+wf name json_pars:
+    cadence workflow run --tl {{name}}Group --wt main.{{name}}Workflow --et 60 -i '{{json_pars}}'

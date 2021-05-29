@@ -1,0 +1,2 @@
+zk: zookeeper-server-start ./zookeeper.properties
+kafka: kafka-server-start /usr/local/etc/kafka/server.properties

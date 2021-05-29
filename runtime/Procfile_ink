@@ -1,0 +1,2 @@
+canvas: canvas --dev --tmp
+canvas_ui: cd ~/workspace/blockchain/parity/canvas-ui && yarn start

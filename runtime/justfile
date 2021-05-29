@@ -1,0 +1,21 @@
+run:
+    cargo +nightly build --manifest-path ../bluecc/cc-data-srv/Cargo.toml
+    # honcho start
+    foreman start
+ink:
+    foreman start -f Procfile_ink
+canvas-ui:
+    open http://localhost:3000
+
+cadence: 
+    cd ~/go/src/github.com/uber/cadence && ./cadence-server start --services=frontend,matching,history,worker
+
+ofbiz:
+    cd ~/ofbiz && ./gradlew ofbiz
+
+kafka:
+    foreman start -f Procfile_kafka
+cassandra:
+    cassandra -f
+
+    

@@ -1,6 +1,9 @@
 package alfin
 
-import "testing"
+import (
+	"os"
+	"testing"
+)
 
 func TestGenTemplate(t *testing.T) {
 	text := `
@@ -42,5 +45,5 @@ func TestGenTemplate(t *testing.T) {
 	{{- end -}}
 {{ end }}
 `
-	GenTemplate(text, tmpl)
+	GenTemplate(text, tmpl, os.Stdout)
 }

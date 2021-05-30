@@ -2,12 +2,12 @@ package alfin
 
 import (
 	"encoding/json"
-	"os"
+	"io"
 	"reflect"
 	"text/template"
 )
 
-func GenTemplate(text string, tmpl string) {
+func GenTemplate(text string, tmpl string, wr io.Writer) {
 	var err error
 	m := make(map[string]interface{})
 	if err = json.Unmarshal([]byte(text), &m); err != nil {
@@ -61,15 +61,18 @@ func GenTemplate(text string, tmpl string) {
 				return false
 			}
 		},
-		"isList": IsList,
+		"isList":   IsList,
+		"isNumber": IsNumber,
+		"isFloat":  IsFloat,
 	}
+
 	t := template.New("hello").Funcs(tf)
 	tt, err := t.Parse(tmpl)
 	if err != nil {
 		panic(err)
 	}
 
-	if err = tt.Execute(os.Stdout, &m); err != nil {
+	if err = tt.Execute(wr, &m); err != nil {
 		panic(err)
 	}
 }

@@ -1,0 +1,5 @@
+entity: {{$.name}}
+fields:
+{{- range $i, $f := $.fields }}
+    - {{$i}}. {{$f.name}}: {{$f.type}}
+{{- end }}

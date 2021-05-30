@@ -17,6 +17,10 @@ gen name +FLAGS='':
 	go build -o bin/gn{{name}} codegen/{{name}}/*.go
 	./bin/gn{{name}} {{FLAGS}}
 
+alfin name +FLAGS='':
+	go build -o bin/al{{name}} alfin/{{name}}/*.go
+	./bin/al{{name}} {{FLAGS}}
+
 simple:
 	go run fixtures/simpleclient/*.go
 fileprocessing-test:

@@ -65,3 +65,9 @@ tokenProcs:
 # omit parameter: --domain samples-domain
 wf name json_pars:
     cadence workflow run --tl {{name}}Group --wt main.{{name}}Workflow --et 60 -i '{{json_pars}}'
+
+# just meta-cli meta Person
+meta-cli +FLAGS='':
+	cargo +nightly run --manifest-path ~/sagas/projs/bluecc/entity-seed/meta-cli/Cargo.toml -- {{FLAGS}}
+
+

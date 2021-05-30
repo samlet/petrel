@@ -18,4 +18,9 @@ kafka:
 cassandra:
     cassandra -f
 
+pulsar:
+    pulsar standalone
+pulsar-produce topic msg:
+    pulsar-client produce {{topic}} --messages "{{msg}}"
+
     

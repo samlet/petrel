@@ -7,16 +7,20 @@ import (
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
+	"time"
 )
 
 /**
 $ just rt stuffs -s env
 $ just rt stuffs -s worker
 $ cadence workflow run --tl seedGroup --wt main.SeedWorkflow --et 60 -i '"cadence"'
+$ just rt stuffs -s exec  # run in one command
+$ just wf Seed '"cadence"'
 */
 
 func main() {
 	prompt := color.New(color.FgYellow).PrintfFunc()
+	info := color.New(color.FgGreen).PrintfFunc()
 	imp := color.New(color.FgGreen).SprintFunc()
 
 	var service string
@@ -52,6 +56,14 @@ func main() {
 				select {}
 			case "trigger":
 				startSeedWorkflow(&h)
+			case "exec":
+				startWorkers(&h)
+				prompt(".. wait 1 sec to run trigger\n")
+				time.Sleep(1000 * time.Millisecond)
+				startSeedWorkflow(&h)
+
+				info(".. quit by press CMD+C\n")
+				select {}
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
 			default:

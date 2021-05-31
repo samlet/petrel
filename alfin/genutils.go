@@ -65,8 +65,9 @@ func GenTemplate(text string, tmpl string, wr io.Writer) {
 		"isList":    IsList,
 		"isNumber":  IsNumber,
 		"isFloat":   IsFloat,
-		"fieldType": FieldType,
 		"title":     strings.Title,
+		"fieldType": FieldType,
+		"paramType": ParamType,
 	}
 
 	t := template.New("hello").Funcs(tf)
@@ -129,6 +130,17 @@ func FieldType(typeName string) string {
 		goType = "byte"
 	default:
 		goType = "string"
+	}
+	return goType
+}
+
+func ParamType(typeName string) string {
+	var goType string
+	switch typeName {
+	case "Map":
+		goType = "map[string]interface{}"
+	default:
+		goType = "interface{}"
 	}
 	return goType
 }

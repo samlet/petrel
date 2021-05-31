@@ -1,0 +1,545 @@
+{
+  "name": "Person",
+  "fields": [
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "salutation",
+      "type": "name",
+      "col": "SALUTATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "firstName",
+      "type": "name",
+      "col": "FIRST_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "middleName",
+      "type": "name",
+      "col": "MIDDLE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastName",
+      "type": "name",
+      "col": "LAST_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "personalTitle",
+      "type": "name",
+      "col": "PERSONAL_TITLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "suffix",
+      "type": "name",
+      "col": "SUFFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "nickname",
+      "type": "name",
+      "col": "NICKNAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "firstNameLocal",
+      "type": "name",
+      "col": "FIRST_NAME_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "middleNameLocal",
+      "type": "name",
+      "col": "MIDDLE_NAME_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastNameLocal",
+      "type": "name",
+      "col": "LAST_NAME_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "otherLocal",
+      "type": "name",
+      "col": "OTHER_LOCAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "memberId",
+      "type": "id",
+      "col": "MEMBER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "gender",
+      "type": "indicator",
+      "col": "GENDER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "birthDate",
+      "type": "date",
+      "col": "BIRTH_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "deceasedDate",
+      "type": "date",
+      "col": "DECEASED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "height",
+      "type": "floating-point",
+      "col": "HEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "weight",
+      "type": "floating-point",
+      "col": "WEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "mothersMaidenName",
+      "type": "long-varchar",
+      "col": "MOTHERS_MAIDEN_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "oldMaritalStatus",
+      "type": "indicator",
+      "col": "MARITAL_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "maritalStatusEnumId",
+      "type": "id",
+      "col": "MARITAL_STATUS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "socialSecurityNumber",
+      "type": "long-varchar",
+      "col": "SOCIAL_SECURITY_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "passportNumber",
+      "type": "long-varchar",
+      "col": "PASSPORT_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "passportExpireDate",
+      "type": "date",
+      "col": "PASSPORT_EXPIRE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "totalYearsWorkExperience",
+      "type": "floating-point",
+      "col": "TOTAL_YEARS_WORK_EXPERIENCE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "employmentStatusEnumId",
+      "type": "id",
+      "col": "EMPLOYMENT_STATUS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "residenceStatusEnumId",
+      "type": "id",
+      "col": "RESIDENCE_STATUS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "occupation",
+      "type": "name",
+      "col": "OCCUPATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "yearsWithEmployer",
+      "type": "numeric",
+      "col": "YEARS_WITH_EMPLOYER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "monthsWithEmployer",
+      "type": "numeric",
+      "col": "MONTHS_WITH_EMPLOYER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "existingCustomer",
+      "type": "indicator",
+      "col": "EXISTING_CUSTOMER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "cardId",
+      "type": "id-long",
+      "col": "CARD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PERSON_PARTY",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "EmploymentStatusEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PERSON_EMPS_ENUM",
+      "keymaps": [
+        {
+          "fieldName": "employmentStatusEnumId",
+          "relFieldName": "enumId"
+        }
+      ]
+    },
+    {
+      "name": "ResidenceStatusEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PERSON_RESS_ENUM",
+      "keymaps": [
+        {
+          "fieldName": "residenceStatusEnumId",
+          "relFieldName": "enumId"
+        }
+      ]
+    },
+    {
+      "name": "MaritalStatusEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PERSON_MARITAL",
+      "keymaps": [
+        {
+          "fieldName": "maritalStatusEnumId",
+          "relFieldName": "enumId"
+        }
+      ]
+    },
+    {
+      "name": "PartyContactMech",
+      "type": "many",
+      "relEntityName": "PartyContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "PartyContactMechPurpose",
+      "type": "many",
+      "relEntityName": "PartyContactMechPurpose",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "ApproverPersonTraining",
+      "type": "many",
+      "relEntityName": "PersonTraining",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "approverId"
+        }
+      ]
+    },
+    {
+      "name": "ProdCatalogRole",
+      "type": "many",
+      "relEntityName": "ProdCatalogRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "ProductStoreRole",
+      "type": "many",
+      "relEntityName": "ProductStoreRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "ToShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdTo"
+        }
+      ]
+    },
+    {
+      "name": "FromShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyIdFrom"
+        }
+      ]
+    },
+    {
+      "name": "CarrierShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "carrierPartyId"
+        }
+      ]
+    },
+    {
+      "name": "UserLogin",
+      "type": "many",
+      "relEntityName": "UserLogin",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "WebSiteRole",
+      "type": "many",
+      "relEntityName": "WebSiteRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    }
+  ]
+}

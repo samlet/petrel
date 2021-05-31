@@ -15,7 +15,8 @@ type Response struct {
 	Data              map[string]interface{} `json:"data"`
 }
 
-func WrapResult(err error, body string, resp Response) (*Response, error) {
+func WrapResult(err error, body string) (*Response, error) {
+	var resp Response
 	if err != nil {
 		return nil, err
 	}
@@ -40,7 +41,6 @@ func FindRoutings(size int) (string, error) {
 }
 
 func FindOrder(orderId string) (*Response, error) {
-	var resp Response
 	body, err := InvokeService("performFindItem",
 		fmt.Sprintf(`{
 				"entityName":"OrderHeader",
@@ -48,7 +48,7 @@ func FindOrder(orderId string) (*Response, error) {
 					"orderId":"%s"
 				}
 			}`, orderId))
-	return WrapResult(err, body, resp)
+	return WrapResult(err, body)
 }
 
 func Render(format string, p map[string]interface{}) string {
@@ -58,7 +58,6 @@ func Render(format string, p map[string]interface{}) string {
 }
 
 func CreateGood(productName string) (*Response, error) {
-	var resp Response
 	body, err := InvokeService("createProduct",
 		Render(`{
 					"internalName": "{{.productName}}",
@@ -69,11 +68,10 @@ func CreateGood(productName string) (*Response, error) {
 					"isVirtual": "N",
 					"isVariant": "N"
 			}`, P{"productName": productName}))
-	return WrapResult(err, body, resp)
+	return WrapResult(err, body)
 }
 
 func FindProduct(productId string) (*Response, error) {
-	var resp Response
 	body, err := InvokeService("performFindItem",
 		Render(`{
 				"entityName":"Product",
@@ -81,5 +79,5 @@ func FindProduct(productId string) (*Response, error) {
 					"productId":"{{.productId}}"
 				}
 			}`, P{"productId": productId}))
-	return WrapResult(err, body, resp)
+	return WrapResult(err, body)
 }

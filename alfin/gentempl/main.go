@@ -11,10 +11,15 @@ import (
 )
 
 /**
-$ just alfin gentempl -s gen
 $ just alfin gentempl -s gen -t alfin/fields.tmpl -i alfin/inventoryitem.json
 $ just alfin gentempl -s gen -t alfin/entity_type.tmpl -i alfin/inventoryitem.json
 $ just alfin gentempl -s gen -t alfin/entity_type.tmpl -i alfin/inventoryitem.json -o alfin/inventoryitem.go
+$ just alfin gentempl -s gen -t alfin/service_intf.tmpl -i alfin/person_ops.json
+$ just alfin gentempl -s gen -t alfin/service_intf.tmpl -i alfin/person_ops.json -o alfin/person_ops.go
+
+# on alfin dir
+$ go run gentempl/main.go -s gen -t fields.tmpl -i inventoryitem.json
+$ gen -t fields.tmpl -i inventoryitem.json
 */
 
 func main() {

@@ -1,0 +1,1018 @@
+{
+  "entity": "Person",
+  "ops": [
+    {
+      "name": "createPerson",
+      "description": "Create a Person",
+      "paramsInput": [
+        {
+          "name": "partyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "salutation",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "firstName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "middleName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lastName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "personalTitle",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "suffix",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "nickname",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "firstNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "middleNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lastNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "otherLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "memberId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "gender",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "birthDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "deceasedDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "height",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "weight",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "mothersMaidenName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldMaritalStatus",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "maritalStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "socialSecurityNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "passportNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "passportExpireDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "totalYearsWorkExperience",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "employmentStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "residenceStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "occupation",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "yearsWithEmployer",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "monthsWithEmployer",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "existingCustomer",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "cardId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "preferredCurrencyUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "externalId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "statusId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "partyId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "createUpdatePerson",
+      "description": "Create and Update a person",
+      "paramsInput": [
+        {
+          "name": "partyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "INOUT",
+          "internal": false
+        },
+        {
+          "name": "salutation",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "firstName",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "middleName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lastName",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "personalTitle",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "suffix",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "nickname",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "firstNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "middleNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lastNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "otherLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "memberId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "gender",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "birthDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "deceasedDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "height",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "weight",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "mothersMaidenName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldMaritalStatus",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "maritalStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "socialSecurityNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "passportNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "passportExpireDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "totalYearsWorkExperience",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "employmentStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "residenceStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "occupation",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "yearsWithEmployer",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "monthsWithEmployer",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "existingCustomer",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "cardId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "userLogin",
+          "type": "org.apache.ofbiz.entity.GenericValue",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "partyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "INOUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "updatePerson",
+      "description": "Update a Person",
+      "paramsInput": [
+        {
+          "name": "partyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "salutation",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "firstName",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "middleName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lastName",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "personalTitle",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "suffix",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "nickname",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "firstNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "middleNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lastNameLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "otherLocal",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "memberId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "gender",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "birthDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "deceasedDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "height",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "weight",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "mothersMaidenName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldMaritalStatus",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "maritalStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "socialSecurityNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "passportNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "passportExpireDate",
+          "type": "java.sql.Date",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "totalYearsWorkExperience",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "employmentStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "residenceStatusEnumId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "occupation",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "yearsWithEmployer",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "monthsWithEmployer",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "existingCustomer",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "cardId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "preferredCurrencyUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "externalId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "statusId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Person",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    }
+  ]
+}

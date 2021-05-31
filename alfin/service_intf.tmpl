@@ -1,0 +1,28 @@
+// Code generated - DO NOT EDIT.
+// This file is a generated binding and any manual changes will be lost.
+
+package alfin
+
+{{ range $i, $s := $.ops }}
+type {{$s.name|title}}Params struct {
+{{- range $i, $p := $s.paramsInput }}
+    {{$p.name|title}} {{$p.type|paramType}}
+{{- end }}
+}
+
+type {{$s.name|title}}Result struct {
+    APIResponse
+{{- range $i, $p := $s.paramsOutput }}
+    {{$p.name|title}} {{$p.type|paramType}}
+{{- end }}
+}
+{{ end }}
+
+// Interface
+type {{$.entity}}Ops interface {
+{{- range $i, $s := $.ops }}
+    // {{$s.name|title}} {{$s.description}}
+    {{$s.name|title}}(params *{{$s.name|title}}Params) (*{{$s.name|title}}Result, error)
+{{- end }}
+}
+

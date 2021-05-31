@@ -3,12 +3,13 @@ package alfin
 import (
 	"encoding/json"
 	"io"
+	"log"
 	"reflect"
 	"strings"
 	"text/template"
 )
 
-func GenTemplate(text string, tmpl string, wr io.Writer) {
+func (c *GenHelper) GenTemplate(text string, tmpl string, wr io.Writer) {
 	var err error
 	m := make(map[string]interface{})
 	if err = json.Unmarshal([]byte(text), &m); err != nil {
@@ -79,6 +80,8 @@ func GenTemplate(text string, tmpl string, wr io.Writer) {
 	if err = tt.Execute(wr, &m); err != nil {
 		panic(err)
 	}
+
+	c.Logger.Info("Generate ok.")
 }
 
 func IsList(i interface{}) bool {
@@ -118,7 +121,9 @@ func FieldType(typeName string) string {
 		goType = "string"
 	case "blob", "byte-array", "object":
 		goType = "[]byte"
-	case "date-time", "date", "time":
+	case "date-time", "date":
+		goType = "DateTime"
+	case "time":
 		goType = "string"
 	case "currency-amount", "currency-precise", "fixed-point", "floating-point":
 		goType = "float64"
@@ -134,12 +139,41 @@ func FieldType(typeName string) string {
 	return goType
 }
 
-func ParamType(typeName string) string {
+func ParamType(typeName string, mode string) string {
 	var goType string
 	switch typeName {
-	case "Map":
+	case "String":
+		goType = "string"
+	case "Integer":
+		goType = "int32"
+	case "Long":
+		goType = "int64"
+	case "Float":
+		goType = "float32"
+	case "Double":
+		goType = "float64"
+	case "Boolean":
+		goType = "bool"
+	case "Timestamp":
+		goType = "Timestamp"
+	case "BigDecimal":
+		goType = "string"
+	case "java.sql.Date", "java.util.Date":
+		goType = "DateTime"
+	case "java.sql.Time":
+		goType = "string"
+	case "List", "java.util.List":
+		goType = "[]interface{}"
+	case "GenericEntity", "org.apache.ofbiz.entity.GenericValue":
+		if mode == "out" {
+			goType = "map[string]interface{}"
+		} else {
+			goType = "MetaValue"
+		}
+	case "Map", "java.util.Map":
 		goType = "map[string]interface{}"
 	default:
+		log.Printf("Cannot convert parameter type %s, default to interface{} \n", typeName)
 		goType = "interface{}"
 	}
 	return goType

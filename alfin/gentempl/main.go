@@ -5,6 +5,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/samlet/petrel/alfin"
 	"github.com/urfave/cli/v2"
+	"go.uber.org/zap"
 	"io/ioutil"
 	"log"
 	"os"
@@ -20,6 +21,8 @@ $ just alfin gentempl -s gen -t alfin/service_intf.tmpl -i alfin/person_ops.json
 # on alfin dir
 $ go run gentempl/main.go -s gen -t fields.tmpl -i inventoryitem.json
 $ gen -t fields.tmpl -i inventoryitem.json
+$ gen -t entity_type.tmpl -i inventoryitem.json -o inventoryitem.go
+$ gen -t service_intf.tmpl -i person_ops.json -o person_ops.go
 */
 
 func main() {
@@ -61,14 +64,20 @@ func main() {
 					log.Fatal(err)
 				}
 
+				logger, err := zap.NewDevelopment()
+				if err != nil {
+					panic(err)
+				}
+				generator := alfin.NewGenHelper(logger)
+
 				if c.IsSet("output") {
 					target := c.String("output")
 					f, err := os.Create(target)
 					check(err)
 					defer f.Close()
-					alfin.GenTemplate(string(d), string(t), f)
+					generator.GenTemplate(string(d), string(t), f)
 				} else {
-					alfin.GenTemplate(string(d), string(t), os.Stdout)
+					generator.GenTemplate(string(d), string(t), os.Stdout)
 				}
 			default:
 				fmt.Printf("Cannot to execute %s.\n", imp(service))

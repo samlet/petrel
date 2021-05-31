@@ -27,6 +27,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/kr/pretty v0.2.1
 	github.com/labstack/echo/v4 v4.3.0
+	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/lib/pq v1.2.0
 	github.com/mattn/go-sqlite3 v1.14.7 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect

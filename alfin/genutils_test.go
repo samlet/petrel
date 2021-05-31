@@ -45,5 +45,6 @@ func TestGenTemplate(t *testing.T) {
 	{{- end -}}
 {{ end }}
 `
-	GenTemplate(text, tmpl, os.Stdout)
+	gen := DevGenHelper()
+	gen.GenTemplate(text, tmpl, os.Stdout)
 }

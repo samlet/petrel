@@ -6,14 +6,14 @@ package alfin
 {{ range $i, $s := $.ops }}
 type {{$s.name|title}}Params struct {
 {{- range $i, $p := $s.paramsInput }}
-    {{$p.name|title}} {{$p.type|paramType}}
+    {{$p.name|title}} {{paramType $p.type "in"}}
 {{- end }}
 }
 
 type {{$s.name|title}}Result struct {
     APIResponse
 {{- range $i, $p := $s.paramsOutput }}
-    {{$p.name|title}} {{$p.type|paramType}}
+    {{$p.name|title}} {{paramType $p.type "out"}}
 {{- end }}
 }
 {{ end }}

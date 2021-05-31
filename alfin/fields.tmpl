@@ -1,5 +1,5 @@
 entity: {{$.name}}
 fields:
 {{- range $i, $f := $.fields }}
-    - {{$i}}. {{$f.name}}: {{$f.type}}
+    - {{$i}}. {{$f.name}}: {{$f.type}} ({{fieldType $f.type}})
 {{- end }}

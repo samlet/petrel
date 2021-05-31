@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"reflect"
+	"strings"
 	"text/template"
 )
 
@@ -61,9 +62,11 @@ func GenTemplate(text string, tmpl string, wr io.Writer) {
 				return false
 			}
 		},
-		"isList":   IsList,
-		"isNumber": IsNumber,
-		"isFloat":  IsFloat,
+		"isList":    IsList,
+		"isNumber":  IsNumber,
+		"isFloat":   IsFloat,
+		"fieldType": FieldType,
+		"title":     strings.Title,
 	}
 
 	t := template.New("hello").Funcs(tf)
@@ -105,4 +108,27 @@ func IsInt(i interface{}) bool {
 func IsFloat(i interface{}) bool {
 	v := reflect.ValueOf(i).Kind()
 	return v == reflect.Float32 || v == reflect.Float64
+}
+
+func FieldType(typeName string) string {
+	var goType string
+	switch typeName {
+	case "id":
+		goType = "string"
+	case "blob", "byte-array", "object":
+		goType = "[]byte"
+	case "date-time", "date", "time":
+		goType = "string"
+	case "currency-amount", "currency-precise", "fixed-point", "floating-point":
+		goType = "float64"
+	case "integer":
+		goType = "int32"
+	case "numeric":
+		goType = "int64"
+	case "indicator":
+		goType = "byte"
+	default:
+		goType = "string"
+	}
+	return goType
 }

@@ -13,6 +13,8 @@ import (
 /**
 $ just alfin gentempl -s gen
 $ just alfin gentempl -s gen -t alfin/fields.tmpl -i alfin/inventoryitem.json
+$ just alfin gentempl -s gen -t alfin/entity_type.tmpl -i alfin/inventoryitem.json
+$ just alfin gentempl -s gen -t alfin/entity_type.tmpl -i alfin/inventoryitem.json -o alfin/inventoryitem.go
 */
 
 func main() {
@@ -34,6 +36,8 @@ func main() {
 				Usage: "template name", Required: true},
 			&cli.StringFlag{Name: "input", Aliases: []string{"i"},
 				Usage: "input data source", Required: true},
+			&cli.StringFlag{Name: "output", Aliases: []string{"o"},
+				Usage: "target file", Required: false},
 		},
 		Action: func(c *cli.Context) error {
 			act := "_none_"
@@ -51,7 +55,16 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				alfin.GenTemplate(string(d), string(t), os.Stdout)
+
+				if c.IsSet("output") {
+					target := c.String("output")
+					f, err := os.Create(target)
+					check(err)
+					defer f.Close()
+					alfin.GenTemplate(string(d), string(t), f)
+				} else {
+					alfin.GenTemplate(string(d), string(t), os.Stdout)
+				}
 			default:
 				fmt.Printf("Cannot to execute %s.\n", imp(service))
 			}
@@ -63,5 +76,11 @@ func main() {
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)
+	}
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
 	}
 }

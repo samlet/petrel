@@ -1,0 +1,11 @@
+// Code generated - DO NOT EDIT.
+// This file is a generated binding and any manual changes will be lost.
+
+package alfin
+
+type {{$.name}} struct {
+{{- range $i, $f := $.fields }}
+    {{$f.name|title}} {{fieldType $f.type}} `json:"{{$f.name}},omitempty"`
+{{- end }}
+}
+

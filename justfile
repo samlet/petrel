@@ -51,6 +51,8 @@ dummy:
 
 gen-alpha:
 	cd fixtures/alphafac && go generate
+gen-ent name:
+    just alfin gentempl -s gen -t alfin/entity_type.tmpl -i alfin/{{name}}.json -o alfin/{{name}}.go
 
 # Web3 Provider from the Environment dropdown, and add “http://127.0.0.1:8545”
 geth:

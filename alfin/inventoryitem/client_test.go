@@ -1,6 +1,7 @@
 package inventoryitem
 
 import (
+	"fmt"
 	"github.com/samlet/petrel/alfin"
 	"github.com/samlet/petrel/services"
 	"github.com/shopspring/decimal"
@@ -26,4 +27,22 @@ func TestInventoryItemClient_CreateInventoryItem(t *testing.T) {
 	assert.Equal(t, 200, rs.LastResponse.StatusCode)
 	assert.NotNil(t, rs)
 	println(rs.InventoryItemId)
+
+	var invitem *services.Response
+	invitem, err = FindInvItem(rs.InventoryItemId)
+	if err != nil {
+		panic(err)
+	}
+	alfin.Pretty(invitem.Data)
+}
+
+func FindInvItem(id string) (*services.Response, error) {
+	body, err := services.InvokeService("performFindItem",
+		fmt.Sprintf(`{
+				"entityName":"InventoryItem",
+				"inputFields":{
+					"inventoryItemId":"%s"
+				}
+			}`, id))
+	return services.WrapResult(err, body)
 }

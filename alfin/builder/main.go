@@ -17,7 +17,7 @@ $ just run builder -s env
 # specific
 $ srv resource Example
 $ gen -t service_intf.tmpl -i exampleitem_ops.json -o exampleitem_ops.go  # optional
-$ srv resource ExampleItem
+$ srv resource -f ExampleItem
 */
 
 func main() {
@@ -51,6 +51,7 @@ func main() {
 			case "resource":
 				if act != "" {
 					if c.Bool("force") {
+						println("force to recreate ..")
 						deleteResource(act)
 					}
 					err := genResource(act)
@@ -77,6 +78,7 @@ func main() {
 }
 
 func genMeta(ent string) {
+	println(".. generate meta")
 	out, err := alfin.PyGen("service_meta.py", "entity_abi", ent)
 	if err != nil {
 		panic(err)
@@ -85,6 +87,7 @@ func genMeta(ent string) {
 }
 
 func genInterface(act string) error {
+	println(".. generate interface")
 	entName := strings.ToLower(act)
 	creator := alfin.Creator{
 		PackageName:  "",
@@ -117,6 +120,8 @@ func deleteResource(act string) {
 }
 
 func genResource(act string) error {
+	println(".. generate resource")
+
 	entName := strings.ToLower(act)
 	creator := alfin.Creator{
 		PackageName:  entName,

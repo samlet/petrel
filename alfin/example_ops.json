@@ -1,5 +1,6 @@
 {
   "entity": "Example",
+  "package": "example",
   "ops": [
     {
       "name": "createExample",

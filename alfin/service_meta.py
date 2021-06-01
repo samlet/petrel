@@ -46,6 +46,7 @@ class ServiceMeta(object):
     def entity_abi(self, ent):
         """
         $ python service_meta.py entity_abi Person
+        $ python service_meta.py entity_abi Example
         :param ent:
         :return:
         """
@@ -53,7 +54,9 @@ class ServiceMeta(object):
         service_defs=[]
         for srv in srvs:
             service_defs.append(self.abi(srv))
-        abi={"entity": ent, "ops": service_defs}
+        abi={"entity": ent,
+             "package": ent.lower(),
+             "ops": service_defs}
         out_file=open(ent.lower()+"_ops.json", 'w')
         out_file.write(json.dumps(abi, indent=2, ensure_ascii=False))
         out_file.close()

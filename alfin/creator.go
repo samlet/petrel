@@ -1,0 +1,110 @@
+package alfin
+
+import (
+	"bufio"
+	"errors"
+	"go.uber.org/zap"
+	"io/ioutil"
+	"log"
+	"os"
+	"path/filepath"
+	"syscall"
+)
+
+type Creator struct {
+	InputPath    string
+	TemplatePath string
+	PackageName  string
+	TargetName   string
+}
+
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func EnsureFile(path string) error {
+	f, err := os.Stat(path)
+	if err == nil {
+		if !f.IsDir() {
+			return nil
+		}
+		return errors.New(path + " is not a valid file")
+	}
+	return err
+}
+
+func EnsureDir(path string) error {
+	// Fast path: if we can tell whether path is a directory or file, stop with success or error.
+	dir, err := os.Stat(path)
+	if err == nil {
+		if dir.IsDir() {
+			return nil
+		}
+		return &os.PathError{Op: "mkdir", Path: path, Err: syscall.ENOTDIR}
+	}
+
+	return os.MkdirAll(path, 0755)
+}
+
+func WriteContent(file string, text string) error {
+	f, err := os.Create(file)
+	w := bufio.NewWriter(f)
+	bytes, err := w.WriteString(text)
+	if err != nil {
+		return err
+	}
+	log.Printf("wrote %d bytes to file %s\n", bytes, file)
+
+	return w.Flush()
+}
+
+func (c *Creator) GetTarget(suffix string) string {
+	if c.PackageName != "" {
+		return filepath.Join(c.PackageName, c.TargetName+suffix)
+	} else {
+		return c.TargetName + suffix
+	}
+}
+
+func (c *Creator) Execute(suffix string) error {
+	err := EnsureFile(c.InputPath)
+	if err != nil {
+		return err
+	}
+	err = EnsureFile(c.TemplatePath)
+	if err != nil {
+		return err
+	}
+
+	if c.PackageName != "" {
+		err := EnsureDir(c.PackageName)
+		if err != nil {
+			return err
+		}
+	}
+
+	logger, err := zap.NewDevelopment()
+	if err != nil {
+		return err
+	}
+	generator := NewGenHelper(logger)
+	f, err := os.Create(c.GetTarget(suffix))
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	t, err := ioutil.ReadFile(c.TemplatePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	d, err := ioutil.ReadFile(c.InputPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	generator.GenTemplate(string(d), string(t), f)
+
+	return nil
+}

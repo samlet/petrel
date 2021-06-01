@@ -1,0 +1,28 @@
+// Code generated - DO NOT EDIT.
+// This file is a generated binding and any manual changes will be lost.
+
+package {{$.package}}
+
+import (
+    "github.com/samlet/petrel/alfin"
+    "github.com/samlet/petrel/services"
+    "net/http"
+)
+
+type {{$.entity}}Client struct {
+    B   *services.AlfinBackend
+    Key string
+}
+
+func newClient(key string) {{$.entity}}Client {
+    return {{$.entity}}Client{services.NewAlfinBackend(), key}
+}
+
+{{- range $i, $s := $.ops }}
+// {{$s.name|title}} {{$s.description}}
+func (c *{{$.entity}}Client) {{$s.name|title}}(params *alfin.{{$s.name|title}}Params) (*alfin.{{$s.name|title}}Result, error) {
+    reversal := &alfin.{{$s.name|title}}Result{}
+    err := c.B.Call(http.MethodPost, "{{$s.name}}", c.Key, params, reversal)
+    return reversal, err
+}
+{{- end }}

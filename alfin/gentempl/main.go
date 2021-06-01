@@ -49,7 +49,7 @@ func main() {
 				Usage: "target file", Required: false},
 		},
 		Action: func(c *cli.Context) error {
-			act := "_none_"
+			act := ""
 			if c.NArg() > 0 {
 				act = c.Args().Get(0)
 				prompt(".. act is %s\n", act)
@@ -80,6 +80,7 @@ func main() {
 				} else {
 					generator.GenTemplate(string(d), string(t), os.Stdout)
 				}
+
 			default:
 				fmt.Printf("Cannot to execute %s.\n", imp(service))
 			}

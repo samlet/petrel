@@ -57,18 +57,18 @@ type ExampleClient struct {
 	Key string
 }
 
-func newClient() ExampleClient {
-	return ExampleClient{services.NewAlfinBackend(), ""}
+func newClient(key string) ExampleClient {
+	return ExampleClient{services.NewAlfinBackend(), key}
 }
 
 func (c *ExampleClient) CreateExample(params *CreateExampleParams) (*CreateExampleResult, error) {
 	reversal := &CreateExampleResult{}
-	err := c.B.Call(http.MethodPost, "createExample", "", params, reversal)
+	err := c.B.Call(http.MethodPost, "createExample", c.Key, params, reversal)
 	return reversal, err
 }
 
 func TestExampleClient(t *testing.T) {
-	client := newClient()
+	client := newClient("")
 	rs, err := client.CreateExample(&CreateExampleParams{
 		ExampleTypeId: "CONTRIVED",
 		StatusId:      "EXST_IN_DESIGN",

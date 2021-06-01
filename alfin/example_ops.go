@@ -25,6 +25,7 @@ type CreateExampleResult struct {
 }
 
 type DeleteExampleParams struct {
+	services.AlfinParams
 	ExampleId string `json:"exampleId,omitempty"`
 }
 
@@ -33,6 +34,7 @@ type DeleteExampleResult struct {
 }
 
 type UpdateExampleParams struct {
+	services.AlfinParams
 	ExampleId       string             `json:"exampleId,omitempty"`
 	ExampleTypeId   string             `json:"exampleTypeId,omitempty"`
 	StatusId        string             `json:"statusId,omitempty"`

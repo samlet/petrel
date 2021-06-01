@@ -17,7 +17,7 @@ $ just run builder -s env
 # specific
 $ srv resource Example
 $ gen -t service_intf.tmpl -i exampleitem_ops.json -o exampleitem_ops.go  # optional
-$ srv resource -f ExampleItem
+$ srv resource -f ExampleItem createExampleStatus createExampleFeature
 */
 
 func main() {
@@ -42,7 +42,7 @@ func main() {
 			&cli.BoolFlag{Name: "force", Aliases: []string{"f"}, Value: false},
 		},
 		Action: func(c *cli.Context) error {
-			act := "_none_"
+			act := ""
 			if c.NArg() > 0 {
 				act = c.Args().Get(0)
 				prompt(".. act is %s\n", act)
@@ -54,7 +54,11 @@ func main() {
 						println("force to recreate ..")
 						deleteResource(act)
 					}
-					err := genResource(act)
+					extra := []string{}
+					if c.NArg() > 1 {
+						extra = c.Args().Slice()[1:]
+					}
+					err := genResource(act, extra)
 					if err != nil {
 						panic(err)
 					}
@@ -77,9 +81,11 @@ func main() {
 	}
 }
 
-func genMeta(ent string) {
+func genMeta(ent string, extra []string) {
 	println(".. generate meta")
-	out, err := alfin.PyGen("service_meta.py", "entity_abi", ent)
+	extraSrvs := "[" + strings.Join(extra, ",") + "]"
+	out, err := alfin.PyGen("service_meta.py", "entity_abi",
+		ent, extraSrvs)
 	if err != nil {
 		panic(err)
 	}
@@ -119,7 +125,7 @@ func deleteResource(act string) {
 	}
 }
 
-func genResource(act string) error {
+func genResource(act string, extra []string) error {
 	println(".. generate resource")
 
 	entName := strings.ToLower(act)
@@ -128,11 +134,12 @@ func genResource(act string) error {
 		InputPath:    entName + "_ops.json",
 		TemplatePath: "service_impl.tmpl",
 		TargetName:   "client.go",
+		Extra:        extra,
 	}
 
 	err := alfin.EnsureFile(creator.InputPath)
 	if err != nil {
-		genMeta(act)
+		genMeta(act, extra)
 	}
 	err = alfin.EnsureFile(entName + "_ops.go")
 	if err != nil {

@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+from typing import List
+
 from sagas.modules.deles import *
 import json
 
@@ -43,10 +45,10 @@ class ServiceMeta(object):
 
         return service_def
 
-    def entity_abi(self, ent):
+    def entity_abi(self, ent, extra_services:List[str]=None):
         """
         $ python service_meta.py entity_abi Person
-        $ python service_meta.py entity_abi Example
+        $ python service_meta.py entity_abi Example [createExampleStatus]
         :param ent:
         :return:
         """
@@ -54,6 +56,9 @@ class ServiceMeta(object):
         service_defs=[]
         for srv in srvs:
             service_defs.append(self.abi(srv))
+        if extra_services is not None:
+            service_defs.extend([self.abi(srv) for srv in extra_services])
+
         abi={"entity": ent,
              "package": ent.lower(),
              "ops": service_defs}

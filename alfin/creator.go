@@ -29,6 +29,7 @@ type Creator struct {
 	TemplatePath string
 	PackageName  string
 	TargetName   string
+	Extra        []string
 }
 
 func check(e error) {

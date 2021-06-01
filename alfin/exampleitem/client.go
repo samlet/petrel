@@ -38,3 +38,17 @@ func (c *ExampleItemClient) UpdateExampleItem(params *alfin.UpdateExampleItemPar
 	err := c.B.Call(http.MethodPost, "updateExampleItem", c.Key, params, reversal)
 	return reversal, err
 }
+
+// CreateExampleStatus Create a ExampleStatus
+func (c *ExampleItemClient) CreateExampleStatus(params *alfin.CreateExampleStatusParams) (*alfin.CreateExampleStatusResult, error) {
+	reversal := &alfin.CreateExampleStatusResult{}
+	err := c.B.Call(http.MethodPost, "createExampleStatus", c.Key, params, reversal)
+	return reversal, err
+}
+
+// CreateExampleFeature Create a ExampleFeature
+func (c *ExampleItemClient) CreateExampleFeature(params *alfin.CreateExampleFeatureParams) (*alfin.CreateExampleFeatureResult, error) {
+	reversal := &alfin.CreateExampleFeatureResult{}
+	err := c.B.Call(http.MethodPost, "createExampleFeature", c.Key, params, reversal)
+	return reversal, err
+}

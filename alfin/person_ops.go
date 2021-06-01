@@ -3,6 +3,8 @@
 
 package alfin
 
+import "github.com/samlet/petrel/services"
+
 type CreatePersonParams struct {
 	PartyId                  string
 	Salutation               string
@@ -18,8 +20,8 @@ type CreatePersonParams struct {
 	OtherLocal               string
 	MemberId                 string
 	Gender                   string
-	BirthDate                DateTime
-	DeceasedDate             DateTime
+	BirthDate                services.DateTime
+	DeceasedDate             services.DateTime
 	Height                   float64
 	Weight                   float64
 	MothersMaidenName        string
@@ -27,7 +29,7 @@ type CreatePersonParams struct {
 	MaritalStatusEnumId      string
 	SocialSecurityNumber     string
 	PassportNumber           string
-	PassportExpireDate       DateTime
+	PassportExpireDate       services.DateTime
 	TotalYearsWorkExperience float64
 	Comments                 string
 	EmploymentStatusEnumId   string
@@ -44,7 +46,7 @@ type CreatePersonParams struct {
 }
 
 type CreatePersonResult struct {
-	APIResponse
+	services.APIResponse
 	PartyId string
 }
 
@@ -63,8 +65,8 @@ type CreateUpdatePersonParams struct {
 	OtherLocal               string
 	MemberId                 string
 	Gender                   string
-	BirthDate                DateTime
-	DeceasedDate             DateTime
+	BirthDate                services.DateTime
+	DeceasedDate             services.DateTime
 	Height                   float64
 	Weight                   float64
 	MothersMaidenName        string
@@ -72,7 +74,7 @@ type CreateUpdatePersonParams struct {
 	MaritalStatusEnumId      string
 	SocialSecurityNumber     string
 	PassportNumber           string
-	PassportExpireDate       DateTime
+	PassportExpireDate       services.DateTime
 	TotalYearsWorkExperience float64
 	Comments                 string
 	EmploymentStatusEnumId   string
@@ -82,11 +84,11 @@ type CreateUpdatePersonParams struct {
 	MonthsWithEmployer       int64
 	ExistingCustomer         string
 	CardId                   string
-	UserLogin                MetaValue
+	UserLogin                services.MetaValue
 }
 
 type CreateUpdatePersonResult struct {
-	APIResponse
+	services.APIResponse
 	PartyId string
 }
 
@@ -105,8 +107,8 @@ type UpdatePersonParams struct {
 	OtherLocal               string
 	MemberId                 string
 	Gender                   string
-	BirthDate                DateTime
-	DeceasedDate             DateTime
+	BirthDate                services.DateTime
+	DeceasedDate             services.DateTime
 	Height                   float64
 	Weight                   float64
 	MothersMaidenName        string
@@ -114,7 +116,7 @@ type UpdatePersonParams struct {
 	MaritalStatusEnumId      string
 	SocialSecurityNumber     string
 	PassportNumber           string
-	PassportExpireDate       DateTime
+	PassportExpireDate       services.DateTime
 	TotalYearsWorkExperience float64
 	Comments                 string
 	EmploymentStatusEnumId   string
@@ -131,7 +133,7 @@ type UpdatePersonParams struct {
 }
 
 type UpdatePersonResult struct {
-	APIResponse
+	services.APIResponse
 }
 
 // Interface

@@ -6,6 +6,7 @@ require (
 	capnproto.org/go/capnp/v3 v3.0.0-alpha.1 // indirect
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239 // indirect
+	github.com/antchfx/htmlquery v1.2.3 // indirect
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
 	github.com/centrifuge/go-substrate-rpc-client/v3 v3.0.0
@@ -31,10 +32,12 @@ require (
 	github.com/lib/pq v1.2.0
 	github.com/mattn/go-sqlite3 v1.14.7 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
+	github.com/olivere/elastic/v7 v7.0.24 // indirect
 	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
 	github.com/prashantv/protectmem v0.0.0-20171002184600-e20412882b3a // indirect
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/samuel/go-thrift v0.0.0-20190219015601-e8b6b52668fe // indirect
+	github.com/segmentio/kafka-go v0.4.16 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/streadway/amqp v1.0.0
 	github.com/streadway/quantile v0.0.0-20150917103942-b0c588724d25 // indirect
@@ -62,6 +65,7 @@ require (
 	k8s.io/apimachinery v0.21.1
 	k8s.io/client-go v0.21.1
 	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
+
 )
 
 //replace github.com/centrifuge/go-substrate-rpc-client => ../go-substrate-rpc-client-master

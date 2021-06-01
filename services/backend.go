@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+const (
+	// APIVersion is the currently supported API version
+	APIVersion string = "2021-06-01"
+)
+
 type Params struct {
 	Metadata map[string]string
 	Payload  string
@@ -19,8 +24,14 @@ type ParamsContainer interface {
 	GetParams() *Params
 }
 
+// LastResponseSetter defines a type that contains an HTTP response from a Stripe
+// API endpoint.
+type LastResponseSetter interface {
+	SetLastResponse(response *APIResponse)
+}
+
 type Backend interface {
-	Call(method, path, key string, params ParamsContainer) error
+	Call(method, path, key string, params ParamsContainer, v LastResponseSetter) error
 }
 
 // NewIdempotencyKey generates a new idempotency key that

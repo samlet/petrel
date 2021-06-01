@@ -3,22 +3,23 @@ package alfin
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/samlet/petrel/services"
 	"testing"
 	"time"
 )
 
 type Dog struct {
-	ID           int       `json:"id"`
-	Name         string    `json:"name"`
-	Breed        string    `json:"breed"`
-	BornAt       Timestamp `json:"born_at"`
-	RegisterTime DateTime  `json:"register_time"`
+	ID           int                `json:"id"`
+	Name         string             `json:"name"`
+	Breed        string             `json:"breed"`
+	BornAt       services.Timestamp `json:"born_at"`
+	RegisterTime services.DateTime  `json:"register_time"`
 }
 
 func TestTimeEncoder(t *testing.T) {
 	dog := Dog{ID: 1,
-		BornAt:       Timestamp{time.Now()},
-		RegisterTime: DateTime{time.Date(2000, 2, 1, 12, 30, 0, 0, time.UTC)},
+		BornAt:       services.Timestamp{time.Now()},
+		RegisterTime: services.DateTime{time.Date(2000, 2, 1, 12, 30, 0, 0, time.UTC)},
 	}
 	data, _ := json.MarshalIndent(dog, "", "  ")
 	fmt.Printf("%s\n", data)

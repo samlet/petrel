@@ -131,66 +131,6 @@
         }
       ],
       "paramsOutput": []
-    },
-    {
-      "name": "createExampleStatus",
-      "description": "Create a ExampleStatus",
-      "paramsInput": [
-        {
-          "name": "exampleId",
-          "type": "String",
-          "required": false,
-          "overrideOptional": false,
-          "entity": "ExampleStatus",
-          "mode": "IN",
-          "internal": false
-        },
-        {
-          "name": "statusId",
-          "type": "String",
-          "required": false,
-          "overrideOptional": false,
-          "entity": "ExampleStatus",
-          "mode": "IN",
-          "internal": false
-        }
-      ],
-      "paramsOutput": []
-    },
-    {
-      "name": "createExampleFeature",
-      "description": "Create a ExampleFeature",
-      "paramsInput": [
-        {
-          "name": "featureSourceEnumId",
-          "type": "String",
-          "required": true,
-          "overrideOptional": false,
-          "entity": "ExampleFeature",
-          "mode": "IN",
-          "internal": false
-        },
-        {
-          "name": "description",
-          "type": "String",
-          "required": false,
-          "overrideOptional": true,
-          "entity": "ExampleFeature",
-          "mode": "IN",
-          "internal": false
-        }
-      ],
-      "paramsOutput": [
-        {
-          "name": "exampleFeatureId",
-          "type": "String",
-          "required": false,
-          "overrideOptional": false,
-          "entity": "ExampleFeature",
-          "mode": "OUT",
-          "internal": false
-        }
-      ]
     }
   ]
 }

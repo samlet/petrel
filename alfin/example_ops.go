@@ -53,6 +53,27 @@ type UpdateExampleResult struct {
 	OldStatusId string `json:"oldStatusId,omitempty"`
 }
 
+type CreateExampleStatusParams struct {
+	services.AlfinParams
+	ExampleId string `json:"exampleId,omitempty"`
+	StatusId  string `json:"statusId,omitempty"`
+}
+
+type CreateExampleStatusResult struct {
+	services.APIResource
+}
+
+type CreateExampleFeatureParams struct {
+	services.AlfinParams
+	FeatureSourceEnumId string `json:"featureSourceEnumId,omitempty"`
+	Description         string `json:"description,omitempty"`
+}
+
+type CreateExampleFeatureResult struct {
+	services.APIResource
+	ExampleFeatureId string `json:"exampleFeatureId,omitempty"`
+}
+
 // Interface
 type ExampleOps interface {
 	// CreateExample Create a Example
@@ -61,4 +82,8 @@ type ExampleOps interface {
 	DeleteExample(params *DeleteExampleParams) (*DeleteExampleResult, error)
 	// UpdateExample Update a Example
 	UpdateExample(params *UpdateExampleParams) (*UpdateExampleResult, error)
+	// CreateExampleStatus Create a ExampleStatus
+	CreateExampleStatus(params *CreateExampleStatusParams) (*CreateExampleStatusResult, error)
+	// CreateExampleFeature Create a ExampleFeature
+	CreateExampleFeature(params *CreateExampleFeatureParams) (*CreateExampleFeatureResult, error)
 }

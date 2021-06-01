@@ -74,6 +74,7 @@ type AlfinParams struct {
 type AlfinBackend struct {
 	Logger              *zap.Logger
 	networkRetriesSleep bool
+	httpClient          *http.Client
 }
 
 func NewAlfinBackend() *AlfinBackend {
@@ -81,34 +82,37 @@ func NewAlfinBackend() *AlfinBackend {
 	if err != nil {
 		panic(err)
 	}
-	return &AlfinBackend{Logger: logger, networkRetriesSleep: false}
+	return &AlfinBackend{Logger: logger,
+		networkRetriesSleep: false,
+		httpClient:          http.DefaultClient,
+	}
 }
 
 // UnmarshalJSONVerbose unmarshals JSON, but in case of a failure logs and
 // produces a more descriptive error.
-func (s *AlfinBackend) UnmarshalJSONVerbose(statusCode int, body []byte, v interface{}) error {
-	err := json.Unmarshal(body, v)
-	if err != nil {
-		// If we got invalid JSON back then something totally unexpected is
-		// happening (caused by a bug on the server side). Put a sample of the
-		// response body into the error message so we can get a better feel for
-		// what the problem was.
-		bodySample := string(body)
-		if len(bodySample) > 500 {
-			bodySample = bodySample[0:500] + " ..."
-		}
-
-		// Make sure a multi-line response ends up all on one line
-		bodySample = strings.Replace(bodySample, "\n", "\\n", -1)
-
-		newErr := fmt.Errorf("Couldn't deserialize JSON (response status: %v, body sample: '%s'): %v",
-			statusCode, bodySample, err)
-		s.Logger.Error(newErr.Error(), zap.Int("status", statusCode))
-		return newErr
-	}
-
-	return nil
-}
+//func (s *AlfinBackend) UnmarshalJSONVerbose(statusCode int, body []byte, v interface{}) error {
+//	err := json.Unmarshal(body, v)
+//	if err != nil {
+//		// If we got invalid JSON back then something totally unexpected is
+//		// happening (caused by a bug on the server side). Put a sample of the
+//		// response body into the error message so we can get a better feel for
+//		// what the problem was.
+//		bodySample := string(body)
+//		if len(bodySample) > 500 {
+//			bodySample = bodySample[0:500] + " ..."
+//		}
+//
+//		// Make sure a multi-line response ends up all on one line
+//		bodySample = strings.Replace(bodySample, "\n", "\\n", -1)
+//
+//		newErr := fmt.Errorf("Couldn't deserialize JSON (response status: %v, body sample: '%s'): %v",
+//			statusCode, bodySample, err)
+//		s.Logger.Error(newErr.Error(), zap.Int("status", statusCode))
+//		return newErr
+//	}
+//
+//	return nil
+//}
 
 // sleepTime calculates sleeping/delay time in milliseconds between failure and a new one request.
 func (s *AlfinBackend) sleepTime(numRetries int) time.Duration {
@@ -161,7 +165,7 @@ func (c *AlfinBackend) Call(method, path, key string, params ParamsContainer, v 
 		req.Header.Add(k, v)
 	}
 
-	res, err := http.DefaultClient.Do(req)
+	res, err := c.httpClient.Do(req)
 	if err != nil {
 		return err
 	}

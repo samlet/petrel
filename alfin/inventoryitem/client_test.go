@@ -14,11 +14,11 @@ func TestInventoryItemClient_CreateInventoryItem(t *testing.T) {
 	client := newClient("")
 	rs, err := client.CreateInventoryItem(&alfin.CreateInventoryItemParams{
 		LocationSeqId:       "TLTLTLUL01",
-		DatetimeReceived:    services.Timestamp{time.Now()},
+		DatetimeReceived:    &services.Timestamp{time.Now()},
 		OwnerPartyId:        "Company",
 		CurrencyUomId:       "USD",
 		FacilityId:          "WebStoreWarehouse",
-		UnitCost:            services.Decimal{decimal.NewFromFloat(1.234)},
+		UnitCost:            &services.Decimal{decimal.NewFromFloat(1.234)},
 		ProductId:           "MAT_A_COST",
 		InventoryItemTypeId: "NON_SERIAL_INV_ITEM",
 	})

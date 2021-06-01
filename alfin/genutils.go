@@ -122,11 +122,11 @@ func FieldType(typeName string) string {
 	case "blob", "byte-array", "object":
 		goType = "[]byte"
 	case "date-time", "date":
-		goType = "services.DateTime"
+		goType = "*services.DateTime"
 	case "time":
 		goType = "string"
 	case "currency-amount", "currency-precise", "fixed-point":
-		goType = "services.Decimal"
+		goType = "*services.Decimal"
 	case "floating-point":
 		goType = "float64"
 	case "integer":
@@ -157,12 +157,12 @@ func ParamType(typeName string, mode string) string {
 	case "Boolean":
 		goType = "bool"
 	case "Timestamp", "java.sql.Timestamp":
-		goType = "services.Timestamp"
+		goType = "*services.Timestamp"
 	case "BigDecimal", "java.math.BigDecimal":
 		//goType = "string"
-		goType = "services.Decimal"
+		goType = "*services.Decimal"
 	case "java.sql.Date", "java.util.Date":
-		goType = "services.DateTime"
+		goType = "*services.DateTime"
 	case "java.sql.Time":
 		goType = "string"
 	case "List", "java.util.List":
@@ -171,7 +171,7 @@ func ParamType(typeName string, mode string) string {
 		if mode == "out" {
 			goType = "map[string]interface{}"
 		} else {
-			goType = "services.MetaValue"
+			goType = "*services.MetaValue"
 		}
 	case "Map", "java.util.Map":
 		goType = "map[string]interface{}"

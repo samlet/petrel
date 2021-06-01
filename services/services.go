@@ -4,15 +4,29 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"text/template"
 )
 
 type P map[string]interface{}
 
 type Response struct {
-	StatusCode        int                    `json:"statusCode"`
-	StatusDescription string                 `json:"statusDescription"`
-	Data              map[string]interface{} `json:"data"`
+	ResponseMeta
+	Data map[string]interface{} `json:"data,omitempty"`
+}
+
+type TypedResponse struct {
+	ResponseMeta
+	Data json.RawMessage `json:"data,omitempty"`
+}
+
+type ResponseMeta struct {
+	StatusCode        int      `json:"statusCode"`
+	StatusDescription string   `json:"statusDescription"`
+	ErrorType         string   `json:"errorType,omitempty"`
+	ErrorMessage      string   `json:"errorMessage,omitempty"`
+	ErrorDescription  string   `json:"errorDescription,omitempty"`
+	AdditionalErrors  []string `json:"additionalErrors,omitempty"`
 }
 
 func WrapResult(err error, body string) (*Response, error) {
@@ -26,6 +40,19 @@ func WrapResult(err error, body string) (*Response, error) {
 		return nil, err
 	}
 	return &resp, nil
+}
+
+func WrapTypedResult(body string, dataType interface{}) (*TypedResponse, error) {
+	var resp TypedResponse
+	r := bytes.NewReader([]byte(body))
+	err := json.NewDecoder(r).Decode(&resp)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode == http.StatusOK {
+		err = json.Unmarshal(resp.Data, dataType)
+	}
+	return &resp, err
 }
 
 func FindRoutings(size int) (string, error) {

@@ -321,5 +321,407 @@
       "autoCreatedInternal": true,
       "validators": []
     }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItemType",
+      "type": "one",
+      "relEntityName": "InventoryItemType",
+      "fkName": "INV_ITEM_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemTypeId",
+          "relFieldName": "inventoryItemTypeId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemTypeAttr",
+      "type": "many",
+      "relEntityName": "InventoryItemTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemTypeId",
+          "relFieldName": "inventoryItemTypeId"
+        }
+      ]
+    },
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "INV_ITEM_PRODUCT",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ]
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "INV_ITEM_PARTY",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "OwnerParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "INV_ITEM_OWNPARTY",
+      "keymaps": [
+        {
+          "fieldName": "ownerPartyId",
+          "relFieldName": "partyId"
+        }
+      ]
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "INV_ITEM_STTSITM",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ]
+    },
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "INV_ITEM_FACILITY",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ]
+    },
+    {
+      "name": "Container",
+      "type": "one",
+      "relEntityName": "Container",
+      "fkName": "INV_ITEM_CONTAINER",
+      "keymaps": [
+        {
+          "fieldName": "containerId",
+          "relFieldName": "containerId"
+        }
+      ]
+    },
+    {
+      "name": "Lot",
+      "type": "one",
+      "relEntityName": "Lot",
+      "fkName": "INV_ITEM_LOT",
+      "keymaps": [
+        {
+          "fieldName": "lotId",
+          "relFieldName": "lotId"
+        }
+      ]
+    },
+    {
+      "name": "ProductFacility",
+      "type": "one-nofk",
+      "relEntityName": "ProductFacility",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        },
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ]
+    },
+    {
+      "name": "FacilityLocation",
+      "type": "one-nofk",
+      "relEntityName": "FacilityLocation",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ]
+    },
+    {
+      "name": "ProductFacilityLocation",
+      "type": "one-nofk",
+      "relEntityName": "ProductFacilityLocation",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        },
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ]
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "INV_ITEM_UOM",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ]
+    },
+    {
+      "name": "CurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "INV_ITEM_CUOM",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ]
+    },
+    {
+      "name": "FixedAssetFixedAsset",
+      "type": "one",
+      "relEntityName": "FixedAsset",
+      "fkName": "IYIM_FAST",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ]
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemAttribute",
+      "type": "many",
+      "relEntityName": "InventoryItemAttribute",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemDetail",
+      "type": "many",
+      "relEntityName": "InventoryItemDetail",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemLabelAppl",
+      "type": "many",
+      "relEntityName": "InventoryItemLabelAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemStatus",
+      "type": "many",
+      "relEntityName": "InventoryItemStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemVariance",
+      "type": "many",
+      "relEntityName": "InventoryItemVariance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "InvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "many",
+      "relEntityName": "ItemIssuance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "FromOrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "fromInventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "OrderItemShipGrpInvRes",
+      "type": "many",
+      "relEntityName": "OrderItemShipGrpInvRes",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "PicklistItem",
+      "type": "many",
+      "relEntityName": "PicklistItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "many",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "Subscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffortInventoryAssign",
+      "type": "many",
+      "relEntityName": "WorkEffortInventoryAssign",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffortInventoryProduced",
+      "type": "many",
+      "relEntityName": "WorkEffortInventoryProduced",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    }
   ]
 }

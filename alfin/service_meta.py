@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from sagas.modules.deles import *
 import json
 

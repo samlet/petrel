@@ -1,0 +1,244 @@
+{
+  "entity": "Example",
+  "ops": [
+    {
+      "name": "createExample",
+      "description": "Create a Example",
+      "paramsInput": [
+        {
+          "name": "exampleTypeId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "statusId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleName",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "longDescription",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleSize",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "anotherDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "anotherText",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "exampleId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "deleteExample",
+      "description": "Delete a Example",
+      "paramsInput": [
+        {
+          "name": "exampleId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    },
+    {
+      "name": "updateExample",
+      "description": "Update a Example",
+      "paramsInput": [
+        {
+          "name": "exampleId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleTypeId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "statusId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "longDescription",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleSize",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "anotherDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "anotherText",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "oldStatusId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Example",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    }
+  ]
+}

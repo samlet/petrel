@@ -1,0 +1,217 @@
+{
+  "name": "Example",
+  "fields": [
+    {
+      "name": "exampleId",
+      "type": "id",
+      "col": "EXAMPLE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "exampleTypeId",
+      "type": "id",
+      "col": "EXAMPLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "exampleName",
+      "type": "name",
+      "col": "EXAMPLE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "longDescription",
+      "type": "very-long",
+      "col": "LONG_DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "exampleSize",
+      "type": "numeric",
+      "col": "EXAMPLE_SIZE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "exampleDate",
+      "type": "date-time",
+      "col": "EXAMPLE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "anotherDate",
+      "type": "date-time",
+      "col": "ANOTHER_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "anotherText",
+      "type": "long-varchar",
+      "col": "ANOTHER_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ExampleType",
+      "type": "one",
+      "relEntityName": "ExampleType",
+      "fkName": "EXMPL_TYP",
+      "keymaps": [
+        {
+          "fieldName": "exampleTypeId",
+          "relFieldName": "exampleTypeId"
+        }
+      ]
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "EXMPL_STTS",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ]
+    },
+    {
+      "name": "ExampleFeatureAppl",
+      "type": "many",
+      "relEntityName": "ExampleFeatureAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "exampleId",
+          "relFieldName": "exampleId"
+        }
+      ]
+    },
+    {
+      "name": "ExampleItem",
+      "type": "many",
+      "relEntityName": "ExampleItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "exampleId",
+          "relFieldName": "exampleId"
+        }
+      ]
+    },
+    {
+      "name": "ExampleStatus",
+      "type": "many",
+      "relEntityName": "ExampleStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "exampleId",
+          "relFieldName": "exampleId"
+        }
+      ]
+    }
+  ]
+}

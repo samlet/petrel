@@ -17,6 +17,10 @@ type Params struct {
 	Payload  string
 }
 
+func (c *Params) GetParams() *Params {
+	return c
+}
+
 // ParamsContainer is a general interface for which all parameter structs
 // should comply. They achieve this by embedding a Params struct and inheriting
 // its implementation of this interface.
@@ -28,6 +32,7 @@ type ParamsContainer interface {
 // API endpoint.
 type LastResponseSetter interface {
 	SetLastResponse(response *APIResponse)
+	SetLastTypedResponse(response *TypedResponse)
 }
 
 type Backend interface {

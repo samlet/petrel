@@ -46,12 +46,17 @@ func newAPIResponse(res *http.Response, resBody []byte) *APIResponse {
 // APIResource is a type assigned to structs that may come from Alfin API
 // endpoints and contains facilities common to all of them.
 type APIResource struct {
-	LastResponse *APIResponse `json:"-"`
+	LastResponse      *APIResponse   `json:"-"`
+	LastTypedResponse *TypedResponse `json:"-"`
 }
 
 // SetLastResponse sets the HTTP response that returned the API resource.
 func (r *APIResource) SetLastResponse(response *APIResponse) {
 	r.LastResponse = response
+}
+
+func (r *APIResource) SetLastTypedResponse(response *TypedResponse) {
+	r.LastTypedResponse = response
 }
 
 type MetaValue struct {

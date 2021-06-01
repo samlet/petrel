@@ -261,5 +261,167 @@
       "autoCreatedInternal": true,
       "validators": []
     }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "INV_ITDTL_INVIT",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "INV_ITDTL_WEFF",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ]
+    },
+    {
+      "name": "OrderItemShipGrpInvRes",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGrpInvRes",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "FixedAssetMaint",
+      "type": "one",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "INV_ITDTL_FAMNT",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        },
+        {
+          "fieldName": "maintHistSeqId",
+          "relFieldName": "maintHistSeqId"
+        }
+      ]
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "one",
+      "relEntityName": "ItemIssuance",
+      "fkName": "INV_ITDTL_ITMIS",
+      "keymaps": [
+        {
+          "fieldName": "itemIssuanceId",
+          "relFieldName": "itemIssuanceId"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffortInventoryAssign",
+      "type": "one-nofk",
+      "relEntityName": "WorkEffortInventoryAssign",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffortInventoryProduced",
+      "type": "one-nofk",
+      "relEntityName": "WorkEffortInventoryProduced",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ]
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "one",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "INV_ITDTL_SHRCT",
+      "keymaps": [
+        {
+          "fieldName": "receiptId",
+          "relFieldName": "receiptId"
+        }
+      ]
+    },
+    {
+      "name": "PhysicalInventory",
+      "type": "one",
+      "relEntityName": "PhysicalInventory",
+      "fkName": "INV_ITDTL_PHINV",
+      "keymaps": [
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ]
+    },
+    {
+      "name": "ReasonEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "INV_ITDTL_REAS",
+      "keymaps": [
+        {
+          "fieldName": "reasonEnumId",
+          "relFieldName": "enumId"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemVariance",
+      "type": "one-nofk",
+      "relEntityName": "InventoryItemVariance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        },
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ]
+    }
   ]
 }

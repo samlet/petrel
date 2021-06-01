@@ -1,6 +1,7 @@
 package services
 
 import (
+	"bytes"
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
@@ -53,21 +54,39 @@ func Post(srv string, objmap map[string]interface{}) (string, error) {
 }
 
 type AlfinParams struct {
-	Params
+	Params `json:"-"`
 }
 
-func (c *AlfinParams) GetParams() *Params {
-	return &Params{c.Metadata, c.Payload}
-}
+//func (c *AlfinParams) GetParams() *AlfinParams {
+//	//return &Params{c.Metadata, c.Payload}
+//	return c
+//}
 
-type AlfindBackend struct {
+//type PA map[string]string
+//func NewParams(input interface{}) (*AlfinParams, error) {
+//	payload, err:=json.Marshal(input)
+//	if err != nil {
+//		return nil, err
+//	}
+//	return &AlfinParams{Params{PA{}, string(payload)}}, nil
+//}
+
+type AlfinBackend struct {
 	Logger              *zap.Logger
 	networkRetriesSleep bool
 }
 
+func NewAlfinBackend() *AlfinBackend {
+	logger, err := zap.NewDevelopment()
+	if err != nil {
+		panic(err)
+	}
+	return &AlfinBackend{Logger: logger, networkRetriesSleep: false}
+}
+
 // UnmarshalJSONVerbose unmarshals JSON, but in case of a failure logs and
 // produces a more descriptive error.
-func (s *AlfindBackend) UnmarshalJSONVerbose(statusCode int, body []byte, v interface{}) error {
+func (s *AlfinBackend) UnmarshalJSONVerbose(statusCode int, body []byte, v interface{}) error {
 	err := json.Unmarshal(body, v)
 	if err != nil {
 		// If we got invalid JSON back then something totally unexpected is
@@ -92,7 +111,7 @@ func (s *AlfindBackend) UnmarshalJSONVerbose(statusCode int, body []byte, v inte
 }
 
 // sleepTime calculates sleeping/delay time in milliseconds between failure and a new one request.
-func (s *AlfindBackend) sleepTime(numRetries int) time.Duration {
+func (s *AlfinBackend) sleepTime(numRetries int) time.Duration {
 	// We disable sleeping in some cases for tests.
 	if !s.networkRetriesSleep {
 		return 0 * time.Second
@@ -119,13 +138,17 @@ func (s *AlfindBackend) sleepTime(numRetries int) time.Duration {
 	return delay
 }
 
-func (c *AlfindBackend) Call(method, path, key string, params ParamsContainer, v LastResponseSetter) error {
+func (c *AlfinBackend) Call(method, path, key string, params ParamsContainer, v LastResponseSetter) error {
 	srv := path
 	url := fmt.Sprintf("https://localhost:8443/rest/services/%s", srv)
 
-	payload := strings.NewReader(params.GetParams().Payload)
+	//payload := strings.NewReader(params.GetParams().Payload)
+	payload, err := json.Marshal(params)
+	if err != nil {
+		return err
+	}
 
-	req, _ := http.NewRequest(method, url, payload)
+	req, _ := http.NewRequest(method, url, bytes.NewReader(payload))
 	req.Header.Add("Content-Type", "application/json")
 	req.Header.Add("Alfin-Version", APIVersion)
 	if key == "" {
@@ -146,8 +169,13 @@ func (c *AlfindBackend) Call(method, path, key string, params ParamsContainer, v
 	defer res.Body.Close()
 	resBody, _ := ioutil.ReadAll(res.Body)
 	c.Logger.Debug("Response", zap.String("body", string(resBody)))
-	err = c.UnmarshalJSONVerbose(res.StatusCode, resBody, v)
+	//err = c.UnmarshalJSONVerbose(res.StatusCode, resBody, v)
 	v.SetLastResponse(newAPIResponse(res, resBody))
 
-	return nil
+	typedResult, err := WrapTypedResult(string(resBody), &v)
+	if typedResult != nil {
+		v.SetLastTypedResponse(typedResult)
+	}
+
+	return err
 }

@@ -3,17 +3,20 @@
 
 package alfin
 
+import "github.com/samlet/petrel/services"
+
 {{ range $i, $s := $.ops }}
 type {{$s.name|title}}Params struct {
+    services.AlfinParams
 {{- range $i, $p := $s.paramsInput }}
-    {{$p.name|title}} {{paramType $p.type "in"}}
+    {{$p.name|title}} {{paramType $p.type "in"}}    `json:"{{$p.name}},omitempty"`
 {{- end }}
 }
 
 type {{$s.name|title}}Result struct {
-    APIResponse
+    services.APIResource
 {{- range $i, $p := $s.paramsOutput }}
-    {{$p.name|title}} {{paramType $p.type "out"}}
+    {{$p.name|title}} {{paramType $p.type "out"}}   `json:"{{$p.name}},omitempty"`
 {{- end }}
 }
 {{ end }}

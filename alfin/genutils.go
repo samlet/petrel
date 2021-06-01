@@ -154,12 +154,12 @@ func ParamType(typeName string, mode string) string {
 		goType = "float64"
 	case "Boolean":
 		goType = "bool"
-	case "Timestamp":
-		goType = "Timestamp"
+	case "Timestamp", "java.sql.Timestamp":
+		goType = "services.Timestamp"
 	case "BigDecimal":
 		goType = "string"
 	case "java.sql.Date", "java.util.Date":
-		goType = "DateTime"
+		goType = "services.DateTime"
 	case "java.sql.Time":
 		goType = "string"
 	case "List", "java.util.List":
@@ -168,7 +168,7 @@ func ParamType(typeName string, mode string) string {
 		if mode == "out" {
 			goType = "map[string]interface{}"
 		} else {
-			goType = "MetaValue"
+			goType = "services.MetaValue"
 		}
 	case "Map", "java.util.Map":
 		goType = "map[string]interface{}"

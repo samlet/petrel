@@ -23,6 +23,7 @@ $ go run gentempl/main.go -s gen -t fields.tmpl -i inventoryitem.json
 $ gen -t fields.tmpl -i inventoryitem.json
 $ gen -t entity_type.tmpl -i inventoryitem.json -o inventoryitem.go
 $ gen -t service_intf.tmpl -i person_ops.json -o person_ops.go
+$ gen -t service_intf.tmpl -i example_ops.json -o example_ops.go
 */
 
 func main() {

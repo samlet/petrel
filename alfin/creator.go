@@ -2,14 +2,27 @@ package alfin
 
 import (
 	"bufio"
+	"bytes"
 	"errors"
+	"fmt"
 	"go.uber.org/zap"
 	"io/ioutil"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"syscall"
 )
+
+var logger *zap.Logger
+
+func init() {
+	var err error
+	logger, err = zap.NewDevelopment()
+	if err != nil {
+		panic(err)
+	}
+}
 
 type Creator struct {
 	InputPath    string
@@ -60,6 +73,26 @@ func WriteContent(file string, text string) error {
 	return w.Flush()
 }
 
+func PyGen(script string, arg ...string) (string, error) {
+	args := append([]string{script}, arg...)
+	binpath := fmt.Sprintf("%s/miniconda3/envs/bigdata/bin/python",
+		os.Getenv("HOME"))
+	cmd := exec.Command(binpath, args...)
+	var out bytes.Buffer
+	var errout bytes.Buffer
+	cmd.Stdout = &out
+	cmd.Stderr = &errout
+	err := cmd.Run()
+	errstr := errout.String()
+	if errstr != "" {
+		logger.Error(errstr)
+	}
+	if err != nil {
+		return "", err
+	}
+	return out.String(), nil
+}
+
 func (c *Creator) GetTarget(suffix string) string {
 	if c.PackageName != "" {
 		return filepath.Join(c.PackageName, c.TargetName+suffix)
@@ -85,10 +118,6 @@ func (c *Creator) Execute(suffix string) error {
 		}
 	}
 
-	logger, err := zap.NewDevelopment()
-	if err != nil {
-		return err
-	}
 	generator := NewGenHelper(logger)
 	f, err := os.Create(c.GetTarget(suffix))
 	if err != nil {
@@ -98,11 +127,13 @@ func (c *Creator) Execute(suffix string) error {
 
 	t, err := ioutil.ReadFile(c.TemplatePath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err.Error())
+		return err
 	}
 	d, err := ioutil.ReadFile(c.InputPath)
 	if err != nil {
-		log.Fatal(err)
+		logger.Fatal(err.Error())
+		return err
 	}
 	generator.GenTemplate(string(d), string(t), f)
 

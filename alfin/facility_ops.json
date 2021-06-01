@@ -1,0 +1,379 @@
+{
+  "entity": "Facility",
+  "package": "facility",
+  "ops": [
+    {
+      "name": "createFacility",
+      "description": "Create a Facility",
+      "paramsInput": [
+        {
+          "name": "facilityTypeId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "parentFacilityId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "ownerPartyId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultInventoryItemTypeId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityName",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "primaryFacilityGroupId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldSquareFootage",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilitySize",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilitySizeUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "productStoreId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultDaysToShip",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "openedDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "closedDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultDimensionUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultWeightUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "geoPointId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityLevel",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "facilityId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "deleteFacility",
+      "description": "Delete a Facility",
+      "paramsInput": [
+        {
+          "name": "facilityId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    },
+    {
+      "name": "updateFacility",
+      "description": "Update a Facility",
+      "paramsInput": [
+        {
+          "name": "facilityId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityTypeId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "parentFacilityId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "ownerPartyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultInventoryItemTypeId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityName",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "primaryFacilityGroupId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldSquareFootage",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilitySize",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilitySizeUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "productStoreId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultDaysToShip",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "openedDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "closedDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultDimensionUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "defaultWeightUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "geoPointId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityLevel",
+          "type": "Long",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "Facility",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    }
+  ]
+}

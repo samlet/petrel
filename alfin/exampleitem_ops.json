@@ -1,0 +1,136 @@
+{
+  "entity": "ExampleItem",
+  "package": "exampleitem",
+  "ops": [
+    {
+      "name": "createExampleItem",
+      "description": "Create a ExampleItem",
+      "paramsInput": [
+        {
+          "name": "exampleId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "amount",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "amountUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "exampleItemSeqId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "deleteExampleItem",
+      "description": "Delete a ExampleItem",
+      "paramsInput": [
+        {
+          "name": "exampleId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleItemSeqId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    },
+    {
+      "name": "updateExampleItem",
+      "description": "Update a ExampleItem",
+      "paramsInput": [
+        {
+          "name": "exampleId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "exampleItemSeqId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "description",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "amount",
+          "type": "Double",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "amountUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "ExampleItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    }
+  ]
+}

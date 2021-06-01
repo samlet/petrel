@@ -7,6 +7,7 @@ import (
 	"github.com/urfave/cli/v2"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -15,6 +16,8 @@ $ just run builder -s env
 
 # specific
 $ srv resource Example
+$ gen -t service_intf.tmpl -i exampleitem_ops.json -o exampleitem_ops.go  # optional
+$ srv resource ExampleItem
 */
 
 func main() {
@@ -36,6 +39,7 @@ func main() {
 			&cli.StringFlag{Name: "entity", Aliases: []string{"e"},
 				Usage: "entity name",
 				Value: "WebSite"},
+			&cli.BoolFlag{Name: "force", Aliases: []string{"f"}, Value: false},
 		},
 		Action: func(c *cli.Context) error {
 			act := "_none_"
@@ -46,17 +50,12 @@ func main() {
 			switch service {
 			case "resource":
 				if act != "" {
-					entName := strings.ToLower(act)
-					creator := alfin.Creator{
-						PackageName:  entName,
-						InputPath:    entName + "_ops.json",
-						TemplatePath: "service_impl.tmpl",
-						TargetName:   "client.go",
+					if c.Bool("force") {
+						deleteResource(act)
 					}
-					err := creator.Execute("")
+					err := genResource(act)
 					if err != nil {
-						prompt("%s\n", err)
-						return nil
+						panic(err)
 					}
 				} else {
 					prompt("Absent resource name")
@@ -75,4 +74,73 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func genMeta(ent string) {
+	out, err := alfin.PyGen("service_meta.py", "entity_abi", ent)
+	if err != nil {
+		panic(err)
+	}
+	println("PyGen OUT => ", out)
+}
+
+func genInterface(act string) error {
+	entName := strings.ToLower(act)
+	creator := alfin.Creator{
+		PackageName:  "",
+		InputPath:    entName + "_ops.json",
+		TemplatePath: "service_intf.tmpl",
+		TargetName:   entName + "_ops.go",
+	}
+
+	err := creator.Execute("")
+	if err != nil {
+		log.Fatalf("%s\n", err)
+		return err
+	}
+	return nil
+}
+
+func deleteResource(act string) {
+	entName := strings.ToLower(act)
+	files := []string{
+		entName + "_ops.json",
+		entName + "_ops.go",
+		filepath.Join(entName, "client.go"),
+	}
+	for _, f := range files {
+		e := os.Remove(f)
+		if e != nil {
+			log.Fatal(e)
+		}
+	}
+}
+
+func genResource(act string) error {
+	entName := strings.ToLower(act)
+	creator := alfin.Creator{
+		PackageName:  entName,
+		InputPath:    entName + "_ops.json",
+		TemplatePath: "service_impl.tmpl",
+		TargetName:   "client.go",
+	}
+
+	err := alfin.EnsureFile(creator.InputPath)
+	if err != nil {
+		genMeta(act)
+	}
+	err = alfin.EnsureFile(entName + "_ops.go")
+	if err != nil {
+		err = genInterface(act)
+		if err != nil {
+			return err
+		}
+	}
+
+	err = creator.Execute("")
+	if err != nil {
+		log.Fatalf("%s\n", err)
+		return err
+	}
+	return nil
 }

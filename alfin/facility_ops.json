@@ -374,6 +374,86 @@
         }
       ],
       "paramsOutput": []
+    },
+    {
+      "name": "getInventoryAvailableByFacility",
+      "description": "Get Inventory Availability for a Product constrained by a facilityId",
+      "paramsInput": [
+        {
+          "name": "productId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "statusId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lotId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "useCache",
+          "type": "Boolean",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "quantityOnHandTotal",
+          "type": "BigDecimal",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "OUT",
+          "internal": false
+        },
+        {
+          "name": "availableToPromiseTotal",
+          "type": "BigDecimal",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "OUT",
+          "internal": false
+        },
+        {
+          "name": "accountingQuantityTotal",
+          "type": "BigDecimal",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
     }
   ]
 }

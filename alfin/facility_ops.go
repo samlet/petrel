@@ -14,7 +14,7 @@ type CreateFacilityParams struct {
 	FacilityName               string             `json:"facilityName,omitempty"`
 	PrimaryFacilityGroupId     string             `json:"primaryFacilityGroupId,omitempty"`
 	OldSquareFootage           int64              `json:"oldSquareFootage,omitempty"`
-	FacilitySize               interface{}        `json:"facilitySize,omitempty"`
+	FacilitySize               float64            `json:"facilitySize,omitempty"`
 	FacilitySizeUomId          string             `json:"facilitySizeUomId,omitempty"`
 	ProductStoreId             string             `json:"productStoreId,omitempty"`
 	DefaultDaysToShip          int64              `json:"defaultDaysToShip,omitempty"`
@@ -51,7 +51,7 @@ type UpdateFacilityParams struct {
 	FacilityName               string             `json:"facilityName,omitempty"`
 	PrimaryFacilityGroupId     string             `json:"primaryFacilityGroupId,omitempty"`
 	OldSquareFootage           int64              `json:"oldSquareFootage,omitempty"`
-	FacilitySize               interface{}        `json:"facilitySize,omitempty"`
+	FacilitySize               float64            `json:"facilitySize,omitempty"`
 	FacilitySizeUomId          string             `json:"facilitySizeUomId,omitempty"`
 	ProductStoreId             string             `json:"productStoreId,omitempty"`
 	DefaultDaysToShip          int64              `json:"defaultDaysToShip,omitempty"`
@@ -68,6 +68,22 @@ type UpdateFacilityResult struct {
 	services.APIResource
 }
 
+type GetInventoryAvailableByFacilityParams struct {
+	services.AlfinParams
+	ProductId  string `json:"productId,omitempty"`
+	FacilityId string `json:"facilityId,omitempty"`
+	StatusId   string `json:"statusId,omitempty"`
+	LotId      string `json:"lotId,omitempty"`
+	UseCache   bool   `json:"useCache,omitempty"`
+}
+
+type GetInventoryAvailableByFacilityResult struct {
+	services.APIResource
+	QuantityOnHandTotal     float64 `json:"quantityOnHandTotal,omitempty"`
+	AvailableToPromiseTotal float64 `json:"availableToPromiseTotal,omitempty"`
+	AccountingQuantityTotal float64 `json:"accountingQuantityTotal,omitempty"`
+}
+
 // Interface
 type FacilityOps interface {
 	// CreateFacility Create a Facility
@@ -76,4 +92,6 @@ type FacilityOps interface {
 	DeleteFacility(params *DeleteFacilityParams) (*DeleteFacilityResult, error)
 	// UpdateFacility Update a Facility
 	UpdateFacility(params *UpdateFacilityParams) (*UpdateFacilityResult, error)
+	// GetInventoryAvailableByFacility Get Inventory Availability for a Product constrained by a facilityId
+	GetInventoryAvailableByFacility(params *GetInventoryAvailableByFacilityParams) (*GetInventoryAvailableByFacilityResult, error)
 }

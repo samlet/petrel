@@ -38,3 +38,10 @@ func (c *FacilityClient) UpdateFacility(params *alfin.UpdateFacilityParams) (*al
 	err := c.B.Call(http.MethodPost, "updateFacility", c.Key, params, reversal)
 	return reversal, err
 }
+
+// GetInventoryAvailableByFacility Get Inventory Availability for a Product constrained by a facilityId
+func (c *FacilityClient) GetInventoryAvailableByFacility(params *alfin.GetInventoryAvailableByFacilityParams) (*alfin.GetInventoryAvailableByFacilityResult, error) {
+	reversal := &alfin.GetInventoryAvailableByFacilityResult{}
+	err := c.B.Call(http.MethodPost, "getInventoryAvailableByFacility", c.Key, params, reversal)
+	return reversal, err
+}

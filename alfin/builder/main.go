@@ -18,6 +18,7 @@ $ just run builder -s env
 $ srv resource Example
 $ gen -t service_intf.tmpl -i exampleitem_ops.json -o exampleitem_ops.go  # optional
 $ srv resource -f ExampleItem createExampleStatus createExampleFeature
+$ srv resource -f Facility getInventoryAvailableByFacility
 */
 
 func main() {

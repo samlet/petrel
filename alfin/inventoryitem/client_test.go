@@ -23,6 +23,7 @@ func TestInventoryItemClient_CreateInventoryItem(t *testing.T) {
 	})
 
 	assert.Nil(t, err)
+	assert.Equal(t, 200, rs.LastResponse.StatusCode)
 	assert.NotNil(t, rs)
 	println(rs.InventoryItemId)
 }

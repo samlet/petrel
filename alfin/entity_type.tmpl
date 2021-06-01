@@ -3,6 +3,8 @@
 
 package alfin
 
+import "github.com/samlet/petrel/services"
+
 type {{$.name}} struct {
 {{- range $i, $f := $.fields }}
     {{$f.name|title}} {{fieldType $f.type}} `json:"{{$f.name}},omitempty"`

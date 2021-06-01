@@ -122,10 +122,12 @@ func FieldType(typeName string) string {
 	case "blob", "byte-array", "object":
 		goType = "[]byte"
 	case "date-time", "date":
-		goType = "DateTime"
+		goType = "services.DateTime"
 	case "time":
 		goType = "string"
-	case "currency-amount", "currency-precise", "fixed-point", "floating-point":
+	case "currency-amount", "currency-precise", "fixed-point":
+		goType = "services.Decimal"
+	case "floating-point":
 		goType = "float64"
 	case "integer":
 		goType = "int32"

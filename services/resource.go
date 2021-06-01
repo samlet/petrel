@@ -75,16 +75,27 @@ type DateTime struct {
 }
 
 func (t Timestamp) MarshalJSON() ([]byte, error) {
-	return json.Marshal(t.Time.Unix())
+	return json.Marshal(t.Time.Unix() * 1000)
 }
 
+//func (t *Timestamp) UnmarshalJSON(data []byte) error {
+//	var i int64
+//	if err := json.Unmarshal(data, &i); err != nil {
+//		return err
+//	}
+//	t.Time = time.Unix(i, 0)
+//	return nil
+//}
 func (t *Timestamp) UnmarshalJSON(data []byte) error {
-	var i int64
-	if err := json.Unmarshal(data, &i); err != nil {
+	var s string
+	if err := json.Unmarshal(data, &s); err != nil {
 		return err
 	}
-	t.Time = time.Unix(i, 0)
-	return nil
+	result, err := time.Parse(time.RFC3339, s)
+	if err == nil {
+		t.Time = result
+	}
+	return err
 }
 
 func (t DateTime) MarshalJSON() ([]byte, error) {

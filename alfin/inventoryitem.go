@@ -22,16 +22,16 @@ type InventoryItem struct {
 	BinNumber               string            `json:"binNumber,omitempty"`
 	LocationSeqId           string            `json:"locationSeqId,omitempty"`
 	Comments                string            `json:"comments,omitempty"`
-	QuantityOnHandTotal     float64           `json:"quantityOnHandTotal,omitempty"`
-	AvailableToPromiseTotal float64           `json:"availableToPromiseTotal,omitempty"`
-	AccountingQuantityTotal float64           `json:"accountingQuantityTotal,omitempty"`
-	OldQuantityOnHand       float64           `json:"oldQuantityOnHand,omitempty"`
-	OldAvailableToPromise   float64           `json:"oldAvailableToPromise,omitempty"`
+	QuantityOnHandTotal     services.Decimal  `json:"quantityOnHandTotal,omitempty"`
+	AvailableToPromiseTotal services.Decimal  `json:"availableToPromiseTotal,omitempty"`
+	AccountingQuantityTotal services.Decimal  `json:"accountingQuantityTotal,omitempty"`
+	OldQuantityOnHand       services.Decimal  `json:"oldQuantityOnHand,omitempty"`
+	OldAvailableToPromise   services.Decimal  `json:"oldAvailableToPromise,omitempty"`
 	SerialNumber            string            `json:"serialNumber,omitempty"`
 	SoftIdentifier          string            `json:"softIdentifier,omitempty"`
 	ActivationNumber        string            `json:"activationNumber,omitempty"`
 	ActivationValidThru     services.DateTime `json:"activationValidThru,omitempty"`
-	UnitCost                float64           `json:"unitCost,omitempty"`
+	UnitCost                services.Decimal  `json:"unitCost,omitempty"`
 	CurrencyUomId           string            `json:"currencyUomId,omitempty"`
 	FixedAssetId            string            `json:"fixedAssetId,omitempty"`
 	LastUpdatedStamp        services.DateTime `json:"lastUpdatedStamp,omitempty"`

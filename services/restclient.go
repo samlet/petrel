@@ -148,6 +148,7 @@ func (c *AlfinBackend) Call(method, path, key string, params ParamsContainer, v 
 
 	//payload := strings.NewReader(params.GetParams().Payload)
 	payload, err := json.Marshal(params)
+	c.Logger.Debug("payload: " + string(payload))
 	if err != nil {
 		return err
 	}

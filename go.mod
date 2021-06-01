@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	capnproto.org/go/capnp/v3 v3.0.0-alpha.1 // indirect
+	github.com/GeertJohan/go.rice v1.0.2 // indirect
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239 // indirect
 	github.com/antchfx/htmlquery v1.2.3 // indirect

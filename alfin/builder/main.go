@@ -12,14 +12,17 @@ import (
 )
 
 /**
-$ just run builder -s env
+$ just alfin builder -s asset Ballot.json
+$ albuilder -s asset Ballot.json
 
 # specific
 $ srv resource Example
 $ gen -t service_intf.tmpl -i exampleitem_ops.json -o exampleitem_ops.go  # optional
 $ srv resource -f Example createExampleStatus createExampleFeature
 $ srv resource -f Facility getInventoryAvailableByFacility
+$ srv create --help
 $ srv create -f -c conf/maint_common.yml
+$ srv asset Ballot.json
 */
 
 func main() {
@@ -33,7 +36,7 @@ func main() {
 			&cli.StringFlag{
 				Name:        "service",
 				Aliases:     []string{"s"},
-				Value:       "find",
+				Value:       "create",
 				Usage:       "service to execute",
 				Destination: &service,
 			},
@@ -76,6 +79,24 @@ func main() {
 						c.Bool("force"))
 				} else {
 					prompt("Must specific config file")
+				}
+			case "asset":
+				if act != "" {
+					assertBox := alfin.NewAssetBox()
+					// get file contents as string
+					asset, err := assertBox.String(act)
+					if err != nil {
+						log.Fatal(err)
+					}
+
+					var bodySample string
+					if len(asset) > 500 {
+						bodySample = asset[0:500] + " ..."
+					} else {
+						bodySample = asset
+					}
+
+					println(bodySample)
 				}
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))

@@ -25,6 +25,12 @@ $ srv create -f -c conf/maint_common.yml
 $ srv asset Ballot.json
 */
 
+const (
+	AssetFolder    string = "assets"
+	TemplateFolder string = "templates"
+	ConfFolder     string = "conf"
+)
+
 func main() {
 	prompt := color.New(color.FgYellow).PrintfFunc()
 	imp := color.New(color.FgGreen).SprintFunc()
@@ -130,8 +136,8 @@ func genInterface(act string) error {
 	entName := strings.ToLower(act)
 	creator := alfin.Creator{
 		PackageName:  "",
-		InputPath:    entName + "_ops.json",
-		TemplatePath: "service_intf.tmpl",
+		InputPath:    filepath.Join(AssetFolder, entName+"_ops.json"),
+		TemplatePath: filepath.Join(TemplateFolder, "service_intf.tmpl"),
 		TargetName:   entName + "_ops.go",
 	}
 
@@ -146,7 +152,7 @@ func genInterface(act string) error {
 func deleteResource(act string) {
 	entName := strings.ToLower(act)
 	files := []string{
-		entName + "_ops.json",
+		filepath.Join(AssetFolder, entName+"_ops.json"),
 		entName + "_ops.go",
 		filepath.Join(entName, "client.go"),
 	}
@@ -176,8 +182,8 @@ func genResource(act string, extra []string) error {
 	entName := strings.ToLower(act)
 	creator := alfin.Creator{
 		PackageName:  entName,
-		InputPath:    entName + "_ops.json",
-		TemplatePath: "service_impl.tmpl",
+		InputPath:    filepath.Join(AssetFolder, entName+"_ops.json"),
+		TemplatePath: filepath.Join(TemplateFolder, "service_impl.tmpl"),
 		TargetName:   "client.go",
 		Extra:        extra,
 	}

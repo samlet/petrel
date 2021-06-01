@@ -38,7 +38,7 @@ class MetaGenerator(object):
                 "relations": relations
             }
 
-            out_file=open(ent.lower()+".json", 'w')
+            out_file=open("assets/"+ent.lower()+".json", 'w')
             out_file.write(json.dumps(abi, indent=2, ensure_ascii=False))
             out_file.close()
 

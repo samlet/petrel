@@ -12,8 +12,13 @@ func TestAssets(t *testing.T) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	printSample(assertBox, "Ballot.json")
+	printSample(assertBox, "person.json")
+}
+
+func printSample(assertBox *rice.Box, asset string) {
 	// get file contents as string
-	asset, err := assertBox.String("Ballot.json")
+	asset, err := assertBox.String(asset)
 	if err != nil {
 		log.Fatal(err)
 	}

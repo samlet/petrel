@@ -38,6 +38,13 @@ func check(e error) {
 	}
 }
 
+func ExistsPath(path string) bool {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return true
+	}
+	return false
+}
+
 func EnsureFile(path string) error {
 	f, err := os.Stat(path)
 	if err == nil {

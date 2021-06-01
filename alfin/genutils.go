@@ -158,7 +158,7 @@ func ParamType(typeName string, mode string) string {
 		goType = "services.Timestamp"
 	case "BigDecimal", "java.math.BigDecimal":
 		//goType = "string"
-		goType = "float64"
+		goType = "services.Decimal"
 	case "java.sql.Date", "java.util.Date":
 		goType = "services.DateTime"
 	case "java.sql.Time":

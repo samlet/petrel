@@ -121,7 +121,7 @@ func deleteResource(act string) {
 	for _, f := range files {
 		e := os.Remove(f)
 		if e != nil {
-			log.Fatal(e)
+			log.Println("ignore: ", e)
 		}
 	}
 }

@@ -2,6 +2,7 @@ package services
 
 import (
 	"encoding/json"
+	"github.com/shopspring/decimal"
 	"net/http"
 	"time"
 )
@@ -100,4 +101,21 @@ func (t *DateTime) UnmarshalJSON(data []byte) error {
 		t.Time = result
 	}
 	return err
+}
+
+type Decimal struct {
+	decimal.Decimal
+}
+
+func (t Decimal) MarshalJSON() ([]byte, error) {
+	return json.Marshal(t.String())
+}
+
+func (t *Decimal) UnmarshalJSON(data []byte) error {
+	var s float64
+	if err := json.Unmarshal(data, &s); err != nil {
+		return err
+	}
+	t.Decimal = decimal.NewFromFloat(s)
+	return nil
 }

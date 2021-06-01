@@ -1,0 +1,593 @@
+{
+  "entity": "InventoryItem",
+  "package": "inventoryitem",
+  "ops": [
+    {
+      "name": "createInventoryItem",
+      "description": "Create an InventoryItem",
+      "paramsInput": [
+        {
+          "name": "inventoryItemTypeId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "productId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "partyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "ownerPartyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "statusId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "datetimeReceived",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "datetimeManufactured",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "expireDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": true,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "containerId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lotId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "uomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "binNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "locationSeqId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "accountingQuantityTotal",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldQuantityOnHand",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldAvailableToPromise",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "serialNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "softIdentifier",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "activationNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "activationValidThru",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "unitCost",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "currencyUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "fixedAssetId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "isReturned",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "inventoryItemId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "getInventoryItemOwner",
+      "description": "get an ownerPartyId from inventoryItemId ",
+      "paramsInput": [
+        {
+          "name": "inventoryItemId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "ownerPartyId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "inventoryItemCheckSetDefaultValues",
+      "description": "Check and, if empty, fills with default values ownerPartyId, currencyUomId, unitCost",
+      "paramsInput": [
+        {
+          "name": "inventoryItemId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "inventoryItem",
+          "type": "Map",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    },
+    {
+      "name": "updateInventoryItem",
+      "description": "Update an InventoryItem",
+      "paramsInput": [
+        {
+          "name": "inventoryItemId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "inventoryItemTypeId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "productId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "partyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "ownerPartyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "statusId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "datetimeReceived",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "datetimeManufactured",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "expireDate",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "facilityId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "containerId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "lotId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "uomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "binNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "locationSeqId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "comments",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "accountingQuantityTotal",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldQuantityOnHand",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "oldAvailableToPromise",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "serialNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "softIdentifier",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "activationNumber",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "activationValidThru",
+          "type": "java.sql.Timestamp",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "unitCost",
+          "type": "java.math.BigDecimal",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "currencyUomId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        },
+        {
+          "name": "fixedAssetId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": [
+        {
+          "name": "oldOwnerPartyId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "OUT",
+          "internal": false
+        },
+        {
+          "name": "oldProductId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "OUT",
+          "internal": false
+        },
+        {
+          "name": "oldStatusId",
+          "type": "String",
+          "required": true,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "OUT",
+          "internal": false
+        }
+      ]
+    },
+    {
+      "name": "updateSerializedInventoryTotals",
+      "description": "Sets the ATP/QOH totals for serialized inventory items",
+      "paramsInput": [
+        {
+          "name": "inventoryItemId",
+          "type": "String",
+          "required": false,
+          "overrideOptional": false,
+          "entity": "InventoryItem",
+          "mode": "IN",
+          "internal": false
+        }
+      ],
+      "paramsOutput": []
+    }
+  ]
+}

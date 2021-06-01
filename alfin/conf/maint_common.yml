@@ -1,0 +1,9 @@
+mainEnts:
+  - name: Facility
+    extras:
+      - getInventoryAvailableByFacility
+  - name: Example
+    extras:
+      - createExampleStatus
+      - createExampleFeature
+

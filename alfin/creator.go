@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"go.uber.org/zap"
+	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
 	"os"
@@ -146,4 +147,26 @@ func (c *Creator) Execute(suffix string) error {
 	generator.GenTemplate(string(d), string(t), f)
 
 	return nil
+}
+
+type MainEnt struct {
+	Name   string   `yaml:"name"`
+	Extras []string `yaml:"extras"`
+}
+
+type MainEntConf struct {
+	MainEnts []MainEnt `yaml:"mainEnts"`
+}
+
+func ReadMaintConf(configFile string) MainEntConf {
+	configData, err := ioutil.ReadFile(configFile)
+	if err != nil {
+		panic(fmt.Sprintf("Failed to read config file: %v, Error: %v", configFile, err))
+	}
+
+	var maintConf MainEntConf
+	if err := yaml.Unmarshal(configData, &maintConf); err != nil {
+		panic(fmt.Sprintf("Error initializing configuration: %v", err))
+	}
+	return maintConf
 }

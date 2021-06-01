@@ -17,8 +17,9 @@ $ just run builder -s env
 # specific
 $ srv resource Example
 $ gen -t service_intf.tmpl -i exampleitem_ops.json -o exampleitem_ops.go  # optional
-$ srv resource -f ExampleItem createExampleStatus createExampleFeature
+$ srv resource -f Example createExampleStatus createExampleFeature
 $ srv resource -f Facility getInventoryAvailableByFacility
+$ srv create -f -c conf/maint_common.yml
 */
 
 func main() {
@@ -41,6 +42,8 @@ func main() {
 				Usage: "entity name",
 				Value: "WebSite"},
 			&cli.BoolFlag{Name: "force", Aliases: []string{"f"}, Value: false},
+			&cli.StringFlag{Name: "conf", Aliases: []string{"c"},
+				Usage: "config file"},
 		},
 		Action: func(c *cli.Context) error {
 			act := ""
@@ -65,6 +68,14 @@ func main() {
 					}
 				} else {
 					prompt("Absent resource name")
+				}
+			case "create":
+				if c.IsSet("conf") {
+					genResourceByConf(
+						alfin.ReadMaintConf(c.String("conf")),
+						c.Bool("force"))
+				} else {
+					prompt("Must specific config file")
 				}
 			case "env":
 				fmt.Println("GOPATH:", os.Getenv("GOPATH"))
@@ -122,6 +133,18 @@ func deleteResource(act string) {
 		e := os.Remove(f)
 		if e != nil {
 			log.Println("ignore: ", e)
+		}
+	}
+}
+
+func genResourceByConf(maintConf alfin.MainEntConf, force bool) {
+	for _, conf := range maintConf.MainEnts {
+		if force {
+			deleteResource(conf.Name)
+		}
+		err := genResource(conf.Name, conf.Extras)
+		if err != nil {
+			panic(err)
 		}
 	}
 }

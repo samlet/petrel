@@ -7,16 +7,16 @@ import "github.com/samlet/petrel/services"
 
 type CreateExampleParams struct {
 	services.AlfinParams
-	ExampleTypeId   string             `json:"exampleTypeId,omitempty"`
-	StatusId        string             `json:"statusId,omitempty"`
-	ExampleName     string             `json:"exampleName,omitempty"`
-	Description     string             `json:"description,omitempty"`
-	LongDescription string             `json:"longDescription,omitempty"`
-	Comments        string             `json:"comments,omitempty"`
-	ExampleSize     int64              `json:"exampleSize,omitempty"`
-	ExampleDate     services.Timestamp `json:"exampleDate,omitempty"`
-	AnotherDate     services.Timestamp `json:"anotherDate,omitempty"`
-	AnotherText     string             `json:"anotherText,omitempty"`
+	ExampleTypeId   string              `json:"exampleTypeId,omitempty"`
+	StatusId        string              `json:"statusId,omitempty"`
+	ExampleName     string              `json:"exampleName,omitempty"`
+	Description     string              `json:"description,omitempty"`
+	LongDescription string              `json:"longDescription,omitempty"`
+	Comments        string              `json:"comments,omitempty"`
+	ExampleSize     int64               `json:"exampleSize,omitempty"`
+	ExampleDate     *services.Timestamp `json:"exampleDate,omitempty"`
+	AnotherDate     *services.Timestamp `json:"anotherDate,omitempty"`
+	AnotherText     string              `json:"anotherText,omitempty"`
 }
 
 type CreateExampleResult struct {
@@ -35,17 +35,17 @@ type DeleteExampleResult struct {
 
 type UpdateExampleParams struct {
 	services.AlfinParams
-	ExampleId       string             `json:"exampleId,omitempty"`
-	ExampleTypeId   string             `json:"exampleTypeId,omitempty"`
-	StatusId        string             `json:"statusId,omitempty"`
-	ExampleName     string             `json:"exampleName,omitempty"`
-	Description     string             `json:"description,omitempty"`
-	LongDescription string             `json:"longDescription,omitempty"`
-	Comments        string             `json:"comments,omitempty"`
-	ExampleSize     int64              `json:"exampleSize,omitempty"`
-	ExampleDate     services.Timestamp `json:"exampleDate,omitempty"`
-	AnotherDate     services.Timestamp `json:"anotherDate,omitempty"`
-	AnotherText     string             `json:"anotherText,omitempty"`
+	ExampleId       string              `json:"exampleId,omitempty"`
+	ExampleTypeId   string              `json:"exampleTypeId,omitempty"`
+	StatusId        string              `json:"statusId,omitempty"`
+	ExampleName     string              `json:"exampleName,omitempty"`
+	Description     string              `json:"description,omitempty"`
+	LongDescription string              `json:"longDescription,omitempty"`
+	Comments        string              `json:"comments,omitempty"`
+	ExampleSize     int64               `json:"exampleSize,omitempty"`
+	ExampleDate     *services.Timestamp `json:"exampleDate,omitempty"`
+	AnotherDate     *services.Timestamp `json:"anotherDate,omitempty"`
+	AnotherText     string              `json:"anotherText,omitempty"`
 }
 
 type UpdateExampleResult struct {

@@ -7,24 +7,24 @@ import "github.com/samlet/petrel/services"
 
 type CreateFacilityParams struct {
 	services.AlfinParams
-	FacilityTypeId             string             `json:"facilityTypeId,omitempty"`
-	ParentFacilityId           string             `json:"parentFacilityId,omitempty"`
-	OwnerPartyId               string             `json:"ownerPartyId,omitempty"`
-	DefaultInventoryItemTypeId string             `json:"defaultInventoryItemTypeId,omitempty"`
-	FacilityName               string             `json:"facilityName,omitempty"`
-	PrimaryFacilityGroupId     string             `json:"primaryFacilityGroupId,omitempty"`
-	OldSquareFootage           int64              `json:"oldSquareFootage,omitempty"`
-	FacilitySize               float64            `json:"facilitySize,omitempty"`
-	FacilitySizeUomId          string             `json:"facilitySizeUomId,omitempty"`
-	ProductStoreId             string             `json:"productStoreId,omitempty"`
-	DefaultDaysToShip          int64              `json:"defaultDaysToShip,omitempty"`
-	OpenedDate                 services.Timestamp `json:"openedDate,omitempty"`
-	ClosedDate                 services.Timestamp `json:"closedDate,omitempty"`
-	Description                string             `json:"description,omitempty"`
-	DefaultDimensionUomId      string             `json:"defaultDimensionUomId,omitempty"`
-	DefaultWeightUomId         string             `json:"defaultWeightUomId,omitempty"`
-	GeoPointId                 string             `json:"geoPointId,omitempty"`
-	FacilityLevel              int64              `json:"facilityLevel,omitempty"`
+	FacilityTypeId             string              `json:"facilityTypeId,omitempty"`
+	ParentFacilityId           string              `json:"parentFacilityId,omitempty"`
+	OwnerPartyId               string              `json:"ownerPartyId,omitempty"`
+	DefaultInventoryItemTypeId string              `json:"defaultInventoryItemTypeId,omitempty"`
+	FacilityName               string              `json:"facilityName,omitempty"`
+	PrimaryFacilityGroupId     string              `json:"primaryFacilityGroupId,omitempty"`
+	OldSquareFootage           int64               `json:"oldSquareFootage,omitempty"`
+	FacilitySize               *services.Decimal   `json:"facilitySize,omitempty"`
+	FacilitySizeUomId          string              `json:"facilitySizeUomId,omitempty"`
+	ProductStoreId             string              `json:"productStoreId,omitempty"`
+	DefaultDaysToShip          int64               `json:"defaultDaysToShip,omitempty"`
+	OpenedDate                 *services.Timestamp `json:"openedDate,omitempty"`
+	ClosedDate                 *services.Timestamp `json:"closedDate,omitempty"`
+	Description                string              `json:"description,omitempty"`
+	DefaultDimensionUomId      string              `json:"defaultDimensionUomId,omitempty"`
+	DefaultWeightUomId         string              `json:"defaultWeightUomId,omitempty"`
+	GeoPointId                 string              `json:"geoPointId,omitempty"`
+	FacilityLevel              int64               `json:"facilityLevel,omitempty"`
 }
 
 type CreateFacilityResult struct {
@@ -43,25 +43,25 @@ type DeleteFacilityResult struct {
 
 type UpdateFacilityParams struct {
 	services.AlfinParams
-	FacilityId                 string             `json:"facilityId,omitempty"`
-	FacilityTypeId             string             `json:"facilityTypeId,omitempty"`
-	ParentFacilityId           string             `json:"parentFacilityId,omitempty"`
-	OwnerPartyId               string             `json:"ownerPartyId,omitempty"`
-	DefaultInventoryItemTypeId string             `json:"defaultInventoryItemTypeId,omitempty"`
-	FacilityName               string             `json:"facilityName,omitempty"`
-	PrimaryFacilityGroupId     string             `json:"primaryFacilityGroupId,omitempty"`
-	OldSquareFootage           int64              `json:"oldSquareFootage,omitempty"`
-	FacilitySize               float64            `json:"facilitySize,omitempty"`
-	FacilitySizeUomId          string             `json:"facilitySizeUomId,omitempty"`
-	ProductStoreId             string             `json:"productStoreId,omitempty"`
-	DefaultDaysToShip          int64              `json:"defaultDaysToShip,omitempty"`
-	OpenedDate                 services.Timestamp `json:"openedDate,omitempty"`
-	ClosedDate                 services.Timestamp `json:"closedDate,omitempty"`
-	Description                string             `json:"description,omitempty"`
-	DefaultDimensionUomId      string             `json:"defaultDimensionUomId,omitempty"`
-	DefaultWeightUomId         string             `json:"defaultWeightUomId,omitempty"`
-	GeoPointId                 string             `json:"geoPointId,omitempty"`
-	FacilityLevel              int64              `json:"facilityLevel,omitempty"`
+	FacilityId                 string              `json:"facilityId,omitempty"`
+	FacilityTypeId             string              `json:"facilityTypeId,omitempty"`
+	ParentFacilityId           string              `json:"parentFacilityId,omitempty"`
+	OwnerPartyId               string              `json:"ownerPartyId,omitempty"`
+	DefaultInventoryItemTypeId string              `json:"defaultInventoryItemTypeId,omitempty"`
+	FacilityName               string              `json:"facilityName,omitempty"`
+	PrimaryFacilityGroupId     string              `json:"primaryFacilityGroupId,omitempty"`
+	OldSquareFootage           int64               `json:"oldSquareFootage,omitempty"`
+	FacilitySize               *services.Decimal   `json:"facilitySize,omitempty"`
+	FacilitySizeUomId          string              `json:"facilitySizeUomId,omitempty"`
+	ProductStoreId             string              `json:"productStoreId,omitempty"`
+	DefaultDaysToShip          int64               `json:"defaultDaysToShip,omitempty"`
+	OpenedDate                 *services.Timestamp `json:"openedDate,omitempty"`
+	ClosedDate                 *services.Timestamp `json:"closedDate,omitempty"`
+	Description                string              `json:"description,omitempty"`
+	DefaultDimensionUomId      string              `json:"defaultDimensionUomId,omitempty"`
+	DefaultWeightUomId         string              `json:"defaultWeightUomId,omitempty"`
+	GeoPointId                 string              `json:"geoPointId,omitempty"`
+	FacilityLevel              int64               `json:"facilityLevel,omitempty"`
 }
 
 type UpdateFacilityResult struct {
@@ -79,9 +79,9 @@ type GetInventoryAvailableByFacilityParams struct {
 
 type GetInventoryAvailableByFacilityResult struct {
 	services.APIResource
-	QuantityOnHandTotal     float64 `json:"quantityOnHandTotal,omitempty"`
-	AvailableToPromiseTotal float64 `json:"availableToPromiseTotal,omitempty"`
-	AccountingQuantityTotal float64 `json:"accountingQuantityTotal,omitempty"`
+	QuantityOnHandTotal     *services.Decimal `json:"quantityOnHandTotal,omitempty"`
+	AvailableToPromiseTotal *services.Decimal `json:"availableToPromiseTotal,omitempty"`
+	AccountingQuantityTotal *services.Decimal `json:"accountingQuantityTotal,omitempty"`
 }
 
 // Interface

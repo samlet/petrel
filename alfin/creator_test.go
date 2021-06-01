@@ -1,6 +1,8 @@
 package alfin
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestPyGen(t *testing.T) {
 	ent := "ExampleItem"
@@ -10,4 +12,10 @@ func TestPyGen(t *testing.T) {
 		panic(err)
 	}
 	println("PyGen OUT => ", out)
+}
+
+func TestMainEntConf(t *testing.T) {
+	configFile := "conf/maint_common.yml"
+	maintConf := ReadMaintConf(configFile)
+	Pretty(maintConf)
 }

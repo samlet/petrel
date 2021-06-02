@@ -69,6 +69,7 @@ func (c *GenHelper) GenTemplate(text string, tmpl string, wr io.Writer) {
 		"title":     strings.Title,
 		"fieldType": FieldType,
 		"paramType": ParamType,
+		"ethType": EthType,
 	}
 
 	t := template.New("hello").Funcs(tf)
@@ -141,6 +142,41 @@ func FieldType(typeName string) string {
 	return goType
 }
 
+func EthType(typeName string) string {
+	var ethType string
+	switch typeName {
+	case "id":
+		ethType = "bytes20"
+	case "id-long":
+		ethType = "bytes32"
+	case "id-vlong":
+		ethType = "bytes"
+	case "blob", "object":
+		ethType = "bytes"
+	case "byte-array":
+		ethType="uint[]"
+	case "date-time", "date":
+		ethType = "uint256"
+	case "time":
+		ethType = "uint256"
+	case "currency-amount", "currency-precise", "fixed-point":
+		ethType = "int256"
+	case "floating-point":
+		ethType = "int256"
+	case "integer":
+		ethType = "int32"
+	case "numeric":
+		ethType = "int64"
+	case "indicator":
+		ethType = "bytes1"
+	case "very-short":
+		ethType = "bytes10"
+	default:
+		ethType = "string"
+	}
+	return ethType
+}
+
 func ParamType(typeName string, mode string) string {
 	var goType string
 	switch typeName {
@@ -181,3 +217,4 @@ func ParamType(typeName string, mode string) string {
 	}
 	return goType
 }
+

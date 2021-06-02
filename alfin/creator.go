@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	rice "github.com/GeertJohan/go.rice"
 	"go.uber.org/zap"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -12,6 +13,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"syscall"
 )
 
@@ -110,15 +112,32 @@ func (c *Creator) GetTarget(suffix string) string {
 	}
 }
 
+// ReadTemplate read from file path at first, if not exists,
+// read template from rice.box
+func (c *Creator) ReadTemplate() (string, error) {
+	err := EnsureFile(c.TemplatePath)
+	if err != nil {
+		dir, file:=filepath.Split(c.TemplatePath)
+		box:=strings.TrimRight(dir, "/")
+		println(box, file)
+		// get template from a rice.Box
+		return rice.MustFindBox(box).String(file)
+	}else{
+		t, err := ioutil.ReadFile(c.TemplatePath)
+		if err != nil {
+			logger.Fatal(err.Error())
+			return "", err
+		}
+		return string(t), nil
+	}
+}
+
 func (c *Creator) Execute(suffix string) error {
 	err := EnsureFile(c.InputPath)
 	if err != nil {
 		return err
 	}
-	err = EnsureFile(c.TemplatePath)
-	if err != nil {
-		return err
-	}
+
 
 	if c.PackageName != "" {
 		err := EnsureDir(c.PackageName)
@@ -134,17 +153,19 @@ func (c *Creator) Execute(suffix string) error {
 	}
 	defer f.Close()
 
-	t, err := ioutil.ReadFile(c.TemplatePath)
-	if err != nil {
-		logger.Fatal(err.Error())
-		return err
-	}
+
 	d, err := ioutil.ReadFile(c.InputPath)
 	if err != nil {
 		logger.Fatal(err.Error())
 		return err
 	}
-	generator.GenTemplate(string(d), string(t), f)
+
+	t,err:=c.ReadTemplate()
+	if err != nil {
+		return err
+	}
+
+	generator.GenTemplate(string(d), t, f)
 
 	return nil
 }

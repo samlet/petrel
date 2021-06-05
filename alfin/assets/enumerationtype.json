@@ -1,0 +1,123 @@
+{
+  "name": "EnumerationType",
+  "fields": [
+    {
+      "name": "enumTypeId",
+      "type": "id",
+      "col": "ENUM_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentEnumerationType",
+      "type": "one",
+      "relEntityName": "EnumerationType",
+      "fkName": "ENUM_TYPE_PARENT",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "enumTypeId"
+        }
+      ]
+    },
+    {
+      "name": "Enumeration",
+      "type": "many",
+      "relEntityName": "Enumeration",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumTypeId",
+          "relFieldName": "enumTypeId"
+        }
+      ]
+    },
+    {
+      "name": "ChildEnumerationType",
+      "type": "many",
+      "relEntityName": "EnumerationType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ]
+    }
+  ]
+}

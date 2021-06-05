@@ -66,6 +66,7 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 	}
 	return nil
 }
+
 func TestDecoder(t *testing.T) {
 	jsonStr := `
 {

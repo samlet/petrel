@@ -1,0 +1,35 @@
+@startuml
+class SignalParams {
++Name: string
++Data: TripEvent
+
+}
+class RestartParams {
++Options: StartWorkflowOptions
++State: UserState
+
+}
+class Params {
++ID: string
++Type: string
++Concurrency: int
+
+}
+class ListOpenExecutionsResult {
++ID: string
++Count: int
++HostID: string
+
+}
+class UserState {
++TripCounter: int
+
+}
+class TripEvent {
++ID: string
++Total: int
+
+}
+SignalParams --> TripEvent
+RestartParams --> UserState
+@enduml

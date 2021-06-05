@@ -1,0 +1,101 @@
+{
+  "name": "ExampleFeatureApplType",
+  "fields": [
+    {
+      "name": "exampleFeatureApplTypeId",
+      "type": "id",
+      "col": "EXAMPLE_FEATURE_APPL_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ExampleFeatureApplType",
+      "type": "one",
+      "relEntityName": "ExampleFeatureApplType",
+      "fkName": "EXFTAPTP_PAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "exampleFeatureApplTypeId"
+        }
+      ]
+    },
+    {
+      "name": "ExampleFeatureAppl",
+      "type": "many",
+      "relEntityName": "ExampleFeatureAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "exampleFeatureApplTypeId",
+          "relFieldName": "exampleFeatureApplTypeId"
+        }
+      ]
+    }
+  ]
+}

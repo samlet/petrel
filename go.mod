@@ -3,11 +3,12 @@ module github.com/samlet/petrel
 go 1.16
 
 require (
-	capnproto.org/go/capnp/v3 v3.0.0-alpha.1 // indirect
-	github.com/GeertJohan/go.rice v1.0.2 // indirect
+	github.com/GeertJohan/go.rice v1.0.2
 	github.com/Microsoft/go-winio v0.5.0 // indirect
-	github.com/anmitsu/go-shlex v0.0.0-20161002113705-648efa622239 // indirect
-	github.com/antchfx/htmlquery v1.2.3 // indirect
+	github.com/alecthomas/kong v0.2.16
+	github.com/alecthomas/participle/v2 v2.0.0-alpha6
+	github.com/alecthomas/repr v0.0.0-20210301060118-828286944d6a
+	github.com/antchfx/htmlquery v1.2.3
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
 	github.com/centrifuge/go-substrate-rpc-client/v3 v3.0.0
@@ -20,30 +21,29 @@ require (
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
 	github.com/fatih/color v1.11.0
 	github.com/fatih/structtag v1.0.0 // indirect
-	github.com/flynn/go-shlex v0.0.0-20150515145356-3f9db97f8568 // indirect
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/gogo/status v1.1.0 // indirect
-	github.com/golang/mock v1.4.1
+	github.com/golang/mock v1.4.3
 	github.com/gorilla/mux v1.8.0 // indirect
-	github.com/jessevdk/go-flags v1.4.0 // indirect
+	github.com/hyperjumptech/grule-rule-engine v1.9.0
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/kr/pretty v0.2.1
 	github.com/labstack/echo/v4 v4.3.0
-	github.com/labstack/gommon v0.3.0 // indirect
 	github.com/lib/pq v1.2.0
+	github.com/looplab/fsm v0.2.0
 	github.com/mattn/go-sqlite3 v1.14.7 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
-	github.com/olivere/elastic/v7 v7.0.24 // indirect
+	github.com/olivere/elastic/v7 v7.0.24
 	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
 	github.com/prashantv/protectmem v0.0.0-20171002184600-e20412882b3a // indirect
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/samuel/go-thrift v0.0.0-20190219015601-e8b6b52668fe // indirect
-	github.com/segmentio/kafka-go v0.4.16 // indirect
-	github.com/shopspring/decimal v1.2.0 // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
+	github.com/segmentio/kafka-go v0.4.16
+	github.com/shopspring/decimal v1.2.0
 	github.com/streadway/amqp v1.0.0
 	github.com/streadway/quantile v0.0.0-20150917103942-b0c588724d25 // indirect
 	github.com/stretchr/testify v1.7.0
+	github.com/tinylib/msgp v1.1.5 // indirect
 	github.com/uber-go/mapdecode v1.0.0 // indirect
 	github.com/uber-go/tally v3.3.11+incompatible
 	github.com/uber/jaeger-client-go v2.18.1+incompatible // indirect
@@ -57,7 +57,7 @@ require (
 	go.uber.org/yarpc v1.39.0
 	go.uber.org/zap v1.10.0
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
-	golang.org/x/net v0.0.0-20210525063256-abc453219eb5 // indirect
+	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
 	google.golang.org/genproto v0.0.0-20210524171403-669157292da3 // indirect
 	google.golang.org/grpc v1.38.0 // indirect
@@ -66,7 +66,7 @@ require (
 	gorm.io/gorm v1.21.10
 	k8s.io/apimachinery v0.21.1
 	k8s.io/client-go v0.21.1
-	zombiezen.com/go/capnproto2 v2.18.2+incompatible // indirect
+	zombiezen.com/go/capnproto2 v2.18.2+incompatible
 
 )
 

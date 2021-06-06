@@ -213,5 +213,9 @@
         }
       ]
     }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "exampleId"
   ]
 }

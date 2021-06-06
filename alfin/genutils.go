@@ -72,7 +72,7 @@ func (c *GenHelper) GenTemplate(text string, tmpl string, wr io.Writer) {
 		"ethType": EthType,
 	}
 
-	t := template.New("hello").Funcs(tf)
+	t := template.New(tmpl).Funcs(tf)
 	tt, err := t.Parse(tmpl)
 	if err != nil {
 		panic(err)

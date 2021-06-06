@@ -1,0 +1,17 @@
+{{/* gotype: github.com/samlet/petrel/alfin.ModelEntity */}}
+// Fields of the {{.Name}}.
+func ({{.Name}}) Fields() []ent.Field {
+    return []ent.Field{
+    {{- range $fld := $.Fields }}
+        {{- if ne $.UniquePk $fld.Name }}
+        {{$fld.EntFieldType}},
+        {{- end}}
+    {{- end}}
+    }
+}
+
+{{- if $.HasCombineIndex}}
+func ({{$.Name}}) Indexes() []ent.Index {
+    {{ $.Indexes }}
+}
+{{ end}}

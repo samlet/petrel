@@ -1,0 +1,2 @@
+gen-example:
+    python meta_generator.py abi [Example,ExampleItem]

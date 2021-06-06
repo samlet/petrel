@@ -26,6 +26,7 @@ require (
 	github.com/golang/mock v1.4.3
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hyperjumptech/grule-rule-engine v1.9.0
+	github.com/iancoleman/strcase v0.1.3 // indirect
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/kr/pretty v0.2.1
 	github.com/labstack/echo/v4 v4.3.0

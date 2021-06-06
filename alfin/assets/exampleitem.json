@@ -117,5 +117,10 @@
         }
       ]
     }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "exampleId",
+    "exampleItemSeqId"
   ]
 }

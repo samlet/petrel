@@ -60,7 +60,9 @@ class MetaGenerator(object):
             abi={
                 "name": model.getEntityName(),
                 "fields": fields,
-                "relations": relations
+                "relations": relations,
+                "pksSize": model.getPksSize(),
+                "pks": [f for f in model.getPkFieldNames()]
             }
 
             out_file=open("assets/"+ent.lower()+".json", 'w')

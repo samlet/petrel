@@ -89,6 +89,10 @@ func (t ModelEntity) NormalFields() []*ModelField{
 	return result
 }
 
+func (t ModelEntity) PluralName() string{
+	return PluralizeTypeName(t.Name)
+}
+
 func (t ModelField) VarName() string{
 	return strcase.ToSnake(t.Name)
 }
@@ -142,6 +146,23 @@ func (t ModelField) EntFieldType() string{
 	return resultDef
 }
 
+func (t ModelRelation) FieldName() string {
+	return t.Keymaps[0].FieldName
+}
+func (t ModelRelation) PluralName() string{
+	return PluralizeTypeName(t.Name)
+}
+
+func (t ModelEntity) Edges() []*ModelRelation {
+	var result []*ModelRelation
+	for _, r := range t.Relations {
+		if len(r.Keymaps)==1{
+			result=append(result, r)
+		}
+	}
+	return result
+}
+
 func LoadModelEntity(filename string) (*ModelEntity, error) {
 	content, err := ioutil.ReadFile(filename)
 	if err != nil {
@@ -158,6 +179,8 @@ func LoadModelEntity(filename string) (*ModelEntity, error) {
 
 func GenModelEntity(templateFile string, inputFile string, writer io.Writer) error{
 	tf := template.FuncMap{
+		"title":     strings.Title,
+		"snakecase": strcase.ToSnake,
 		"isUniquePk": func(ent ModelEntity, fld string) bool {
 			return ent.IsUniqueIdField(fld)
 		},

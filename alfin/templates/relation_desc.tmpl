@@ -1,0 +1,20 @@
+{{/* gotype: github.com/samlet/petrel/alfin.ModelEntity */}}
+
+// Edges of the {{.Name}}.
+{{- range $r := $.Relations }}
+//  {{ $r.Type }}: {{ $r.Name }}
+{{- end }}
+func ({{.Name}}) Edges() []ent.Edge {
+    return []ent.Edge{
+        {{- range $r := $.Edges }}
+        {{- if eq $r.Type "many" }}
+        edge.To("{{$r.PluralName}}", {{$r.RelEntityName}}.Type),
+        {{- else }}
+        edge.To("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
+            // Bind the "{{$r.FieldName}}" field to this edge.
+            Field("{{$r.FieldName|snakecase}}").
+            Unique(),
+        {{- end}}
+        {{- end }}
+    }
+}

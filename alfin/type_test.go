@@ -37,3 +37,11 @@ func TestModelEntityTemplate(te *testing.T) {
 	println("ok")
 }
 
+func TestRelationDesc(t *testing.T) {
+	tmpl:="templates/relation_desc.tmpl"
+	err:=GenModelEntity(tmpl, "./assets/example.json", os.Stdout)
+	if err != nil {
+		panic(err)
+	}
+
+}

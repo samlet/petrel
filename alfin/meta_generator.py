@@ -54,7 +54,8 @@ class MetaGenerator(object):
             relations=[{"name":rel.getCombinedName(), "type": rel.getType(),
                         "relEntityName": rel.getRelEntityName(),
                         "fkName": rel.getFkName(),
-                        "keymaps": keymaps(rel)
+                        "keymaps": keymaps(rel),
+                        "autoRelation": rel.isAutoRelation(),
                         }
                        for rel in model.getRelations()]
             abi={

@@ -103,7 +103,8 @@
           "fieldName": "amountUomId",
           "relFieldName": "uomId"
         }
-      ]
+      ],
+      "autoRelation": false
     },
     {
       "name": "Example",
@@ -115,7 +116,8 @@
           "fieldName": "exampleId",
           "relFieldName": "exampleId"
         }
-      ]
+      ],
+      "autoRelation": false
     }
   ],
   "pksSize": 2,

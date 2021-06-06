@@ -163,7 +163,8 @@
           "fieldName": "exampleTypeId",
           "relFieldName": "exampleTypeId"
         }
-      ]
+      ],
+      "autoRelation": false
     },
     {
       "name": "StatusItem",
@@ -175,7 +176,8 @@
           "fieldName": "statusId",
           "relFieldName": "statusId"
         }
-      ]
+      ],
+      "autoRelation": false
     },
     {
       "name": "ExampleFeatureAppl",
@@ -187,7 +189,8 @@
           "fieldName": "exampleId",
           "relFieldName": "exampleId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "ExampleItem",
@@ -199,7 +202,8 @@
           "fieldName": "exampleId",
           "relFieldName": "exampleId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "ExampleStatus",
@@ -211,7 +215,8 @@
           "fieldName": "exampleId",
           "relFieldName": "exampleId"
         }
-      ]
+      ],
+      "autoRelation": true
     }
   ],
   "pksSize": 1,

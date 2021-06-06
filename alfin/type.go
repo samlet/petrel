@@ -2,6 +2,7 @@ package alfin
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/iancoleman/strcase"
 	"io"
@@ -12,32 +13,33 @@ import (
 )
 
 type (
-	ModelEntity struct{
-		Name string `json:"name"`
-		Fields []*ModelField `json:"fields"`
+	ModelEntity struct {
+		Name      string           `json:"name"`
+		Fields    []*ModelField    `json:"fields"`
 		Relations []*ModelRelation `json:"relations"`
-		PksSize int `json:"pksSize"`
-		Pks []string `json:"pks"`
+		PksSize   int              `json:"pksSize"`
+		Pks       []string         `json:"pks"`
 	}
 
 	ModelField struct {
-		Name string `json:"name"`
-		Type string `json:"type"`
-		Col string `json:"col"`
-		Pk bool `json:"pk"`
-		AutoCreatedInternal bool `json:"autoCreatedInternal"`
+		Name                string `json:"name"`
+		Type                string `json:"type"`
+		Col                 string `json:"col"`
+		Pk                  bool   `json:"pk"`
+		AutoCreatedInternal bool   `json:"autoCreatedInternal"`
 	}
 
-	ModelRelation struct{
-		Name string `json:"name"`
-		Type string `json:"type"`
-		RelEntityName string `json:"relEntityName"`
-		FkName string `json:"fkName"`
-		Keymaps []ModelKeymap `json:"keymaps"`
+	ModelRelation struct {
+		Name          string        `json:"name"`
+		Type          string        `json:"type"`
+		RelEntityName string        `json:"relEntityName"`
+		FkName        string        `json:"fkName"`
+		Keymaps       []ModelKeymap `json:"keymaps"`
+		Backref       string        `json:"-"`
 	}
 
 	ModelKeymap struct {
-		FieldName string `json:"fieldName"`
+		FieldName    string `json:"fieldName"`
 		RelFieldName string `json:"relFieldName"`
 	}
 )
@@ -51,54 +53,54 @@ func contains(s []string, e string) bool {
 	return false
 }
 
-func (t ModelEntity) IsUniqueIdField(fldName string) bool{
-	return t.PksSize==1 && contains(t.Pks, fldName)
+func (t ModelEntity) IsUniqueIdField(fldName string) bool {
+	return t.PksSize == 1 && contains(t.Pks, fldName)
 }
 
-func (t ModelEntity) UniquePk() string{
-	if t.PksSize==1{
+func (t ModelEntity) UniquePk() string {
+	if t.PksSize == 1 {
 		return t.Pks[0]
-	}else{
+	} else {
 		return ""
 	}
 }
 
-func (t ModelEntity) HasCombineIndex() bool{
-	return t.PksSize>1
+func (t ModelEntity) HasCombineIndex() bool {
+	return t.PksSize > 1
 }
 
-func (t ModelEntity) Indexes() string{
-	f:=fmt.Sprintf
+func (t ModelEntity) Indexes() string {
+	f := fmt.Sprintf
 	quotePks := MapStrToStr(t.Pks, func(s string) string {
 		return f("\"%s\"", strcase.ToSnake(s))
 	})
-	quoteString:=strings.Join(quotePks, ", ")
+	quoteString := strings.Join(quotePks, ", ")
 	return f(`return []ent.Index{
         index.Fields(%s).
             Unique(),
     }`, quoteString)
 }
 
-func (t ModelEntity) NormalFields() []*ModelField{
-	result:=[]*ModelField{}
-	for _,f := range t.Fields {
-		if !f.AutoCreatedInternal{
-			result=append(result, f)
+func (t ModelEntity) NormalFields() []*ModelField {
+	result := []*ModelField{}
+	for _, f := range t.Fields {
+		if !f.AutoCreatedInternal {
+			result = append(result, f)
 		}
 	}
 	return result
 }
 
-func (t ModelEntity) PluralName() string{
+func (t ModelEntity) PluralName() string {
 	return PluralizeTypeName(t.Name)
 }
 
-func (t ModelField) VarName() string{
+func (t ModelField) VarName() string {
 	return strcase.ToSnake(t.Name)
 }
 
-func (t ModelField) EntFieldType() string{
-	f:=fmt.Sprintf
+func (t ModelField) EntFieldType() string {
+	f := fmt.Sprintf
 	var resultDef string
 	switch t.Type {
 	case "id":
@@ -149,18 +151,50 @@ func (t ModelField) EntFieldType() string{
 func (t ModelRelation) FieldName() string {
 	return t.Keymaps[0].FieldName
 }
-func (t ModelRelation) PluralName() string{
+func (t ModelRelation) PluralName() string {
 	return PluralizeTypeName(t.Name)
+}
+
+func (t ModelRelation) HashBackref() bool {
+	return t.Type == "one"
 }
 
 func (t ModelEntity) Edges() []*ModelRelation {
 	var result []*ModelRelation
 	for _, r := range t.Relations {
-		if len(r.Keymaps)==1{
-			result=append(result, r)
+		if len(r.Keymaps) == 1 {
+			result = append(result, r)
 		}
 	}
 	return result
+}
+
+func (t ModelEntity) GetBackRef(entName string, rel *ModelRelation) *ModelRelation {
+	//log.Printf(".. get backref %s.%s in entity %s", entName, rel.Name, t.Name)
+	for _, r := range t.Relations {
+		if len(r.Keymaps) == 1 {
+			//log.Printf("%s == %s, %s == %s, %s == %s", r.Keymaps, rel.Keymaps,
+			//	rel.RelEntityName, t.Name, r.RelEntityName, entName)
+			//log.Println("rel.RelEntityName==t.Name", rel.RelEntityName==t.Name)
+			if rel.RelEntityName == t.Name &&
+				r.RelEntityName == entName &&
+				rel.Keymaps[0].FieldName == r.Keymaps[0].RelFieldName &&
+				rel.Keymaps[0].RelFieldName == r.Keymaps[0].FieldName {
+				return r
+			}
+		}
+	}
+
+	return nil
+}
+
+func (t ModelEntity) GetBackRefName(entName string, rel *ModelRelation) (string, error) {
+	ref := t.GetBackRef(entName, rel)
+	if ref == nil {
+		return "", errors.New(fmt.Sprintf("Cannot find backref for relation %s in entity %s", rel.Name, t.Name))
+	} else {
+		return ref.PluralName(), nil
+	}
 }
 
 func LoadModelEntity(filename string) (*ModelEntity, error) {
@@ -170,14 +204,14 @@ func LoadModelEntity(filename string) (*ModelEntity, error) {
 		return nil, err
 	}
 	var modelEntity ModelEntity
-	err=json.Unmarshal(content, &modelEntity)
+	err = json.Unmarshal(content, &modelEntity)
 	if err != nil {
 		log.Fatal("Error during Unmarshal(): ", err)
 	}
 	return &modelEntity, err
 }
 
-func GenModelEntity(templateFile string, inputFile string, writer io.Writer) error{
+func GenModelEntity(templateFile string, inputFile string, writer io.Writer) error {
 	tf := template.FuncMap{
 		"title":     strings.Title,
 		"snakecase": strcase.ToSnake,
@@ -187,7 +221,7 @@ func GenModelEntity(templateFile string, inputFile string, writer io.Writer) err
 	}
 
 	tpl := template.New("tpl").Funcs(tf)
-	cnt, err:=ioutil.ReadFile(templateFile)
+	cnt, err := ioutil.ReadFile(templateFile)
 	if err != nil {
 		return err
 	}
@@ -197,7 +231,7 @@ func GenModelEntity(templateFile string, inputFile string, writer io.Writer) err
 		return err
 	}
 
-	m, err:=LoadModelEntity(inputFile)
+	m, err := LoadModelEntity(inputFile)
 	if err = tt.Execute(writer, m); err != nil {
 		return err
 	}

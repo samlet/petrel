@@ -11,6 +11,7 @@ func ({{.Name}}) Edges() []ent.Edge {
         edge.To("{{$r.PluralName}}", {{$r.RelEntityName}}.Type),
         {{- else }}
         edge.To("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
+            {{- if ne $r.Backref "" }}Ref("{{$r.Backref}}").{{- end }}
             // Bind the "{{$r.FieldName}}" field to this edge.
             Field("{{$r.FieldName|snakecase}}").
             Unique(),

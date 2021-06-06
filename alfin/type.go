@@ -212,6 +212,14 @@ func LoadModelEntity(filename string) (*ModelEntity, error) {
 }
 
 func GenModelEntity(templateFile string, inputFile string, writer io.Writer) error {
+	m, err := LoadModelEntity(inputFile)
+	if err != nil {
+		return err
+	}
+	return GenModelEntityWithMeta(templateFile, m, writer)
+}
+
+func GenModelEntityWithMeta(templateFile string, m *ModelEntity, writer io.Writer) error {
 	tf := template.FuncMap{
 		"title":     strings.Title,
 		"snakecase": strcase.ToSnake,
@@ -231,7 +239,6 @@ func GenModelEntity(templateFile string, inputFile string, writer io.Writer) err
 		return err
 	}
 
-	m, err := LoadModelEntity(inputFile)
 	if err = tt.Execute(writer, m); err != nil {
 		return err
 	}

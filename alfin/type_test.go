@@ -39,9 +39,20 @@ func TestModelEntityTemplate(te *testing.T) {
 
 func TestRelationDesc(t *testing.T) {
 	tmpl:="templates/relation_desc.tmpl"
-	err:=GenModelEntity(tmpl, "./assets/example.json", os.Stdout)
+
+	ents := []string{"Example", "ExampleItem"}
+	mani, err:=NewMetaManipulate(ents)
 	if err != nil {
 		panic(err)
+	}
+
+	for _,ent := range ents {
+		e := mani.MustEntity(ent)
+		//e:=mani.MustEntity("Example")
+		err = GenModelEntityWithMeta(tmpl, e, os.Stdout)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 }

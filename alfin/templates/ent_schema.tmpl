@@ -1,12 +1,30 @@
 {{/* gotype: github.com/samlet/petrel/alfin.ModelEntity */}}
+
+package schema
+
+import (
+    "entgo.io/ent"
+    "entgo.io/ent/schema/mixin"
+)
+
+type {{.Name}} struct {
+    ent.Schema
+}
+
 // Fields of the {{.Name}}.
 func ({{.Name}}) Fields() []ent.Field {
     return []ent.Field{
-    {{- range $fld := $.Fields }}
+    {{- range $fld := $.NormalFields }}
         {{- if ne $.UniquePk $fld.Name }}
         {{$fld.EntFieldType}},
         {{- end}}
     {{- end}}
+    }
+}
+
+func ({{$.Name}}) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
     }
 }
 

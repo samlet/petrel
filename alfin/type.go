@@ -79,6 +79,16 @@ func (t ModelEntity) Indexes() string{
     }`, quoteString)
 }
 
+func (t ModelEntity) NormalFields() []*ModelField{
+	result:=[]*ModelField{}
+	for _,f := range t.Fields {
+		if !f.AutoCreatedInternal{
+			result=append(result, f)
+		}
+	}
+	return result
+}
+
 func (t ModelField) VarName() string{
 	return strcase.ToSnake(t.Name)
 }

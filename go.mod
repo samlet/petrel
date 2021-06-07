@@ -3,6 +3,7 @@ module github.com/samlet/petrel
 go 1.16
 
 require (
+	entgo.io/ent v0.8.0 // indirect
 	github.com/GeertJohan/go.rice v1.0.2
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/alecthomas/kong v0.2.16
@@ -32,7 +33,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/kr/pretty v0.2.1
 	github.com/labstack/echo/v4 v4.3.0
-	github.com/lib/pq v1.2.0
+	github.com/lib/pq v1.10.0
 	github.com/looplab/fsm v0.2.0
 	github.com/mattn/go-sqlite3 v1.14.7 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect

@@ -11,6 +11,7 @@ require (
 	github.com/antchfx/htmlquery v1.2.3
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
+	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/centrifuge/go-substrate-rpc-client/v3 v3.0.0
 	github.com/containerd/containerd v1.5.2 // indirect
 	github.com/crossdock/crossdock-go v0.0.0-20160816171116-049aabb0122b

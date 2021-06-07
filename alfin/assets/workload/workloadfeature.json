@@ -1,0 +1,107 @@
+{
+  "name": "WorkloadFeature",
+  "fields": [
+    {
+      "name": "workloadFeatureId",
+      "type": "id",
+      "col": "WORKLOAD_FEATURE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "featureSourceEnumId",
+      "type": "id",
+      "col": "FEATURE_SOURCE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Enumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "WLFT_ENUM",
+      "keymaps": [
+        {
+          "fieldName": "featureSourceEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkloadFeatureAppl",
+      "type": "many",
+      "relEntityName": "WorkloadFeatureAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workloadFeatureId",
+          "relFieldName": "workloadFeatureId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "workloadFeatureId"
+  ]
+}

@@ -7,6 +7,7 @@ from os.path import isfile, join
 import xml.etree.ElementTree as ET
 
 from sagas.modules.deles import *
+from utils import create_dir, write_to_file
 
 def keymaps(rel):
     return [{"fieldName":k.getFieldName(),
@@ -36,6 +37,10 @@ def collect_data(seed_path, f):
     return rs
 
 class MetaGenerator(object):
+    def __init__(self, asset_root=""):
+        self.asset_dir="assets"
+        self.asset_root=asset_root
+
     def abi(self, entities:List[str]):
         """
         $ python meta_generator.py abi [InventoryItemAndDetail]
@@ -66,7 +71,11 @@ class MetaGenerator(object):
                 "pks": [f for f in model.getPkFieldNames()]
             }
 
-            out_file=open("assets/"+ent.lower()+".json", 'w')
+            target_dir=self.asset_dir
+            if self.asset_root!="":
+                target_dir=f"{target_dir}/{self.asset_root}/"
+                create_dir(target_dir)
+            out_file=open(target_dir+"/"+ent.lower()+".json", 'w')
             out_file.write(json.dumps(abi, indent=2, ensure_ascii=False))
             out_file.close()
 
@@ -78,11 +87,11 @@ class MetaGenerator(object):
         :param write:
         :return:
         """
-        seed_path=f"./assets/{asset_path}"
+        seed_path=f"./{self.asset_dir}/{asset_path}"
         sets = self.collect_entity_types(seed_path)
 
         if write:
-            fd=open('assets/data_example_ents.json', 'w')
+            fd=open('{self.asset_dir}/data_example_ents.json', 'w')
             fd.write(json.dumps(sets, indent=2))
             fd.close()
         else:
@@ -108,7 +117,7 @@ class MetaGenerator(object):
         :param asset_path:
         :return:
         """
-        seed_path=f"./assets/{asset_path}"
+        seed_path=f"{self.asset_dir}/{asset_path}"
         sets = self.collect_entity_types(seed_path)
         self.abi(sets)
 
@@ -121,7 +130,7 @@ class MetaGenerator(object):
         """
         import os
 
-        seed_path=f"./assets/{asset_path}"
+        seed_path=f"./{self.asset_dir}/{asset_path}"
         onlyfiles = [f for f in listdir(seed_path) if isfile(join(seed_path, f))]
         for f in onlyfiles:
             if f.endswith('.xml'):
@@ -130,6 +139,34 @@ class MetaGenerator(object):
                 fd=open(target_path, 'w')
                 fd.write(json.dumps(rs, indent=2, ensure_ascii=False))
                 fd.close()
+
+    def gen_package(self, pkg, asset_root):
+        """
+        $ python meta_generator.py gen_package "com.bluecc.workload" workload
+        :param pkg:
+        :param asset_root:
+        :return:
+        """
+        self.asset_root=asset_root
+
+        reader=oc.delegator.getModelReader()
+        filters=oc.jset(pkg)
+        ent_map=reader.getEntitiesByPackage(filters, oc.jset())
+        all_ents=[]
+        for k,v in ent_map.items():
+            all_ents.extend(v)
+
+        self.abi(all_ents)
+
+        # write package meta
+        pkg_meta={"name":self.asset_root,
+                  "package": pkg,
+                  "entities": {ent:ent.lower()+".json" for ent in all_ents}
+                  }
+        write_to_file(f"{self.asset_dir}/{self.asset_root}/meta.json",
+                      json.dumps(pkg_meta, indent=2))
+
+        print("ok.")
 
 if __name__ == '__main__':
     import fire

@@ -1,0 +1,13 @@
+{
+  "name": "workload",
+  "package": "com.bluecc.workload",
+  "entities": {
+    "WorkloadFeature": "workloadfeature.json",
+    "WorkloadFeatureAppl": "workloadfeatureappl.json",
+    "WorkloadFeatureApplType": "workloadfeatureappltype.json",
+    "Workload": "workload.json",
+    "WorkloadItem": "workloaditem.json",
+    "WorkloadStatus": "workloadstatus.json",
+    "WorkloadType": "workloadtype.json"
+  }
+}

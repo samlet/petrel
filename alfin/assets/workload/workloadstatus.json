@@ -1,0 +1,141 @@
+{
+  "name": "WorkloadStatus",
+  "fields": [
+    {
+      "name": "workloadId",
+      "type": "id",
+      "col": "WORKLOAD_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusDate",
+      "type": "date-time",
+      "col": "STATUS_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusEndDate",
+      "type": "date-time",
+      "col": "STATUS_END_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "changeByUserLoginId",
+      "type": "id-vlong",
+      "col": "CHANGE_BY_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Workload",
+      "type": "one",
+      "relEntityName": "Workload",
+      "fkName": "WORKLST_WORKL",
+      "keymaps": [
+        {
+          "fieldName": "workloadId",
+          "relFieldName": "workloadId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "WORKLST_STTS",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "WORKLST_STTS_USER",
+      "keymaps": [
+        {
+          "fieldName": "changeByUserLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "workloadId",
+    "statusDate"
+  ]
+}

@@ -1,0 +1,152 @@
+{
+  "name": "WorkloadFeatureAppl",
+  "fields": [
+    {
+      "name": "workloadId",
+      "type": "id",
+      "col": "WORKLOAD_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workloadFeatureId",
+      "type": "id",
+      "col": "WORKLOAD_FEATURE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workloadFeatureApplTypeId",
+      "type": "id",
+      "col": "WORKLOAD_FEATURE_APPL_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Workload",
+      "type": "one",
+      "relEntityName": "Workload",
+      "fkName": "WLFTAP_WLPL",
+      "keymaps": [
+        {
+          "fieldName": "workloadId",
+          "relFieldName": "workloadId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkloadFeature",
+      "type": "one",
+      "relEntityName": "WorkloadFeature",
+      "fkName": "WLFTAP_WLFT",
+      "keymaps": [
+        {
+          "fieldName": "workloadFeatureId",
+          "relFieldName": "workloadFeatureId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkloadFeatureApplType",
+      "type": "one",
+      "relEntityName": "WorkloadFeatureApplType",
+      "fkName": "WLFTAP_TYP",
+      "keymaps": [
+        {
+          "fieldName": "workloadFeatureApplTypeId",
+          "relFieldName": "workloadFeatureApplTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "workloadId",
+    "workloadFeatureId",
+    "fromDate"
+  ]
+}

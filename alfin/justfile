@@ -1,2 +1,5 @@
 gen-example:
     python meta_generator.py abi [Example,ExampleItem]
+gen-workload:
+	python meta_generator.py gen_package "com.bluecc.workload" workload
+

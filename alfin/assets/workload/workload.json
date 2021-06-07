@@ -1,0 +1,226 @@
+{
+  "name": "Workload",
+  "fields": [
+    {
+      "name": "workloadId",
+      "type": "id",
+      "col": "WORKLOAD_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workloadTypeId",
+      "type": "id",
+      "col": "WORKLOAD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workloadName",
+      "type": "name",
+      "col": "WORKLOAD_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "longDescription",
+      "type": "very-long",
+      "col": "LONG_DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workloadSize",
+      "type": "numeric",
+      "col": "WORKLOAD_SIZE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workloadDate",
+      "type": "date-time",
+      "col": "WORKLOAD_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "anotherDate",
+      "type": "date-time",
+      "col": "ANOTHER_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "anotherText",
+      "type": "long-varchar",
+      "col": "ANOTHER_TEXT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "WorkloadType",
+      "type": "one",
+      "relEntityName": "WorkloadType",
+      "fkName": "WORKL_TYP",
+      "keymaps": [
+        {
+          "fieldName": "workloadTypeId",
+          "relFieldName": "workloadTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "WORKL_STTS",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkloadFeatureAppl",
+      "type": "many",
+      "relEntityName": "WorkloadFeatureAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workloadId",
+          "relFieldName": "workloadId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkloadItem",
+      "type": "many",
+      "relEntityName": "WorkloadItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workloadId",
+          "relFieldName": "workloadId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkloadStatus",
+      "type": "many",
+      "relEntityName": "WorkloadStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workloadId",
+          "relFieldName": "workloadId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "workloadId"
+  ]
+}

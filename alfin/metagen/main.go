@@ -39,6 +39,7 @@ type CLI struct {
 	Globals
 	Attach AttachCmd `cmd help:"Attach local standard input, output, and error streams to a running container"`
 	Run    RunCmd    `cmd help:"Run a command"`
+	Test   TestCmd   `cmd help:"Test command options"`
 }
 
 func main() {
@@ -77,12 +78,21 @@ func (a *AttachCmd) Run(globals *Globals) error {
 	return nil
 }
 
+type TestCmd struct {
+	Arg string `arg required`
+}
+
+func (cmd *TestCmd) Run(globals *Globals) error {
+	println(".. just say:", cmd.Arg, "with",
+		globals.Debug, globals.TLSVerify, globals.Config)
+	return nil
+}
+
 type RunCmd struct {
 	Arg string `arg required`
 }
 
 func (cmd *RunCmd) Run(globals *Globals) error {
-	println(".. just say:", cmd.Arg, "with",
-		globals.Debug, globals.TLSVerify, globals.Config)
+	println(".. just say:", cmd.Arg)
 	return nil
 }

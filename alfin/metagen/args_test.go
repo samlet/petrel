@@ -8,7 +8,7 @@ import (
 )
 
 func TestArgsParse(t *testing.T) {
-	input:=`metagen -D --tls-verify --config .meta run "hello, guys"`
+	input:=`metagen -D --tls-verify --config .meta test "hello, guys"`
 	parts,err:=shellquote.Split(input)
 	if err != nil {
 		panic(err)

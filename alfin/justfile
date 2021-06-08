@@ -6,5 +6,9 @@ gen-workload-ent:
 	go test -run TestWriteSchemas
 	go generate ./modules/workload/ent
 
+# $ just schema workload
+schema pkg:
+	go run entgo.io/ent/cmd/ent describe ./modules/{{pkg}}/ent/schema
+
 repl:
 	ipython --profile=bluecc

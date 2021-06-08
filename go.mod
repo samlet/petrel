@@ -27,6 +27,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/gogo/status v1.1.0 // indirect
 	github.com/golang/mock v1.4.3
+	github.com/google/wire v0.5.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hyperjumptech/grule-rule-engine v1.9.0
 	github.com/iancoleman/strcase v0.1.3

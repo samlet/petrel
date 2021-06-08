@@ -9,6 +9,10 @@ run name +FLAGS='':
 	go build -o bin/ft{{name}} fixtures/{{name}}/*.go
 	./bin/ft{{name}} {{FLAGS}}
 
+wire name +FLAGS='':
+    cd fixtures/{{name}} && go build -o ../../bin/ft{{name}}
+    ./bin/ft{{name}} {{FLAGS}} || true
+
 rt name +FLAGS='':
 	go build -o bin/rt{{name}} routines/{{name}}/*.go
 	./bin/rt{{name}} {{FLAGS}}

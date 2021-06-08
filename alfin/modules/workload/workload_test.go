@@ -40,6 +40,6 @@ func Do(ctx context.Context, client *ent.Client) error {
 	if err != nil {
 		panic(err)
 	}
-	log.Printf("%s", w)
+	log.Printf("%d -> %s", w.ID, w)
 	return nil
 }

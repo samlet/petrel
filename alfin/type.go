@@ -36,6 +36,7 @@ type (
 		FkName        string        `json:"fkName"`
 		Keymaps       []ModelKeymap `json:"keymaps"`
 		Backref       string        `json:"-"`
+		SelfRelation  bool          `json:"-"`
 	}
 
 	ModelKeymap struct {

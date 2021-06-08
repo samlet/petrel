@@ -8,9 +8,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/samlet/petrel/alfin/modules/workload/ent/asset"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/predicate"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/workloadpkg"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/asset"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 
 	"entgo.io/ent"
 )

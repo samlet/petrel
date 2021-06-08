@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/asset"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/workloadpkg"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/asset"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 )
 
 // Asset is the model entity for the Asset schema.

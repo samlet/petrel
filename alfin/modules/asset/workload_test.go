@@ -1,10 +1,10 @@
-package workload
+package asset
 
 import (
 	"context"
 	"fmt"
-	"github.com/samlet/petrel/alfin/modules/workload/ent"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/workloadpkg"
+	"github.com/samlet/petrel/alfin/modules/asset/ent"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 	"log"
 	"testing"
 	"time"
@@ -12,7 +12,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-func TestWorload(t *testing.T) {
+func TestAsset(t *testing.T) {
 	client, err := ent.Open("sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
 	if err != nil {
 		log.Fatalf("failed opening connection to sqlite: %v", err)

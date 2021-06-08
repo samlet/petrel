@@ -7,7 +7,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.

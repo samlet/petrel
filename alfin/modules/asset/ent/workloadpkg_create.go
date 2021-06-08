@@ -9,8 +9,8 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/asset"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/workloadpkg"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/asset"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 )
 
 // WorkloadPkgCreate is the builder for creating a WorkloadPkg entity.

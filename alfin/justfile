@@ -3,3 +3,5 @@ gen-example:
 gen-workload:
 	python meta_generator.py gen_package "com.bluecc.workload" workload
 
+repl:
+	ipython --profile=bluecc

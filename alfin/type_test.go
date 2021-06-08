@@ -40,7 +40,7 @@ func TestModelEntityTemplate(te *testing.T) {
 func TestRelationDesc(t *testing.T) {
 	tmpl:="templates/relation_desc.tmpl"
 
-	ents := []string{"Example", "ExampleItem"}
+	ents := []string{"Example", "ExampleItem", "ExampleType"}
 	mani, err:=NewMetaManipulate(ents)
 	if err != nil {
 		panic(err)

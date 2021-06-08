@@ -3,8 +3,8 @@
 package ent
 
 import (
-	"github.com/samlet/petrel/alfin/modules/workload/ent/schema"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/workloadpkg"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/schema"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 )
 
 // The init function reads all schema descriptors with runtime code

@@ -9,8 +9,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/predicate"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/workloadpkg"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 )
 
 // WorkloadPkgDelete is the builder for deleting a WorkloadPkg entity.

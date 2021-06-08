@@ -7,10 +7,10 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/samlet/petrel/alfin/modules/workload/ent/migrate"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/migrate"
 
-	"github.com/samlet/petrel/alfin/modules/workload/ent/asset"
-	"github.com/samlet/petrel/alfin/modules/workload/ent/workloadpkg"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/asset"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"

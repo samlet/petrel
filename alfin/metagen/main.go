@@ -82,6 +82,7 @@ type RunCmd struct {
 }
 
 func (cmd *RunCmd) Run(globals *Globals) error {
-	println(".. just say hi")
+	println(".. just say:", cmd.Arg, "with",
+		globals.Debug, globals.TLSVerify, globals.Config)
 	return nil
 }

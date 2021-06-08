@@ -3,7 +3,7 @@ module github.com/samlet/petrel
 go 1.16
 
 require (
-	entgo.io/ent v0.8.0 // indirect
+	entgo.io/ent v0.8.0
 	github.com/GeertJohan/go.rice v1.0.2
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/alecthomas/kong v0.2.16
@@ -12,7 +12,7 @@ require (
 	github.com/antchfx/htmlquery v1.2.3
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
-	github.com/bwmarrin/snowflake v0.3.0 // indirect
+	github.com/bwmarrin/snowflake v0.3.0
 	github.com/centrifuge/go-substrate-rpc-client/v3 v3.0.0
 	github.com/containerd/containerd v1.5.2 // indirect
 	github.com/crossdock/crossdock-go v0.0.0-20160816171116-049aabb0122b
@@ -21,7 +21,7 @@ require (
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/ethereum/go-ethereum v1.10.3
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
-	github.com/fatih/camelcase v1.0.0 // indirect
+	github.com/fatih/camelcase v1.0.0
 	github.com/fatih/color v1.11.0
 	github.com/fatih/structtag v1.0.0 // indirect
 	github.com/go-redis/redis v6.15.9+incompatible
@@ -29,13 +29,15 @@ require (
 	github.com/golang/mock v1.4.3
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hyperjumptech/grule-rule-engine v1.9.0
-	github.com/iancoleman/strcase v0.1.3 // indirect
+	github.com/iancoleman/strcase v0.1.3
 	github.com/jmoiron/sqlx v1.3.4
+	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/kr/pretty v0.2.1
 	github.com/labstack/echo/v4 v4.3.0
 	github.com/lib/pq v1.10.0
 	github.com/looplab/fsm v0.2.0
-	github.com/mattn/go-sqlite3 v1.14.7 // indirect
+	github.com/magefile/mage v1.11.0
+	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/olivere/elastic/v7 v7.0.24
 	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
@@ -63,7 +65,7 @@ require (
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
-	golang.org/x/text v0.3.6 // indirect
+	golang.org/x/text v0.3.6
 	google.golang.org/genproto v0.0.0-20210524171403-669157292da3 // indirect
 	google.golang.org/grpc v1.38.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0

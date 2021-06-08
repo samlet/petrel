@@ -6,7 +6,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/samlet/petrel/alfin/modules/workload/ent"
+	"github.com/samlet/petrel/alfin/modules/asset/ent"
 )
 
 // The AssetFunc type is an adapter to allow the use of ordinary

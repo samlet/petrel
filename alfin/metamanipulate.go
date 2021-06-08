@@ -7,6 +7,9 @@ import (
 	"strings"
 )
 
+const (
+	AssetRoot="assets"
+)
 type MetaManipulate struct{
 	EntsMap map[string]*ModelEntity
 }
@@ -17,7 +20,11 @@ func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
 	f := fmt.Sprintf
 	entsMap := make(map[string]*ModelEntity)
 	for _, e := range ents {
-		ex, err := LoadModelEntity(f("./assets/%s.json", strings.ToLower(e)))
+		metaFile:=e
+		if !strings.HasSuffix(e, ".json"){
+			metaFile=f("./assets/%s.json", strings.ToLower(e))
+		}
+		ex, err := LoadModelEntity(metaFile)
 		if err != nil {
 			return nil, err
 		}
@@ -36,19 +43,24 @@ func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
 		for _, rel := range e.Relations {
 			relEntName := rel.RelEntityName
 			if rel.HashBackref() {
-				log.Printf(".. check %s.%s(%s)\n", e.Name, rel.Name, relEntName)
-				relEnt, ok := entsMap[relEntName]
-				if ok {
-					refName, err := relEnt.GetBackRefName(e.Name, rel)
-					if err != nil {
-						panic(err)
+				if relEntName==e.Name{
+					log.Printf("entity %s has a self-relation\n", e.Name)
+					rel.SelfRelation=true
+				}else {
+					log.Printf(".. check %s.%s(%s)\n", e.Name, rel.Name, relEntName)
+					relEnt, ok := entsMap[relEntName]
+					if ok {
+						refName, err := relEnt.GetBackRefName(e.Name, rel)
+						if err != nil {
+							panic(err)
+						}
+						rel.Backref = refName
+						log.Printf("*** %s.%s backref: %s.%s\n",
+							e.Name, rel.Name,
+							relEntName, refName)
+					} else {
+						log.Printf("\tEntity %s is not exists in meta-collection\n", relEntName)
 					}
-					rel.Backref=refName
-					log.Printf("*** %s.%s backref: %s.%s\n",
-						e.Name, rel.Name,
-						relEntName, refName)
-				} else {
-					log.Printf("\tEntity %s is not exists in meta-collection\n", relEntName)
 				}
 			}
 		}
@@ -64,3 +76,4 @@ func (t *MetaManipulate) MustEntity(entName string) *ModelEntity {
 	}
 	return ent
 }
+

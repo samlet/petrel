@@ -5,9 +5,9 @@ package enttest
 import (
 	"context"
 
-	"github.com/samlet/petrel/alfin/modules/workload/ent"
+	"github.com/samlet/petrel/alfin/modules/asset/ent"
 	// required by schema hooks.
-	_ "github.com/samlet/petrel/alfin/modules/workload/ent/runtime"
+	_ "github.com/samlet/petrel/alfin/modules/asset/ent/runtime"
 
 	"entgo.io/ent/dialect/sql/schema"
 )

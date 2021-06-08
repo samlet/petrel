@@ -14,11 +14,12 @@ import (
 
 type (
 	ModelEntity struct {
-		Name      string           `json:"name"`
-		Fields    []*ModelField    `json:"fields"`
-		Relations []*ModelRelation `json:"relations"`
-		PksSize   int              `json:"pksSize"`
-		Pks       []string         `json:"pks"`
+		Name          string           `json:"name"`
+		Fields        []*ModelField    `json:"fields"`
+		Relations     []*ModelRelation `json:"relations"`
+		PksSize       int              `json:"pksSize"`
+		Pks           []string         `json:"pks"`
+		EntitiesInPkg *[]string        `json:"-"`
 	}
 
 	ModelField struct {
@@ -26,6 +27,7 @@ type (
 		Type                string `json:"type"`
 		Col                 string `json:"col"`
 		Pk                  bool   `json:"pk"`
+		NotNull             bool   `json:"notNull"`
 		AutoCreatedInternal bool   `json:"autoCreatedInternal"`
 	}
 
@@ -85,11 +87,20 @@ func (t ModelEntity) Indexes() string {
 func (t ModelEntity) NormalFields() []*ModelField {
 	result := []*ModelField{}
 	for _, f := range t.Fields {
-		if !f.AutoCreatedInternal {
+		if !f.AutoCreatedInternal && !t.isRelationField(f.Name) {
 			result = append(result, f)
 		}
 	}
 	return result
+}
+
+func (t ModelEntity) isRelationField(fldName string) bool {
+	for _, r := range t.Edges() {
+		if r.FieldName() == fldName {
+			return true
+		}
+	}
+	return false
 }
 
 func (t ModelEntity) PluralName() string {
@@ -105,17 +116,16 @@ func (t ModelField) EntFieldType() string {
 	var resultDef string
 	switch t.Type {
 	case "id":
-		resultDef = f(`field.String("%s").MaxLen(20)`, t.VarName())
+		//resultDef = f(`field.String("%s").MaxLen(20)`, t.VarName())
+		resultDef = f(`field.Int("%s")`, t.VarName())
 	case "id-long":
 		resultDef = f(`field.String("%s").MaxLen(32)`, t.VarName())
 	case "id-vlong":
 		resultDef = f(`field.String("%s")`, t.VarName())
 	case "blob", "object":
-		resultDef = f(`field.JSON("%s", []byte{}).
-            Optional()`, t.VarName())
+		resultDef = f(`field.JSON("%s", []byte{})`, t.VarName())
 	case "byte-array":
-		resultDef = f(`field.JSON("%s", []byte{}).
-            Optional()`, t.VarName())
+		resultDef = f(`field.JSON("%s", []byte{})`, t.VarName())
 	case "date-time", "date":
 		resultDef = f(`field.Time("%s").
             Default(time.Now)`, t.VarName())
@@ -123,28 +133,25 @@ func (t ModelField) EntFieldType() string {
 		resultDef = f(`field.Int("%s").
             Positive()`, t.VarName())
 	case "currency-amount", "currency-precise", "fixed-point":
-		resultDef = f(`field.Float("%s").
-            Optional()`, t.VarName())
+		resultDef = f(`field.Float("%s")`, t.VarName())
 	case "floating-point":
-		resultDef = f(`field.Float("%s").
-            Optional()`, t.VarName())
+		resultDef = f(`field.Float("%s")`, t.VarName())
 	case "integer":
-		resultDef = f(`field.Int("%s").
-            Optional()`, t.VarName())
+		resultDef = f(`field.Int("%s")`, t.VarName())
 	case "numeric":
-		resultDef = f(`field.Int("%s").
-            Optional()`, t.VarName())
+		resultDef = f(`field.Int("%s")`, t.VarName())
 	case "indicator":
 		resultDef = f(`field.Enum("%s").
-            Values("Y", "N", "-").
-            Optional()`, t.VarName())
+            Values("Y", "N", "-")`, t.VarName())
 	case "very-short":
 		resultDef = f(`field.String("%s").MaxLen(10)`, t.VarName())
 	case "url":
-		resultDef = f(`field.JSON("%s", &url.URL{}).
-            Optional()`, t.VarName())
+		resultDef = f(`field.JSON("%s", &url.URL{})`, t.VarName())
 	default:
 		resultDef = f(`field.String("%s")`, t.VarName())
+	}
+	if !t.NotNull{
+		resultDef=resultDef+".Optional()"
 	}
 	return resultDef
 }
@@ -164,7 +171,9 @@ func (t ModelEntity) Edges() []*ModelRelation {
 	var result []*ModelRelation
 	for _, r := range t.Relations {
 		if len(r.Keymaps) == 1 {
-			result = append(result, r)
+			if contains(*t.EntitiesInPkg, r.RelEntityName) {
+				result = append(result, r)
+			}
 		}
 	}
 	return result

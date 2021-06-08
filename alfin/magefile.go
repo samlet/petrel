@@ -5,11 +5,11 @@ package main
 import (
 	"fmt"
 	"github.com/magefile/mage/mg"
-	"os"
-	"strings"
-
 	"github.com/magefile/mage/sh"
 	"github.com/samlet/petrel/alfin"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 //var Default = Build
@@ -81,10 +81,39 @@ func GenRelations(what string){
 	}
 }
 
+func check(e error) {
+	if e != nil {
+		panic(e)
+	}
+}
+
+func WriteSchemas(pkg string) {
+	//pkg:="workload"
+	path:=filepath.Join("modules", pkg, "ent", "schema", "workload.go")
+	f, err := os.Create(path)
+	check(err)
+	defer f.Close()
+
+	err=alfin.GenSchemas(pkg, f)
+	if err != nil {
+		panic(err)
+	}
+
+	f.Sync()
+
+	println("write to ", path)
+	genPath:=filepath.Join(".","modules", pkg, "ent")
+	println("execute go generate:", genPath)
+	sh.RunV("go", "generate", "./"+genPath)
+	println("done.")
+}
+
+
 /**
 $ mage check
 $ mage build
 $ mage -l
 $ mage gen example
 	or $ mage genrelations example
+$ mage WriteSchemas workload
 */

@@ -11,16 +11,16 @@ func ({{.Name}}) Edges() []ent.Edge {
                 edge.To("children", {{$r.RelEntityName}}.Type).
                     From("parent").
                     // Bind the "{{$r.FieldName}}" field to this edge.
-                    Field("{{$r.FieldName|snakecase}}").
+                    // Field("{{$r.FieldName|snakecase}}").
                     Unique(),
             {{- else }}
                 {{- if eq $r.Type "many" }}
                 edge.To("{{$r.PluralName}}", {{$r.RelEntityName}}.Type),
                 {{- else }}
-                edge.To("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
+                edge.From("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
                     {{- if ne $r.Backref "" }}Ref("{{$r.Backref}}").{{- end }}
                     // Bind the "{{$r.FieldName}}" field to this edge.
-                    Field("{{$r.FieldName|snakecase}}").
+                    // Field("{{$r.FieldName|snakecase}}").
                     Unique(),
                 {{- end}}
             {{- end}}

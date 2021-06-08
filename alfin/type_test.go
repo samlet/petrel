@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -52,6 +53,28 @@ func TestRelationDesc(t *testing.T) {
 		err = GenModelEntityWithMeta(tmpl, e, os.Stdout)
 		if err != nil {
 			panic(err)
+		}
+	}
+
+}
+
+func TestGenEntitySchemas(t *testing.T) {
+	tmpls:=[]string{"ent_schema.tmpl", "relation_desc.tmpl"}
+	//ents := []string{"Example", "ExampleItem", "ExampleType"}
+	ents := []string{"Example"}
+	mani, err:=NewMetaManipulate(ents)
+	if err != nil {
+		panic(err)
+	}
+
+	for _,ent := range ents {
+		e := mani.MustEntity(ent)
+		for _,tmpl := range tmpls {
+			err = GenModelEntityWithMeta(filepath.Join("templates", tmpl),
+				e, os.Stdout)
+			if err != nil {
+				panic(err)
+			}
 		}
 	}
 

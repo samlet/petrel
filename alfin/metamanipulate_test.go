@@ -3,6 +3,7 @@ package alfin
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"path/filepath"
 	"testing"
 )
@@ -23,13 +24,6 @@ func TestMetaManipulate(t *testing.T) {
 	for _,r := range e.Relations {
 		println(r.Backref)
 	}
-}
-
-
-type PackageMeta struct{
-	Name string `json:"name"`
-	Package string `json:"package"`
-	Entities map[string]string `json:"entities"`
 }
 
 func TestPackageMeta(t *testing.T) {
@@ -84,3 +78,27 @@ func TestLoadPackage(t *testing.T) {
 	}
 }
 
+func TestGenSchemas(t *testing.T) {
+	pkg:="workload"
+	err:=GenSchemas(pkg, os.Stdout)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func TestWriteSchemas(t *testing.T) {
+	pkg:="workload"
+	path:=filepath.Join("modules", pkg, "ent", "schema", "workload.go")
+	f, err := os.Create(path)
+	check(err)
+	defer f.Close()
+
+	err=GenSchemas(pkg, f)
+	if err != nil {
+		panic(err)
+	}
+
+	f.Sync()
+
+	println("write to ", path)
+}

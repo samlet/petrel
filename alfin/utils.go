@@ -22,6 +22,15 @@ func MapStrToInt(arr []string, fn func(s string) int) []int {
 	return newArray
 }
 
+func Mapify(kv []string) map[string]string {
+	mymap := make(map[string]string)
+
+	for i := 0; i+1 <= len(kv); i = i + 2 {
+		mymap[kv[i]] = kv[i+1]
+	}
+
+	return mymap
+}
 
 func ReadJsonFile(file string, targetObj interface{}) error {
 	configData, err := ioutil.ReadFile(file)

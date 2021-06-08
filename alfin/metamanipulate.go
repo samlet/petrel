@@ -3,7 +3,9 @@ package alfin
 import (
 	"errors"
 	"fmt"
+	"io"
 	"log"
+	"path/filepath"
 	"strings"
 )
 
@@ -15,7 +17,7 @@ type MetaManipulate struct{
 }
 
 // NewMetaManipulate create MetaManipulate
-// `ents := []string{"Example", "ExampleItem"}`
+// entity names as `ents := []string{"Example", "ExampleItem"}` or files
 func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
 	f := fmt.Sprintf
 	entsMap := make(map[string]*ModelEntity)
@@ -29,6 +31,7 @@ func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
 			return nil, err
 		}
 		entsMap[ex.Name] = ex
+
 	}
 
 	// get keys
@@ -40,6 +43,7 @@ func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
 	log.Printf("%s\n", keys)
 
 	for _, e := range entsMap {
+		e.EntitiesInPkg=&keys
 		for _, rel := range e.Relations {
 			relEntName := rel.RelEntityName
 			if rel.HashBackref() {
@@ -75,5 +79,66 @@ func (t *MetaManipulate) MustEntity(entName string) *ModelEntity {
 		panic(errors.New("Cannot find entity "+entName))
 	}
 	return ent
+}
+
+
+type PackageMeta struct{
+	Name string `json:"name"`
+	Package string `json:"package"`
+	Entities map[string]string `json:"entities"`
+}
+
+const (
+	SchemaHeader=`package schema
+import (
+    "entgo.io/ent"
+    // "entgo.io/ent/schema/index"
+    "entgo.io/ent/schema/mixin"
+    "entgo.io/ent/schema/edge"
+    "entgo.io/ent/schema/field"
+    "time"
+)
+`
+)
+func GenSchemas(pkg string, writer io.Writer) error{
+	tmpls:=[]string{"ent_schema.tmpl", "relation_desc.tmpl"}
+
+	assetDir:=filepath.Join(AssetRoot, pkg)
+	metaFile:=filepath.Join(assetDir, "meta.json")
+	var pkgMeta PackageMeta
+	err:=ReadJsonFile(metaFile, &pkgMeta)
+	if err != nil {
+		return(err)
+	}
+	println(pkgMeta.Package)
+	files:=[]string{}
+	ents:=[]string{}
+	for entName,entFile:=range pkgMeta.Entities{
+		ents=append(ents, entName)
+		files=append(files, filepath.Join(assetDir, entFile))
+	}
+
+	mani, err:=NewMetaManipulate(files)
+	if err != nil {
+		return(err)
+	}
+
+	_,err=writer.Write([]byte(SchemaHeader))
+	if err != nil {
+		return fmt.Errorf("write header: %w", err)
+	}
+
+	for _,ent := range ents {
+		e := mani.MustEntity(ent)
+		for _,tmpl := range tmpls {
+			err = GenModelEntityWithMeta(filepath.Join("templates", tmpl),
+				e, writer)
+			if err != nil {
+				return(err)
+			}
+		}
+	}
+
+	return nil
 }
 

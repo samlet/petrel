@@ -2,6 +2,9 @@ gen-example:
     python meta_generator.py abi [Example,ExampleItem]
 gen-workload:
 	python meta_generator.py gen_package "com.bluecc.workload" workload
+gen-workload-ent:
+	go test -run TestWriteSchemas
+	go generate ./modules/workload/ent
 
 repl:
 	ipython --profile=bluecc

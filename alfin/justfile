@@ -1,3 +1,5 @@
+gen:
+	go generate
 gen-example:
     python meta_generator.py abi [Example,ExampleItem]
 gen-workload:

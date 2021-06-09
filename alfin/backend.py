@@ -6,7 +6,9 @@ import grpc
 import numpy as np
 from signal import signal, SIGTERM
 from sagas.ofbiz.entities import entity
+import json
 
+from meta_generator import get_entity_abi
 from outliers_pb2 import OutliersResponse, EntityInfo
 from outliers_pb2_grpc import OutliersServicer, add_OutliersServicer_to_server
 
@@ -31,8 +33,10 @@ class OutliersServer(OutliersServicer):
     def GetEntityInfo(self, request, context):
         ent=request.name
         model=entity(ent)
+        abi=get_entity_abi(ent)
         info={"name":ent,
-              "package_name": model.package_name
+              "package_name": model.package_name,
+              "meta": json.dumps(abi, indent=2, ensure_ascii=False)
               }
         resp=json_format.ParseDict(info, EntityInfo())
         return resp

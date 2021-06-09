@@ -21,6 +21,7 @@ message OutliersResponse {
 message EntityInfo{
     string name=1;
     string package_name=2;
+    string meta=3;
 }
 message EntityInfoRequest{
     string name=1;

@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=b'Z!github.com/samlet/petrel/alfin/pb',
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0eoutliers.proto\x12\x02pb\x1a\x1fgoogle/protobuf/timestamp.proto\"O\n\x06Metric\x12(\n\x04time\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\x01\".\n\x0fOutliersRequest\x12\x1b\n\x07metrics\x18\x01 \x03(\x0b\x32\n.pb.Metric\"#\n\x10OutliersResponse\x12\x0f\n\x07indices\x18\x01 \x03(\x05\"0\n\nEntityInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x14\n\x0cpackage_name\x18\x02 \x01(\t\"!\n\x11\x45ntityInfoRequest\x12\x0c\n\x04name\x18\x01 \x01(\t2{\n\x08Outliers\x12\x35\n\x06\x44\x65tect\x12\x13.pb.OutliersRequest\x1a\x14.pb.OutliersResponse\"\x00\x12\x38\n\rGetEntityInfo\x12\x15.pb.EntityInfoRequest\x1a\x0e.pb.EntityInfo\"\x00\x42#Z!github.com/samlet/petrel/alfin/pbb\x06proto3'
+  serialized_pb=b'\n\x0eoutliers.proto\x12\x02pb\x1a\x1fgoogle/protobuf/timestamp.proto\"O\n\x06Metric\x12(\n\x04time\x18\x01 \x01(\x0b\x32\x1a.google.protobuf.Timestamp\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\r\n\x05value\x18\x03 \x01(\x01\".\n\x0fOutliersRequest\x12\x1b\n\x07metrics\x18\x01 \x03(\x0b\x32\n.pb.Metric\"#\n\x10OutliersResponse\x12\x0f\n\x07indices\x18\x01 \x03(\x05\">\n\nEntityInfo\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x14\n\x0cpackage_name\x18\x02 \x01(\t\x12\x0c\n\x04meta\x18\x03 \x01(\t\"!\n\x11\x45ntityInfoRequest\x12\x0c\n\x04name\x18\x01 \x01(\t2{\n\x08Outliers\x12\x35\n\x06\x44\x65tect\x12\x13.pb.OutliersRequest\x1a\x14.pb.OutliersResponse\"\x00\x12\x38\n\rGetEntityInfo\x12\x15.pb.EntityInfoRequest\x1a\x0e.pb.EntityInfo\"\x00\x42#Z!github.com/samlet/petrel/alfin/pbb\x06proto3'
   ,
   dependencies=[google_dot_protobuf_dot_timestamp__pb2.DESCRIPTOR,])
 
@@ -159,6 +159,13 @@ _ENTITYINFO = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='meta', full_name='pb.EntityInfo.meta', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -172,7 +179,7 @@ _ENTITYINFO = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=221,
-  serialized_end=269,
+  serialized_end=283,
 )
 
 
@@ -203,8 +210,8 @@ _ENTITYINFOREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=271,
-  serialized_end=304,
+  serialized_start=285,
+  serialized_end=318,
 )
 
 _METRIC.fields_by_name['time'].message_type = google_dot_protobuf_dot_timestamp__pb2._TIMESTAMP
@@ -261,8 +268,8 @@ _OUTLIERS = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=306,
-  serialized_end=429,
+  serialized_start=320,
+  serialized_end=443,
   methods=[
   _descriptor.MethodDescriptor(
     name='Detect',

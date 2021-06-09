@@ -383,7 +383,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyId"
         }
-      ]
+      ],
+      "autoRelation": false
     },
     {
       "name": "EmploymentStatusEnumeration",
@@ -395,7 +396,8 @@
           "fieldName": "employmentStatusEnumId",
           "relFieldName": "enumId"
         }
-      ]
+      ],
+      "autoRelation": false
     },
     {
       "name": "ResidenceStatusEnumeration",
@@ -407,7 +409,8 @@
           "fieldName": "residenceStatusEnumId",
           "relFieldName": "enumId"
         }
-      ]
+      ],
+      "autoRelation": false
     },
     {
       "name": "MaritalStatusEnumeration",
@@ -419,7 +422,8 @@
           "fieldName": "maritalStatusEnumId",
           "relFieldName": "enumId"
         }
-      ]
+      ],
+      "autoRelation": false
     },
     {
       "name": "PartyContactMech",
@@ -431,7 +435,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "PartyContactMechPurpose",
@@ -443,7 +448,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "ApproverPersonTraining",
@@ -455,7 +461,8 @@
           "fieldName": "partyId",
           "relFieldName": "approverId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "ProdCatalogRole",
@@ -467,7 +474,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "ProductStoreRole",
@@ -479,7 +487,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "ToShipment",
@@ -491,7 +500,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyIdTo"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "FromShipment",
@@ -503,7 +513,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyIdFrom"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "CarrierShipmentRouteSegment",
@@ -515,7 +526,8 @@
           "fieldName": "partyId",
           "relFieldName": "carrierPartyId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "UserLogin",
@@ -527,7 +539,8 @@
           "fieldName": "partyId",
           "relFieldName": "partyId"
         }
-      ]
+      ],
+      "autoRelation": true
     },
     {
       "name": "WebSiteRole",
@@ -539,7 +552,13 @@
           "fieldName": "partyId",
           "relFieldName": "partyId"
         }
-      ]
+      ],
+      "autoRelation": true
     }
-  ]
+  ],
+  "pksSize": 1,
+  "pks": [
+    "partyId"
+  ],
+  "isView": false
 }

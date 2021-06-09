@@ -36,6 +36,33 @@ def collect_data(seed_path, f):
             rs.append({c.tag:c.attrib})
     return rs
 
+def get_entity_abi(ent: str):
+    from sagas.ofbiz.entities import entity
+    entity_meta=entity(ent)
+    model=entity_meta.model
+    fields=[{"name":f.getName(), "type":f.getType(), "col":f.getColName(),
+             "pk":f.getIsPk(), "notNull":f.getIsNotNull(), "encrypt":f.getEncrypt(),
+             "autoCreatedInternal": f.getIsAutoCreatedInternal(),
+             "validators":[v for v in f.getValidators()]
+             }
+            for f in model.getFieldsIterator()]
+    relations=[{"name":rel.getCombinedName(), "type": rel.getType(),
+                "relEntityName": rel.getRelEntityName(),
+                "fkName": rel.getFkName(),
+                "keymaps": keymaps(rel),
+                "autoRelation": rel.isAutoRelation(),
+                }
+               for rel in model.getRelations()]
+    abi={
+        "name": model.getEntityName(),
+        "fields": fields,
+        "relations": relations,
+        "pksSize": model.getPksSize(),
+        "pks": [f for f in model.getPkFieldNames()],
+        "isView": entity_meta.is_view()
+    }
+    return abi
+
 class MetaGenerator(object):
     def __init__(self, asset_root=""):
         self.asset_dir="assets"
@@ -48,32 +75,10 @@ class MetaGenerator(object):
         :param ent:
         :return:
         """
-        from sagas.ofbiz.entities import entity
+
         for ent in entities:
             # model=oc.delegator.getModelEntity(ent)
-            entity_meta=entity(ent)
-            model=entity_meta.model
-            fields=[{"name":f.getName(), "type":f.getType(), "col":f.getColName(),
-                     "pk":f.getIsPk(), "notNull":f.getIsNotNull(), "encrypt":f.getEncrypt(),
-                     "autoCreatedInternal": f.getIsAutoCreatedInternal(),
-                     "validators":[v for v in f.getValidators()]
-                     }
-                    for f in model.getFieldsIterator()]
-            relations=[{"name":rel.getCombinedName(), "type": rel.getType(),
-                        "relEntityName": rel.getRelEntityName(),
-                        "fkName": rel.getFkName(),
-                        "keymaps": keymaps(rel),
-                        "autoRelation": rel.isAutoRelation(),
-                        }
-                       for rel in model.getRelations()]
-            abi={
-                "name": model.getEntityName(),
-                "fields": fields,
-                "relations": relations,
-                "pksSize": model.getPksSize(),
-                "pks": [f for f in model.getPkFieldNames()],
-                "isView": entity_meta.is_view()
-            }
+            abi=get_entity_abi(ent)
 
             target_dir=self.asset_dir
             if self.asset_root!="":

@@ -165,17 +165,17 @@ func (t ModelRelation) PluralName() string {
 }
 
 func (t ModelRelation) HashBackref() bool {
-	return t.Type == "one"
+	return t.Type == "one" || t.Type=="one-nofk"
 }
 
 func (t ModelEntity) Edges() []*ModelRelation {
 	var result []*ModelRelation
 	for _, r := range t.Relations {
-		if len(r.Keymaps) == 1 {
-			if contains(*t.EntitiesInPkg, r.RelEntityName) {
-				result = append(result, r)
-			}
+		//if len(r.Keymaps) == 1 {
+		if contains(*t.EntitiesInPkg, r.RelEntityName) {
+			result = append(result, r)
 		}
+		//}
 	}
 	return result
 }
@@ -183,17 +183,19 @@ func (t ModelEntity) Edges() []*ModelRelation {
 func (t ModelEntity) GetBackRef(entName string, rel *ModelRelation) *ModelRelation {
 	//log.Printf(".. get backref %s.%s in entity %s", entName, rel.Name, t.Name)
 	for _, r := range t.Relations {
-		if len(r.Keymaps) == 1 {
+		//if len(r.Keymaps) == 1 {
 			//log.Printf("%s == %s, %s == %s, %s == %s", r.Keymaps, rel.Keymaps,
 			//	rel.RelEntityName, t.Name, r.RelEntityName, entName)
 			//log.Println("rel.RelEntityName==t.Name", rel.RelEntityName==t.Name)
-			if rel.RelEntityName == t.Name &&
-				r.RelEntityName == entName &&
-				rel.Keymaps[0].FieldName == r.Keymaps[0].RelFieldName &&
-				rel.Keymaps[0].RelFieldName == r.Keymaps[0].FieldName {
-				return r
-			}
+		if rel.RelEntityName == t.Name &&
+			r.RelEntityName == entName &&
+			rel.Keymaps[0].FieldName == r.Keymaps[0].RelFieldName &&
+			rel.Keymaps[0].RelFieldName == r.Keymaps[0].FieldName {
+			return r
 		}
+		//}else{
+			//log.Println("\tRelation has multi-keymaps", len(rel.Keymaps))
+		//}
 	}
 
 	return nil
@@ -202,7 +204,9 @@ func (t ModelEntity) GetBackRef(entName string, rel *ModelRelation) *ModelRelati
 func (t ModelEntity) GetBackRefName(entName string, rel *ModelRelation) (string, error) {
 	ref := t.GetBackRef(entName, rel)
 	if ref == nil {
-		return "", errors.New(fmt.Sprintf("Cannot find backref for relation %s in entity %s", rel.Name, t.Name))
+		return "", errors.New(fmt.Sprintf(
+			"Cannot find backref for relation %s in entity %s for %s",
+			rel.Name, t.Name, entName))
 	} else {
 		return ref.PluralName(), nil
 	}

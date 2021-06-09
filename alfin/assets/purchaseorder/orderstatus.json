@@ -1,0 +1,201 @@
+{
+  "name": "OrderStatus",
+  "fields": [
+    {
+      "name": "orderStatusId",
+      "type": "id",
+      "col": "ORDER_STATUS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderPaymentPreferenceId",
+      "type": "id",
+      "col": "ORDER_PAYMENT_PREFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusDatetime",
+      "type": "date-time",
+      "col": "STATUS_DATETIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusUserLogin",
+      "type": "id-vlong",
+      "col": "STATUS_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "changeReason",
+      "type": "description",
+      "col": "CHANGE_REASON",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "ORDER_STTS_STTS",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "ORDER_STTS_OHDR",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItem",
+      "type": "one-nofk",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "type": "one-nofk",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderPaymentPreferenceId",
+          "relFieldName": "orderPaymentPreferenceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "ORDER_STTS_USER",
+      "keymaps": [
+        {
+          "fieldName": "statusUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "orderStatusId"
+  ],
+  "isView": false
+}

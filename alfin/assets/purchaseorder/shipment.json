@@ -1,0 +1,876 @@
+{
+  "name": "Shipment",
+  "fields": [
+    {
+      "name": "shipmentId",
+      "type": "id",
+      "col": "SHIPMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentTypeId",
+      "type": "id",
+      "col": "SHIPMENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "primaryOrderId",
+      "type": "id",
+      "col": "PRIMARY_ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "primaryReturnId",
+      "type": "id",
+      "col": "PRIMARY_RETURN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "primaryShipGroupSeqId",
+      "type": "id",
+      "col": "PRIMARY_SHIP_GROUP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "picklistBinId",
+      "type": "id",
+      "col": "PICKLIST_BIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedReadyDate",
+      "type": "date-time",
+      "col": "ESTIMATED_READY_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedShipDate",
+      "type": "date-time",
+      "col": "ESTIMATED_SHIP_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedShipWorkEffId",
+      "type": "id",
+      "col": "ESTIMATED_SHIP_WORK_EFF_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedArrivalDate",
+      "type": "date-time",
+      "col": "ESTIMATED_ARRIVAL_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedArrivalWorkEffId",
+      "type": "id",
+      "col": "ESTIMATED_ARRIVAL_WORK_EFF_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "latestCancelDate",
+      "type": "date-time",
+      "col": "LATEST_CANCEL_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedShipCost",
+      "type": "currency-amount",
+      "col": "ESTIMATED_SHIP_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "handlingInstructions",
+      "type": "long-varchar",
+      "col": "HANDLING_INSTRUCTIONS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "originFacilityId",
+      "type": "id",
+      "col": "ORIGIN_FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "destinationFacilityId",
+      "type": "id",
+      "col": "DESTINATION_FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "originContactMechId",
+      "type": "id",
+      "col": "ORIGIN_CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "originTelecomNumberId",
+      "type": "id",
+      "col": "ORIGIN_TELECOM_NUMBER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "destinationContactMechId",
+      "type": "id",
+      "col": "DESTINATION_CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "destinationTelecomNumberId",
+      "type": "id",
+      "col": "DESTINATION_TELECOM_NUMBER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "partyIdTo",
+      "type": "id",
+      "col": "PARTY_ID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "partyIdFrom",
+      "type": "id",
+      "col": "PARTY_ID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "additionalShippingCharge",
+      "type": "currency-amount",
+      "col": "ADDITIONAL_SHIPPING_CHARGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "addtlShippingChargeDesc",
+      "type": "long-varchar",
+      "col": "ADDTL_SHIPPING_CHARGE_DESC",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ShipmentType",
+      "type": "one",
+      "relEntityName": "ShipmentType",
+      "fkName": "SHPMNT_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "shipmentTypeId",
+          "relFieldName": "shipmentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "SHPMNT_STTS",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EstimatedShipWorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "SHPMNT_ESHWEFF",
+      "keymaps": [
+        {
+          "fieldName": "estimatedShipWorkEffId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EstimatedArrivalWorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "SHPMNT_EARRWEFF",
+      "keymaps": [
+        {
+          "fieldName": "estimatedArrivalWorkEffId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "SHPMNT_CUOM",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginFacility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "SHPMNT_OFAC",
+      "keymaps": [
+        {
+          "fieldName": "originFacilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestinationFacility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "SHPMNT_DFAC",
+      "keymaps": [
+        {
+          "fieldName": "destinationFacilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginContactMech",
+      "type": "one-nofk",
+      "relEntityName": "ContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "originContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestContactMech",
+      "type": "one-nofk",
+      "relEntityName": "ContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "destinationContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginPostalAddress",
+      "type": "one",
+      "relEntityName": "PostalAddress",
+      "fkName": "SHPMNT_OPAD",
+      "keymaps": [
+        {
+          "fieldName": "originContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OriginTelecomNumber",
+      "type": "one",
+      "relEntityName": "TelecomNumber",
+      "fkName": "SHPMNT_OTCN",
+      "keymaps": [
+        {
+          "fieldName": "originTelecomNumberId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestinationPostalAddress",
+      "type": "one",
+      "relEntityName": "PostalAddress",
+      "fkName": "SHPMNT_DPAD",
+      "keymaps": [
+        {
+          "fieldName": "destinationContactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DestinationTelecomNumber",
+      "type": "one",
+      "relEntityName": "TelecomNumber",
+      "fkName": "SHPMNT_DTCN",
+      "keymaps": [
+        {
+          "fieldName": "destinationTelecomNumberId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PrimaryOrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "SHPMNT_PODR",
+      "keymaps": [
+        {
+          "fieldName": "primaryOrderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PrimaryReturnHeader",
+      "type": "one",
+      "relEntityName": "ReturnHeader",
+      "fkName": "SHPMNT_PRTNHDR",
+      "keymaps": [
+        {
+          "fieldName": "primaryReturnId",
+          "relFieldName": "returnId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PicklistBin",
+      "type": "one",
+      "relEntityName": "PicklistBin",
+      "fkName": "SHPMNT_PKLSTBIN",
+      "keymaps": [
+        {
+          "fieldName": "picklistBinId",
+          "relFieldName": "picklistBinId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PrimaryOrderItemShipGroup",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "primaryOrderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "primaryShipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentTypeAttr",
+      "type": "many",
+      "relEntityName": "ShipmentTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentTypeId",
+          "relFieldName": "shipmentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "SHPMNT_PRTYTO",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToPerson",
+      "type": "one-nofk",
+      "relEntityName": "Person",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToPartyGroup",
+      "type": "one-nofk",
+      "relEntityName": "PartyGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyIdTo",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "SHPMNT_PRTYFM",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromPerson",
+      "type": "one-nofk",
+      "relEntityName": "Person",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromPartyGroup",
+      "type": "one-nofk",
+      "relEntityName": "PartyGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyIdFrom",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentManifestView",
+      "type": "many",
+      "relEntityName": "ShipmentManifestView",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "many",
+      "relEntityName": "ItemIssuance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderShipment",
+      "type": "many",
+      "relEntityName": "OrderShipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItemShipment",
+      "type": "many",
+      "relEntityName": "ReturnItemShipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentAttribute",
+      "type": "many",
+      "relEntityName": "ShipmentAttribute",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentContactMech",
+      "type": "many",
+      "relEntityName": "ShipmentContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentItem",
+      "type": "many",
+      "relEntityName": "ShipmentItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentItemBilling",
+      "type": "many",
+      "relEntityName": "ShipmentItemBilling",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentItemFeature",
+      "type": "many",
+      "relEntityName": "ShipmentItemFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentPackage",
+      "type": "many",
+      "relEntityName": "ShipmentPackage",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentPackageContent",
+      "type": "many",
+      "relEntityName": "ShipmentPackageContent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentPackageRouteSeg",
+      "type": "many",
+      "relEntityName": "ShipmentPackageRouteSeg",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "many",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentRouteSegment",
+      "type": "many",
+      "relEntityName": "ShipmentRouteSegment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentStatus",
+      "type": "many",
+      "relEntityName": "ShipmentStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "shipmentId"
+  ],
+  "isView": false
+}

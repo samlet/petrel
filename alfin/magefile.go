@@ -8,7 +8,6 @@ import (
 	"github.com/magefile/mage/sh"
 	"github.com/samlet/petrel/alfin"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
@@ -89,25 +88,12 @@ func check(e error) {
 
 func WriteSchemas(pkg string) {
 	//pkg:="workload"
-	path:=filepath.Join("modules", pkg, "ent", "schema", "workload.go")
-	f, err := os.Create(path)
-	check(err)
-	defer f.Close()
-
-	err=alfin.GenSchemas(pkg, f)
-	if err != nil {
-		panic(err)
-	}
-
-	f.Sync()
-
-	println("write to ", path)
-	genPath:=filepath.Join(".","modules", pkg, "ent")
-	println("execute go generate:", genPath)
-	sh.RunV("go", "generate", "./"+genPath)
-	println("done.")
+	alfin.WriteSchemas(pkg)
 }
 
+func CreateMod(modName string){
+	alfin.CreateMod(modName)
+}
 
 /**
 $ mage check

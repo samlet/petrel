@@ -1,0 +1,114 @@
+edges:
+- name: OrderRole
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: OrderItem
+    type: many
+- name: OrderItemShipGroup
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: OrderItemShipGroupAssoc
+    type: many
+  - rel: Shipment
+    type: many
+- name: OrderItemPriceInfo
+  relations:
+  - rel: OrderHeader
+    type: one-nofk
+  - rel: OrderItem
+    type: one
+- name: ShipmentItem
+  relations:
+  - rel: Shipment
+    type: one
+  - rel: ItemIssuance
+    type: many
+- name: Payment
+  relations: []
+- name: ItemIssuance
+  relations:
+  - rel: Shipment
+    type: one-nofk
+  - rel: ShipmentItem
+    type: one
+  - rel: OrderHeader
+    type: one-nofk
+  - rel: OrderItem
+    type: one
+- name: OrderItem
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: ItemIssuance
+    type: many
+  - rel: OrderItemPriceInfo
+    type: many
+  - rel: OrderItemShipGroupAssoc
+    type: many
+  - rel: OrderStatus
+    type: many
+- name: OrderHeader
+  relations:
+  - rel: ItemIssuance
+    type: many
+  - rel: OrderContactMech
+    type: many
+  - rel: OrderItem
+    type: many
+  - rel: OrderItemPriceInfo
+    type: many
+  - rel: OrderItemShipGroup
+    type: many
+  - rel: OrderItemShipGroupAssoc
+    type: many
+  - rel: OrderRole
+    type: many
+  - rel: OrderStatus
+    type: many
+  - rel: Shipment
+    type: many
+- name: OrderStatus
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: OrderItem
+    type: one-nofk
+- name: Shipment
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: OrderItemShipGroup
+    type: one-nofk
+  - rel: ItemIssuance
+    type: many
+  - rel: ShipmentItem
+    type: many
+- name: OrderItemShipGroupAssoc
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: OrderItem
+    type: one
+  - rel: OrderItemShipGroup
+    type: one
+- name: OrderContactMech
+  relations:
+  - rel: OrderHeader
+    type: one
+entities:
+  ItemIssuance: itemissuance.json
+  OrderContactMech: ordercontactmech.json
+  OrderHeader: orderheader.json
+  OrderItem: orderitem.json
+  OrderItemPriceInfo: orderitempriceinfo.json
+  OrderItemShipGroup: orderitemshipgroup.json
+  OrderItemShipGroupAssoc: orderitemshipgroupassoc.json
+  OrderRole: orderrole.json
+  OrderStatus: orderstatus.json
+  Payment: payment.json
+  Shipment: shipment.json
+  ShipmentItem: shipmentitem.json
+name: purchaseorder
+package: purchaseorder

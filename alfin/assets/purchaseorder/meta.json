@@ -1,0 +1,227 @@
+{
+  "name": "purchaseorder",
+  "package": "purchaseorder",
+  "entities": {
+    "OrderRole": "orderrole.json",
+    "OrderItemShipGroup": "orderitemshipgroup.json",
+    "OrderItemPriceInfo": "orderitempriceinfo.json",
+    "ShipmentItem": "shipmentitem.json",
+    "Payment": "payment.json",
+    "ItemIssuance": "itemissuance.json",
+    "OrderItem": "orderitem.json",
+    "OrderHeader": "orderheader.json",
+    "OrderStatus": "orderstatus.json",
+    "Shipment": "shipment.json",
+    "OrderItemShipGroupAssoc": "orderitemshipgroupassoc.json",
+    "OrderContactMech": "ordercontactmech.json"
+  },
+  "edges": [
+    {
+      "name": "OrderRole",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItem"
+        }
+      ]
+    },
+    {
+      "name": "OrderItemShipGroup",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "Shipment"
+        }
+      ]
+    },
+    {
+      "name": "OrderItemPriceInfo",
+      "relations": [
+        {
+          "type": "one-nofk",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItem"
+        }
+      ]
+    },
+    {
+      "name": "ShipmentItem",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "Shipment"
+        },
+        {
+          "type": "many",
+          "rel": "ItemIssuance"
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "relations": []
+    },
+    {
+      "name": "ItemIssuance",
+      "relations": [
+        {
+          "type": "one-nofk",
+          "rel": "Shipment"
+        },
+        {
+          "type": "one",
+          "rel": "ShipmentItem"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItem"
+        }
+      ]
+    },
+    {
+      "name": "OrderItem",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "many",
+          "rel": "ItemIssuance"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemPriceInfo"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "OrderStatus"
+        }
+      ]
+    },
+    {
+      "name": "OrderHeader",
+      "relations": [
+        {
+          "type": "many",
+          "rel": "ItemIssuance"
+        },
+        {
+          "type": "many",
+          "rel": "OrderContactMech"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItem"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemPriceInfo"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroup"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "OrderRole"
+        },
+        {
+          "type": "many",
+          "rel": "OrderStatus"
+        },
+        {
+          "type": "many",
+          "rel": "Shipment"
+        }
+      ]
+    },
+    {
+      "name": "OrderStatus",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderItem"
+        }
+      ]
+    },
+    {
+      "name": "Shipment",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderItemShipGroup"
+        },
+        {
+          "type": "many",
+          "rel": "ItemIssuance"
+        },
+        {
+          "type": "many",
+          "rel": "ShipmentItem"
+        }
+      ]
+    },
+    {
+      "name": "OrderItemShipGroupAssoc",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItem"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItemShipGroup"
+        }
+      ]
+    },
+    {
+      "name": "OrderContactMech",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        }
+      ]
+    }
+  ]
+}

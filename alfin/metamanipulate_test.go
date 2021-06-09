@@ -86,6 +86,14 @@ func TestGenSchemas(t *testing.T) {
 	}
 }
 
+func TestGenSchemas_purchaseorder(t *testing.T) {
+	pkg:="purchaseorder"
+	err:=GenSchemas(pkg, os.Stdout)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func TestWriteSchemas(t *testing.T) {
 	pkg:="workload"
 	path:=filepath.Join("modules", pkg, "ent", "schema", "workload.go")

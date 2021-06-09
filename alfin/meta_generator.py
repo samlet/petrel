@@ -6,8 +6,10 @@ from os.path import isfile, join
 
 import xml.etree.ElementTree as ET
 
+import yaml
 from sagas.modules.deles import *
 from utils import create_dir, write_to_file
+from sagas.ofbiz.entities import entity
 
 def keymaps(rel):
     return [{"fieldName":k.getFieldName(),
@@ -16,7 +18,7 @@ def keymaps(rel):
             for k in rel.getKeyMaps()]
 
 
-def collect_types(seed_path, f):
+def collect_types(seed_path:str, f:str):
     xml_path=join(seed_path, f)
     tree = ET.parse(xml_path)
     root = tree.getroot()
@@ -149,7 +151,7 @@ class MetaGenerator(object):
                 fd.write(json.dumps(rs, indent=2, ensure_ascii=False))
                 fd.close()
 
-    def gen_package(self, pkg, asset_root):
+    def gen_package(self, pkg:str, asset_root:str):
         """
         $ python meta_generator.py gen_package "com.bluecc.workload" workload
         $ python meta_generator.py gen_package "org.apache.ofbiz.order.shoppinglist" shoppinglist
@@ -167,18 +169,62 @@ class MetaGenerator(object):
         for k,v in ent_map.items():
             all_ents.extend(v)
 
-        self.abi(all_ents)
-
-        # write package meta
-        pkg_meta={"name":self.asset_root,
-                  "package": pkg,
-                  "entities": {ent:ent.lower()+".json" for ent in all_ents}
-                  }
-        write_to_file(f"{self.asset_dir}/{self.asset_root}/meta.json",
-                      json.dumps(pkg_meta, indent=2))
+        self.gen_ents(asset_root, all_ents, pkg)
 
         print("ok.")
 
+    def gen_ents(self, asset_root, all_ents, pkg):
+        from ruamel.yaml import YAML
+
+        self.asset_root=asset_root
+        self.abi(all_ents)
+
+        # collect edges
+        edges=[]
+        for typ in all_ents:
+            entity_meta=entity(typ)
+            model=entity_meta.model
+            relations=[{"type": rel.getType(),
+                        "rel": rel.getRelEntityName()}
+                       for rel in model.getRelations() if rel.getRelEntityName() in all_ents]
+            edges.append({"name":typ, "relations": relations})
+
+        # write package meta
+        pkg_meta = {"name": self.asset_root,
+                    "package": pkg,
+                    "entities": {ent: ent.lower() + ".json" for ent in all_ents},
+                    "edges": edges
+                    }
+        write_to_file(f"{self.asset_dir}/{self.asset_root}/meta.json",
+                      json.dumps(pkg_meta, indent=2))
+        write_to_file(f"{self.asset_dir}/{self.asset_root}/meta.yaml",
+                      yaml.dump(pkg_meta))
+
+    def gen_case(self, seed_path:str):
+        """
+        $ python meta_generator.py gen_case ./assets/cases/purchaseorder
+        :param seed_path:
+        :return:
+        """
+        from os import listdir
+        from os.path import isfile, join
+        import os
+
+        # seed_path="./assets/cases/purchaseorder"
+        onlyfiles = [f for f in listdir(seed_path) if isfile(join(seed_path, f)) and f.endswith('.xml')]
+        all_types=set()
+        for f in onlyfiles:
+            all_types.update(collect_types(seed_path, f))
+        pkg=os.path.basename(seed_path)
+        self.gen_ents(pkg, all_types, pkg)
+
+metagen=MetaGenerator()
+
 if __name__ == '__main__':
     import fire
-    fire.Fire(MetaGenerator)
+    fire.Fire(metagen)
+
+"""
+from meta_generator import metagen
+"""
+

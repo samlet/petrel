@@ -1,0 +1,362 @@
+{
+  "name": "ItemIssuance",
+  "fields": [
+    {
+      "name": "itemIssuanceId",
+      "type": "id",
+      "col": "ITEM_ISSUANCE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipGroupSeqId",
+      "type": "id",
+      "col": "SHIP_GROUP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "inventoryItemId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentId",
+      "type": "id",
+      "col": "SHIPMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentItemSeqId",
+      "type": "id",
+      "col": "SHIPMENT_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "maintHistSeqId",
+      "type": "id",
+      "col": "MAINT_HIST_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "issuedDateTime",
+      "type": "date-time",
+      "col": "ISSUED_DATE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "issuedByUserLoginId",
+      "type": "id-vlong",
+      "col": "ISSUED_BY_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "cancelQuantity",
+      "type": "fixed-point",
+      "col": "CANCEL_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "ITEM_ISS_INVITM",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemShipGrpInvRes",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGrpInvRes",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Shipment",
+      "type": "one-nofk",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentItem",
+      "type": "one",
+      "relEntityName": "ShipmentItem",
+      "fkName": "ITEM_ISS_SHITM",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAssetMaint",
+      "type": "one",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "ITEM_ISS_FAMNT",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        },
+        {
+          "fieldName": "maintHistSeqId",
+          "relFieldName": "maintHistSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderHeader",
+      "type": "one-nofk",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItem",
+      "type": "one",
+      "relEntityName": "OrderItem",
+      "fkName": "ITEM_ISS_ORITM",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "IssuedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "ITEM_ISS_IBUL",
+      "keymaps": [
+        {
+          "fieldName": "issuedByUserLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItemDetail",
+      "type": "many",
+      "relEntityName": "InventoryItemDetail",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "itemIssuanceId",
+          "relFieldName": "itemIssuanceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryTransfer",
+      "type": "many",
+      "relEntityName": "InventoryTransfer",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "itemIssuanceId",
+          "relFieldName": "itemIssuanceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemIssuanceRole",
+      "type": "many",
+      "relEntityName": "ItemIssuanceRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "itemIssuanceId",
+          "relFieldName": "itemIssuanceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemBilling",
+      "type": "many",
+      "relEntityName": "OrderItemBilling",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "itemIssuanceId",
+          "relFieldName": "itemIssuanceId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "itemIssuanceId"
+  ],
+  "isView": false
+}

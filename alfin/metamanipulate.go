@@ -16,24 +16,7 @@ type MetaManipulate struct{
 	EntsMap map[string]*ModelEntity
 }
 
-// NewMetaManipulate create MetaManipulate
-// entity names as `ents := []string{"Example", "ExampleItem"}` or files
-func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
-	f := fmt.Sprintf
-	entsMap := make(map[string]*ModelEntity)
-	for _, e := range ents {
-		metaFile:=e
-		if !strings.HasSuffix(e, ".json"){
-			metaFile=f("./assets/%s.json", strings.ToLower(e))
-		}
-		ex, err := LoadModelEntity(metaFile)
-		if err != nil {
-			return nil, err
-		}
-		entsMap[ex.Name] = ex
-
-	}
-
+func NewMetaManipulateWithMap(entsMap map[string]*ModelEntity) (*MetaManipulate, error) {
 	// get keys
 	keys := make([]string, 0, len(entsMap))
 	for k := range entsMap {
@@ -73,6 +56,26 @@ func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
 	return &MetaManipulate{EntsMap: entsMap}, nil
 }
 
+// NewMetaManipulate create MetaManipulate
+// entity names as `ents := []string{"Example", "ExampleItem"}` or files
+func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
+	f := fmt.Sprintf
+	entsMap := make(map[string]*ModelEntity)
+	for _, e := range ents {
+		metaFile:=e
+		if !strings.HasSuffix(e, ".json"){
+			metaFile=f("./assets/%s.json", strings.ToLower(e))
+		}
+		ex, err := LoadModelEntity(metaFile)
+		if err != nil {
+			return nil, err
+		}
+		entsMap[ex.Name] = ex
+	}
+
+	return NewMetaManipulateWithMap(entsMap)
+}
+
 func (t *MetaManipulate) MustEntity(entName string) *ModelEntity {
 	ent, ok:=t.EntsMap[entName]
 	if !ok {
@@ -100,9 +103,8 @@ import (
 )
 `
 )
-func GenSchemas(pkg string, writer io.Writer) error{
-	tmpls:=[]string{"ent_schema.tmpl", "relation_desc.tmpl"}
 
+func GenSchemas(pkg string, writer io.Writer) error{
 	assetDir:=filepath.Join(AssetRoot, pkg)
 	metaFile:=filepath.Join(assetDir, "meta.json")
 	var pkgMeta PackageMeta
@@ -118,17 +120,21 @@ func GenSchemas(pkg string, writer io.Writer) error{
 		files=append(files, filepath.Join(assetDir, entFile))
 	}
 
-	mani, err:=NewMetaManipulate(files)
+	return GenSchemaWithFiles(files, ents, writer)
+}
+
+func GenSchemaWithFiles(files []string, ents []string, writer io.Writer) error {
+	mani, err := NewMetaManipulate(files)
 	if err != nil {
-		return(err)
+		return (err)
 	}
 
-	_,err=writer.Write([]byte(SchemaHeader))
+	_, err = writer.Write([]byte(SchemaHeader))
 	if err != nil {
 		return fmt.Errorf("write header: %w", err)
 	}
-
-	for _,ent := range ents {
+	tmpls := []string{"ent_schema.tmpl", "relation_desc.tmpl"}
+	for _, ent := range ents {
 		e := mani.MustEntity(ent)
 		if !e.IsView {
 			for _, tmpl := range tmpls {

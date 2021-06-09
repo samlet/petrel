@@ -20,3 +20,9 @@ backend:
 procs:
 	foreman start
 
+# $ just gencase purchaseorder
+gencase modname:
+    python meta_generator.py gen_case ./assets/cases/{{modname}}
+    mage CreateMod {{modname}}
+    mage WriteSchemas {{modname}}
+

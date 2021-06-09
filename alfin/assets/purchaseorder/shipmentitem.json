@@ -1,0 +1,265 @@
+{
+  "name": "ShipmentItem",
+  "fields": [
+    {
+      "name": "shipmentId",
+      "type": "id",
+      "col": "SHIPMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentItemSeqId",
+      "type": "id",
+      "col": "SHIPMENT_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentContentDescription",
+      "type": "description",
+      "col": "SHIPMENT_CONTENT_DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Shipment",
+      "type": "one",
+      "relEntityName": "Shipment",
+      "fkName": "SHPMNT_ITM_SHPMT",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "SHPMNT_ITM_PROD",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "many",
+      "relEntityName": "ItemIssuance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderShipment",
+      "type": "many",
+      "relEntityName": "OrderShipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItemShipment",
+      "type": "many",
+      "relEntityName": "ReturnItemShipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentItemBilling",
+      "type": "many",
+      "relEntityName": "ShipmentItemBilling",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentItemFeature",
+      "type": "many",
+      "relEntityName": "ShipmentItemFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentPackageContent",
+      "type": "many",
+      "relEntityName": "ShipmentPackageContent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "many",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShippingDocument",
+      "type": "many",
+      "relEntityName": "ShippingDocument",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentId",
+          "relFieldName": "shipmentId"
+        },
+        {
+          "fieldName": "shipmentItemSeqId",
+          "relFieldName": "shipmentItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "shipmentId",
+    "shipmentItemSeqId"
+  ],
+  "isView": false
+}

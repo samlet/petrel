@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/magefile/mage/sh"
 	"go.uber.org/zap"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -193,3 +194,53 @@ func ReadMaintConf(configFile string) MainEntConf {
 	}
 	return maintConf
 }
+
+func mkdir(dir string){
+	err:=os.MkdirAll(dir, 0777)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func chdir(dir string){
+	err:=os.Chdir(dir)
+	if err != nil {
+		panic(err)
+	}
+}
+
+func CreateMod(modName string){
+	//f:=fmt.Sprintf
+	modDir:=filepath.Join("modules", modName)
+	mkdir(modDir)
+	chdir(modDir)
+	err:=sh.RunV("ent", "init", "ModEnt")
+	if err != nil {
+		panic(err)
+	}
+	mkdir("meta")
+
+	//targetFile:=filepath.Join("ent", "schema", "modent.go")
+}
+
+func WriteSchemas(pkg string) {
+	//pkg:="workload"
+	path:=filepath.Join("modules", pkg, "ent", "schema", "modent.go")
+	f, err := os.Create(path)
+	check(err)
+	defer f.Close()
+
+	err=GenSchemas(pkg, f)
+	if err != nil {
+		panic(err)
+	}
+
+	f.Sync()
+
+	println("write to ", path)
+	genPath:=filepath.Join(".","modules", pkg, "ent")
+	println("execute go generate:", genPath)
+	sh.RunV("go", "generate", "./"+genPath)
+	println("done.")
+}
+

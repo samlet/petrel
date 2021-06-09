@@ -1,0 +1,192 @@
+{
+  "name": "OrderItemPriceInfo",
+  "fields": [
+    {
+      "name": "orderItemPriceInfoId",
+      "type": "id",
+      "col": "ORDER_ITEM_PRICE_INFO_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPriceRuleId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_RULE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPriceActionSeqId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_ACTION_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "modifyAmount",
+      "type": "currency-precise",
+      "col": "MODIFY_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "rateCode",
+      "type": "short-varchar",
+      "col": "RATE_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderHeader",
+      "type": "one-nofk",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItem",
+      "type": "one",
+      "relEntityName": "OrderItem",
+      "fkName": "ORDER_OIPI_OITM",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceRule",
+      "type": "one-nofk",
+      "relEntityName": "ProductPriceRule",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceAction",
+      "type": "one",
+      "relEntityName": "ProductPriceAction",
+      "fkName": "ORDER_OIPI_PRAI",
+      "keymaps": [
+        {
+          "fieldName": "productPriceRuleId",
+          "relFieldName": "productPriceRuleId"
+        },
+        {
+          "fieldName": "productPriceActionSeqId",
+          "relFieldName": "productPriceActionSeqId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "orderItemPriceInfoId"
+  ],
+  "isView": false
+}

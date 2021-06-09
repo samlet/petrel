@@ -12,3 +12,9 @@ schema pkg:
 
 repl:
 	ipython --profile=bluecc
+backend:
+	python backend.py
+
+procs:
+	foreman start
+

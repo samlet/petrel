@@ -1,0 +1,32 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+package pb;
+
+option go_package = "github.com/samlet/petrel/alfin/pb";
+
+message Metric {
+    google.protobuf.Timestamp time = 1;
+    string name = 2;
+    double value = 3;
+}
+
+message OutliersRequest {
+    repeated Metric metrics = 1;
+}
+
+message OutliersResponse {
+    repeated int32 indices = 1;
+}
+
+message EntityInfo{
+    string name=1;
+    string package_name=2;
+}
+message EntityInfoRequest{
+    string name=1;
+}
+
+service Outliers {
+    rpc Detect(OutliersRequest) returns (OutliersResponse) {}
+    rpc GetEntityInfo(EntityInfoRequest) returns (EntityInfo) {}
+}

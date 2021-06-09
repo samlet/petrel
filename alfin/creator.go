@@ -5,7 +5,6 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	rice "github.com/GeertJohan/go.rice"
 	"go.uber.org/zap"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -13,7 +12,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 	"syscall"
 )
 
@@ -116,20 +114,24 @@ func (c *Creator) GetTarget(suffix string) string {
 // read template from rice.box
 func (c *Creator) ReadTemplate() (string, error) {
 	err := EnsureFile(c.TemplatePath)
+	//if err != nil {
+	//	dir, file:=filepath.Split(c.TemplatePath)
+	//	box:=strings.TrimRight(dir, "/")
+	//	println(box, file)
+	//	// get template from a rice.Box
+	//	return rice.MustFindBox(box).String(file)  // err: argument must be a string literal
+	//}
+
 	if err != nil {
-		dir, file:=filepath.Split(c.TemplatePath)
-		box:=strings.TrimRight(dir, "/")
-		println(box, file)
-		// get template from a rice.Box
-		return rice.MustFindBox(box).String(file)
-	}else{
-		t, err := ioutil.ReadFile(c.TemplatePath)
-		if err != nil {
-			logger.Fatal(err.Error())
-			return "", err
-		}
-		return string(t), nil
+		return "", err
 	}
+
+	t, err := ioutil.ReadFile(c.TemplatePath)
+	if err != nil {
+		logger.Fatal(err.Error())
+		return "", err
+	}
+	return string(t), nil
 }
 
 func (c *Creator) Execute(suffix string) error {

@@ -6,10 +6,11 @@ import grpc
 import numpy as np
 from signal import signal, SIGTERM
 from sagas.ofbiz.entities import entity
+from sagas.modules.deles import *
 import json
 
 from meta_generator import get_entity_abi
-from outliers_pb2 import OutliersResponse, EntityInfo
+from outliers_pb2 import OutliersResponse, EntityInfo, EntityPackage
 from outliers_pb2_grpc import OutliersServicer, add_OutliersServicer_to_server
 
 
@@ -40,6 +41,17 @@ class OutliersServer(OutliersServicer):
               }
         resp=json_format.ParseDict(info, EntityInfo())
         return resp
+
+    def GetEntitiesInPackage(self, request, context):
+        reader=oc.delegator.getModelReader()
+        pkg=request.name
+        filters=oc.jset(pkg)
+        ent_map=reader.getEntitiesByPackage(filters, oc.jset())
+        result=[]
+        for k,v in ent_map.items():
+            for ent in v:
+                result.append(ent)
+        return EntityPackage(name=pkg, entities=result)
 
 
 if __name__ == '__main__':

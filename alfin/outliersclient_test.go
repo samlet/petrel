@@ -13,7 +13,7 @@ func TestBackend_EntityInfo(t *testing.T) {
 	if err != nil {
 		panic(err)
 	}
-	Do(client.client)
+	Do(client.Client)
 }
 
 func Do(client pb.OutliersClient) {
@@ -39,4 +39,17 @@ func TestOutliersClient_GetEntityMeta(t *testing.T) {
 		panic(err)
 	}
 	fmt.Printf("%s: %s\n", model.Name, model.Pks)
+}
+
+func TestOutliersClient_GetEntitiesInPackage(t *testing.T) {
+	client,err:=NewOutliersClient()
+	if err != nil {
+		panic(err)
+	}
+	model, err:=client.Client.GetEntitiesInPackage(context.Background(),
+		&pb.EntityPackageRequest{Name: "com.bluecc.workload"})
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("%s: %s\n", model.Name, model.Entities)
 }

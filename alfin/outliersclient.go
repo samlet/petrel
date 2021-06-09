@@ -9,7 +9,7 @@ import (
 )
 
 type OutliersClient struct{
-	client pb.OutliersClient
+	Client pb.OutliersClient
 }
 
 func NewOutliersClient() (*OutliersClient, error){
@@ -22,7 +22,7 @@ func NewOutliersClient() (*OutliersClient, error){
 	//defer conn.Close()
 
 	client := pb.NewOutliersClient(conn)
-	return &OutliersClient{client:client}, nil
+	return &OutliersClient{Client: client}, nil
 }
 
 func (t OutliersClient) GetEntityMeta(entityName string) (*ModelEntity, error){
@@ -31,7 +31,7 @@ func (t OutliersClient) GetEntityMeta(entityName string) (*ModelEntity, error){
 	}
 
 	var modelEntity ModelEntity
-	resp, err := t.client.GetEntityInfo(context.Background(), req)
+	resp, err := t.Client.GetEntityInfo(context.Background(), req)
 	if err != nil {
 		log.Fatal(err)
 		return nil, err

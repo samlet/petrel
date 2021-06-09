@@ -27,7 +27,16 @@ message EntityInfoRequest{
     string name=1;
 }
 
+message EntityPackage{
+    string name=1;
+    repeated string entities=2;
+}
+message EntityPackageRequest{
+    string name=1;
+}
+
 service Outliers {
     rpc Detect(OutliersRequest) returns (OutliersResponse) {}
     rpc GetEntityInfo(EntityInfoRequest) returns (EntityInfo) {}
+    rpc GetEntitiesInPackage(EntityPackageRequest) returns (EntityPackage) {}
 }

@@ -292,6 +292,108 @@ func (x *EntityInfoRequest) GetName() string {
 	return ""
 }
 
+type EntityPackage struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name     string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Entities []string `protobuf:"bytes,2,rep,name=entities,proto3" json:"entities,omitempty"`
+}
+
+func (x *EntityPackage) Reset() {
+	*x = EntityPackage{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_outliers_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EntityPackage) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EntityPackage) ProtoMessage() {}
+
+func (x *EntityPackage) ProtoReflect() protoreflect.Message {
+	mi := &file_outliers_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EntityPackage.ProtoReflect.Descriptor instead.
+func (*EntityPackage) Descriptor() ([]byte, []int) {
+	return file_outliers_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *EntityPackage) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *EntityPackage) GetEntities() []string {
+	if x != nil {
+		return x.Entities
+	}
+	return nil
+}
+
+type EntityPackageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+}
+
+func (x *EntityPackageRequest) Reset() {
+	*x = EntityPackageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_outliers_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *EntityPackageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EntityPackageRequest) ProtoMessage() {}
+
+func (x *EntityPackageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_outliers_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EntityPackageRequest.ProtoReflect.Descriptor instead.
+func (*EntityPackageRequest) Descriptor() ([]byte, []int) {
+	return file_outliers_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *EntityPackageRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
 var File_outliers_proto protoreflect.FileDescriptor
 
 var file_outliers_proto_rawDesc = []byte{
@@ -319,17 +421,29 @@ var file_outliers_proto_rawDesc = []byte{
 	0x01, 0x28, 0x09, 0x52, 0x04, 0x6d, 0x65, 0x74, 0x61, 0x22, 0x27, 0x0a, 0x11, 0x45, 0x6e, 0x74,
 	0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12,
 	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x32, 0x7b, 0x0a, 0x08, 0x4f, 0x75, 0x74, 0x6c, 0x69, 0x65, 0x72, 0x73, 0x12, 0x35,
-	0x0a, 0x06, 0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x4f, 0x75,
-	0x74, 0x6c, 0x69, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e,
-	0x70, 0x62, 0x2e, 0x4f, 0x75, 0x74, 0x6c, 0x69, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f,
-	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x38, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x45, 0x6e, 0x74, 0x69,
-	0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x12, 0x15, 0x2e, 0x70, 0x62, 0x2e, 0x45, 0x6e, 0x74, 0x69,
-	0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0e, 0x2e,
-	0x70, 0x62, 0x2e, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x00, 0x42,
-	0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x61,
-	0x6d, 0x6c, 0x65, 0x74, 0x2f, 0x70, 0x65, 0x74, 0x72, 0x65, 0x6c, 0x2f, 0x61, 0x6c, 0x66, 0x69,
-	0x6e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x6d, 0x65, 0x22, 0x3f, 0x0a, 0x0d, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x50, 0x61, 0x63, 0x6b,
+	0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x65, 0x6e, 0x74, 0x69, 0x74,
+	0x69, 0x65, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x08, 0x65, 0x6e, 0x74, 0x69, 0x74,
+	0x69, 0x65, 0x73, 0x22, 0x2a, 0x0a, 0x14, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x50, 0x61, 0x63,
+	0x6b, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x32,
+	0xc2, 0x01, 0x0a, 0x08, 0x4f, 0x75, 0x74, 0x6c, 0x69, 0x65, 0x72, 0x73, 0x12, 0x35, 0x0a, 0x06,
+	0x44, 0x65, 0x74, 0x65, 0x63, 0x74, 0x12, 0x13, 0x2e, 0x70, 0x62, 0x2e, 0x4f, 0x75, 0x74, 0x6c,
+	0x69, 0x65, 0x72, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x70, 0x62,
+	0x2e, 0x4f, 0x75, 0x74, 0x6c, 0x69, 0x65, 0x72, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x12, 0x38, 0x0a, 0x0d, 0x47, 0x65, 0x74, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79,
+	0x49, 0x6e, 0x66, 0x6f, 0x12, 0x15, 0x2e, 0x70, 0x62, 0x2e, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79,
+	0x49, 0x6e, 0x66, 0x6f, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x0e, 0x2e, 0x70, 0x62,
+	0x2e, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x49, 0x6e, 0x66, 0x6f, 0x22, 0x00, 0x12, 0x45, 0x0a,
+	0x14, 0x47, 0x65, 0x74, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x69, 0x65, 0x73, 0x49, 0x6e, 0x50, 0x61,
+	0x63, 0x6b, 0x61, 0x67, 0x65, 0x12, 0x18, 0x2e, 0x70, 0x62, 0x2e, 0x45, 0x6e, 0x74, 0x69, 0x74,
+	0x79, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x11, 0x2e, 0x70, 0x62, 0x2e, 0x45, 0x6e, 0x74, 0x69, 0x74, 0x79, 0x50, 0x61, 0x63, 0x6b, 0x61,
+	0x67, 0x65, 0x22, 0x00, 0x42, 0x23, 0x5a, 0x21, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x73, 0x61, 0x6d, 0x6c, 0x65, 0x74, 0x2f, 0x70, 0x65, 0x74, 0x72, 0x65, 0x6c,
+	0x2f, 0x61, 0x6c, 0x66, 0x69, 0x6e, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -344,24 +458,28 @@ func file_outliers_proto_rawDescGZIP() []byte {
 	return file_outliers_proto_rawDescData
 }
 
-var file_outliers_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_outliers_proto_msgTypes = make([]protoimpl.MessageInfo, 7)
 var file_outliers_proto_goTypes = []interface{}{
 	(*Metric)(nil),                // 0: pb.Metric
 	(*OutliersRequest)(nil),       // 1: pb.OutliersRequest
 	(*OutliersResponse)(nil),      // 2: pb.OutliersResponse
 	(*EntityInfo)(nil),            // 3: pb.EntityInfo
 	(*EntityInfoRequest)(nil),     // 4: pb.EntityInfoRequest
-	(*timestamppb.Timestamp)(nil), // 5: google.protobuf.Timestamp
+	(*EntityPackage)(nil),         // 5: pb.EntityPackage
+	(*EntityPackageRequest)(nil),  // 6: pb.EntityPackageRequest
+	(*timestamppb.Timestamp)(nil), // 7: google.protobuf.Timestamp
 }
 var file_outliers_proto_depIdxs = []int32{
-	5, // 0: pb.Metric.time:type_name -> google.protobuf.Timestamp
+	7, // 0: pb.Metric.time:type_name -> google.protobuf.Timestamp
 	0, // 1: pb.OutliersRequest.metrics:type_name -> pb.Metric
 	1, // 2: pb.Outliers.Detect:input_type -> pb.OutliersRequest
 	4, // 3: pb.Outliers.GetEntityInfo:input_type -> pb.EntityInfoRequest
-	2, // 4: pb.Outliers.Detect:output_type -> pb.OutliersResponse
-	3, // 5: pb.Outliers.GetEntityInfo:output_type -> pb.EntityInfo
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
+	6, // 4: pb.Outliers.GetEntitiesInPackage:input_type -> pb.EntityPackageRequest
+	2, // 5: pb.Outliers.Detect:output_type -> pb.OutliersResponse
+	3, // 6: pb.Outliers.GetEntityInfo:output_type -> pb.EntityInfo
+	5, // 7: pb.Outliers.GetEntitiesInPackage:output_type -> pb.EntityPackage
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
 	2, // [2:2] is the sub-list for extension type_name
 	2, // [2:2] is the sub-list for extension extendee
 	0, // [0:2] is the sub-list for field type_name
@@ -433,6 +551,30 @@ func file_outliers_proto_init() {
 				return nil
 			}
 		}
+		file_outliers_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EntityPackage); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_outliers_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*EntityPackageRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -440,7 +582,7 @@ func file_outliers_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_outliers_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   5,
+			NumMessages:   7,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -468,6 +610,7 @@ const _ = grpc.SupportPackageIsVersion6
 type OutliersClient interface {
 	Detect(ctx context.Context, in *OutliersRequest, opts ...grpc.CallOption) (*OutliersResponse, error)
 	GetEntityInfo(ctx context.Context, in *EntityInfoRequest, opts ...grpc.CallOption) (*EntityInfo, error)
+	GetEntitiesInPackage(ctx context.Context, in *EntityPackageRequest, opts ...grpc.CallOption) (*EntityPackage, error)
 }
 
 type outliersClient struct {
@@ -496,10 +639,20 @@ func (c *outliersClient) GetEntityInfo(ctx context.Context, in *EntityInfoReques
 	return out, nil
 }
 
+func (c *outliersClient) GetEntitiesInPackage(ctx context.Context, in *EntityPackageRequest, opts ...grpc.CallOption) (*EntityPackage, error) {
+	out := new(EntityPackage)
+	err := c.cc.Invoke(ctx, "/pb.Outliers/GetEntitiesInPackage", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OutliersServer is the server API for Outliers service.
 type OutliersServer interface {
 	Detect(context.Context, *OutliersRequest) (*OutliersResponse, error)
 	GetEntityInfo(context.Context, *EntityInfoRequest) (*EntityInfo, error)
+	GetEntitiesInPackage(context.Context, *EntityPackageRequest) (*EntityPackage, error)
 }
 
 // UnimplementedOutliersServer can be embedded to have forward compatible implementations.
@@ -511,6 +664,9 @@ func (*UnimplementedOutliersServer) Detect(context.Context, *OutliersRequest) (*
 }
 func (*UnimplementedOutliersServer) GetEntityInfo(context.Context, *EntityInfoRequest) (*EntityInfo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetEntityInfo not implemented")
+}
+func (*UnimplementedOutliersServer) GetEntitiesInPackage(context.Context, *EntityPackageRequest) (*EntityPackage, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetEntitiesInPackage not implemented")
 }
 
 func RegisterOutliersServer(s *grpc.Server, srv OutliersServer) {
@@ -553,6 +709,24 @@ func _Outliers_GetEntityInfo_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Outliers_GetEntitiesInPackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EntityPackageRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OutliersServer).GetEntitiesInPackage(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/pb.Outliers/GetEntitiesInPackage",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OutliersServer).GetEntitiesInPackage(ctx, req.(*EntityPackageRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Outliers_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "pb.Outliers",
 	HandlerType: (*OutliersServer)(nil),
@@ -564,6 +738,10 @@ var _Outliers_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetEntityInfo",
 			Handler:    _Outliers_GetEntityInfo_Handler,
+		},
+		{
+			MethodName: "GetEntitiesInPackage",
+			Handler:    _Outliers_GetEntitiesInPackage_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

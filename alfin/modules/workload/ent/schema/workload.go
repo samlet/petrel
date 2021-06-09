@@ -10,6 +10,94 @@ import (
 )
 
 
+type WorkloadFeature struct {
+    ent.Schema
+}
+
+// Fields of the WorkloadFeature.
+func (WorkloadFeature) Fields() []ent.Field {
+    return []ent.Field{
+        field.Int("feature_source_enum_id").Optional(),
+        field.String("description").Optional(),
+    }
+}
+
+func (WorkloadFeature) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+    }
+}
+
+/*
+*/
+
+
+
+// Edges of the WorkloadFeature.
+//  one: Enumeration
+//  many: WorkloadFeatureAppl
+func (WorkloadFeature) Edges() []ent.Edge {
+    return []ent.Edge{
+                edge.To("workload_feature_appls", WorkloadFeatureAppl.Type),
+    }
+}
+
+
+type WorkloadFeatureAppl struct {
+    ent.Schema
+}
+
+// Fields of the WorkloadFeatureAppl.
+func (WorkloadFeatureAppl) Fields() []ent.Field {
+    return []ent.Field{
+        field.Time("from_date").
+            Default(time.Now),
+        field.Time("thru_date").
+            Default(time.Now).Optional(),
+        field.Int("sequence_num").Optional(),
+    }
+}
+
+func (WorkloadFeatureAppl) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+    }
+}
+
+/*
+func (WorkloadFeatureAppl) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("workload_id", "workload_feature_id", "from_date").
+            Unique(),
+    }
+}
+
+*/
+
+
+
+// Edges of the WorkloadFeatureAppl.
+//  one: Workload
+//  one: WorkloadFeature
+//  one: WorkloadFeatureApplType
+func (WorkloadFeatureAppl) Edges() []ent.Edge {
+    return []ent.Edge{
+                edge.From("workload", Workload.Type).Ref("workload_feature_appls").
+                    // Bind the "workloadId" field to this edge.
+                    // Field("workload_id").
+                    Unique(),
+                edge.From("workload_feature", WorkloadFeature.Type).Ref("workload_feature_appls").
+                    // Bind the "workloadFeatureId" field to this edge.
+                    // Field("workload_feature_id").
+                    Unique(),
+                edge.From("workload_feature_appl_type", WorkloadFeatureApplType.Type).Ref("workload_feature_appls").
+                    // Bind the "workloadFeatureApplTypeId" field to this edge.
+                    // Field("workload_feature_appl_type_id").
+                    Unique(),
+    }
+}
+
+
 type WorkloadFeatureApplType struct {
     ent.Schema
 }
@@ -224,93 +312,5 @@ func (WorkloadType) Edges() []ent.Edge {
                     // Field("parent_type_id").
                     Unique(),
                 edge.To("workloads", Workload.Type),
-    }
-}
-
-
-type WorkloadFeature struct {
-    ent.Schema
-}
-
-// Fields of the WorkloadFeature.
-func (WorkloadFeature) Fields() []ent.Field {
-    return []ent.Field{
-        field.Int("feature_source_enum_id").Optional(),
-        field.String("description").Optional(),
-    }
-}
-
-func (WorkloadFeature) Mixin() []ent.Mixin {
-    return []ent.Mixin{
-        mixin.Time{},
-    }
-}
-
-/*
-*/
-
-
-
-// Edges of the WorkloadFeature.
-//  one: Enumeration
-//  many: WorkloadFeatureAppl
-func (WorkloadFeature) Edges() []ent.Edge {
-    return []ent.Edge{
-                edge.To("workload_feature_appls", WorkloadFeatureAppl.Type),
-    }
-}
-
-
-type WorkloadFeatureAppl struct {
-    ent.Schema
-}
-
-// Fields of the WorkloadFeatureAppl.
-func (WorkloadFeatureAppl) Fields() []ent.Field {
-    return []ent.Field{
-        field.Time("from_date").
-            Default(time.Now),
-        field.Time("thru_date").
-            Default(time.Now).Optional(),
-        field.Int("sequence_num").Optional(),
-    }
-}
-
-func (WorkloadFeatureAppl) Mixin() []ent.Mixin {
-    return []ent.Mixin{
-        mixin.Time{},
-    }
-}
-
-/*
-func (WorkloadFeatureAppl) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("workload_id", "workload_feature_id", "from_date").
-            Unique(),
-    }
-}
-
-*/
-
-
-
-// Edges of the WorkloadFeatureAppl.
-//  one: Workload
-//  one: WorkloadFeature
-//  one: WorkloadFeatureApplType
-func (WorkloadFeatureAppl) Edges() []ent.Edge {
-    return []ent.Edge{
-                edge.From("workload", Workload.Type).Ref("workload_feature_appls").
-                    // Bind the "workloadId" field to this edge.
-                    // Field("workload_id").
-                    Unique(),
-                edge.From("workload_feature", WorkloadFeature.Type).Ref("workload_feature_appls").
-                    // Bind the "workloadFeatureId" field to this edge.
-                    // Field("workload_feature_id").
-                    Unique(),
-                edge.From("workload_feature_appl_type", WorkloadFeatureApplType.Type).Ref("workload_feature_appls").
-                    // Bind the "workloadFeatureApplTypeId" field to this edge.
-                    // Field("workload_feature_appl_type_id").
-                    Unique(),
     }
 }

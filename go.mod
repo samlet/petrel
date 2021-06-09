@@ -13,6 +13,8 @@ require (
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
 	github.com/bwmarrin/snowflake v0.3.0
+	github.com/casbin/casbin/v2 v2.31.2 // indirect
+	github.com/casbin/xorm-adapter/v2 v2.3.2 // indirect
 	github.com/centrifuge/go-substrate-rpc-client/v3 v3.0.0
 	github.com/containerd/containerd v1.5.2 // indirect
 	github.com/crossdock/crossdock-go v0.0.0-20160816171116-049aabb0122b
@@ -25,8 +27,9 @@ require (
 	github.com/fatih/color v1.11.0
 	github.com/fatih/structtag v1.0.0 // indirect
 	github.com/go-redis/redis v6.15.9+incompatible
+	github.com/go-sql-driver/mysql v1.5.1-0.20200311113236-681ffa848bae // indirect
 	github.com/gogo/status v1.1.0 // indirect
-	github.com/golang/mock v1.4.3
+	github.com/golang/mock v1.4.4
 	github.com/google/wire v0.5.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hyperjumptech/grule-rule-engine v1.9.0
@@ -45,6 +48,7 @@ require (
 	github.com/prashantv/protectmem v0.0.0-20171002184600-e20412882b3a // indirect
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/samuel/go-thrift v0.0.0-20190219015601-e8b6b52668fe // indirect
+	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/segmentio/kafka-go v0.4.16
 	github.com/shopspring/decimal v1.2.0
 	github.com/streadway/amqp v1.0.0

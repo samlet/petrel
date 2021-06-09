@@ -1,0 +1,493 @@
+{
+  "name": "ShoppingList",
+  "fields": [
+    {
+      "name": "shoppingListId",
+      "type": "id",
+      "col": "SHOPPING_LIST_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shoppingListTypeId",
+      "type": "id",
+      "col": "SHOPPING_LIST_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentShoppingListId",
+      "type": "id",
+      "col": "PARENT_SHOPPING_LIST_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "visitorId",
+      "type": "id",
+      "col": "VISITOR_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "listName",
+      "type": "name",
+      "col": "LIST_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isPublic",
+      "type": "indicator",
+      "col": "IS_PUBLIC",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isActive",
+      "type": "indicator",
+      "col": "IS_ACTIVE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "currencyUom",
+      "type": "id",
+      "col": "CURRENCY_UOM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentMethodTypeId",
+      "type": "id",
+      "col": "SHIPMENT_METHOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "carrierPartyId",
+      "type": "id",
+      "col": "CARRIER_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "carrierRoleTypeId",
+      "type": "id",
+      "col": "CARRIER_ROLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "contactMechId",
+      "type": "id",
+      "col": "CONTACT_MECH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "paymentMethodId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "recurrenceInfoId",
+      "type": "id",
+      "col": "RECURRENCE_INFO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastOrderedDate",
+      "type": "date-time",
+      "col": "LAST_ORDERED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastAdminModified",
+      "type": "date-time",
+      "col": "LAST_ADMIN_MODIFIED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPromoCodeId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_CODE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentShoppingList",
+      "type": "one",
+      "relEntityName": "ShoppingList",
+      "fkName": "SHLIST_PARENT",
+      "keymaps": [
+        {
+          "fieldName": "parentShoppingListId",
+          "relFieldName": "shoppingListId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SiblingShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "parentShoppingListId",
+          "relFieldName": "parentShoppingListId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShoppingListType",
+      "type": "one",
+      "relEntityName": "ShoppingListType",
+      "fkName": "SHLIST_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListTypeId",
+          "relFieldName": "shoppingListTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStore",
+      "type": "one",
+      "relEntityName": "ProductStore",
+      "fkName": "SHLIST_PRDS",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "SHLIST_PTY",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStoreShipmentMeth",
+      "type": "many",
+      "relEntityName": "ProductStoreShipmentMeth",
+      "fkName": "SHLIST_PSSM",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        },
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        },
+        {
+          "fieldName": "carrierPartyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "carrierRoleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CarrierShipmentMethod",
+      "type": "one",
+      "relEntityName": "CarrierShipmentMethod",
+      "fkName": "SHLIST_CSSM",
+      "keymaps": [
+        {
+          "fieldName": "shipmentMethodTypeId",
+          "relFieldName": "shipmentMethodTypeId"
+        },
+        {
+          "fieldName": "carrierPartyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "carrierRoleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "SHLIST_CMECH",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PostalAddress",
+      "type": "one-nofk",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentMethod",
+      "type": "one",
+      "relEntityName": "PaymentMethod",
+      "fkName": "SHLIST_PYMETH",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RecurrenceInfo",
+      "type": "one",
+      "relEntityName": "RecurrenceInfo",
+      "fkName": "SHLIST_RECINFO",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPromoCode",
+      "type": "one",
+      "relEntityName": "ProductPromoCode",
+      "fkName": "SHLIST_PRMCD",
+      "keymaps": [
+        {
+          "fieldName": "productPromoCodeId",
+          "relFieldName": "productPromoCodeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AutoOrderOrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "autoOrderShoppingListId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "parentShoppingListId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingListItem",
+      "type": "many",
+      "relEntityName": "ShoppingListItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "shoppingListId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingListItemSurvey",
+      "type": "many",
+      "relEntityName": "ShoppingListItemSurvey",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "shoppingListId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingListWorkEffort",
+      "type": "many",
+      "relEntityName": "ShoppingListWorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "shoppingListId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "shoppingListId"
+  ],
+  "isView": false
+}

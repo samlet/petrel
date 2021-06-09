@@ -130,11 +130,13 @@ func GenSchemas(pkg string, writer io.Writer) error{
 
 	for _,ent := range ents {
 		e := mani.MustEntity(ent)
-		for _,tmpl := range tmpls {
-			err = GenModelEntityWithMeta(filepath.Join("templates", tmpl),
-				e, writer)
-			if err != nil {
-				return(err)
+		if !e.IsView {
+			for _, tmpl := range tmpls {
+				err = GenModelEntityWithMeta(filepath.Join("templates", tmpl),
+					e, writer)
+				if err != nil {
+					return (err)
+				}
 			}
 		}
 	}

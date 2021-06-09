@@ -1,16 +1,27 @@
 from sagas.modules.deles import *
 
 class MetaTool(object):
-    def search_ent(self, filter):
+    def search_ent(self, filter, show_desc=False, show_auto_fields=True, show_view=False):
         """
         $ python meta_tool.py search_ent shopping
+        $ python meta_tool.py search_ent shopping True False
+
         :param filter:
         :return:
         """
-        from sagas.ofbiz.entities import all_entities, search_entity
+        from sagas.ofbiz.entities import all_entities, search_entity, entity
         result=search_entity(filter)
         for r in result:
-            print(r)
+            entity_model=entity(r)
+            if not show_view and entity_model.is_view():
+                continue
+
+            print("-", f"{r} ({entity_model.package_name})")
+            desc=entity_model.description
+            if desc is not None:
+                print("\t", desc)
+            if show_desc:
+                entity_model.desc(show_auto_fields)
 
     def list_package_ents(self, pkg="com.bluecc.workload"):
         """

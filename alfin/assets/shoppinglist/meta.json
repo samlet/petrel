@@ -1,0 +1,11 @@
+{
+  "name": "shoppinglist",
+  "package": "org.apache.ofbiz.order.shoppinglist",
+  "entities": {
+    "ShoppingList": "shoppinglist.json",
+    "ShoppingListItem": "shoppinglistitem.json",
+    "ShoppingListItemSurvey": "shoppinglistitemsurvey.json",
+    "ShoppingListType": "shoppinglisttype.json",
+    "ShoppingListWorkEffort": "shoppinglistworkeffort.json"
+  }
+}

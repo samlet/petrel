@@ -1,0 +1,99 @@
+{
+  "name": "ShoppingListWorkEffort",
+  "fields": [
+    {
+      "name": "shoppingListId",
+      "type": "id",
+      "col": "SHOPPING_LIST_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workEffortId",
+      "type": "id",
+      "col": "WORK_EFFORT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ShoppingList",
+      "type": "one",
+      "relEntityName": "ShoppingList",
+      "fkName": "SHLISTWE_SHLST",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "shoppingListId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "SHLISTWE_WEFF",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "shoppingListId",
+    "workEffortId"
+  ],
+  "isView": false
+}

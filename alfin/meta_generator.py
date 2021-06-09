@@ -48,8 +48,11 @@ class MetaGenerator(object):
         :param ent:
         :return:
         """
+        from sagas.ofbiz.entities import entity
         for ent in entities:
-            model=oc.delegator.getModelEntity(ent)
+            # model=oc.delegator.getModelEntity(ent)
+            entity_meta=entity(ent)
+            model=entity_meta.model
             fields=[{"name":f.getName(), "type":f.getType(), "col":f.getColName(),
                      "pk":f.getIsPk(), "notNull":f.getIsNotNull(), "encrypt":f.getEncrypt(),
                      "autoCreatedInternal": f.getIsAutoCreatedInternal(),
@@ -68,7 +71,8 @@ class MetaGenerator(object):
                 "fields": fields,
                 "relations": relations,
                 "pksSize": model.getPksSize(),
-                "pks": [f for f in model.getPkFieldNames()]
+                "pks": [f for f in model.getPkFieldNames()],
+                "isView": entity_meta.is_view()
             }
 
             target_dir=self.asset_dir
@@ -143,6 +147,8 @@ class MetaGenerator(object):
     def gen_package(self, pkg, asset_root):
         """
         $ python meta_generator.py gen_package "com.bluecc.workload" workload
+        $ python meta_generator.py gen_package "org.apache.ofbiz.order.shoppinglist" shoppinglist
+
         :param pkg:
         :param asset_root:
         :return:

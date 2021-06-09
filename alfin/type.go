@@ -19,6 +19,7 @@ type (
 		Relations     []*ModelRelation `json:"relations"`
 		PksSize       int              `json:"pksSize"`
 		Pks           []string         `json:"pks"`
+		IsView        bool             `json:"isView"`
 		EntitiesInPkg *[]string        `json:"-"`
 	}
 
@@ -150,8 +151,8 @@ func (t ModelField) EntFieldType() string {
 	default:
 		resultDef = f(`field.String("%s")`, t.VarName())
 	}
-	if !t.NotNull{
-		resultDef=resultDef+".Optional()"
+	if !t.NotNull {
+		resultDef = resultDef + ".Optional()"
 	}
 	return resultDef
 }

@@ -1,0 +1,4 @@
+install:
+    solc-select install 0.5.0
+version:
+	solc-select use 0.5.0

@@ -64,6 +64,7 @@ require (
 	github.com/uber/jaeger-lib v2.1.1+incompatible // indirect
 	github.com/uber/tchannel-go v1.14.0 // indirect
 	github.com/urfave/cli/v2 v2.3.0
+	go.etcd.io/bbolt v1.3.6 // indirect
 	go.uber.org/cadence v0.8.9-0.20190711214419-cef99c5ba19e
 	go.uber.org/net/metrics v1.1.0 // indirect
 	go.uber.org/thriftrw v1.20.0 // indirect

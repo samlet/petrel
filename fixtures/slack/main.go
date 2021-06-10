@@ -136,7 +136,7 @@ func (cmd *UserCmd) Run(globals *Globals) error {
 }
 
 type BotCmd struct {
-	Arg string `arg required`
+	Arg string `arg optional`
 }
 
 func (cmd *BotCmd) Run(globals *Globals) error {

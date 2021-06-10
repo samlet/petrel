@@ -52,6 +52,7 @@ require (
 	github.com/samuel/go-thrift v0.0.0-20190219015601-e8b6b52668fe // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/segmentio/kafka-go v0.4.16
+	github.com/shomali11/slacker v0.0.0-20210527125624-74795172e04f // indirect
 	github.com/shopspring/decimal v1.2.0
 	github.com/streadway/amqp v1.0.0
 	github.com/streadway/quantile v0.0.0-20150917103942-b0c588724d25 // indirect

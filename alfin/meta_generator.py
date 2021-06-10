@@ -192,8 +192,9 @@ class MetaGenerator(object):
         # write package meta
         pkg_meta = {"name": self.asset_root,
                     "package": pkg,
+                    "total": len(all_ents),
                     "entities": {ent: ent.lower() + ".json" for ent in all_ents},
-                    "edges": edges
+                    "edges": edges,
                     }
         write_to_file(f"{self.asset_dir}/{self.asset_root}/meta.json",
                       json.dumps(pkg_meta, indent=2))

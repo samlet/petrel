@@ -1,34 +1,22 @@
 {
   "name": "purchaseorder",
   "package": "purchaseorder",
+  "total": 12,
   "entities": {
-    "OrderRole": "orderrole.json",
     "OrderItemShipGroup": "orderitemshipgroup.json",
-    "OrderItemPriceInfo": "orderitempriceinfo.json",
     "ShipmentItem": "shipmentitem.json",
-    "Payment": "payment.json",
-    "ItemIssuance": "itemissuance.json",
     "OrderItem": "orderitem.json",
+    "ItemIssuance": "itemissuance.json",
     "OrderHeader": "orderheader.json",
     "OrderStatus": "orderstatus.json",
     "Shipment": "shipment.json",
+    "OrderContactMech": "ordercontactmech.json",
+    "Payment": "payment.json",
     "OrderItemShipGroupAssoc": "orderitemshipgroupassoc.json",
-    "OrderContactMech": "ordercontactmech.json"
+    "OrderRole": "orderrole.json",
+    "OrderItemPriceInfo": "orderitempriceinfo.json"
   },
   "edges": [
-    {
-      "name": "OrderRole",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItem"
-        }
-      ]
-    },
     {
       "name": "OrderItemShipGroup",
       "relations": [
@@ -47,19 +35,6 @@
       ]
     },
     {
-      "name": "OrderItemPriceInfo",
-      "relations": [
-        {
-          "type": "one-nofk",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "one",
-          "rel": "OrderItem"
-        }
-      ]
-    },
-    {
       "name": "ShipmentItem",
       "relations": [
         {
@@ -69,31 +44,6 @@
         {
           "type": "many",
           "rel": "ItemIssuance"
-        }
-      ]
-    },
-    {
-      "name": "Payment",
-      "relations": []
-    },
-    {
-      "name": "ItemIssuance",
-      "relations": [
-        {
-          "type": "one-nofk",
-          "rel": "Shipment"
-        },
-        {
-          "type": "one",
-          "rel": "ShipmentItem"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "one",
-          "rel": "OrderItem"
         }
       ]
     },
@@ -119,6 +69,27 @@
         {
           "type": "many",
           "rel": "OrderStatus"
+        }
+      ]
+    },
+    {
+      "name": "ItemIssuance",
+      "relations": [
+        {
+          "type": "one-nofk",
+          "rel": "Shipment"
+        },
+        {
+          "type": "one",
+          "rel": "ShipmentItem"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItem"
         }
       ]
     },
@@ -198,6 +169,19 @@
       ]
     },
     {
+      "name": "OrderContactMech",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        }
+      ]
+    },
+    {
+      "name": "Payment",
+      "relations": []
+    },
+    {
       "name": "OrderItemShipGroupAssoc",
       "relations": [
         {
@@ -215,11 +199,28 @@
       ]
     },
     {
-      "name": "OrderContactMech",
+      "name": "OrderRole",
       "relations": [
         {
           "type": "one",
           "rel": "OrderHeader"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItem"
+        }
+      ]
+    },
+    {
+      "name": "OrderItemPriceInfo",
+      "relations": [
+        {
+          "type": "one-nofk",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItem"
         }
       ]
     }

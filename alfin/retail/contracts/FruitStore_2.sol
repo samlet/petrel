@@ -13,4 +13,11 @@ contract FruitStore_2 is BasicAuth {
     onlyOwner validFruitName(fruitName) external {
         _fruitStock[fruitName] = stock;
     }
+
+    /**
+     * @dev 查询具体水果库存数量的函数
+     */
+    function getStock(bytes fruit) external view returns(uint) {
+        return _fruitStock[fruit];
+    }
 }

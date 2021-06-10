@@ -1,10 +1,4 @@
 edges:
-- name: OrderRole
-  relations:
-  - rel: OrderHeader
-    type: one
-  - rel: OrderItem
-    type: many
 - name: OrderItemShipGroup
   relations:
   - rel: OrderHeader
@@ -13,30 +7,12 @@ edges:
     type: many
   - rel: Shipment
     type: many
-- name: OrderItemPriceInfo
-  relations:
-  - rel: OrderHeader
-    type: one-nofk
-  - rel: OrderItem
-    type: one
 - name: ShipmentItem
   relations:
   - rel: Shipment
     type: one
   - rel: ItemIssuance
     type: many
-- name: Payment
-  relations: []
-- name: ItemIssuance
-  relations:
-  - rel: Shipment
-    type: one-nofk
-  - rel: ShipmentItem
-    type: one
-  - rel: OrderHeader
-    type: one-nofk
-  - rel: OrderItem
-    type: one
 - name: OrderItem
   relations:
   - rel: OrderHeader
@@ -49,6 +25,16 @@ edges:
     type: many
   - rel: OrderStatus
     type: many
+- name: ItemIssuance
+  relations:
+  - rel: Shipment
+    type: one-nofk
+  - rel: ShipmentItem
+    type: one
+  - rel: OrderHeader
+    type: one-nofk
+  - rel: OrderItem
+    type: one
 - name: OrderHeader
   relations:
   - rel: ItemIssuance
@@ -85,6 +71,12 @@ edges:
     type: many
   - rel: ShipmentItem
     type: many
+- name: OrderContactMech
+  relations:
+  - rel: OrderHeader
+    type: one
+- name: Payment
+  relations: []
 - name: OrderItemShipGroupAssoc
   relations:
   - rel: OrderHeader
@@ -93,9 +85,17 @@ edges:
     type: one
   - rel: OrderItemShipGroup
     type: one
-- name: OrderContactMech
+- name: OrderRole
   relations:
   - rel: OrderHeader
+    type: one
+  - rel: OrderItem
+    type: many
+- name: OrderItemPriceInfo
+  relations:
+  - rel: OrderHeader
+    type: one-nofk
+  - rel: OrderItem
     type: one
 entities:
   ItemIssuance: itemissuance.json
@@ -112,3 +112,4 @@ entities:
   ShipmentItem: shipmentitem.json
 name: purchaseorder
 package: purchaseorder
+total: 12

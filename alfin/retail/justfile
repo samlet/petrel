@@ -1,3 +1,14 @@
 c:
 	brownie compile
 
+install:
+    solc-select install 0.4.25
+version:
+	solc-select use 0.4.25
+gen:
+    go generate
+
+# $ just t TestDeployFruitStore2
+t testname:
+    go generate
+    go test -run {{testname}}

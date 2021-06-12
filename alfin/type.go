@@ -157,6 +157,14 @@ func (t ModelField) EntFieldType() string {
 	return resultDef
 }
 
+func (t ModelField) EthFieldType() string {
+	return EthType(t.Type)
+}
+
+func (t ModelField) GoFieldType() string {
+	return FieldType(t.Type)
+}
+
 func (t ModelRelation) FieldName() string {
 	return t.Keymaps[0].FieldName
 }

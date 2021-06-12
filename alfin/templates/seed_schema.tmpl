@@ -1,0 +1,8 @@
+{{/* gotype: github.com/samlet/petrel/alfin.ModelEntity */}}
+
+type {{.Name}} struct {
+{{- range $fld := $.Fields }}
+    {{ $fld.Name|title }} {{ $fld.GoFieldType }} `json:"{{$fld.Name}},omitempty" xml:"{{$fld.Name}},attr"`
+{{- end}}
+}
+

@@ -32,9 +32,13 @@ func Do(ctx context.Context, client *ent.Client) error {
 	if err != nil {
 		panic(err)
 	}
+	wtyp,err:=client.WorkloadType.Create().
+		SetDescription("workload type").
+		Save(ctx)
 	w,err:=client.Workload.Create().
 		SetWorkloadName("tester").
 		SetStatusID(0).
+		SetWorkloadType(wtyp).
 		AddWorkloadItems(item).
 		Save(ctx)
 	if err != nil {

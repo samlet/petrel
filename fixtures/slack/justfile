@@ -2,5 +2,7 @@ run +FLAGS='':
 	go run *.go {{FLAGS}}
 slash:
 	go run *.go slash
+bot:
+	go run *.go bot
 
 

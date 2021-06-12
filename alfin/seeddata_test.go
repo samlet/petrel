@@ -11,7 +11,7 @@ import (
 )
 
 func TestXmlSeed(t *testing.T) {
-	xmlSeed:=`<entity-engine-xml>
+	xmlSeed := `<entity-engine-xml>
 <!-- Purchase order test data -->
     <!--for jira issue - 1782-->
     <OrderHeader orderId="DEMO10091" orderTypeId="PURCHASE_ORDER" orderName="New Purchase Order" salesChannelEnumId="UNKNWN_SALES_CHANNEL" orderDate="2008-06-10 13:27:07.024" entryDate="2008-06-10 13:27:07.024" visitId="10000" statusId="ORDER_CREATED" createdBy="admin" currencyUom="USD" productStoreId="9000" remainingSubTotal="108.0" grandTotal="108.0" webSiteId="WebStore"/>
@@ -41,7 +41,7 @@ func TestXmlSeed(t *testing.T) {
 }
 
 func TestWorkloadSeed(t *testing.T) {
-	xmlSeed:=`<entity-engine-xml>
+	xmlSeed := `<entity-engine-xml>
 	<WorkloadType workloadTypeId="REAL_WORLD" description="Real World"/>
     <WorkloadType workloadTypeId="MADE_UP" description="Made Up"/>
     <WorkloadType workloadTypeId="CONTRIVED" description="Contrived" parentTypeId="MADE_UP"/>
@@ -116,11 +116,14 @@ func TestWorkloadSeed(t *testing.T) {
     <WorkloadStatus workloadId="WL02" statusDate="2012-01-02 00:00:00" statusEndDate="2013-01-02 00:00:00" statusId="WLST_APPROVED"/>
 </entity-engine-xml>`
 
-	ctx:=context.Background()
-	store, err:=workload.NewDevStore(ctx)
+	ctx := context.Background()
+	store, err := workload.NewDevStore(ctx)
 	if err != nil {
 		panic(err)
 	}
+	ctx = context.WithValue(ctx, WorkloadStoreKey, store)
+	ctx=context.WithValue(ctx, SeedsKey, NewSeedElements())
+
 	doc := etree.NewDocument()
 	if err := doc.ReadFromString(xmlSeed); err != nil {
 		panic(err)
@@ -134,9 +137,9 @@ func TestWorkloadSeed(t *testing.T) {
 		}
 		switch node.Tag {
 		case "WorkloadType":
-			processWorkloadType(ctx, store, node)
+			newWorkloadType(ctx, node)
 		case "WorkloadItem":
-			val, err:=processWorkloadItem(ctx, store, node)
+			val, err := newWorkloadItem(ctx, node)
 			if err != nil {
 				panic(err)
 			}
@@ -147,22 +150,37 @@ func TestWorkloadSeed(t *testing.T) {
 	}
 }
 
-func processWorkloadItem(ctx context.Context, store *workload.WorkloadStore, node *etree.Element) (*ent.WorkloadItem, error) {
+func newWorkloadItem(ctx context.Context, node *etree.Element) (*ent.WorkloadItem, error) {
+	store:=ctx.Value(WorkloadStoreKey).(*workload.WorkloadStore)
+	seeds:=ctx.Value(SeedsKey).(*SeedElements)
 	seqId, err := strconv.Atoi(node.SelectAttrValue("workloadItemSeqId", "0"))
 	if err != nil {
 		return nil, err
 	}
-	item,err:=store.Client().WorkloadItem.Create().
+	item, err := store.Client().WorkloadItem.Create().
 		SetWorkloadItemSeqID(seqId).
 		SetDescription(node.SelectAttrValue("description", "")).
 		Save(ctx)
-
-	return item, err
+	if err != nil {
+		log.Fatalf("save fail: %v", err)
+	}
+	itemId:=node.SelectAttrValue("workloadId","")+":"+node.SelectAttrValue("workloadItemSeqId","")
+	seeds.Put(itemId, item)
+	return item, nil
 }
 
-func processWorkloadType(ctx context.Context, store *workload.WorkloadStore, node *etree.Element) (*ent.WorkloadType, error) {
-	return store.Client().WorkloadType.Create().
-		SetDescription(node.SelectAttrValue("description","")).
+func newWorkloadType(ctx context.Context, node *etree.Element) (*ent.WorkloadType, error) {
+	store:=ctx.Value(WorkloadStoreKey).(*workload.WorkloadStore)
+	seeds:=ctx.Value(SeedsKey).(*SeedElements)
+	recId:=node.SelectAttrValue("workloadTypeId", "")
+
+	rec,err:= store.Client().WorkloadType.Create().
+		SetDescription(node.SelectAttrValue("description", "")).
 		Save(ctx)
+	if err != nil {
+		log.Fatalf(" fail: %v", err)
+	}
+	seeds.Put(recId, rec)
+	return rec,nil
 }
 

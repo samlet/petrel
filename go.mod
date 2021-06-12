@@ -3,7 +3,9 @@ module github.com/samlet/petrel
 go 1.16
 
 require (
+	entgo.io/contrib v0.0.0-20210531191413-4a9a7cfbd7dc // indirect
 	entgo.io/ent v0.8.0
+	github.com/99designs/gqlgen v0.13.0 // indirect
 	github.com/GeertJohan/go.rice v1.0.2
 	github.com/Microsoft/go-winio v0.5.0 // indirect
 	github.com/alecthomas/kong v0.2.16
@@ -34,6 +36,7 @@ require (
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/wire v0.5.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
+	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/hyperjumptech/grule-rule-engine v1.9.0
 	github.com/iancoleman/strcase v0.1.3
 	github.com/jmoiron/sqlx v1.3.4
@@ -64,15 +67,18 @@ require (
 	github.com/uber/jaeger-lib v2.1.1+incompatible // indirect
 	github.com/uber/tchannel-go v1.14.0 // indirect
 	github.com/urfave/cli/v2 v2.3.0
+	github.com/vektah/gqlparser/v2 v2.1.0 // indirect
+	github.com/vmihailenco/msgpack/v5 v5.3.4 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.uber.org/cadence v0.8.9-0.20190711214419-cef99c5ba19e
 	go.uber.org/net/metrics v1.1.0 // indirect
 	go.uber.org/thriftrw v1.20.0 // indirect
 	go.uber.org/tools v0.0.0-20190618225709-2cfd321de3ee // indirect
 	go.uber.org/yarpc v1.39.0
-	go.uber.org/zap v1.10.0
+	go.uber.org/zap v1.16.0
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
+	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
 	golang.org/x/text v0.3.6
 	google.golang.org/genproto v0.0.0-20210524171403-669157292da3 // indirect

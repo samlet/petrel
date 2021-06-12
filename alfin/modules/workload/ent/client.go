@@ -41,6 +41,8 @@ type Client struct {
 	WorkloadStatus *WorkloadStatusClient
 	// WorkloadType is the client for interacting with the WorkloadType builders.
 	WorkloadType *WorkloadTypeClient
+	// additional fields for node api
+	tables tables
 }
 
 // NewClient creates a new client configured with the given options.

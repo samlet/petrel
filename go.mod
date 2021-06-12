@@ -34,6 +34,7 @@ require (
 	github.com/gogo/status v1.1.0 // indirect
 	github.com/golang/mock v1.4.4
 	github.com/golang/protobuf v1.5.2 // indirect
+	github.com/google/uuid v1.2.0 // indirect
 	github.com/google/wire v0.5.0 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
@@ -70,7 +71,9 @@ require (
 	github.com/vektah/gqlparser/v2 v2.1.0 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.4 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
+	go.uber.org/atomic v1.8.0 // indirect
 	go.uber.org/cadence v0.8.9-0.20190711214419-cef99c5ba19e
+	go.uber.org/multierr v1.7.0 // indirect
 	go.uber.org/net/metrics v1.1.0 // indirect
 	go.uber.org/thriftrw v1.20.0 // indirect
 	go.uber.org/tools v0.0.0-20190618225709-2cfd321de3ee // indirect
@@ -79,8 +82,9 @@ require (
 	golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a
 	golang.org/x/net v0.0.0-20210525063256-abc453219eb5
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
-	golang.org/x/sys v0.0.0-20210525143221-35b2ab0089ea // indirect
+	golang.org/x/sys v0.0.0-20210611083646-a4fc73990273 // indirect
 	golang.org/x/text v0.3.6
+	golang.org/x/tools v0.1.3 // indirect
 	google.golang.org/genproto v0.0.0-20210524171403-669157292da3 // indirect
 	google.golang.org/grpc v1.38.0 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect

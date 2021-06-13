@@ -1,0 +1,1213 @@
+{
+  "name": "UserLogin",
+  "fields": [
+    {
+      "name": "userLoginId",
+      "type": "id-vlong",
+      "col": "USER_LOGIN_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "currentPassword",
+      "type": "long-varchar",
+      "col": "CURRENT_PASSWORD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "passwordHint",
+      "type": "description",
+      "col": "PASSWORD_HINT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isSystem",
+      "type": "indicator",
+      "col": "IS_SYSTEM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "enabled",
+      "type": "indicator",
+      "col": "ENABLED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasLoggedOut",
+      "type": "indicator",
+      "col": "HAS_LOGGED_OUT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "requirePasswordChange",
+      "type": "indicator",
+      "col": "REQUIRE_PASSWORD_CHANGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastCurrencyUom",
+      "type": "id",
+      "col": "LAST_CURRENCY_UOM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastLocale",
+      "type": "very-short",
+      "col": "LAST_LOCALE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastTimeZone",
+      "type": "id-long",
+      "col": "LAST_TIME_ZONE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "disabledDateTime",
+      "type": "date-time",
+      "col": "DISABLED_DATE_TIME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "successiveFailedLogins",
+      "type": "numeric",
+      "col": "SUCCESSIVE_FAILED_LOGINS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "externalAuthId",
+      "type": "id-vlong",
+      "col": "EXTERNAL_AUTH_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "userLdapDn",
+      "type": "id-vlong",
+      "col": "USER_LDAP_DN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "disabledBy",
+      "type": "id-vlong",
+      "col": "DISABLED_BY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "USER_PARTY",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Person",
+      "type": "one-nofk",
+      "relEntityName": "Person",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyGroup",
+      "type": "one-nofk",
+      "relEntityName": "PartyGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Created ByAllocationPlanHeader",
+      "type": "many",
+      "relEntityName": "AllocationPlanHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Last Modified ByAllocationPlanHeader",
+      "type": "many",
+      "relEntityName": "AllocationPlanHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Created By User LoginAllocationPlanItem",
+      "type": "many",
+      "relEntityName": "AllocationPlanItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Last Modified By User LoginAllocationPlanItem",
+      "type": "many",
+      "relEntityName": "AllocationPlanItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByBudgetStatus",
+      "type": "many",
+      "relEntityName": "BudgetStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByContactList",
+      "type": "many",
+      "relEntityName": "ContactList",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByContactList",
+      "type": "many",
+      "relEntityName": "ContactList",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByContactListCommStatus",
+      "type": "many",
+      "relEntityName": "ContactListCommStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByContent",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByContent",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByContentAssoc",
+      "type": "many",
+      "relEntityName": "ContentAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByContentAssoc",
+      "type": "many",
+      "relEntityName": "ContentAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByCustRequestStatus",
+      "type": "many",
+      "relEntityName": "CustRequestStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByDataResource",
+      "type": "many",
+      "relEntityName": "DataResource",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByDataResource",
+      "type": "many",
+      "relEntityName": "DataResource",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ExampleStatus",
+      "type": "many",
+      "relEntityName": "ExampleStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLoginExcelImportHistory",
+      "type": "many",
+      "relEntityName": "ExcelImportHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountStatus",
+      "type": "many",
+      "relEntityName": "FinAccountStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItemStatus",
+      "type": "many",
+      "relEntityName": "InventoryItemStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByInvoiceStatus",
+      "type": "many",
+      "relEntityName": "InvoiceStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "IssuedByItemIssuance",
+      "type": "many",
+      "relEntityName": "ItemIssuance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "issuedByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AuthJobSandbox",
+      "type": "many",
+      "relEntityName": "JobSandbox",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "authUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RunAsJobSandbox",
+      "type": "many",
+      "relEntityName": "JobSandbox",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "runAsUser"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeOldPicklistStatusHistory",
+      "type": "many",
+      "relEntityName": "OldPicklistStatusHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderAdjustment",
+      "type": "many",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByOrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdBy"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DontCancelSetOrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "dontCancelSetUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByOrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemChange",
+      "type": "many",
+      "relEntityName": "OrderItemChange",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "type": "many",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderStatus",
+      "type": "many",
+      "relEntityName": "OrderStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "statusUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByParty",
+      "type": "many",
+      "relEntityName": "Party",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByParty",
+      "type": "many",
+      "relEntityName": "Party",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByPartyStatus",
+      "type": "many",
+      "relEntityName": "PartyStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByPicklistRole",
+      "type": "many",
+      "relEntityName": "PicklistRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByPicklistRole",
+      "type": "many",
+      "relEntityName": "PicklistRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangePicklistStatus",
+      "type": "many",
+      "relEntityName": "PicklistStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByProductFeaturePrice",
+      "type": "many",
+      "relEntityName": "ProductFeaturePrice",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByProductFeaturePrice",
+      "type": "many",
+      "relEntityName": "ProductFeaturePrice",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangedByProductPriceChange",
+      "type": "many",
+      "relEntityName": "ProductPriceChange",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByProductPromo",
+      "type": "many",
+      "relEntityName": "ProductPromo",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByProductPromo",
+      "type": "many",
+      "relEntityName": "ProductPromo",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedByProductPromoCode",
+      "type": "many",
+      "relEntityName": "ProductPromoCode",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LastModifiedByProductPromoCode",
+      "type": "many",
+      "relEntityName": "ProductPromoCode",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "lastModifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductReview",
+      "type": "many",
+      "relEntityName": "ProductReview",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteAdjustment",
+      "type": "many",
+      "relEntityName": "QuoteAdjustment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByRequirementStatus",
+      "type": "many",
+      "relEntityName": "RequirementStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnHeader",
+      "type": "many",
+      "relEntityName": "ReturnHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdBy"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByReturnStatus",
+      "type": "many",
+      "relEntityName": "ReturnStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreatedBySalesForecast",
+      "type": "many",
+      "relEntityName": "SalesForecast",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ModifiedBySalesForecast",
+      "type": "many",
+      "relEntityName": "SalesForecast",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "modifiedByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ModifiedBySalesForecastHistory",
+      "type": "many",
+      "relEntityName": "SalesForecastHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "modifiedByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunity",
+      "type": "many",
+      "relEntityName": "SalesOpportunity",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "createdByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityHistory",
+      "type": "many",
+      "relEntityName": "SalesOpportunityHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "modifiedByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "many",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "receivedByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByShipmentStatus",
+      "type": "many",
+      "relEntityName": "ShipmentStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChangeByTestingStatus",
+      "type": "many",
+      "relEntityName": "TestingStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApprovedByTimesheet",
+      "type": "many",
+      "relEntityName": "Timesheet",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "approvedByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLoginHistory",
+      "type": "many",
+      "relEntityName": "UserLoginHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginUserLoginHistory",
+      "type": "many",
+      "relEntityName": "UserLoginHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "originUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLoginPasswordHistory",
+      "type": "many",
+      "relEntityName": "UserLoginPasswordHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLoginSecurityGroup",
+      "type": "many",
+      "relEntityName": "UserLoginSecurityGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLoginSession",
+      "type": "one-nofk",
+      "relEntityName": "UserLoginSession",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserPreference",
+      "type": "many",
+      "relEntityName": "UserPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebUserPreference",
+      "type": "many",
+      "relEntityName": "WebUserPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AssignedByWorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "assignedByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortReview",
+      "type": "many",
+      "relEntityName": "WorkEffortReview",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SetByWorkEffortStatus",
+      "type": "many",
+      "relEntityName": "WorkEffortStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "setByUserLogin"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkloadStatus",
+      "type": "many",
+      "relEntityName": "WorkloadStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "changeByUserLoginId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "userLoginId"
+  ],
+  "isView": false
+}

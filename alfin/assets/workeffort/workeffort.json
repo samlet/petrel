@@ -1,0 +1,1378 @@
+{
+  "name": "WorkEffort",
+  "fields": [
+    {
+      "name": "workEffortId",
+      "type": "id",
+      "col": "WORK_EFFORT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workEffortTypeId",
+      "type": "id",
+      "col": "WORK_EFFORT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "currentStatusId",
+      "type": "id",
+      "col": "CURRENT_STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastStatusUpdate",
+      "type": "date-time",
+      "col": "LAST_STATUS_UPDATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workEffortPurposeTypeId",
+      "type": "id",
+      "col": "WORK_EFFORT_PURPOSE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workEffortParentId",
+      "type": "id",
+      "col": "WORK_EFFORT_PARENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "scopeEnumId",
+      "type": "id",
+      "col": "SCOPE_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "priority",
+      "type": "numeric",
+      "col": "PRIORITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "percentComplete",
+      "type": "numeric",
+      "col": "PERCENT_COMPLETE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workEffortName",
+      "type": "name",
+      "col": "WORK_EFFORT_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "showAsEnumId",
+      "type": "id",
+      "col": "SHOW_AS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "sendNotificationEmail",
+      "type": "indicator",
+      "col": "SEND_NOTIFICATION_EMAIL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "locationDesc",
+      "type": "description",
+      "col": "LOCATION_DESC",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedStartDate",
+      "type": "date-time",
+      "col": "ESTIMATED_START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedCompletionDate",
+      "type": "date-time",
+      "col": "ESTIMATED_COMPLETION_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "actualStartDate",
+      "type": "date-time",
+      "col": "ACTUAL_START_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "actualCompletionDate",
+      "type": "date-time",
+      "col": "ACTUAL_COMPLETION_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedMilliSeconds",
+      "type": "floating-point",
+      "col": "ESTIMATED_MILLI_SECONDS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedSetupMillis",
+      "type": "floating-point",
+      "col": "ESTIMATED_SETUP_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimateCalcMethod",
+      "type": "id",
+      "col": "ESTIMATE_CALC_METHOD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "actualMilliSeconds",
+      "type": "floating-point",
+      "col": "ACTUAL_MILLI_SECONDS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "actualSetupMillis",
+      "type": "floating-point",
+      "col": "ACTUAL_SETUP_MILLIS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "totalMilliSecondsAllowed",
+      "type": "floating-point",
+      "col": "TOTAL_MILLI_SECONDS_ALLOWED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "totalMoneyAllowed",
+      "type": "currency-amount",
+      "col": "TOTAL_MONEY_ALLOWED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "moneyUomId",
+      "type": "id",
+      "col": "MONEY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "specialTerms",
+      "type": "long-varchar",
+      "col": "SPECIAL_TERMS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "timeTransparency",
+      "type": "numeric",
+      "col": "TIME_TRANSPARENCY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "universalId",
+      "type": "short-varchar",
+      "col": "UNIVERSAL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "sourceReferenceId",
+      "type": "id-long",
+      "col": "SOURCE_REFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "facilityId",
+      "type": "id",
+      "col": "FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "infoUrl",
+      "type": "long-varchar",
+      "col": "INFO_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "recurrenceInfoId",
+      "type": "id",
+      "col": "RECURRENCE_INFO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "tempExprId",
+      "type": "id",
+      "col": "TEMP_EXPR_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "runtimeDataId",
+      "type": "id",
+      "col": "RUNTIME_DATA_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "noteId",
+      "type": "id",
+      "col": "NOTE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "serviceLoaderName",
+      "type": "name",
+      "col": "SERVICE_LOADER_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantityToProduce",
+      "type": "fixed-point",
+      "col": "QUANTITY_TO_PRODUCE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantityProduced",
+      "type": "fixed-point",
+      "col": "QUANTITY_PRODUCED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantityRejected",
+      "type": "fixed-point",
+      "col": "QUANTITY_REJECTED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reservPersons",
+      "type": "fixed-point",
+      "col": "RESERV_PERSONS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reserv2ndPPPerc",
+      "type": "fixed-point",
+      "col": "RESERV2ND_P_P_PERC",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reservNthPPPerc",
+      "type": "fixed-point",
+      "col": "RESERV_NTH_P_P_PERC",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accommodationMapId",
+      "type": "id",
+      "col": "ACCOMMODATION_MAP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accommodationSpotId",
+      "type": "id",
+      "col": "ACCOMMODATION_SPOT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "revisionNumber",
+      "type": "numeric",
+      "col": "REVISION_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "WorkEffortType",
+      "type": "one",
+      "relEntityName": "WorkEffortType",
+      "fkName": "WK_EFFRT_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "workEffortTypeId",
+          "relFieldName": "workEffortTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffortPurposeType",
+      "type": "one",
+      "relEntityName": "WorkEffortPurposeType",
+      "fkName": "WK_EFFRT_PRPTYP",
+      "keymaps": [
+        {
+          "fieldName": "workEffortPurposeTypeId",
+          "relFieldName": "workEffortPurposeTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ParentWorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "WK_EFFRT_PARENT",
+      "keymaps": [
+        {
+          "fieldName": "workEffortParentId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffortTypeAttr",
+      "type": "many",
+      "relEntityName": "WorkEffortTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortTypeId",
+          "relFieldName": "workEffortTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrentStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "WK_EFFRT_CURSTTS",
+      "keymaps": [
+        {
+          "fieldName": "currentStatusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ScopeEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "WK_EFFRT_SC_ENUM",
+      "keymaps": [
+        {
+          "fieldName": "scopeEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAsset",
+      "type": "one",
+      "relEntityName": "FixedAsset",
+      "fkName": "WK_EFFRT_FXDASST",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "WK_EFFRT_FACILITY",
+      "keymaps": [
+        {
+          "fieldName": "facilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MoneyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "WK_EFFRT_MON_UOM",
+      "keymaps": [
+        {
+          "fieldName": "moneyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RecurrenceInfo",
+      "type": "one",
+      "relEntityName": "RecurrenceInfo",
+      "fkName": "WK_EFFRT_RECINFO",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TemporalExpression",
+      "type": "one",
+      "relEntityName": "TemporalExpression",
+      "fkName": "WK_EFFRT_TEMPEXPR",
+      "keymaps": [
+        {
+          "fieldName": "tempExprId",
+          "relFieldName": "tempExprId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RuntimeData",
+      "type": "one",
+      "relEntityName": "RuntimeData",
+      "fkName": "WK_EFFRT_RNTMDTA",
+      "keymaps": [
+        {
+          "fieldName": "runtimeDataId",
+          "relFieldName": "runtimeDataId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "NoteData",
+      "type": "one",
+      "relEntityName": "NoteData",
+      "fkName": "WK_EFFRT_NOTE",
+      "keymaps": [
+        {
+          "fieldName": "noteId",
+          "relFieldName": "noteId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "WK_EFFRT_CUS_MET",
+      "keymaps": [
+        {
+          "fieldName": "estimateCalcMethod",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AccommodationMap",
+      "type": "one",
+      "relEntityName": "AccommodationMap",
+      "fkName": "WK_EFFRT_ACC_MAP",
+      "keymaps": [
+        {
+          "fieldName": "accommodationMapId",
+          "relFieldName": "accommodationMapId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AccommodationSpot",
+      "type": "one",
+      "relEntityName": "AccommodationSpot",
+      "fkName": "WK_EFFRT_ACC_SPOT",
+      "keymaps": [
+        {
+          "fieldName": "accommodationSpotId",
+          "relFieldName": "accommodationSpotId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementWorkEffortApplic",
+      "type": "many",
+      "relEntityName": "AgreementWorkEffortApplic",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventWorkEff",
+      "type": "many",
+      "relEntityName": "CommunicationEventWorkEff",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CostComponent",
+      "type": "many",
+      "relEntityName": "CostComponent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestItemWorkEffort",
+      "type": "many",
+      "relEntityName": "CustRequestItemWorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestWorkEffort",
+      "type": "many",
+      "relEntityName": "CustRequestWorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ScheduleFixedAssetMaint",
+      "type": "many",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "scheduleWorkEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItemDetail",
+      "type": "many",
+      "relEntityName": "InventoryItemDetail",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderHeaderWorkEffort",
+      "type": "many",
+      "relEntityName": "OrderHeaderWorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PersonTraining",
+      "type": "many",
+      "relEntityName": "PersonTraining",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RoutingProductAssoc",
+      "type": "many",
+      "relEntityName": "ProductAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "routingWorkEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MaintTemplateProductMaint",
+      "type": "many",
+      "relEntityName": "ProductMaint",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "maintTemplateWorkEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteItem",
+      "type": "many",
+      "relEntityName": "QuoteItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteWorkEffort",
+      "type": "many",
+      "relEntityName": "QuoteWorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RateAmount",
+      "type": "many",
+      "relEntityName": "RateAmount",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityWorkEffort",
+      "type": "many",
+      "relEntityName": "SalesOpportunityWorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EstimatedShipShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "estimatedShipWorkEffId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EstimatedArrivalShipment",
+      "type": "many",
+      "relEntityName": "Shipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "estimatedArrivalWorkEffId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingListWorkEffort",
+      "type": "many",
+      "relEntityName": "ShoppingListWorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TimeEntry",
+      "type": "many",
+      "relEntityName": "TimeEntry",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildWorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortParentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromWorkEffortAssoc",
+      "type": "many",
+      "relEntityName": "WorkEffortAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToWorkEffortAssoc",
+      "type": "many",
+      "relEntityName": "WorkEffortAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortAttribute",
+      "type": "many",
+      "relEntityName": "WorkEffortAttribute",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortBilling",
+      "type": "many",
+      "relEntityName": "WorkEffortBilling",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortContactMech",
+      "type": "many",
+      "relEntityName": "WorkEffortContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortContent",
+      "type": "many",
+      "relEntityName": "WorkEffortContent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortCostCalc",
+      "type": "many",
+      "relEntityName": "WorkEffortCostCalc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortDeliverableProd",
+      "type": "many",
+      "relEntityName": "WorkEffortDeliverableProd",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortEventReminder",
+      "type": "many",
+      "relEntityName": "WorkEffortEventReminder",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortFixedAssetAssign",
+      "type": "many",
+      "relEntityName": "WorkEffortFixedAssetAssign",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortFixedAssetStd",
+      "type": "many",
+      "relEntityName": "WorkEffortFixedAssetStd",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortGoodStandard",
+      "type": "many",
+      "relEntityName": "WorkEffortGoodStandard",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortIcalData",
+      "type": "one-nofk",
+      "relEntityName": "WorkEffortIcalData",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortInventoryAssign",
+      "type": "many",
+      "relEntityName": "WorkEffortInventoryAssign",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortInventoryProduced",
+      "type": "many",
+      "relEntityName": "WorkEffortInventoryProduced",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortKeyword",
+      "type": "many",
+      "relEntityName": "WorkEffortKeyword",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortNote",
+      "type": "many",
+      "relEntityName": "WorkEffortNote",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortReview",
+      "type": "many",
+      "relEntityName": "WorkEffortReview",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortSkillStandard",
+      "type": "many",
+      "relEntityName": "WorkEffortSkillStandard",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortStatus",
+      "type": "many",
+      "relEntityName": "WorkEffortStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortSurveyAppl",
+      "type": "many",
+      "relEntityName": "WorkEffortSurveyAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortTransBox",
+      "type": "many",
+      "relEntityName": "WorkEffortTransBox",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "processWorkEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkOrderItemFulfillment",
+      "type": "many",
+      "relEntityName": "WorkOrderItemFulfillment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkRequirementFulfillment",
+      "type": "many",
+      "relEntityName": "WorkRequirementFulfillment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "workEffortId"
+  ],
+  "isView": false
+}

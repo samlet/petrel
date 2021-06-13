@@ -9,17 +9,19 @@ func ({{.Name}}) Fields() []ent.Field {
     return []ent.Field{
     {{- range $fld := $.NormalFields }}
         {{- if ne $.UniquePk $fld.Name }}
-        {{$fld.EntFieldType}},
+        {{$fld.EntFieldType}}.Annotations(entproto.Field({{$fld.FieldNumber}})),
         {{- end}}
     {{- end}}
     }
 }
 
+/* entproto annotations ??
 func ({{$.Name}}) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
     }
 }
+*/
 
 /*
 {{- if $.HasCombineIndex}}
@@ -29,3 +31,9 @@ func ({{$.Name}}) Indexes() []ent.Index {
 {{ end}}
 */
 
+func ({{$.Name}}) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}

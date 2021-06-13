@@ -27,7 +27,18 @@ func NewMetaManipulateWithMap(entsMap map[string]*ModelEntity) (*MetaManipulate,
 
 	for _, e := range entsMap {
 		e.EntitiesInPkg=&keys
+		// manage entity fields
+		var lastNumber int
+		for i,fld := range e.NormalFields() {
+			fld.FieldNumber=i+2  // start with 2, the id field is number 1
+			lastNumber=fld.FieldNumber+1
+		}
+
+		// manage entity relations
 		for _, rel := range e.Relations {
+			rel.FieldNumber=lastNumber
+			lastNumber=lastNumber+1
+
 			relEntName := rel.RelEntityName
 			if rel.HashBackref() {
 				if relEntName==e.Name{
@@ -37,20 +48,23 @@ func NewMetaManipulateWithMap(entsMap map[string]*ModelEntity) (*MetaManipulate,
 					log.Printf(".. check %s.%s(%s)\n", e.Name, rel.Name, relEntName)
 					relEnt, ok := entsMap[relEntName]
 					if ok {
-						refName, err := relEnt.GetBackRefName(e.Name, rel)
+						refName, refType, err := relEnt.GetBackRefNameAndType(e.Name, rel)
 						if err != nil {
 							panic(err)
 						}
 						rel.Backref = refName
-						log.Printf("*** %s.%s backref: %s.%s\n",
+						rel.BackrefType=refType
+						log.Printf("*** %s.%s backref: %s.%s(%s)\n",
 							e.Name, rel.Name,
-							relEntName, refName)
+							relEntName, refName, refType)
 					} else {
 						log.Printf("\tEntity %s is not exists in meta-collection\n", relEntName)
 					}
 				}
 			}
 		}
+
+
 	}
 
 	return &MetaManipulate{EntsMap: entsMap}, nil
@@ -96,9 +110,11 @@ const (
 import (
     "entgo.io/ent"
     // "entgo.io/ent/schema/index"
-    "entgo.io/ent/schema/mixin"
+	"entgo.io/ent/schema"
+    // "entgo.io/ent/schema/mixin"
     "entgo.io/ent/schema/edge"
     "entgo.io/ent/schema/field"
+	"entgo.io/contrib/entproto"
     "time"
 )
 `

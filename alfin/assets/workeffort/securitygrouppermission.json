@@ -1,0 +1,120 @@
+{
+  "name": "SecurityGroupPermission",
+  "fields": [
+    {
+      "name": "groupId",
+      "type": "id",
+      "col": "GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "permissionId",
+      "type": "id-long",
+      "col": "PERMISSION_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SecurityGroup",
+      "type": "one",
+      "relEntityName": "SecurityGroup",
+      "fkName": "SEC_GRP_PERM_GRP",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "groupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SecurityPermission",
+      "type": "one-nofk",
+      "relEntityName": "SecurityPermission",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "permissionId",
+          "relFieldName": "permissionId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "groupId",
+    "permissionId",
+    "fromDate"
+  ],
+  "isView": false
+}

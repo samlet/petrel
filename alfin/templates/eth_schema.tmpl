@@ -1,0 +1,15 @@
+{{/* gotype: github.com/samlet/petrel/alfin.ModelEntity */}}
+pragma solidity ^0.4.25;
+
+contract {{.Name}} {
+    address public  _owner;
+    modifier onlyOwner() {
+        require(msg.sender == _owner, "Auth: only owner is authorized.");
+        _;
+    }
+
+{{- range $fld := $.Fields }}
+    {{ $fld.EthFieldType }} {{ $fld.Name }}
+{{- end}}
+}
+

@@ -1,0 +1,160 @@
+edges:
+- name: SecurityGroupPermission
+  relations:
+  - rel: SecurityGroup
+    type: one
+- name: WorkEffortAssoc
+  relations:
+  - rel: WorkEffort
+    type: one
+  - rel: WorkEffort
+    type: one
+- name: TemporalExpression
+  relations:
+  - rel: TemporalExpressionAssoc
+    type: many
+  - rel: TemporalExpressionAssoc
+    type: many
+  - rel: WorkEffort
+    type: many
+- name: TemporalExpressionAssoc
+  relations:
+  - rel: TemporalExpression
+    type: one
+  - rel: TemporalExpression
+    type: one
+- name: UserLoginSecurityGroup
+  relations:
+  - rel: UserLogin
+    type: one
+  - rel: SecurityGroup
+    type: one
+  - rel: SecurityGroupPermission
+    type: many
+- name: PartyRole
+  relations:
+  - rel: Party
+    type: one
+  - rel: FixedAsset
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: SecurityGroup
+  relations:
+  - rel: SecurityGroupPermission
+    type: many
+  - rel: UserLoginSecurityGroup
+    type: many
+- name: UserLogin
+  relations:
+  - rel: Party
+    type: one
+  - rel: Person
+    type: one-nofk
+  - rel: Party
+    type: many
+  - rel: Party
+    type: many
+  - rel: PartyStatus
+    type: many
+  - rel: UserLoginSecurityGroup
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: WorkEffortPartyAssignment
+  relations:
+  - rel: WorkEffort
+    type: one
+  - rel: Party
+    type: one-nofk
+  - rel: PartyRole
+    type: one
+  - rel: UserLogin
+    type: one
+- name: WorkEffort
+  relations:
+  - rel: WorkEffort
+    type: one
+  - rel: FixedAsset
+    type: one
+  - rel: TemporalExpression
+    type: one
+  - rel: WorkEffort
+    type: many
+  - rel: WorkEffortAssoc
+    type: many
+  - rel: WorkEffortAssoc
+    type: many
+  - rel: WorkEffortFixedAssetAssign
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: PartyStatus
+  relations:
+  - rel: Party
+    type: one
+  - rel: UserLogin
+    type: one
+- name: FixedAsset
+  relations:
+  - rel: FixedAsset
+    type: one
+  - rel: Party
+    type: one
+  - rel: PartyRole
+    type: one-nofk
+  - rel: FixedAsset
+    type: many
+  - rel: WorkEffort
+    type: many
+  - rel: WorkEffortFixedAssetAssign
+    type: many
+- name: Party
+  relations:
+  - rel: UserLogin
+    type: one
+  - rel: UserLogin
+    type: one
+  - rel: FixedAsset
+    type: many
+  - rel: PartyRole
+    type: many
+  - rel: PartyStatus
+    type: many
+  - rel: Person
+    type: one-nofk
+  - rel: UserLogin
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: Person
+  relations:
+  - rel: Party
+    type: one
+  - rel: UserLogin
+    type: many
+- name: WorkEffortFixedAssetAssign
+  relations:
+  - rel: WorkEffort
+    type: one
+  - rel: FixedAsset
+    type: one
+entities:
+  FixedAsset: fixedasset.json
+  Party: party.json
+  PartyRole: partyrole.json
+  PartyStatus: partystatus.json
+  Person: person.json
+  SecurityGroup: securitygroup.json
+  SecurityGroupPermission: securitygrouppermission.json
+  TemporalExpression: temporalexpression.json
+  TemporalExpressionAssoc: temporalexpressionassoc.json
+  UserLogin: userlogin.json
+  UserLoginSecurityGroup: userloginsecuritygroup.json
+  WorkEffort: workeffort.json
+  WorkEffortAssoc: workeffortassoc.json
+  WorkEffortFixedAssetAssign: workeffortfixedassetassign.json
+  WorkEffortPartyAssignment: workeffortpartyassignment.json
+name: workeffort
+package: workeffort
+total: 15

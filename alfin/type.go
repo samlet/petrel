@@ -30,6 +30,7 @@ type (
 		Pk                  bool   `json:"pk"`
 		NotNull             bool   `json:"notNull"`
 		AutoCreatedInternal bool   `json:"autoCreatedInternal"`
+		FieldNumber         int    `json:"-"`
 	}
 
 	ModelRelation struct {
@@ -40,6 +41,8 @@ type (
 		Keymaps       []ModelKeymap `json:"keymaps"`
 		Backref       string        `json:"-"`
 		SelfRelation  bool          `json:"-"`
+		BackrefType   string        `json:"-"`
+		FieldNumber   int           `json:"-"`
 	}
 
 	ModelKeymap struct {
@@ -143,7 +146,7 @@ func (t ModelField) EntFieldType() string {
 		resultDef = f(`field.Int("%s")`, t.VarName())
 	case "indicator":
 		resultDef = f(`field.Enum("%s").
-            Values("Y", "N", "-")`, t.VarName())
+            Values("Yes", "No", "Unknown")`, t.VarName())
 	case "very-short":
 		resultDef = f(`field.String("%s").MaxLen(10)`, t.VarName())
 	case "url":
@@ -172,8 +175,12 @@ func (t ModelRelation) PluralName() string {
 	return PluralizeTypeName(t.Name)
 }
 
+func (t ModelRelation) SnakecaseName() string {
+	return strcase.ToSnake(t.Name)
+}
+
 func (t ModelRelation) HashBackref() bool {
-	return t.Type == "one" || t.Type=="one-nofk"
+	return t.Type == "one" || t.Type == "one-nofk"
 }
 
 func (t ModelEntity) Edges() []*ModelRelation {
@@ -192,9 +199,9 @@ func (t ModelEntity) GetBackRef(entName string, rel *ModelRelation) *ModelRelati
 	//log.Printf(".. get backref %s.%s in entity %s", entName, rel.Name, t.Name)
 	for _, r := range t.Relations {
 		//if len(r.Keymaps) == 1 {
-			//log.Printf("%s == %s, %s == %s, %s == %s", r.Keymaps, rel.Keymaps,
-			//	rel.RelEntityName, t.Name, r.RelEntityName, entName)
-			//log.Println("rel.RelEntityName==t.Name", rel.RelEntityName==t.Name)
+		//log.Printf("%s == %s, %s == %s, %s == %s", r.Keymaps, rel.Keymaps,
+		//	rel.RelEntityName, t.Name, r.RelEntityName, entName)
+		//log.Println("rel.RelEntityName==t.Name", rel.RelEntityName==t.Name)
 		if rel.RelEntityName == t.Name &&
 			r.RelEntityName == entName &&
 			rel.Keymaps[0].FieldName == r.Keymaps[0].RelFieldName &&
@@ -202,21 +209,25 @@ func (t ModelEntity) GetBackRef(entName string, rel *ModelRelation) *ModelRelati
 			return r
 		}
 		//}else{
-			//log.Println("\tRelation has multi-keymaps", len(rel.Keymaps))
+		//log.Println("\tRelation has multi-keymaps", len(rel.Keymaps))
 		//}
 	}
 
 	return nil
 }
 
-func (t ModelEntity) GetBackRefName(entName string, rel *ModelRelation) (string, error) {
+func (t ModelEntity) GetBackRefNameAndType(entName string, rel *ModelRelation) (string, string, error) {
 	ref := t.GetBackRef(entName, rel)
 	if ref == nil {
-		return "", errors.New(fmt.Sprintf(
+		return "", "", errors.New(fmt.Sprintf(
 			"Cannot find backref for relation %s in entity %s for %s",
 			rel.Name, t.Name, entName))
 	} else {
-		return ref.PluralName(), nil
+		if ref.Type == "one" || ref.Type == "one-nofk" {
+			return ref.SnakecaseName(), ref.Type, nil
+		} else {
+			return ref.PluralName(), ref.Type, nil
+		}
 	}
 }
 

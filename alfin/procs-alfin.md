@@ -7,3 +7,9 @@ $ srv resource -f ExampleItem  # force regen
 $ srv resource -f Example createExampleStatus createExampleFeature
 ```
 
+* Generate ent package from seed files
+
+```bash
+$ just gencase workeffort
+```
+

@@ -1,0 +1,147 @@
+{
+  "name": "SecurityGroup",
+  "fields": [
+    {
+      "name": "groupId",
+      "type": "id",
+      "col": "GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "groupName",
+      "type": "value",
+      "col": "GROUP_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "securityGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PortalPage",
+      "type": "many",
+      "relEntityName": "PortalPage",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "securityGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProtectedView",
+      "type": "many",
+      "relEntityName": "ProtectedView",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "groupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SecurityGroupPermission",
+      "type": "many",
+      "relEntityName": "SecurityGroupPermission",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "groupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UserLoginSecurityGroup",
+      "type": "many",
+      "relEntityName": "UserLoginSecurityGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "groupId",
+          "relFieldName": "groupId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "groupId"
+  ],
+  "isView": false
+}

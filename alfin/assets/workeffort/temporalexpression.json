@@ -1,0 +1,194 @@
+{
+  "name": "TemporalExpression",
+  "fields": [
+    {
+      "name": "tempExprId",
+      "type": "id",
+      "col": "TEMP_EXPR_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "tempExprTypeId",
+      "type": "id",
+      "col": "TEMP_EXPR_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "date1",
+      "type": "date-time",
+      "col": "DATE1",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "date2",
+      "type": "date-time",
+      "col": "DATE2",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "integer1",
+      "type": "numeric",
+      "col": "INTEGER1",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "integer2",
+      "type": "numeric",
+      "col": "INTEGER2",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "string1",
+      "type": "id",
+      "col": "STRING1",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "string2",
+      "type": "id",
+      "col": "STRING2",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "JobSandbox",
+      "type": "many",
+      "relEntityName": "JobSandbox",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "tempExprId",
+          "relFieldName": "tempExprId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromTemporalExpressionAssoc",
+      "type": "many",
+      "relEntityName": "TemporalExpressionAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "tempExprId",
+          "relFieldName": "fromTempExprId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToTemporalExpressionAssoc",
+      "type": "many",
+      "relEntityName": "TemporalExpressionAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "tempExprId",
+          "relFieldName": "toTempExprId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "tempExprId",
+          "relFieldName": "tempExprId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "tempExprId"
+  ],
+  "isView": false
+}

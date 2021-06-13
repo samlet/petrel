@@ -1,0 +1,769 @@
+{
+  "name": "FixedAsset",
+  "fields": [
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetTypeId",
+      "type": "id",
+      "col": "FIXED_ASSET_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentFixedAssetId",
+      "type": "id",
+      "col": "PARENT_FIXED_ASSET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "instanceOfProductId",
+      "type": "id",
+      "col": "INSTANCE_OF_PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "classEnumId",
+      "type": "id",
+      "col": "CLASS_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetName",
+      "type": "name",
+      "col": "FIXED_ASSET_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "acquireOrderId",
+      "type": "id",
+      "col": "ACQUIRE_ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "acquireOrderItemSeqId",
+      "type": "id",
+      "col": "ACQUIRE_ORDER_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "dateAcquired",
+      "type": "date-time",
+      "col": "DATE_ACQUIRED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "dateLastServiced",
+      "type": "date-time",
+      "col": "DATE_LAST_SERVICED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "dateNextService",
+      "type": "date-time",
+      "col": "DATE_NEXT_SERVICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "expectedEndOfLife",
+      "type": "date",
+      "col": "EXPECTED_END_OF_LIFE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "actualEndOfLife",
+      "type": "date",
+      "col": "ACTUAL_END_OF_LIFE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productionCapacity",
+      "type": "fixed-point",
+      "col": "PRODUCTION_CAPACITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "uomId",
+      "type": "id",
+      "col": "UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "calendarId",
+      "type": "id",
+      "col": "CALENDAR_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "serialNumber",
+      "type": "long-varchar",
+      "col": "SERIAL_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "locatedAtFacilityId",
+      "type": "id",
+      "col": "LOCATED_AT_FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "locatedAtLocationSeqId",
+      "type": "id",
+      "col": "LOCATED_AT_LOCATION_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "salvageValue",
+      "type": "currency-amount",
+      "col": "SALVAGE_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "depreciation",
+      "type": "currency-amount",
+      "col": "DEPRECIATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "purchaseCost",
+      "type": "currency-amount",
+      "col": "PURCHASE_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "purchaseCostUomId",
+      "type": "id",
+      "col": "PURCHASE_COST_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FixedAssetType",
+      "type": "one",
+      "relEntityName": "FixedAssetType",
+      "fkName": "FIXEDAST_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAssetTypeAttr",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetTypeId",
+          "relFieldName": "fixedAssetTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ParentFixedAsset",
+      "type": "one",
+      "relEntityName": "FixedAsset",
+      "fkName": "FIXEDAST_PAR",
+      "keymaps": [
+        {
+          "fieldName": "parentFixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InstanceOfProduct",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "FIXEDAST_IOPROD",
+      "keymaps": [
+        {
+          "fieldName": "instanceOfProductId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ClassEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "FIXEDAST_CLSENM",
+      "keymaps": [
+        {
+          "fieldName": "classEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "FIXEDAST_PARTY",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "FIXEDAST_ROLETYP",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRole",
+      "type": "one-nofk",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcquireOrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "FIXEDAST_ORDHDR",
+      "keymaps": [
+        {
+          "fieldName": "acquireOrderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcquireOrderItem",
+      "type": "one",
+      "relEntityName": "OrderItem",
+      "fkName": "FIXEDAST_ORDITM",
+      "keymaps": [
+        {
+          "fieldName": "acquireOrderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "acquireOrderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "FIXEDAST_UOM",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TechDataCalendar",
+      "type": "one",
+      "relEntityName": "TechDataCalendar",
+      "fkName": "FIXEDAST_CALENDAR",
+      "keymaps": [
+        {
+          "fieldName": "calendarId",
+          "relFieldName": "calendarId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LocatedAtFacility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "FIXEDAST_FAC",
+      "keymaps": [
+        {
+          "fieldName": "locatedAtFacilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LocatedAtFacilityLocation",
+      "type": "one-nofk",
+      "relEntityName": "FacilityLocation",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "locatedAtFacilityId",
+          "relFieldName": "facilityId"
+        },
+        {
+          "fieldName": "locatedAtLocationSeqId",
+          "relFieldName": "locationSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AccommodationMap",
+      "type": "many",
+      "relEntityName": "AccommodationMap",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AccommodationSpot",
+      "type": "many",
+      "relEntityName": "AccommodationSpot",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CostComponent",
+      "type": "many",
+      "relEntityName": "CostComponent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Delivery",
+      "type": "many",
+      "relEntityName": "Delivery",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildFixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "parentFixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetAttribute",
+      "type": "many",
+      "relEntityName": "FixedAssetAttribute",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetDepMethod",
+      "type": "many",
+      "relEntityName": "FixedAssetDepMethod",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetGeoPoint",
+      "type": "many",
+      "relEntityName": "FixedAssetGeoPoint",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetIdent",
+      "type": "many",
+      "relEntityName": "FixedAssetIdent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetMaint",
+      "type": "many",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetMaintOrder",
+      "type": "many",
+      "relEntityName": "FixedAssetMaintOrder",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetProduct",
+      "type": "many",
+      "relEntityName": "FixedAssetProduct",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetRegistration",
+      "type": "many",
+      "relEntityName": "FixedAssetRegistration",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetStdCost",
+      "type": "many",
+      "relEntityName": "FixedAssetStdCost",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetTypeGlAccount",
+      "type": "many",
+      "relEntityName": "FixedAssetTypeGlAccount",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetInventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyFixedAssetAssignment",
+      "type": "many",
+      "relEntityName": "PartyFixedAssetAssignment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Requirement",
+      "type": "many",
+      "relEntityName": "Requirement",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortFixedAssetAssign",
+      "type": "many",
+      "relEntityName": "WorkEffortFixedAssetAssign",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "fixedAssetId"
+  ],
+  "isView": false
+}

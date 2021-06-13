@@ -12,6 +12,15 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+var (
+	partyTypePerson *ent.PartyType
+	statusItemPartyEnabled *ent.StatusItem
+)
+
+const (
+	EstimateCalcMethod_Simple=100
+)
+
 func TestProject(t *testing.T) {
 	client, err := ent.Open("sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
 	if err != nil {
@@ -34,8 +43,9 @@ func DoProject(ctx context.Context, client *ent.Client) error {
 	createParties(ctx, client)
 
 	workeff, err := client.WorkEffort.Create().
-		SetWorkEffortType(WorkEffortTypeRef(ctx, client, "PROJECT")).
+		SetWorkEffortType(helper.WorkEffortTypeRef(ctx, "PROJECT")).
 		SetWorkEffortName("Demo Project1 Cust1").
+		SetEstimateCalcMethod(EstimateCalcMethod_Simple).
 		Save(ctx)
 	if err != nil {
 		log.Fatalf("create workeffort fail: %v", err)
@@ -46,12 +56,19 @@ func DoProject(ctx context.Context, client *ent.Client) error {
 }
 
 func createParties(ctx context.Context, client *ent.Client) {
-	client.PartyType.Create().SetStringRef("PERSON").SetDescription("Person").Save(ctx)
-	client.StatusItem.Create().SetStringRef("PARTY_ENABLED").SetDescription("Party enabled").Save(ctx)
+	var err error
+	partyTypePerson, err = client.PartyType.Create().SetStringRef("PERSON").SetDescription("Person").Save(ctx)
+	if err != nil {
+		log.Fatalf(" fail: %v", err)
+	}
+	statusItemPartyEnabled, err=client.StatusItem.Create().SetStringRef("PARTY_ENABLED").SetDescription("Party enabled").Save(ctx)
+	if err != nil {
+		log.Fatalf(" fail: %v", err)
+	}
 
 	client.Party.Create().SetStringRef("DemoEmployee").
-		SetPartyType(helper.PartyTypeRef(ctx, "PERSON")).
-		SetStatusItem(StatusItemRef(ctx,client,"PARTY_ENABLED")).
+		SetPartyType(partyTypePerson).
+		SetStatusItem(statusItemPartyEnabled).
 		Save(ctx)
 }
 

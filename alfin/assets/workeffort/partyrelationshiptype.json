@@ -1,0 +1,187 @@
+{
+  "name": "PartyRelationshipType",
+  "fields": [
+    {
+      "name": "partyRelationshipTypeId",
+      "type": "id",
+      "col": "PARTY_RELATIONSHIP_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "partyRelationshipName",
+      "type": "name",
+      "col": "PARTY_RELATIONSHIP_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdValidFrom",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_VALID_FROM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "roleTypeIdValidTo",
+      "type": "id",
+      "col": "ROLE_TYPE_ID_VALID_TO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentPartyRelationshipType",
+      "type": "one",
+      "relEntityName": "PartyRelationshipType",
+      "fkName": "PARTY_RELTYP_PAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "partyRelationshipTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ValidFromRoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "PARTY_RELTYP_VFRT",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdValidFrom",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ValidToRoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "PARTY_RELTYP_VTRT",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeIdValidTo",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyRelationshipTypeId",
+          "relFieldName": "partyRelationshipTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildPartyRelationshipType",
+      "type": "many",
+      "relEntityName": "PartyRelationshipType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyRelationshipTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "partyRelationshipTypeId"
+  ],
+  "isView": false
+}

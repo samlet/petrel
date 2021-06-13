@@ -42,6 +42,10 @@ type RoleTypeEdges struct {
 	FixedAssets []*FixedAsset `json:"fixed_assets,omitempty"`
 	// PartyContactMeches holds the value of the party_contact_meches edge.
 	PartyContactMeches []*PartyContactMech `json:"party_contact_meches,omitempty"`
+	// ValidFromPartyRelationshipTypes holds the value of the valid_from_party_relationship_types edge.
+	ValidFromPartyRelationshipTypes []*PartyRelationshipType `json:"valid_from_party_relationship_types,omitempty"`
+	// ValidToPartyRelationshipTypes holds the value of the valid_to_party_relationship_types edge.
+	ValidToPartyRelationshipTypes []*PartyRelationshipType `json:"valid_to_party_relationship_types,omitempty"`
 	// PartyRoles holds the value of the party_roles edge.
 	PartyRoles []*PartyRole `json:"party_roles,omitempty"`
 	// ChildRoleTypes holds the value of the child_role_types edge.
@@ -50,7 +54,7 @@ type RoleTypeEdges struct {
 	WorkEffortPartyAssignments []*WorkEffortPartyAssignment `json:"work_effort_party_assignments,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [7]bool
+	loadedTypes [9]bool
 }
 
 // ParentOrErr returns the Parent value or an error if the edge
@@ -94,10 +98,28 @@ func (e RoleTypeEdges) PartyContactMechesOrErr() ([]*PartyContactMech, error) {
 	return nil, &NotLoadedError{edge: "party_contact_meches"}
 }
 
+// ValidFromPartyRelationshipTypesOrErr returns the ValidFromPartyRelationshipTypes value or an error if the edge
+// was not loaded in eager-loading.
+func (e RoleTypeEdges) ValidFromPartyRelationshipTypesOrErr() ([]*PartyRelationshipType, error) {
+	if e.loadedTypes[4] {
+		return e.ValidFromPartyRelationshipTypes, nil
+	}
+	return nil, &NotLoadedError{edge: "valid_from_party_relationship_types"}
+}
+
+// ValidToPartyRelationshipTypesOrErr returns the ValidToPartyRelationshipTypes value or an error if the edge
+// was not loaded in eager-loading.
+func (e RoleTypeEdges) ValidToPartyRelationshipTypesOrErr() ([]*PartyRelationshipType, error) {
+	if e.loadedTypes[5] {
+		return e.ValidToPartyRelationshipTypes, nil
+	}
+	return nil, &NotLoadedError{edge: "valid_to_party_relationship_types"}
+}
+
 // PartyRolesOrErr returns the PartyRoles value or an error if the edge
 // was not loaded in eager-loading.
 func (e RoleTypeEdges) PartyRolesOrErr() ([]*PartyRole, error) {
-	if e.loadedTypes[4] {
+	if e.loadedTypes[6] {
 		return e.PartyRoles, nil
 	}
 	return nil, &NotLoadedError{edge: "party_roles"}
@@ -106,7 +128,7 @@ func (e RoleTypeEdges) PartyRolesOrErr() ([]*PartyRole, error) {
 // ChildRoleTypesOrErr returns the ChildRoleTypes value or an error if the edge
 // was not loaded in eager-loading.
 func (e RoleTypeEdges) ChildRoleTypesOrErr() ([]*RoleType, error) {
-	if e.loadedTypes[5] {
+	if e.loadedTypes[7] {
 		return e.ChildRoleTypes, nil
 	}
 	return nil, &NotLoadedError{edge: "child_role_types"}
@@ -115,7 +137,7 @@ func (e RoleTypeEdges) ChildRoleTypesOrErr() ([]*RoleType, error) {
 // WorkEffortPartyAssignmentsOrErr returns the WorkEffortPartyAssignments value or an error if the edge
 // was not loaded in eager-loading.
 func (e RoleTypeEdges) WorkEffortPartyAssignmentsOrErr() ([]*WorkEffortPartyAssignment, error) {
-	if e.loadedTypes[6] {
+	if e.loadedTypes[8] {
 		return e.WorkEffortPartyAssignments, nil
 	}
 	return nil, &NotLoadedError{edge: "work_effort_party_assignments"}
@@ -215,6 +237,16 @@ func (rt *RoleType) QueryFixedAssets() *FixedAssetQuery {
 // QueryPartyContactMeches queries the "party_contact_meches" edge of the RoleType entity.
 func (rt *RoleType) QueryPartyContactMeches() *PartyContactMechQuery {
 	return (&RoleTypeClient{config: rt.config}).QueryPartyContactMeches(rt)
+}
+
+// QueryValidFromPartyRelationshipTypes queries the "valid_from_party_relationship_types" edge of the RoleType entity.
+func (rt *RoleType) QueryValidFromPartyRelationshipTypes() *PartyRelationshipTypeQuery {
+	return (&RoleTypeClient{config: rt.config}).QueryValidFromPartyRelationshipTypes(rt)
+}
+
+// QueryValidToPartyRelationshipTypes queries the "valid_to_party_relationship_types" edge of the RoleType entity.
+func (rt *RoleType) QueryValidToPartyRelationshipTypes() *PartyRelationshipTypeQuery {
+	return (&RoleTypeClient{config: rt.config}).QueryValidToPartyRelationshipTypes(rt)
 }
 
 // QueryPartyRoles queries the "party_roles" edge of the RoleType entity.

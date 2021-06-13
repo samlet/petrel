@@ -218,29 +218,45 @@ func CreateMod(modName string){
 	if err != nil {
 		panic(err)
 	}
-	mkdir("meta")
+	mkdir("helper")
 
 	//targetFile:=filepath.Join("ent", "schema", "modent.go")
 }
 
-func WriteSchemas(pkg string) {
+func WriteSchemas(pkg string, onlyWrite bool) {
 	//pkg:="workload"
+	// write modent
 	path:=filepath.Join("modules", pkg, "ent", "schema", "modent.go")
 	f, err := os.Create(path)
 	check(err)
 	defer f.Close()
 
-	err=GenSchemas(pkg, f)
+	mani, err:=GenSchemas(pkg)
 	if err != nil {
 		panic(err)
 	}
-
+	err=mani.GenSchemaWithFiles(f)
+	if err != nil {
+		log.Fatalf(" fail: %v", err)
+	}
 	f.Sync()
+	println("write modent to ", path)
 
-	println("write to ", path)
-	genPath:=filepath.Join(".","modules", pkg, "ent")
-	println("execute go generate:", genPath)
-	sh.RunV("go", "generate", "./"+genPath)
-	println("done.")
+	// write helper
+	path=filepath.Join("modules", pkg, "helper", pkg+"helper.go")
+	f, err = os.Create(path)
+	check(err)
+	defer f.Close()
+	mani.GenHelpers(f)
+	f.Sync()
+	println("write helper to ", path)
+
+	if !onlyWrite {
+		// invoke generate
+		genPath := filepath.Join(".", "modules", pkg, "ent")
+		println("execute go generate:", genPath)
+		sh.RunV("go", "generate", "./"+genPath)
+		println("done.")
+	}
 }
 

@@ -58,6 +58,8 @@ const (
 	EdgeChangeByPartyStatuses = "change_by_party_statuses"
 	// EdgeUserLoginSecurityGroups holds the string denoting the user_login_security_groups edge name in mutations.
 	EdgeUserLoginSecurityGroups = "user_login_security_groups"
+	// EdgeUserPreferences holds the string denoting the user_preferences edge name in mutations.
+	EdgeUserPreferences = "user_preferences"
 	// EdgeAssignedByWorkEffortPartyAssignments holds the string denoting the assigned_by_work_effort_party_assignments edge name in mutations.
 	EdgeAssignedByWorkEffortPartyAssignments = "assigned_by_work_effort_party_assignments"
 	// Table holds the table name of the userlogin in the database.
@@ -104,6 +106,13 @@ const (
 	UserLoginSecurityGroupsInverseTable = "user_login_security_groups"
 	// UserLoginSecurityGroupsColumn is the table column denoting the user_login_security_groups relation/edge.
 	UserLoginSecurityGroupsColumn = "user_login_user_login_security_groups"
+	// UserPreferencesTable is the table the holds the user_preferences relation/edge.
+	UserPreferencesTable = "user_preferences"
+	// UserPreferencesInverseTable is the table name for the UserPreference entity.
+	// It exists in this package in order to avoid circular dependency with the "userpreference" package.
+	UserPreferencesInverseTable = "user_preferences"
+	// UserPreferencesColumn is the table column denoting the user_preferences relation/edge.
+	UserPreferencesColumn = "user_login_user_preferences"
 	// AssignedByWorkEffortPartyAssignmentsTable is the table the holds the assigned_by_work_effort_party_assignments relation/edge.
 	AssignedByWorkEffortPartyAssignmentsTable = "work_effort_party_assignments"
 	// AssignedByWorkEffortPartyAssignmentsInverseTable is the table name for the WorkEffortPartyAssignment entity.

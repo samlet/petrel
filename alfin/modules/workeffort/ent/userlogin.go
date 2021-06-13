@@ -73,11 +73,13 @@ type UserLoginEdges struct {
 	ChangeByPartyStatuses []*PartyStatus `json:"change_by_party_statuses,omitempty"`
 	// UserLoginSecurityGroups holds the value of the user_login_security_groups edge.
 	UserLoginSecurityGroups []*UserLoginSecurityGroup `json:"user_login_security_groups,omitempty"`
+	// UserPreferences holds the value of the user_preferences edge.
+	UserPreferences []*UserPreference `json:"user_preferences,omitempty"`
 	// AssignedByWorkEffortPartyAssignments holds the value of the assigned_by_work_effort_party_assignments edge.
 	AssignedByWorkEffortPartyAssignments []*WorkEffortPartyAssignment `json:"assigned_by_work_effort_party_assignments,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [7]bool
+	loadedTypes [8]bool
 }
 
 // PartyOrErr returns the Party value or an error if the edge
@@ -144,10 +146,19 @@ func (e UserLoginEdges) UserLoginSecurityGroupsOrErr() ([]*UserLoginSecurityGrou
 	return nil, &NotLoadedError{edge: "user_login_security_groups"}
 }
 
+// UserPreferencesOrErr returns the UserPreferences value or an error if the edge
+// was not loaded in eager-loading.
+func (e UserLoginEdges) UserPreferencesOrErr() ([]*UserPreference, error) {
+	if e.loadedTypes[6] {
+		return e.UserPreferences, nil
+	}
+	return nil, &NotLoadedError{edge: "user_preferences"}
+}
+
 // AssignedByWorkEffortPartyAssignmentsOrErr returns the AssignedByWorkEffortPartyAssignments value or an error if the edge
 // was not loaded in eager-loading.
 func (e UserLoginEdges) AssignedByWorkEffortPartyAssignmentsOrErr() ([]*WorkEffortPartyAssignment, error) {
-	if e.loadedTypes[6] {
+	if e.loadedTypes[7] {
 		return e.AssignedByWorkEffortPartyAssignments, nil
 	}
 	return nil, &NotLoadedError{edge: "assigned_by_work_effort_party_assignments"}
@@ -338,6 +349,11 @@ func (ul *UserLogin) QueryChangeByPartyStatuses() *PartyStatusQuery {
 // QueryUserLoginSecurityGroups queries the "user_login_security_groups" edge of the UserLogin entity.
 func (ul *UserLogin) QueryUserLoginSecurityGroups() *UserLoginSecurityGroupQuery {
 	return (&UserLoginClient{config: ul.config}).QueryUserLoginSecurityGroups(ul)
+}
+
+// QueryUserPreferences queries the "user_preferences" edge of the UserLogin entity.
+func (ul *UserLogin) QueryUserPreferences() *UserPreferenceQuery {
+	return (&UserLoginClient{config: ul.config}).QueryUserPreferences(ul)
 }
 
 // QueryAssignedByWorkEffortPartyAssignments queries the "assigned_by_work_effort_party_assignments" edge of the UserLogin entity.

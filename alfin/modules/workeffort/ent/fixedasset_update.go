@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
@@ -103,33 +104,6 @@ func (fau *FixedAssetUpdate) AddInstanceOfProductID(i int) *FixedAssetUpdate {
 // ClearInstanceOfProductID clears the value of the "instance_of_product_id" field.
 func (fau *FixedAssetUpdate) ClearInstanceOfProductID() *FixedAssetUpdate {
 	fau.mutation.ClearInstanceOfProductID()
-	return fau
-}
-
-// SetClassEnumID sets the "class_enum_id" field.
-func (fau *FixedAssetUpdate) SetClassEnumID(i int) *FixedAssetUpdate {
-	fau.mutation.ResetClassEnumID()
-	fau.mutation.SetClassEnumID(i)
-	return fau
-}
-
-// SetNillableClassEnumID sets the "class_enum_id" field if the given value is not nil.
-func (fau *FixedAssetUpdate) SetNillableClassEnumID(i *int) *FixedAssetUpdate {
-	if i != nil {
-		fau.SetClassEnumID(*i)
-	}
-	return fau
-}
-
-// AddClassEnumID adds i to the "class_enum_id" field.
-func (fau *FixedAssetUpdate) AddClassEnumID(i int) *FixedAssetUpdate {
-	fau.mutation.AddClassEnumID(i)
-	return fau
-}
-
-// ClearClassEnumID clears the value of the "class_enum_id" field.
-func (fau *FixedAssetUpdate) ClearClassEnumID() *FixedAssetUpdate {
-	fau.mutation.ClearClassEnumID()
 	return fau
 }
 
@@ -604,6 +578,25 @@ func (fau *FixedAssetUpdate) AddChildren(f ...*FixedAsset) *FixedAssetUpdate {
 	return fau.AddChildIDs(ids...)
 }
 
+// SetClassEnumerationID sets the "class_enumeration" edge to the Enumeration entity by ID.
+func (fau *FixedAssetUpdate) SetClassEnumerationID(id int) *FixedAssetUpdate {
+	fau.mutation.SetClassEnumerationID(id)
+	return fau
+}
+
+// SetNillableClassEnumerationID sets the "class_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (fau *FixedAssetUpdate) SetNillableClassEnumerationID(id *int) *FixedAssetUpdate {
+	if id != nil {
+		fau = fau.SetClassEnumerationID(*id)
+	}
+	return fau
+}
+
+// SetClassEnumeration sets the "class_enumeration" edge to the Enumeration entity.
+func (fau *FixedAssetUpdate) SetClassEnumeration(e *Enumeration) *FixedAssetUpdate {
+	return fau.SetClassEnumerationID(e.ID)
+}
+
 // SetPartyID sets the "party" edge to the Party entity by ID.
 func (fau *FixedAssetUpdate) SetPartyID(id int) *FixedAssetUpdate {
 	fau.mutation.SetPartyID(id)
@@ -736,6 +729,12 @@ func (fau *FixedAssetUpdate) RemoveChildren(f ...*FixedAsset) *FixedAssetUpdate 
 		ids[i] = f[i].ID
 	}
 	return fau.RemoveChildIDs(ids...)
+}
+
+// ClearClassEnumeration clears the "class_enumeration" edge to the Enumeration entity.
+func (fau *FixedAssetUpdate) ClearClassEnumeration() *FixedAssetUpdate {
+	fau.mutation.ClearClassEnumeration()
+	return fau
 }
 
 // ClearParty clears the "party" edge to the Party entity.
@@ -955,26 +954,6 @@ func (fau *FixedAssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Column: fixedasset.FieldInstanceOfProductID,
-		})
-	}
-	if value, ok := fau.mutation.ClassEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldClassEnumID,
-		})
-	}
-	if value, ok := fau.mutation.AddedClassEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldClassEnumID,
-		})
-	}
-	if fau.mutation.ClassEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: fixedasset.FieldClassEnumID,
 		})
 	}
 	if value, ok := fau.mutation.FixedAssetName(); ok {
@@ -1377,6 +1356,41 @@ func (fau *FixedAssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if fau.mutation.ClassEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.ClassEnumerationTable,
+			Columns: []string{fixedasset.ClassEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := fau.mutation.ClassEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.ClassEnumerationTable,
+			Columns: []string{fixedasset.ClassEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if fau.mutation.PartyCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -1734,33 +1748,6 @@ func (fauo *FixedAssetUpdateOne) AddInstanceOfProductID(i int) *FixedAssetUpdate
 // ClearInstanceOfProductID clears the value of the "instance_of_product_id" field.
 func (fauo *FixedAssetUpdateOne) ClearInstanceOfProductID() *FixedAssetUpdateOne {
 	fauo.mutation.ClearInstanceOfProductID()
-	return fauo
-}
-
-// SetClassEnumID sets the "class_enum_id" field.
-func (fauo *FixedAssetUpdateOne) SetClassEnumID(i int) *FixedAssetUpdateOne {
-	fauo.mutation.ResetClassEnumID()
-	fauo.mutation.SetClassEnumID(i)
-	return fauo
-}
-
-// SetNillableClassEnumID sets the "class_enum_id" field if the given value is not nil.
-func (fauo *FixedAssetUpdateOne) SetNillableClassEnumID(i *int) *FixedAssetUpdateOne {
-	if i != nil {
-		fauo.SetClassEnumID(*i)
-	}
-	return fauo
-}
-
-// AddClassEnumID adds i to the "class_enum_id" field.
-func (fauo *FixedAssetUpdateOne) AddClassEnumID(i int) *FixedAssetUpdateOne {
-	fauo.mutation.AddClassEnumID(i)
-	return fauo
-}
-
-// ClearClassEnumID clears the value of the "class_enum_id" field.
-func (fauo *FixedAssetUpdateOne) ClearClassEnumID() *FixedAssetUpdateOne {
-	fauo.mutation.ClearClassEnumID()
 	return fauo
 }
 
@@ -2235,6 +2222,25 @@ func (fauo *FixedAssetUpdateOne) AddChildren(f ...*FixedAsset) *FixedAssetUpdate
 	return fauo.AddChildIDs(ids...)
 }
 
+// SetClassEnumerationID sets the "class_enumeration" edge to the Enumeration entity by ID.
+func (fauo *FixedAssetUpdateOne) SetClassEnumerationID(id int) *FixedAssetUpdateOne {
+	fauo.mutation.SetClassEnumerationID(id)
+	return fauo
+}
+
+// SetNillableClassEnumerationID sets the "class_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (fauo *FixedAssetUpdateOne) SetNillableClassEnumerationID(id *int) *FixedAssetUpdateOne {
+	if id != nil {
+		fauo = fauo.SetClassEnumerationID(*id)
+	}
+	return fauo
+}
+
+// SetClassEnumeration sets the "class_enumeration" edge to the Enumeration entity.
+func (fauo *FixedAssetUpdateOne) SetClassEnumeration(e *Enumeration) *FixedAssetUpdateOne {
+	return fauo.SetClassEnumerationID(e.ID)
+}
+
 // SetPartyID sets the "party" edge to the Party entity by ID.
 func (fauo *FixedAssetUpdateOne) SetPartyID(id int) *FixedAssetUpdateOne {
 	fauo.mutation.SetPartyID(id)
@@ -2367,6 +2373,12 @@ func (fauo *FixedAssetUpdateOne) RemoveChildren(f ...*FixedAsset) *FixedAssetUpd
 		ids[i] = f[i].ID
 	}
 	return fauo.RemoveChildIDs(ids...)
+}
+
+// ClearClassEnumeration clears the "class_enumeration" edge to the Enumeration entity.
+func (fauo *FixedAssetUpdateOne) ClearClassEnumeration() *FixedAssetUpdateOne {
+	fauo.mutation.ClearClassEnumeration()
+	return fauo
 }
 
 // ClearParty clears the "party" edge to the Party entity.
@@ -2610,26 +2622,6 @@ func (fauo *FixedAssetUpdateOne) sqlSave(ctx context.Context) (_node *FixedAsset
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Column: fixedasset.FieldInstanceOfProductID,
-		})
-	}
-	if value, ok := fauo.mutation.ClassEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldClassEnumID,
-		})
-	}
-	if value, ok := fauo.mutation.AddedClassEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldClassEnumID,
-		})
-	}
-	if fauo.mutation.ClassEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: fixedasset.FieldClassEnumID,
 		})
 	}
 	if value, ok := fauo.mutation.FixedAssetName(); ok {
@@ -3024,6 +3016,41 @@ func (fauo *FixedAssetUpdateOne) sqlSave(ctx context.Context) (_node *FixedAsset
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if fauo.mutation.ClassEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.ClassEnumerationTable,
+			Columns: []string{fixedasset.ClassEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := fauo.mutation.ClassEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.ClassEnumerationTable,
+			Columns: []string{fixedasset.ClassEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
 				},
 			},
 		}

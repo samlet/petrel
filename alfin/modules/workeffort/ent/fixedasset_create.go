@@ -10,6 +10,7 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
@@ -91,20 +92,6 @@ func (fac *FixedAssetCreate) SetInstanceOfProductID(i int) *FixedAssetCreate {
 func (fac *FixedAssetCreate) SetNillableInstanceOfProductID(i *int) *FixedAssetCreate {
 	if i != nil {
 		fac.SetInstanceOfProductID(*i)
-	}
-	return fac
-}
-
-// SetClassEnumID sets the "class_enum_id" field.
-func (fac *FixedAssetCreate) SetClassEnumID(i int) *FixedAssetCreate {
-	fac.mutation.SetClassEnumID(i)
-	return fac
-}
-
-// SetNillableClassEnumID sets the "class_enum_id" field if the given value is not nil.
-func (fac *FixedAssetCreate) SetNillableClassEnumID(i *int) *FixedAssetCreate {
-	if i != nil {
-		fac.SetClassEnumID(*i)
 	}
 	return fac
 }
@@ -395,6 +382,25 @@ func (fac *FixedAssetCreate) AddChildren(f ...*FixedAsset) *FixedAssetCreate {
 	return fac.AddChildIDs(ids...)
 }
 
+// SetClassEnumerationID sets the "class_enumeration" edge to the Enumeration entity by ID.
+func (fac *FixedAssetCreate) SetClassEnumerationID(id int) *FixedAssetCreate {
+	fac.mutation.SetClassEnumerationID(id)
+	return fac
+}
+
+// SetNillableClassEnumerationID sets the "class_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (fac *FixedAssetCreate) SetNillableClassEnumerationID(id *int) *FixedAssetCreate {
+	if id != nil {
+		fac = fac.SetClassEnumerationID(*id)
+	}
+	return fac
+}
+
+// SetClassEnumeration sets the "class_enumeration" edge to the Enumeration entity.
+func (fac *FixedAssetCreate) SetClassEnumeration(e *Enumeration) *FixedAssetCreate {
+	return fac.SetClassEnumerationID(e.ID)
+}
+
 // SetPartyID sets the "party" edge to the Party entity by ID.
 func (fac *FixedAssetCreate) SetPartyID(id int) *FixedAssetCreate {
 	fac.mutation.SetPartyID(id)
@@ -657,14 +663,6 @@ func (fac *FixedAssetCreate) createSpec() (*FixedAsset, *sqlgraph.CreateSpec) {
 		})
 		_node.InstanceOfProductID = value
 	}
-	if value, ok := fac.mutation.ClassEnumID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldClassEnumID,
-		})
-		_node.ClassEnumID = value
-	}
 	if value, ok := fac.mutation.FixedAssetName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -846,6 +844,26 @@ func (fac *FixedAssetCreate) createSpec() (*FixedAsset, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := fac.mutation.ClassEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.ClassEnumerationTable,
+			Columns: []string{fixedasset.ClassEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.enumeration_class_fixed_assets = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := fac.mutation.PartyIDs(); len(nodes) > 0 {

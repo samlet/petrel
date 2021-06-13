@@ -18,8 +18,6 @@ const (
 	FieldUpdateTime = "update_time"
 	// FieldStringRef holds the string denoting the string_ref field in the database.
 	FieldStringRef = "string_ref"
-	// FieldPartyTypeID holds the string denoting the party_type_id field in the database.
-	FieldPartyTypeID = "party_type_id"
 	// FieldExternalID holds the string denoting the external_id field in the database.
 	FieldExternalID = "external_id"
 	// FieldPreferredCurrencyUomID holds the string denoting the preferred_currency_uom_id field in the database.
@@ -34,6 +32,8 @@ const (
 	FieldDataSourceID = "data_source_id"
 	// FieldIsUnread holds the string denoting the is_unread field in the database.
 	FieldIsUnread = "is_unread"
+	// EdgePartyType holds the string denoting the party_type edge name in mutations.
+	EdgePartyType = "party_type"
 	// EdgeCreatedByUserLogin holds the string denoting the created_by_user_login edge name in mutations.
 	EdgeCreatedByUserLogin = "created_by_user_login"
 	// EdgeLastModifiedByUserLogin holds the string denoting the last_modified_by_user_login edge name in mutations.
@@ -56,6 +56,13 @@ const (
 	EdgeWorkEffortPartyAssignments = "work_effort_party_assignments"
 	// Table holds the table name of the party in the database.
 	Table = "parties"
+	// PartyTypeTable is the table the holds the party_type relation/edge.
+	PartyTypeTable = "parties"
+	// PartyTypeInverseTable is the table name for the PartyType entity.
+	// It exists in this package in order to avoid circular dependency with the "partytype" package.
+	PartyTypeInverseTable = "party_types"
+	// PartyTypeColumn is the table column denoting the party_type relation/edge.
+	PartyTypeColumn = "party_type_parties"
 	// CreatedByUserLoginTable is the table the holds the created_by_user_login relation/edge.
 	CreatedByUserLoginTable = "parties"
 	// CreatedByUserLoginInverseTable is the table name for the UserLogin entity.
@@ -134,7 +141,6 @@ var Columns = []string{
 	FieldCreateTime,
 	FieldUpdateTime,
 	FieldStringRef,
-	FieldPartyTypeID,
 	FieldExternalID,
 	FieldPreferredCurrencyUomID,
 	FieldDescription,
@@ -147,6 +153,7 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the "parties"
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
+	"party_type_parties",
 	"status_item_parties",
 	"user_login_created_by_parties",
 	"user_login_last_modified_by_parties",

@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
@@ -104,60 +105,6 @@ func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableStatusDateTime(t *time.
 // ClearStatusDateTime clears the value of the "status_date_time" field.
 func (wepau *WorkEffortPartyAssignmentUpdate) ClearStatusDateTime() *WorkEffortPartyAssignmentUpdate {
 	wepau.mutation.ClearStatusDateTime()
-	return wepau
-}
-
-// SetExpectationEnumID sets the "expectation_enum_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetExpectationEnumID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ResetExpectationEnumID()
-	wepau.mutation.SetExpectationEnumID(i)
-	return wepau
-}
-
-// SetNillableExpectationEnumID sets the "expectation_enum_id" field if the given value is not nil.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableExpectationEnumID(i *int) *WorkEffortPartyAssignmentUpdate {
-	if i != nil {
-		wepau.SetExpectationEnumID(*i)
-	}
-	return wepau
-}
-
-// AddExpectationEnumID adds i to the "expectation_enum_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) AddExpectationEnumID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.AddExpectationEnumID(i)
-	return wepau
-}
-
-// ClearExpectationEnumID clears the value of the "expectation_enum_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) ClearExpectationEnumID() *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ClearExpectationEnumID()
-	return wepau
-}
-
-// SetDelegateReasonEnumID sets the "delegate_reason_enum_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetDelegateReasonEnumID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ResetDelegateReasonEnumID()
-	wepau.mutation.SetDelegateReasonEnumID(i)
-	return wepau
-}
-
-// SetNillableDelegateReasonEnumID sets the "delegate_reason_enum_id" field if the given value is not nil.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableDelegateReasonEnumID(i *int) *WorkEffortPartyAssignmentUpdate {
-	if i != nil {
-		wepau.SetDelegateReasonEnumID(*i)
-	}
-	return wepau
-}
-
-// AddDelegateReasonEnumID adds i to the "delegate_reason_enum_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) AddDelegateReasonEnumID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.AddDelegateReasonEnumID(i)
-	return wepau
-}
-
-// ClearDelegateReasonEnumID clears the value of the "delegate_reason_enum_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) ClearDelegateReasonEnumID() *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ClearDelegateReasonEnumID()
 	return wepau
 }
 
@@ -342,6 +289,44 @@ func (wepau *WorkEffortPartyAssignmentUpdate) SetAssignmentStatusItem(s *StatusI
 	return wepau.SetAssignmentStatusItemID(s.ID)
 }
 
+// SetExpectationEnumerationID sets the "expectation_enumeration" edge to the Enumeration entity by ID.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetExpectationEnumerationID(id int) *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.SetExpectationEnumerationID(id)
+	return wepau
+}
+
+// SetNillableExpectationEnumerationID sets the "expectation_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableExpectationEnumerationID(id *int) *WorkEffortPartyAssignmentUpdate {
+	if id != nil {
+		wepau = wepau.SetExpectationEnumerationID(*id)
+	}
+	return wepau
+}
+
+// SetExpectationEnumeration sets the "expectation_enumeration" edge to the Enumeration entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetExpectationEnumeration(e *Enumeration) *WorkEffortPartyAssignmentUpdate {
+	return wepau.SetExpectationEnumerationID(e.ID)
+}
+
+// SetDelegateReasonEnumerationID sets the "delegate_reason_enumeration" edge to the Enumeration entity by ID.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetDelegateReasonEnumerationID(id int) *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.SetDelegateReasonEnumerationID(id)
+	return wepau
+}
+
+// SetNillableDelegateReasonEnumerationID sets the "delegate_reason_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableDelegateReasonEnumerationID(id *int) *WorkEffortPartyAssignmentUpdate {
+	if id != nil {
+		wepau = wepau.SetDelegateReasonEnumerationID(*id)
+	}
+	return wepau
+}
+
+// SetDelegateReasonEnumeration sets the "delegate_reason_enumeration" edge to the Enumeration entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetDelegateReasonEnumeration(e *Enumeration) *WorkEffortPartyAssignmentUpdate {
+	return wepau.SetDelegateReasonEnumerationID(e.ID)
+}
+
 // SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
 func (wepau *WorkEffortPartyAssignmentUpdate) SetAvailabilityStatusItemID(id int) *WorkEffortPartyAssignmentUpdate {
 	wepau.mutation.SetAvailabilityStatusItemID(id)
@@ -399,6 +384,18 @@ func (wepau *WorkEffortPartyAssignmentUpdate) ClearAssignedByUserLogin() *WorkEf
 // ClearAssignmentStatusItem clears the "assignment_status_item" edge to the StatusItem entity.
 func (wepau *WorkEffortPartyAssignmentUpdate) ClearAssignmentStatusItem() *WorkEffortPartyAssignmentUpdate {
 	wepau.mutation.ClearAssignmentStatusItem()
+	return wepau
+}
+
+// ClearExpectationEnumeration clears the "expectation_enumeration" edge to the Enumeration entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) ClearExpectationEnumeration() *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.ClearExpectationEnumeration()
+	return wepau
+}
+
+// ClearDelegateReasonEnumeration clears the "delegate_reason_enumeration" edge to the Enumeration entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) ClearDelegateReasonEnumeration() *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.ClearDelegateReasonEnumeration()
 	return wepau
 }
 
@@ -553,46 +550,6 @@ func (wepau *WorkEffortPartyAssignmentUpdate) sqlSave(ctx context.Context) (n in
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Column: workeffortpartyassignment.FieldStatusDateTime,
-		})
-	}
-	if value, ok := wepau.mutation.ExpectationEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldExpectationEnumID,
-		})
-	}
-	if value, ok := wepau.mutation.AddedExpectationEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldExpectationEnumID,
-		})
-	}
-	if wepau.mutation.ExpectationEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldExpectationEnumID,
-		})
-	}
-	if value, ok := wepau.mutation.DelegateReasonEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldDelegateReasonEnumID,
-		})
-	}
-	if value, ok := wepau.mutation.AddedDelegateReasonEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldDelegateReasonEnumID,
-		})
-	}
-	if wepau.mutation.DelegateReasonEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldDelegateReasonEnumID,
 		})
 	}
 	if value, ok := wepau.mutation.FacilityID(); ok {
@@ -851,6 +808,76 @@ func (wepau *WorkEffortPartyAssignmentUpdate) sqlSave(ctx context.Context) (n in
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if wepau.mutation.ExpectationEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.ExpectationEnumerationTable,
+			Columns: []string{workeffortpartyassignment.ExpectationEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepau.mutation.ExpectationEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.ExpectationEnumerationTable,
+			Columns: []string{workeffortpartyassignment.ExpectationEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wepau.mutation.DelegateReasonEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.DelegateReasonEnumerationTable,
+			Columns: []string{workeffortpartyassignment.DelegateReasonEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepau.mutation.DelegateReasonEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.DelegateReasonEnumerationTable,
+			Columns: []string{workeffortpartyassignment.DelegateReasonEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if wepau.mutation.AvailabilityStatusItemCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -976,60 +1003,6 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableStatusDateTime(t *t
 // ClearStatusDateTime clears the value of the "status_date_time" field.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearStatusDateTime() *WorkEffortPartyAssignmentUpdateOne {
 	wepauo.mutation.ClearStatusDateTime()
-	return wepauo
-}
-
-// SetExpectationEnumID sets the "expectation_enum_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetExpectationEnumID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ResetExpectationEnumID()
-	wepauo.mutation.SetExpectationEnumID(i)
-	return wepauo
-}
-
-// SetNillableExpectationEnumID sets the "expectation_enum_id" field if the given value is not nil.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableExpectationEnumID(i *int) *WorkEffortPartyAssignmentUpdateOne {
-	if i != nil {
-		wepauo.SetExpectationEnumID(*i)
-	}
-	return wepauo
-}
-
-// AddExpectationEnumID adds i to the "expectation_enum_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) AddExpectationEnumID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.AddExpectationEnumID(i)
-	return wepauo
-}
-
-// ClearExpectationEnumID clears the value of the "expectation_enum_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearExpectationEnumID() *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ClearExpectationEnumID()
-	return wepauo
-}
-
-// SetDelegateReasonEnumID sets the "delegate_reason_enum_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetDelegateReasonEnumID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ResetDelegateReasonEnumID()
-	wepauo.mutation.SetDelegateReasonEnumID(i)
-	return wepauo
-}
-
-// SetNillableDelegateReasonEnumID sets the "delegate_reason_enum_id" field if the given value is not nil.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableDelegateReasonEnumID(i *int) *WorkEffortPartyAssignmentUpdateOne {
-	if i != nil {
-		wepauo.SetDelegateReasonEnumID(*i)
-	}
-	return wepauo
-}
-
-// AddDelegateReasonEnumID adds i to the "delegate_reason_enum_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) AddDelegateReasonEnumID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.AddDelegateReasonEnumID(i)
-	return wepauo
-}
-
-// ClearDelegateReasonEnumID clears the value of the "delegate_reason_enum_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearDelegateReasonEnumID() *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ClearDelegateReasonEnumID()
 	return wepauo
 }
 
@@ -1214,6 +1187,44 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAssignmentStatusItem(s *Sta
 	return wepauo.SetAssignmentStatusItemID(s.ID)
 }
 
+// SetExpectationEnumerationID sets the "expectation_enumeration" edge to the Enumeration entity by ID.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetExpectationEnumerationID(id int) *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.SetExpectationEnumerationID(id)
+	return wepauo
+}
+
+// SetNillableExpectationEnumerationID sets the "expectation_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableExpectationEnumerationID(id *int) *WorkEffortPartyAssignmentUpdateOne {
+	if id != nil {
+		wepauo = wepauo.SetExpectationEnumerationID(*id)
+	}
+	return wepauo
+}
+
+// SetExpectationEnumeration sets the "expectation_enumeration" edge to the Enumeration entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetExpectationEnumeration(e *Enumeration) *WorkEffortPartyAssignmentUpdateOne {
+	return wepauo.SetExpectationEnumerationID(e.ID)
+}
+
+// SetDelegateReasonEnumerationID sets the "delegate_reason_enumeration" edge to the Enumeration entity by ID.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetDelegateReasonEnumerationID(id int) *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.SetDelegateReasonEnumerationID(id)
+	return wepauo
+}
+
+// SetNillableDelegateReasonEnumerationID sets the "delegate_reason_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableDelegateReasonEnumerationID(id *int) *WorkEffortPartyAssignmentUpdateOne {
+	if id != nil {
+		wepauo = wepauo.SetDelegateReasonEnumerationID(*id)
+	}
+	return wepauo
+}
+
+// SetDelegateReasonEnumeration sets the "delegate_reason_enumeration" edge to the Enumeration entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetDelegateReasonEnumeration(e *Enumeration) *WorkEffortPartyAssignmentUpdateOne {
+	return wepauo.SetDelegateReasonEnumerationID(e.ID)
+}
+
 // SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAvailabilityStatusItemID(id int) *WorkEffortPartyAssignmentUpdateOne {
 	wepauo.mutation.SetAvailabilityStatusItemID(id)
@@ -1271,6 +1282,18 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearAssignedByUserLogin() *Wo
 // ClearAssignmentStatusItem clears the "assignment_status_item" edge to the StatusItem entity.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearAssignmentStatusItem() *WorkEffortPartyAssignmentUpdateOne {
 	wepauo.mutation.ClearAssignmentStatusItem()
+	return wepauo
+}
+
+// ClearExpectationEnumeration clears the "expectation_enumeration" edge to the Enumeration entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearExpectationEnumeration() *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.ClearExpectationEnumeration()
+	return wepauo
+}
+
+// ClearDelegateReasonEnumeration clears the "delegate_reason_enumeration" edge to the Enumeration entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearDelegateReasonEnumeration() *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.ClearDelegateReasonEnumeration()
 	return wepauo
 }
 
@@ -1449,46 +1472,6 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) sqlSave(ctx context.Context) (
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Column: workeffortpartyassignment.FieldStatusDateTime,
-		})
-	}
-	if value, ok := wepauo.mutation.ExpectationEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldExpectationEnumID,
-		})
-	}
-	if value, ok := wepauo.mutation.AddedExpectationEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldExpectationEnumID,
-		})
-	}
-	if wepauo.mutation.ExpectationEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldExpectationEnumID,
-		})
-	}
-	if value, ok := wepauo.mutation.DelegateReasonEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldDelegateReasonEnumID,
-		})
-	}
-	if value, ok := wepauo.mutation.AddedDelegateReasonEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldDelegateReasonEnumID,
-		})
-	}
-	if wepauo.mutation.DelegateReasonEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldDelegateReasonEnumID,
 		})
 	}
 	if value, ok := wepauo.mutation.FacilityID(); ok {
@@ -1739,6 +1722,76 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) sqlSave(ctx context.Context) (
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wepauo.mutation.ExpectationEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.ExpectationEnumerationTable,
+			Columns: []string{workeffortpartyassignment.ExpectationEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepauo.mutation.ExpectationEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.ExpectationEnumerationTable,
+			Columns: []string{workeffortpartyassignment.ExpectationEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wepauo.mutation.DelegateReasonEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.DelegateReasonEnumerationTable,
+			Columns: []string{workeffortpartyassignment.DelegateReasonEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepauo.mutation.DelegateReasonEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.DelegateReasonEnumerationTable,
+			Columns: []string{workeffortpartyassignment.DelegateReasonEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
 				},
 			},
 		}

@@ -3,6 +3,7 @@ package alfin
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"testing"
@@ -80,31 +81,62 @@ func TestLoadPackage(t *testing.T) {
 
 func TestGenSchemas(t *testing.T) {
 	pkg:="workload"
-	err:=GenSchemas(pkg, os.Stdout)
+	mani, err:=GenSchemas(pkg)
 	if err != nil {
 		panic(err)
+	}
+	err=mani.GenSchemaWithFiles(os.Stdout)
+	if err != nil {
+		log.Fatalf(" fail: %v", err)
 	}
 }
 
 func TestGenSchemas_purchaseorder(t *testing.T) {
 	pkg:="purchaseorder"
-	err:=GenSchemas(pkg, os.Stdout)
+	mani, err:=GenSchemas(pkg)
 	if err != nil {
 		panic(err)
+	}
+	err=mani.GenSchemaWithFiles(os.Stdout)
+	if err != nil {
+		log.Fatalf(" fail: %v", err)
 	}
 }
 
 func TestWriteSchemas(t *testing.T) {
 	pkg:="workload"
-	path:=filepath.Join("modules", pkg, "ent", "schema", "workload.go")
+	path:=filepath.Join("modules", pkg, "ent", "schema", "modent.go")
 	f, err := os.Create(path)
 	check(err)
 	defer f.Close()
 
-	err=GenSchemas(pkg, f)
+	mani, err:=GenSchemas(pkg)
 	if err != nil {
 		panic(err)
 	}
+	err=mani.GenSchemaWithFiles(f)
+	if err != nil {
+		log.Fatalf(" fail: %v", err)
+	}
+
+	f.Sync()
+
+	println("write to ", path)
+}
+
+
+func TestWriteHelpers(t *testing.T) {
+	pkg:="workeffort"
+	path:=filepath.Join("modules", pkg, "helper", pkg+"helper.go")
+	f, err := os.Create(path)
+	check(err)
+	defer f.Close()
+
+	mani, err:=GenSchemas(pkg)
+	if err != nil {
+		panic(err)
+	}
+	mani.GenHelpers(f)
 
 	f.Sync()
 

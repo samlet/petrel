@@ -5,6 +5,7 @@ import (
 	"github.com/iancoleman/strcase"
 	"github.com/samlet/petrel/alfin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
+	"github.com/samlet/petrel/alfin/modules/workeffort/helper"
 	"log"
 	"testing"
 
@@ -18,6 +19,7 @@ func TestProject(t *testing.T) {
 	}
 	defer client.Close()
 	ctx := context.Background()
+	ctx=ent.NewContext(ctx, client)
 	// Run the auto migration tool.
 	if err := client.Schema.Create(ctx); err != nil {
 		log.Fatalf("failed creating schema resources: %v", err)
@@ -28,10 +30,11 @@ func TestProject(t *testing.T) {
 }
 
 func DoProject(ctx context.Context, client *ent.Client) error {
-	createTypes(ctx, client)
+	createWorkEffortTypes(ctx, client)
+	createParties(ctx, client)
 
 	workeff, err := client.WorkEffort.Create().
-		SetWorkEffortType(IdRef(ctx, client, "PROJECT")).
+		SetWorkEffortType(WorkEffortTypeRef(ctx, client, "PROJECT")).
 		SetWorkEffortName("Demo Project1 Cust1").
 		Save(ctx)
 	if err != nil {
@@ -42,7 +45,17 @@ func DoProject(ctx context.Context, client *ent.Client) error {
 	return nil
 }
 
-func createTypes(ctx context.Context, client *ent.Client) {
+func createParties(ctx context.Context, client *ent.Client) {
+	client.PartyType.Create().SetStringRef("PERSON").SetDescription("Person").Save(ctx)
+	client.StatusItem.Create().SetStringRef("PARTY_ENABLED").SetDescription("Party enabled").Save(ctx)
+
+	client.Party.Create().SetStringRef("DemoEmployee").
+		SetPartyType(helper.PartyTypeRef(ctx, "PERSON")).
+		SetStatusItem(StatusItemRef(ctx,client,"PARTY_ENABLED")).
+		Save(ctx)
+}
+
+func createWorkEffortTypes(ctx context.Context, client *ent.Client) {
 	names := []string{"Project", "Task", "layla"}
 	bulk := make([]*ent.WorkEffortTypeCreate, len(names))
 	for i, name := range names {

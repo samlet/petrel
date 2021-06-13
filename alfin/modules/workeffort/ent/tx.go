@@ -12,16 +12,42 @@ import (
 // Tx is a transactional client that is created by calling Client.Tx().
 type Tx struct {
 	config
+	// CommunicationEventPrpTyp is the client for interacting with the CommunicationEventPrpTyp builders.
+	CommunicationEventPrpTyp *CommunicationEventPrpTypClient
+	// CommunicationEventType is the client for interacting with the CommunicationEventType builders.
+	CommunicationEventType *CommunicationEventTypeClient
+	// ContactMechPurposeType is the client for interacting with the ContactMechPurposeType builders.
+	ContactMechPurposeType *ContactMechPurposeTypeClient
+	// ContactMechType is the client for interacting with the ContactMechType builders.
+	ContactMechType *ContactMechTypeClient
+	// ContactMechTypePurpose is the client for interacting with the ContactMechTypePurpose builders.
+	ContactMechTypePurpose *ContactMechTypePurposeClient
+	// Enumeration is the client for interacting with the Enumeration builders.
+	Enumeration *EnumerationClient
+	// EnumerationType is the client for interacting with the EnumerationType builders.
+	EnumerationType *EnumerationTypeClient
 	// FixedAsset is the client for interacting with the FixedAsset builders.
 	FixedAsset *FixedAssetClient
 	// Party is the client for interacting with the Party builders.
 	Party *PartyClient
+	// PartyClassificationType is the client for interacting with the PartyClassificationType builders.
+	PartyClassificationType *PartyClassificationTypeClient
 	// PartyContactMech is the client for interacting with the PartyContactMech builders.
 	PartyContactMech *PartyContactMechClient
+	// PartyContentType is the client for interacting with the PartyContentType builders.
+	PartyContentType *PartyContentTypeClient
+	// PartyIdentificationType is the client for interacting with the PartyIdentificationType builders.
+	PartyIdentificationType *PartyIdentificationTypeClient
+	// PartyQualType is the client for interacting with the PartyQualType builders.
+	PartyQualType *PartyQualTypeClient
+	// PartyRelationshipType is the client for interacting with the PartyRelationshipType builders.
+	PartyRelationshipType *PartyRelationshipTypeClient
 	// PartyRole is the client for interacting with the PartyRole builders.
 	PartyRole *PartyRoleClient
 	// PartyStatus is the client for interacting with the PartyStatus builders.
 	PartyStatus *PartyStatusClient
+	// PartyType is the client for interacting with the PartyType builders.
+	PartyType *PartyTypeClient
 	// Person is the client for interacting with the Person builders.
 	Person *PersonClient
 	// RoleType is the client for interacting with the RoleType builders.
@@ -30,6 +56,8 @@ type Tx struct {
 	SecurityGroup *SecurityGroupClient
 	// SecurityGroupPermission is the client for interacting with the SecurityGroupPermission builders.
 	SecurityGroupPermission *SecurityGroupPermissionClient
+	// SecurityPermission is the client for interacting with the SecurityPermission builders.
+	SecurityPermission *SecurityPermissionClient
 	// SkillType is the client for interacting with the SkillType builders.
 	SkillType *SkillTypeClient
 	// StatusItem is the client for interacting with the StatusItem builders.
@@ -42,10 +70,14 @@ type Tx struct {
 	TemporalExpression *TemporalExpressionClient
 	// TemporalExpressionAssoc is the client for interacting with the TemporalExpressionAssoc builders.
 	TemporalExpressionAssoc *TemporalExpressionAssocClient
+	// TermType is the client for interacting with the TermType builders.
+	TermType *TermTypeClient
 	// UserLogin is the client for interacting with the UserLogin builders.
 	UserLogin *UserLoginClient
 	// UserLoginSecurityGroup is the client for interacting with the UserLoginSecurityGroup builders.
 	UserLoginSecurityGroup *UserLoginSecurityGroupClient
+	// UserPreference is the client for interacting with the UserPreference builders.
+	UserPreference *UserPreferenceClient
 	// WorkEffort is the client for interacting with the WorkEffort builders.
 	WorkEffort *WorkEffortClient
 	// WorkEffortAssoc is the client for interacting with the WorkEffortAssoc builders.
@@ -193,23 +225,39 @@ func (tx *Tx) Client() *Client {
 }
 
 func (tx *Tx) init() {
+	tx.CommunicationEventPrpTyp = NewCommunicationEventPrpTypClient(tx.config)
+	tx.CommunicationEventType = NewCommunicationEventTypeClient(tx.config)
+	tx.ContactMechPurposeType = NewContactMechPurposeTypeClient(tx.config)
+	tx.ContactMechType = NewContactMechTypeClient(tx.config)
+	tx.ContactMechTypePurpose = NewContactMechTypePurposeClient(tx.config)
+	tx.Enumeration = NewEnumerationClient(tx.config)
+	tx.EnumerationType = NewEnumerationTypeClient(tx.config)
 	tx.FixedAsset = NewFixedAssetClient(tx.config)
 	tx.Party = NewPartyClient(tx.config)
+	tx.PartyClassificationType = NewPartyClassificationTypeClient(tx.config)
 	tx.PartyContactMech = NewPartyContactMechClient(tx.config)
+	tx.PartyContentType = NewPartyContentTypeClient(tx.config)
+	tx.PartyIdentificationType = NewPartyIdentificationTypeClient(tx.config)
+	tx.PartyQualType = NewPartyQualTypeClient(tx.config)
+	tx.PartyRelationshipType = NewPartyRelationshipTypeClient(tx.config)
 	tx.PartyRole = NewPartyRoleClient(tx.config)
 	tx.PartyStatus = NewPartyStatusClient(tx.config)
+	tx.PartyType = NewPartyTypeClient(tx.config)
 	tx.Person = NewPersonClient(tx.config)
 	tx.RoleType = NewRoleTypeClient(tx.config)
 	tx.SecurityGroup = NewSecurityGroupClient(tx.config)
 	tx.SecurityGroupPermission = NewSecurityGroupPermissionClient(tx.config)
+	tx.SecurityPermission = NewSecurityPermissionClient(tx.config)
 	tx.SkillType = NewSkillTypeClient(tx.config)
 	tx.StatusItem = NewStatusItemClient(tx.config)
 	tx.StatusType = NewStatusTypeClient(tx.config)
 	tx.StatusValidChange = NewStatusValidChangeClient(tx.config)
 	tx.TemporalExpression = NewTemporalExpressionClient(tx.config)
 	tx.TemporalExpressionAssoc = NewTemporalExpressionAssocClient(tx.config)
+	tx.TermType = NewTermTypeClient(tx.config)
 	tx.UserLogin = NewUserLoginClient(tx.config)
 	tx.UserLoginSecurityGroup = NewUserLoginSecurityGroupClient(tx.config)
+	tx.UserPreference = NewUserPreferenceClient(tx.config)
 	tx.WorkEffort = NewWorkEffortClient(tx.config)
 	tx.WorkEffortAssoc = NewWorkEffortAssocClient(tx.config)
 	tx.WorkEffortFixedAssetAssign = NewWorkEffortFixedAssetAssignClient(tx.config)
@@ -225,7 +273,7 @@ func (tx *Tx) init() {
 // of them in order to commit or rollback the transaction.
 //
 // If a closed transaction is embedded in one of the generated entities, and the entity
-// applies a query, for example: FixedAsset.QueryXXX(), the query will be executed
+// applies a query, for example: CommunicationEventPrpTyp.QueryXXX(), the query will be executed
 // through the driver which created this transaction.
 //
 // Note that txDriver is not goroutine safe.

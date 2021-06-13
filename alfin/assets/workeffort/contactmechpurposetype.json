@@ -1,0 +1,183 @@
+{
+  "name": "ContactMechPurposeType",
+  "fields": [
+    {
+      "name": "contactMechPurposeTypeId",
+      "type": "id",
+      "col": "CONTACT_MECH_PURPOSE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ContactMechTypePurpose",
+      "type": "many",
+      "relEntityName": "ContactMechTypePurpose",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechPurposeTypeId",
+          "relFieldName": "contactMechPurposeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityContactMechPurpose",
+      "type": "many",
+      "relEntityName": "FacilityContactMechPurpose",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechPurposeTypeId",
+          "relFieldName": "contactMechPurposeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceContactMech",
+      "type": "many",
+      "relEntityName": "InvoiceContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechPurposeTypeId",
+          "relFieldName": "contactMechPurposeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderContactMech",
+      "type": "many",
+      "relEntityName": "OrderContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechPurposeTypeId",
+          "relFieldName": "contactMechPurposeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemContactMech",
+      "type": "many",
+      "relEntityName": "OrderItemContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechPurposeTypeId",
+          "relFieldName": "contactMechPurposeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContactMechPurpose",
+      "type": "many",
+      "relEntityName": "PartyContactMechPurpose",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechPurposeTypeId",
+          "relFieldName": "contactMechPurposeTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnContactMech",
+      "type": "many",
+      "relEntityName": "ReturnContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechPurposeTypeId",
+          "relFieldName": "contactMechPurposeTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "contactMechPurposeTypeId"
+  ],
+  "isView": false
+}

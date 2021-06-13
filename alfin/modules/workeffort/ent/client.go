@@ -9,23 +9,39 @@ import (
 
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/migrate"
 
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/communicationeventprptyp"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/communicationeventtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/contactmechpurposetype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/contactmechtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/contactmechtypepurpose"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumerationtype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyclassificationtype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontenttype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyidentificationtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyqualtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrelationshiptype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partytype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitypermission"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/skilltype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statustype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusvalidchange"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpressionassoc"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/termtype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userloginsecuritygroup"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userpreference"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
@@ -43,16 +59,42 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
+	// CommunicationEventPrpTyp is the client for interacting with the CommunicationEventPrpTyp builders.
+	CommunicationEventPrpTyp *CommunicationEventPrpTypClient
+	// CommunicationEventType is the client for interacting with the CommunicationEventType builders.
+	CommunicationEventType *CommunicationEventTypeClient
+	// ContactMechPurposeType is the client for interacting with the ContactMechPurposeType builders.
+	ContactMechPurposeType *ContactMechPurposeTypeClient
+	// ContactMechType is the client for interacting with the ContactMechType builders.
+	ContactMechType *ContactMechTypeClient
+	// ContactMechTypePurpose is the client for interacting with the ContactMechTypePurpose builders.
+	ContactMechTypePurpose *ContactMechTypePurposeClient
+	// Enumeration is the client for interacting with the Enumeration builders.
+	Enumeration *EnumerationClient
+	// EnumerationType is the client for interacting with the EnumerationType builders.
+	EnumerationType *EnumerationTypeClient
 	// FixedAsset is the client for interacting with the FixedAsset builders.
 	FixedAsset *FixedAssetClient
 	// Party is the client for interacting with the Party builders.
 	Party *PartyClient
+	// PartyClassificationType is the client for interacting with the PartyClassificationType builders.
+	PartyClassificationType *PartyClassificationTypeClient
 	// PartyContactMech is the client for interacting with the PartyContactMech builders.
 	PartyContactMech *PartyContactMechClient
+	// PartyContentType is the client for interacting with the PartyContentType builders.
+	PartyContentType *PartyContentTypeClient
+	// PartyIdentificationType is the client for interacting with the PartyIdentificationType builders.
+	PartyIdentificationType *PartyIdentificationTypeClient
+	// PartyQualType is the client for interacting with the PartyQualType builders.
+	PartyQualType *PartyQualTypeClient
+	// PartyRelationshipType is the client for interacting with the PartyRelationshipType builders.
+	PartyRelationshipType *PartyRelationshipTypeClient
 	// PartyRole is the client for interacting with the PartyRole builders.
 	PartyRole *PartyRoleClient
 	// PartyStatus is the client for interacting with the PartyStatus builders.
 	PartyStatus *PartyStatusClient
+	// PartyType is the client for interacting with the PartyType builders.
+	PartyType *PartyTypeClient
 	// Person is the client for interacting with the Person builders.
 	Person *PersonClient
 	// RoleType is the client for interacting with the RoleType builders.
@@ -61,6 +103,8 @@ type Client struct {
 	SecurityGroup *SecurityGroupClient
 	// SecurityGroupPermission is the client for interacting with the SecurityGroupPermission builders.
 	SecurityGroupPermission *SecurityGroupPermissionClient
+	// SecurityPermission is the client for interacting with the SecurityPermission builders.
+	SecurityPermission *SecurityPermissionClient
 	// SkillType is the client for interacting with the SkillType builders.
 	SkillType *SkillTypeClient
 	// StatusItem is the client for interacting with the StatusItem builders.
@@ -73,10 +117,14 @@ type Client struct {
 	TemporalExpression *TemporalExpressionClient
 	// TemporalExpressionAssoc is the client for interacting with the TemporalExpressionAssoc builders.
 	TemporalExpressionAssoc *TemporalExpressionAssocClient
+	// TermType is the client for interacting with the TermType builders.
+	TermType *TermTypeClient
 	// UserLogin is the client for interacting with the UserLogin builders.
 	UserLogin *UserLoginClient
 	// UserLoginSecurityGroup is the client for interacting with the UserLoginSecurityGroup builders.
 	UserLoginSecurityGroup *UserLoginSecurityGroupClient
+	// UserPreference is the client for interacting with the UserPreference builders.
+	UserPreference *UserPreferenceClient
 	// WorkEffort is the client for interacting with the WorkEffort builders.
 	WorkEffort *WorkEffortClient
 	// WorkEffortAssoc is the client for interacting with the WorkEffortAssoc builders.
@@ -102,23 +150,39 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
+	c.CommunicationEventPrpTyp = NewCommunicationEventPrpTypClient(c.config)
+	c.CommunicationEventType = NewCommunicationEventTypeClient(c.config)
+	c.ContactMechPurposeType = NewContactMechPurposeTypeClient(c.config)
+	c.ContactMechType = NewContactMechTypeClient(c.config)
+	c.ContactMechTypePurpose = NewContactMechTypePurposeClient(c.config)
+	c.Enumeration = NewEnumerationClient(c.config)
+	c.EnumerationType = NewEnumerationTypeClient(c.config)
 	c.FixedAsset = NewFixedAssetClient(c.config)
 	c.Party = NewPartyClient(c.config)
+	c.PartyClassificationType = NewPartyClassificationTypeClient(c.config)
 	c.PartyContactMech = NewPartyContactMechClient(c.config)
+	c.PartyContentType = NewPartyContentTypeClient(c.config)
+	c.PartyIdentificationType = NewPartyIdentificationTypeClient(c.config)
+	c.PartyQualType = NewPartyQualTypeClient(c.config)
+	c.PartyRelationshipType = NewPartyRelationshipTypeClient(c.config)
 	c.PartyRole = NewPartyRoleClient(c.config)
 	c.PartyStatus = NewPartyStatusClient(c.config)
+	c.PartyType = NewPartyTypeClient(c.config)
 	c.Person = NewPersonClient(c.config)
 	c.RoleType = NewRoleTypeClient(c.config)
 	c.SecurityGroup = NewSecurityGroupClient(c.config)
 	c.SecurityGroupPermission = NewSecurityGroupPermissionClient(c.config)
+	c.SecurityPermission = NewSecurityPermissionClient(c.config)
 	c.SkillType = NewSkillTypeClient(c.config)
 	c.StatusItem = NewStatusItemClient(c.config)
 	c.StatusType = NewStatusTypeClient(c.config)
 	c.StatusValidChange = NewStatusValidChangeClient(c.config)
 	c.TemporalExpression = NewTemporalExpressionClient(c.config)
 	c.TemporalExpressionAssoc = NewTemporalExpressionAssocClient(c.config)
+	c.TermType = NewTermTypeClient(c.config)
 	c.UserLogin = NewUserLoginClient(c.config)
 	c.UserLoginSecurityGroup = NewUserLoginSecurityGroupClient(c.config)
+	c.UserPreference = NewUserPreferenceClient(c.config)
 	c.WorkEffort = NewWorkEffortClient(c.config)
 	c.WorkEffortAssoc = NewWorkEffortAssocClient(c.config)
 	c.WorkEffortFixedAssetAssign = NewWorkEffortFixedAssetAssignClient(c.config)
@@ -158,23 +222,39 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	return &Tx{
 		ctx:                        ctx,
 		config:                     cfg,
+		CommunicationEventPrpTyp:   NewCommunicationEventPrpTypClient(cfg),
+		CommunicationEventType:     NewCommunicationEventTypeClient(cfg),
+		ContactMechPurposeType:     NewContactMechPurposeTypeClient(cfg),
+		ContactMechType:            NewContactMechTypeClient(cfg),
+		ContactMechTypePurpose:     NewContactMechTypePurposeClient(cfg),
+		Enumeration:                NewEnumerationClient(cfg),
+		EnumerationType:            NewEnumerationTypeClient(cfg),
 		FixedAsset:                 NewFixedAssetClient(cfg),
 		Party:                      NewPartyClient(cfg),
+		PartyClassificationType:    NewPartyClassificationTypeClient(cfg),
 		PartyContactMech:           NewPartyContactMechClient(cfg),
+		PartyContentType:           NewPartyContentTypeClient(cfg),
+		PartyIdentificationType:    NewPartyIdentificationTypeClient(cfg),
+		PartyQualType:              NewPartyQualTypeClient(cfg),
+		PartyRelationshipType:      NewPartyRelationshipTypeClient(cfg),
 		PartyRole:                  NewPartyRoleClient(cfg),
 		PartyStatus:                NewPartyStatusClient(cfg),
+		PartyType:                  NewPartyTypeClient(cfg),
 		Person:                     NewPersonClient(cfg),
 		RoleType:                   NewRoleTypeClient(cfg),
 		SecurityGroup:              NewSecurityGroupClient(cfg),
 		SecurityGroupPermission:    NewSecurityGroupPermissionClient(cfg),
+		SecurityPermission:         NewSecurityPermissionClient(cfg),
 		SkillType:                  NewSkillTypeClient(cfg),
 		StatusItem:                 NewStatusItemClient(cfg),
 		StatusType:                 NewStatusTypeClient(cfg),
 		StatusValidChange:          NewStatusValidChangeClient(cfg),
 		TemporalExpression:         NewTemporalExpressionClient(cfg),
 		TemporalExpressionAssoc:    NewTemporalExpressionAssocClient(cfg),
+		TermType:                   NewTermTypeClient(cfg),
 		UserLogin:                  NewUserLoginClient(cfg),
 		UserLoginSecurityGroup:     NewUserLoginSecurityGroupClient(cfg),
+		UserPreference:             NewUserPreferenceClient(cfg),
 		WorkEffort:                 NewWorkEffortClient(cfg),
 		WorkEffortAssoc:            NewWorkEffortAssocClient(cfg),
 		WorkEffortFixedAssetAssign: NewWorkEffortFixedAssetAssignClient(cfg),
@@ -199,23 +279,39 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
 		config:                     cfg,
+		CommunicationEventPrpTyp:   NewCommunicationEventPrpTypClient(cfg),
+		CommunicationEventType:     NewCommunicationEventTypeClient(cfg),
+		ContactMechPurposeType:     NewContactMechPurposeTypeClient(cfg),
+		ContactMechType:            NewContactMechTypeClient(cfg),
+		ContactMechTypePurpose:     NewContactMechTypePurposeClient(cfg),
+		Enumeration:                NewEnumerationClient(cfg),
+		EnumerationType:            NewEnumerationTypeClient(cfg),
 		FixedAsset:                 NewFixedAssetClient(cfg),
 		Party:                      NewPartyClient(cfg),
+		PartyClassificationType:    NewPartyClassificationTypeClient(cfg),
 		PartyContactMech:           NewPartyContactMechClient(cfg),
+		PartyContentType:           NewPartyContentTypeClient(cfg),
+		PartyIdentificationType:    NewPartyIdentificationTypeClient(cfg),
+		PartyQualType:              NewPartyQualTypeClient(cfg),
+		PartyRelationshipType:      NewPartyRelationshipTypeClient(cfg),
 		PartyRole:                  NewPartyRoleClient(cfg),
 		PartyStatus:                NewPartyStatusClient(cfg),
+		PartyType:                  NewPartyTypeClient(cfg),
 		Person:                     NewPersonClient(cfg),
 		RoleType:                   NewRoleTypeClient(cfg),
 		SecurityGroup:              NewSecurityGroupClient(cfg),
 		SecurityGroupPermission:    NewSecurityGroupPermissionClient(cfg),
+		SecurityPermission:         NewSecurityPermissionClient(cfg),
 		SkillType:                  NewSkillTypeClient(cfg),
 		StatusItem:                 NewStatusItemClient(cfg),
 		StatusType:                 NewStatusTypeClient(cfg),
 		StatusValidChange:          NewStatusValidChangeClient(cfg),
 		TemporalExpression:         NewTemporalExpressionClient(cfg),
 		TemporalExpressionAssoc:    NewTemporalExpressionAssocClient(cfg),
+		TermType:                   NewTermTypeClient(cfg),
 		UserLogin:                  NewUserLoginClient(cfg),
 		UserLoginSecurityGroup:     NewUserLoginSecurityGroupClient(cfg),
+		UserPreference:             NewUserPreferenceClient(cfg),
 		WorkEffort:                 NewWorkEffortClient(cfg),
 		WorkEffortAssoc:            NewWorkEffortAssocClient(cfg),
 		WorkEffortFixedAssetAssign: NewWorkEffortFixedAssetAssignClient(cfg),
@@ -228,7 +324,7 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		FixedAsset.
+//		CommunicationEventPrpTyp.
 //		Query().
 //		Count(ctx)
 //
@@ -251,29 +347,1107 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
+	c.CommunicationEventPrpTyp.Use(hooks...)
+	c.CommunicationEventType.Use(hooks...)
+	c.ContactMechPurposeType.Use(hooks...)
+	c.ContactMechType.Use(hooks...)
+	c.ContactMechTypePurpose.Use(hooks...)
+	c.Enumeration.Use(hooks...)
+	c.EnumerationType.Use(hooks...)
 	c.FixedAsset.Use(hooks...)
 	c.Party.Use(hooks...)
+	c.PartyClassificationType.Use(hooks...)
 	c.PartyContactMech.Use(hooks...)
+	c.PartyContentType.Use(hooks...)
+	c.PartyIdentificationType.Use(hooks...)
+	c.PartyQualType.Use(hooks...)
+	c.PartyRelationshipType.Use(hooks...)
 	c.PartyRole.Use(hooks...)
 	c.PartyStatus.Use(hooks...)
+	c.PartyType.Use(hooks...)
 	c.Person.Use(hooks...)
 	c.RoleType.Use(hooks...)
 	c.SecurityGroup.Use(hooks...)
 	c.SecurityGroupPermission.Use(hooks...)
+	c.SecurityPermission.Use(hooks...)
 	c.SkillType.Use(hooks...)
 	c.StatusItem.Use(hooks...)
 	c.StatusType.Use(hooks...)
 	c.StatusValidChange.Use(hooks...)
 	c.TemporalExpression.Use(hooks...)
 	c.TemporalExpressionAssoc.Use(hooks...)
+	c.TermType.Use(hooks...)
 	c.UserLogin.Use(hooks...)
 	c.UserLoginSecurityGroup.Use(hooks...)
+	c.UserPreference.Use(hooks...)
 	c.WorkEffort.Use(hooks...)
 	c.WorkEffortAssoc.Use(hooks...)
 	c.WorkEffortFixedAssetAssign.Use(hooks...)
 	c.WorkEffortPartyAssignment.Use(hooks...)
 	c.WorkEffortSkillStandard.Use(hooks...)
 	c.WorkEffortType.Use(hooks...)
+}
+
+// CommunicationEventPrpTypClient is a client for the CommunicationEventPrpTyp schema.
+type CommunicationEventPrpTypClient struct {
+	config
+}
+
+// NewCommunicationEventPrpTypClient returns a client for the CommunicationEventPrpTyp from the given config.
+func NewCommunicationEventPrpTypClient(c config) *CommunicationEventPrpTypClient {
+	return &CommunicationEventPrpTypClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `communicationeventprptyp.Hooks(f(g(h())))`.
+func (c *CommunicationEventPrpTypClient) Use(hooks ...Hook) {
+	c.hooks.CommunicationEventPrpTyp = append(c.hooks.CommunicationEventPrpTyp, hooks...)
+}
+
+// Create returns a create builder for CommunicationEventPrpTyp.
+func (c *CommunicationEventPrpTypClient) Create() *CommunicationEventPrpTypCreate {
+	mutation := newCommunicationEventPrpTypMutation(c.config, OpCreate)
+	return &CommunicationEventPrpTypCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of CommunicationEventPrpTyp entities.
+func (c *CommunicationEventPrpTypClient) CreateBulk(builders ...*CommunicationEventPrpTypCreate) *CommunicationEventPrpTypCreateBulk {
+	return &CommunicationEventPrpTypCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for CommunicationEventPrpTyp.
+func (c *CommunicationEventPrpTypClient) Update() *CommunicationEventPrpTypUpdate {
+	mutation := newCommunicationEventPrpTypMutation(c.config, OpUpdate)
+	return &CommunicationEventPrpTypUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *CommunicationEventPrpTypClient) UpdateOne(cept *CommunicationEventPrpTyp) *CommunicationEventPrpTypUpdateOne {
+	mutation := newCommunicationEventPrpTypMutation(c.config, OpUpdateOne, withCommunicationEventPrpTyp(cept))
+	return &CommunicationEventPrpTypUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *CommunicationEventPrpTypClient) UpdateOneID(id int) *CommunicationEventPrpTypUpdateOne {
+	mutation := newCommunicationEventPrpTypMutation(c.config, OpUpdateOne, withCommunicationEventPrpTypID(id))
+	return &CommunicationEventPrpTypUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for CommunicationEventPrpTyp.
+func (c *CommunicationEventPrpTypClient) Delete() *CommunicationEventPrpTypDelete {
+	mutation := newCommunicationEventPrpTypMutation(c.config, OpDelete)
+	return &CommunicationEventPrpTypDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *CommunicationEventPrpTypClient) DeleteOne(cept *CommunicationEventPrpTyp) *CommunicationEventPrpTypDeleteOne {
+	return c.DeleteOneID(cept.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *CommunicationEventPrpTypClient) DeleteOneID(id int) *CommunicationEventPrpTypDeleteOne {
+	builder := c.Delete().Where(communicationeventprptyp.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &CommunicationEventPrpTypDeleteOne{builder}
+}
+
+// Query returns a query builder for CommunicationEventPrpTyp.
+func (c *CommunicationEventPrpTypClient) Query() *CommunicationEventPrpTypQuery {
+	return &CommunicationEventPrpTypQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a CommunicationEventPrpTyp entity by its id.
+func (c *CommunicationEventPrpTypClient) Get(ctx context.Context, id int) (*CommunicationEventPrpTyp, error) {
+	return c.Query().Where(communicationeventprptyp.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *CommunicationEventPrpTypClient) GetX(ctx context.Context, id int) *CommunicationEventPrpTyp {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a CommunicationEventPrpTyp.
+func (c *CommunicationEventPrpTypClient) QueryParent(cept *CommunicationEventPrpTyp) *CommunicationEventPrpTypQuery {
+	query := &CommunicationEventPrpTypQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cept.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(communicationeventprptyp.Table, communicationeventprptyp.FieldID, id),
+			sqlgraph.To(communicationeventprptyp.Table, communicationeventprptyp.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, communicationeventprptyp.ParentTable, communicationeventprptyp.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(cept.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a CommunicationEventPrpTyp.
+func (c *CommunicationEventPrpTypClient) QueryChildren(cept *CommunicationEventPrpTyp) *CommunicationEventPrpTypQuery {
+	query := &CommunicationEventPrpTypQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cept.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(communicationeventprptyp.Table, communicationeventprptyp.FieldID, id),
+			sqlgraph.To(communicationeventprptyp.Table, communicationeventprptyp.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, communicationeventprptyp.ChildrenTable, communicationeventprptyp.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(cept.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildCommunicationEventPrpTyps queries the child_communication_event_prp_typs edge of a CommunicationEventPrpTyp.
+func (c *CommunicationEventPrpTypClient) QueryChildCommunicationEventPrpTyps(cept *CommunicationEventPrpTyp) *CommunicationEventPrpTypQuery {
+	query := &CommunicationEventPrpTypQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cept.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(communicationeventprptyp.Table, communicationeventprptyp.FieldID, id),
+			sqlgraph.To(communicationeventprptyp.Table, communicationeventprptyp.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, communicationeventprptyp.ChildCommunicationEventPrpTypsTable, communicationeventprptyp.ChildCommunicationEventPrpTypsPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(cept.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *CommunicationEventPrpTypClient) Hooks() []Hook {
+	return c.hooks.CommunicationEventPrpTyp
+}
+
+// CommunicationEventTypeClient is a client for the CommunicationEventType schema.
+type CommunicationEventTypeClient struct {
+	config
+}
+
+// NewCommunicationEventTypeClient returns a client for the CommunicationEventType from the given config.
+func NewCommunicationEventTypeClient(c config) *CommunicationEventTypeClient {
+	return &CommunicationEventTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `communicationeventtype.Hooks(f(g(h())))`.
+func (c *CommunicationEventTypeClient) Use(hooks ...Hook) {
+	c.hooks.CommunicationEventType = append(c.hooks.CommunicationEventType, hooks...)
+}
+
+// Create returns a create builder for CommunicationEventType.
+func (c *CommunicationEventTypeClient) Create() *CommunicationEventTypeCreate {
+	mutation := newCommunicationEventTypeMutation(c.config, OpCreate)
+	return &CommunicationEventTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of CommunicationEventType entities.
+func (c *CommunicationEventTypeClient) CreateBulk(builders ...*CommunicationEventTypeCreate) *CommunicationEventTypeCreateBulk {
+	return &CommunicationEventTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for CommunicationEventType.
+func (c *CommunicationEventTypeClient) Update() *CommunicationEventTypeUpdate {
+	mutation := newCommunicationEventTypeMutation(c.config, OpUpdate)
+	return &CommunicationEventTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *CommunicationEventTypeClient) UpdateOne(cet *CommunicationEventType) *CommunicationEventTypeUpdateOne {
+	mutation := newCommunicationEventTypeMutation(c.config, OpUpdateOne, withCommunicationEventType(cet))
+	return &CommunicationEventTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *CommunicationEventTypeClient) UpdateOneID(id int) *CommunicationEventTypeUpdateOne {
+	mutation := newCommunicationEventTypeMutation(c.config, OpUpdateOne, withCommunicationEventTypeID(id))
+	return &CommunicationEventTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for CommunicationEventType.
+func (c *CommunicationEventTypeClient) Delete() *CommunicationEventTypeDelete {
+	mutation := newCommunicationEventTypeMutation(c.config, OpDelete)
+	return &CommunicationEventTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *CommunicationEventTypeClient) DeleteOne(cet *CommunicationEventType) *CommunicationEventTypeDeleteOne {
+	return c.DeleteOneID(cet.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *CommunicationEventTypeClient) DeleteOneID(id int) *CommunicationEventTypeDeleteOne {
+	builder := c.Delete().Where(communicationeventtype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &CommunicationEventTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for CommunicationEventType.
+func (c *CommunicationEventTypeClient) Query() *CommunicationEventTypeQuery {
+	return &CommunicationEventTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a CommunicationEventType entity by its id.
+func (c *CommunicationEventTypeClient) Get(ctx context.Context, id int) (*CommunicationEventType, error) {
+	return c.Query().Where(communicationeventtype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *CommunicationEventTypeClient) GetX(ctx context.Context, id int) *CommunicationEventType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a CommunicationEventType.
+func (c *CommunicationEventTypeClient) QueryParent(cet *CommunicationEventType) *CommunicationEventTypeQuery {
+	query := &CommunicationEventTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(communicationeventtype.Table, communicationeventtype.FieldID, id),
+			sqlgraph.To(communicationeventtype.Table, communicationeventtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, communicationeventtype.ParentTable, communicationeventtype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(cet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a CommunicationEventType.
+func (c *CommunicationEventTypeClient) QueryChildren(cet *CommunicationEventType) *CommunicationEventTypeQuery {
+	query := &CommunicationEventTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(communicationeventtype.Table, communicationeventtype.FieldID, id),
+			sqlgraph.To(communicationeventtype.Table, communicationeventtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, communicationeventtype.ChildrenTable, communicationeventtype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(cet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryContacMechTypeContactMechType queries the contac_mech_type_contact_mech_type edge of a CommunicationEventType.
+func (c *CommunicationEventTypeClient) QueryContacMechTypeContactMechType(cet *CommunicationEventType) *ContactMechTypeQuery {
+	query := &ContactMechTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(communicationeventtype.Table, communicationeventtype.FieldID, id),
+			sqlgraph.To(contactmechtype.Table, contactmechtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, communicationeventtype.ContacMechTypeContactMechTypeTable, communicationeventtype.ContacMechTypeContactMechTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(cet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildCommunicationEventTypes queries the child_communication_event_types edge of a CommunicationEventType.
+func (c *CommunicationEventTypeClient) QueryChildCommunicationEventTypes(cet *CommunicationEventType) *CommunicationEventTypeQuery {
+	query := &CommunicationEventTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(communicationeventtype.Table, communicationeventtype.FieldID, id),
+			sqlgraph.To(communicationeventtype.Table, communicationeventtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, communicationeventtype.ChildCommunicationEventTypesTable, communicationeventtype.ChildCommunicationEventTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(cet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *CommunicationEventTypeClient) Hooks() []Hook {
+	return c.hooks.CommunicationEventType
+}
+
+// ContactMechPurposeTypeClient is a client for the ContactMechPurposeType schema.
+type ContactMechPurposeTypeClient struct {
+	config
+}
+
+// NewContactMechPurposeTypeClient returns a client for the ContactMechPurposeType from the given config.
+func NewContactMechPurposeTypeClient(c config) *ContactMechPurposeTypeClient {
+	return &ContactMechPurposeTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `contactmechpurposetype.Hooks(f(g(h())))`.
+func (c *ContactMechPurposeTypeClient) Use(hooks ...Hook) {
+	c.hooks.ContactMechPurposeType = append(c.hooks.ContactMechPurposeType, hooks...)
+}
+
+// Create returns a create builder for ContactMechPurposeType.
+func (c *ContactMechPurposeTypeClient) Create() *ContactMechPurposeTypeCreate {
+	mutation := newContactMechPurposeTypeMutation(c.config, OpCreate)
+	return &ContactMechPurposeTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of ContactMechPurposeType entities.
+func (c *ContactMechPurposeTypeClient) CreateBulk(builders ...*ContactMechPurposeTypeCreate) *ContactMechPurposeTypeCreateBulk {
+	return &ContactMechPurposeTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for ContactMechPurposeType.
+func (c *ContactMechPurposeTypeClient) Update() *ContactMechPurposeTypeUpdate {
+	mutation := newContactMechPurposeTypeMutation(c.config, OpUpdate)
+	return &ContactMechPurposeTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *ContactMechPurposeTypeClient) UpdateOne(cmpt *ContactMechPurposeType) *ContactMechPurposeTypeUpdateOne {
+	mutation := newContactMechPurposeTypeMutation(c.config, OpUpdateOne, withContactMechPurposeType(cmpt))
+	return &ContactMechPurposeTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *ContactMechPurposeTypeClient) UpdateOneID(id int) *ContactMechPurposeTypeUpdateOne {
+	mutation := newContactMechPurposeTypeMutation(c.config, OpUpdateOne, withContactMechPurposeTypeID(id))
+	return &ContactMechPurposeTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for ContactMechPurposeType.
+func (c *ContactMechPurposeTypeClient) Delete() *ContactMechPurposeTypeDelete {
+	mutation := newContactMechPurposeTypeMutation(c.config, OpDelete)
+	return &ContactMechPurposeTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *ContactMechPurposeTypeClient) DeleteOne(cmpt *ContactMechPurposeType) *ContactMechPurposeTypeDeleteOne {
+	return c.DeleteOneID(cmpt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *ContactMechPurposeTypeClient) DeleteOneID(id int) *ContactMechPurposeTypeDeleteOne {
+	builder := c.Delete().Where(contactmechpurposetype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &ContactMechPurposeTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for ContactMechPurposeType.
+func (c *ContactMechPurposeTypeClient) Query() *ContactMechPurposeTypeQuery {
+	return &ContactMechPurposeTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a ContactMechPurposeType entity by its id.
+func (c *ContactMechPurposeTypeClient) Get(ctx context.Context, id int) (*ContactMechPurposeType, error) {
+	return c.Query().Where(contactmechpurposetype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *ContactMechPurposeTypeClient) GetX(ctx context.Context, id int) *ContactMechPurposeType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryContactMechTypePurposes queries the contact_mech_type_purposes edge of a ContactMechPurposeType.
+func (c *ContactMechPurposeTypeClient) QueryContactMechTypePurposes(cmpt *ContactMechPurposeType) *ContactMechTypePurposeQuery {
+	query := &ContactMechTypePurposeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmpt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechpurposetype.Table, contactmechpurposetype.FieldID, id),
+			sqlgraph.To(contactmechtypepurpose.Table, contactmechtypepurpose.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, contactmechpurposetype.ContactMechTypePurposesTable, contactmechpurposetype.ContactMechTypePurposesColumn),
+		)
+		fromV = sqlgraph.Neighbors(cmpt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *ContactMechPurposeTypeClient) Hooks() []Hook {
+	return c.hooks.ContactMechPurposeType
+}
+
+// ContactMechTypeClient is a client for the ContactMechType schema.
+type ContactMechTypeClient struct {
+	config
+}
+
+// NewContactMechTypeClient returns a client for the ContactMechType from the given config.
+func NewContactMechTypeClient(c config) *ContactMechTypeClient {
+	return &ContactMechTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `contactmechtype.Hooks(f(g(h())))`.
+func (c *ContactMechTypeClient) Use(hooks ...Hook) {
+	c.hooks.ContactMechType = append(c.hooks.ContactMechType, hooks...)
+}
+
+// Create returns a create builder for ContactMechType.
+func (c *ContactMechTypeClient) Create() *ContactMechTypeCreate {
+	mutation := newContactMechTypeMutation(c.config, OpCreate)
+	return &ContactMechTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of ContactMechType entities.
+func (c *ContactMechTypeClient) CreateBulk(builders ...*ContactMechTypeCreate) *ContactMechTypeCreateBulk {
+	return &ContactMechTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for ContactMechType.
+func (c *ContactMechTypeClient) Update() *ContactMechTypeUpdate {
+	mutation := newContactMechTypeMutation(c.config, OpUpdate)
+	return &ContactMechTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *ContactMechTypeClient) UpdateOne(cmt *ContactMechType) *ContactMechTypeUpdateOne {
+	mutation := newContactMechTypeMutation(c.config, OpUpdateOne, withContactMechType(cmt))
+	return &ContactMechTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *ContactMechTypeClient) UpdateOneID(id int) *ContactMechTypeUpdateOne {
+	mutation := newContactMechTypeMutation(c.config, OpUpdateOne, withContactMechTypeID(id))
+	return &ContactMechTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for ContactMechType.
+func (c *ContactMechTypeClient) Delete() *ContactMechTypeDelete {
+	mutation := newContactMechTypeMutation(c.config, OpDelete)
+	return &ContactMechTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *ContactMechTypeClient) DeleteOne(cmt *ContactMechType) *ContactMechTypeDeleteOne {
+	return c.DeleteOneID(cmt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *ContactMechTypeClient) DeleteOneID(id int) *ContactMechTypeDeleteOne {
+	builder := c.Delete().Where(contactmechtype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &ContactMechTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for ContactMechType.
+func (c *ContactMechTypeClient) Query() *ContactMechTypeQuery {
+	return &ContactMechTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a ContactMechType entity by its id.
+func (c *ContactMechTypeClient) Get(ctx context.Context, id int) (*ContactMechType, error) {
+	return c.Query().Where(contactmechtype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *ContactMechTypeClient) GetX(ctx context.Context, id int) *ContactMechType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a ContactMechType.
+func (c *ContactMechTypeClient) QueryParent(cmt *ContactMechType) *ContactMechTypeQuery {
+	query := &ContactMechTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechtype.Table, contactmechtype.FieldID, id),
+			sqlgraph.To(contactmechtype.Table, contactmechtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, contactmechtype.ParentTable, contactmechtype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(cmt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a ContactMechType.
+func (c *ContactMechTypeClient) QueryChildren(cmt *ContactMechType) *ContactMechTypeQuery {
+	query := &ContactMechTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechtype.Table, contactmechtype.FieldID, id),
+			sqlgraph.To(contactmechtype.Table, contactmechtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, contactmechtype.ChildrenTable, contactmechtype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(cmt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryContacMechTypeCommunicationEventTypes queries the contac_mech_type_communication_event_types edge of a ContactMechType.
+func (c *ContactMechTypeClient) QueryContacMechTypeCommunicationEventTypes(cmt *ContactMechType) *CommunicationEventTypeQuery {
+	query := &CommunicationEventTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechtype.Table, contactmechtype.FieldID, id),
+			sqlgraph.To(communicationeventtype.Table, communicationeventtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, contactmechtype.ContacMechTypeCommunicationEventTypesTable, contactmechtype.ContacMechTypeCommunicationEventTypesColumn),
+		)
+		fromV = sqlgraph.Neighbors(cmt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildContactMechTypes queries the child_contact_mech_types edge of a ContactMechType.
+func (c *ContactMechTypeClient) QueryChildContactMechTypes(cmt *ContactMechType) *ContactMechTypeQuery {
+	query := &ContactMechTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechtype.Table, contactmechtype.FieldID, id),
+			sqlgraph.To(contactmechtype.Table, contactmechtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, contactmechtype.ChildContactMechTypesTable, contactmechtype.ChildContactMechTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(cmt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryContactMechTypePurposes queries the contact_mech_type_purposes edge of a ContactMechType.
+func (c *ContactMechTypeClient) QueryContactMechTypePurposes(cmt *ContactMechType) *ContactMechTypePurposeQuery {
+	query := &ContactMechTypePurposeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechtype.Table, contactmechtype.FieldID, id),
+			sqlgraph.To(contactmechtypepurpose.Table, contactmechtypepurpose.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, contactmechtype.ContactMechTypePurposesTable, contactmechtype.ContactMechTypePurposesColumn),
+		)
+		fromV = sqlgraph.Neighbors(cmt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *ContactMechTypeClient) Hooks() []Hook {
+	return c.hooks.ContactMechType
+}
+
+// ContactMechTypePurposeClient is a client for the ContactMechTypePurpose schema.
+type ContactMechTypePurposeClient struct {
+	config
+}
+
+// NewContactMechTypePurposeClient returns a client for the ContactMechTypePurpose from the given config.
+func NewContactMechTypePurposeClient(c config) *ContactMechTypePurposeClient {
+	return &ContactMechTypePurposeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `contactmechtypepurpose.Hooks(f(g(h())))`.
+func (c *ContactMechTypePurposeClient) Use(hooks ...Hook) {
+	c.hooks.ContactMechTypePurpose = append(c.hooks.ContactMechTypePurpose, hooks...)
+}
+
+// Create returns a create builder for ContactMechTypePurpose.
+func (c *ContactMechTypePurposeClient) Create() *ContactMechTypePurposeCreate {
+	mutation := newContactMechTypePurposeMutation(c.config, OpCreate)
+	return &ContactMechTypePurposeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of ContactMechTypePurpose entities.
+func (c *ContactMechTypePurposeClient) CreateBulk(builders ...*ContactMechTypePurposeCreate) *ContactMechTypePurposeCreateBulk {
+	return &ContactMechTypePurposeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for ContactMechTypePurpose.
+func (c *ContactMechTypePurposeClient) Update() *ContactMechTypePurposeUpdate {
+	mutation := newContactMechTypePurposeMutation(c.config, OpUpdate)
+	return &ContactMechTypePurposeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *ContactMechTypePurposeClient) UpdateOne(cmtp *ContactMechTypePurpose) *ContactMechTypePurposeUpdateOne {
+	mutation := newContactMechTypePurposeMutation(c.config, OpUpdateOne, withContactMechTypePurpose(cmtp))
+	return &ContactMechTypePurposeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *ContactMechTypePurposeClient) UpdateOneID(id int) *ContactMechTypePurposeUpdateOne {
+	mutation := newContactMechTypePurposeMutation(c.config, OpUpdateOne, withContactMechTypePurposeID(id))
+	return &ContactMechTypePurposeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for ContactMechTypePurpose.
+func (c *ContactMechTypePurposeClient) Delete() *ContactMechTypePurposeDelete {
+	mutation := newContactMechTypePurposeMutation(c.config, OpDelete)
+	return &ContactMechTypePurposeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *ContactMechTypePurposeClient) DeleteOne(cmtp *ContactMechTypePurpose) *ContactMechTypePurposeDeleteOne {
+	return c.DeleteOneID(cmtp.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *ContactMechTypePurposeClient) DeleteOneID(id int) *ContactMechTypePurposeDeleteOne {
+	builder := c.Delete().Where(contactmechtypepurpose.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &ContactMechTypePurposeDeleteOne{builder}
+}
+
+// Query returns a query builder for ContactMechTypePurpose.
+func (c *ContactMechTypePurposeClient) Query() *ContactMechTypePurposeQuery {
+	return &ContactMechTypePurposeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a ContactMechTypePurpose entity by its id.
+func (c *ContactMechTypePurposeClient) Get(ctx context.Context, id int) (*ContactMechTypePurpose, error) {
+	return c.Query().Where(contactmechtypepurpose.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *ContactMechTypePurposeClient) GetX(ctx context.Context, id int) *ContactMechTypePurpose {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryContactMechType queries the contact_mech_type edge of a ContactMechTypePurpose.
+func (c *ContactMechTypePurposeClient) QueryContactMechType(cmtp *ContactMechTypePurpose) *ContactMechTypeQuery {
+	query := &ContactMechTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmtp.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechtypepurpose.Table, contactmechtypepurpose.FieldID, id),
+			sqlgraph.To(contactmechtype.Table, contactmechtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, contactmechtypepurpose.ContactMechTypeTable, contactmechtypepurpose.ContactMechTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(cmtp.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryContactMechPurposeType queries the contact_mech_purpose_type edge of a ContactMechTypePurpose.
+func (c *ContactMechTypePurposeClient) QueryContactMechPurposeType(cmtp *ContactMechTypePurpose) *ContactMechPurposeTypeQuery {
+	query := &ContactMechPurposeTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := cmtp.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(contactmechtypepurpose.Table, contactmechtypepurpose.FieldID, id),
+			sqlgraph.To(contactmechpurposetype.Table, contactmechpurposetype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, contactmechtypepurpose.ContactMechPurposeTypeTable, contactmechtypepurpose.ContactMechPurposeTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(cmtp.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *ContactMechTypePurposeClient) Hooks() []Hook {
+	return c.hooks.ContactMechTypePurpose
+}
+
+// EnumerationClient is a client for the Enumeration schema.
+type EnumerationClient struct {
+	config
+}
+
+// NewEnumerationClient returns a client for the Enumeration from the given config.
+func NewEnumerationClient(c config) *EnumerationClient {
+	return &EnumerationClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `enumeration.Hooks(f(g(h())))`.
+func (c *EnumerationClient) Use(hooks ...Hook) {
+	c.hooks.Enumeration = append(c.hooks.Enumeration, hooks...)
+}
+
+// Create returns a create builder for Enumeration.
+func (c *EnumerationClient) Create() *EnumerationCreate {
+	mutation := newEnumerationMutation(c.config, OpCreate)
+	return &EnumerationCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of Enumeration entities.
+func (c *EnumerationClient) CreateBulk(builders ...*EnumerationCreate) *EnumerationCreateBulk {
+	return &EnumerationCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for Enumeration.
+func (c *EnumerationClient) Update() *EnumerationUpdate {
+	mutation := newEnumerationMutation(c.config, OpUpdate)
+	return &EnumerationUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *EnumerationClient) UpdateOne(e *Enumeration) *EnumerationUpdateOne {
+	mutation := newEnumerationMutation(c.config, OpUpdateOne, withEnumeration(e))
+	return &EnumerationUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *EnumerationClient) UpdateOneID(id int) *EnumerationUpdateOne {
+	mutation := newEnumerationMutation(c.config, OpUpdateOne, withEnumerationID(id))
+	return &EnumerationUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for Enumeration.
+func (c *EnumerationClient) Delete() *EnumerationDelete {
+	mutation := newEnumerationMutation(c.config, OpDelete)
+	return &EnumerationDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *EnumerationClient) DeleteOne(e *Enumeration) *EnumerationDeleteOne {
+	return c.DeleteOneID(e.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *EnumerationClient) DeleteOneID(id int) *EnumerationDeleteOne {
+	builder := c.Delete().Where(enumeration.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &EnumerationDeleteOne{builder}
+}
+
+// Query returns a query builder for Enumeration.
+func (c *EnumerationClient) Query() *EnumerationQuery {
+	return &EnumerationQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a Enumeration entity by its id.
+func (c *EnumerationClient) Get(ctx context.Context, id int) (*Enumeration, error) {
+	return c.Query().Where(enumeration.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *EnumerationClient) GetX(ctx context.Context, id int) *Enumeration {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryEnumerationType queries the enumeration_type edge of a Enumeration.
+func (c *EnumerationClient) QueryEnumerationType(e *Enumeration) *EnumerationTypeQuery {
+	query := &EnumerationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(enumerationtype.Table, enumerationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, enumeration.EnumerationTypeTable, enumeration.EnumerationTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryClassFixedAssets queries the class_fixed_assets edge of a Enumeration.
+func (c *EnumerationClient) QueryClassFixedAssets(e *Enumeration) *FixedAssetQuery {
+	query := &FixedAssetQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumeration.ClassFixedAssetsTable, enumeration.ClassFixedAssetsColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryEmploymentStatusPeople queries the employment_status_people edge of a Enumeration.
+func (c *EnumerationClient) QueryEmploymentStatusPeople(e *Enumeration) *PersonQuery {
+	query := &PersonQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(person.Table, person.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumeration.EmploymentStatusPeopleTable, enumeration.EmploymentStatusPeopleColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryResidenceStatusPeople queries the residence_status_people edge of a Enumeration.
+func (c *EnumerationClient) QueryResidenceStatusPeople(e *Enumeration) *PersonQuery {
+	query := &PersonQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(person.Table, person.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumeration.ResidenceStatusPeopleTable, enumeration.ResidenceStatusPeopleColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMaritalStatusPeople queries the marital_status_people edge of a Enumeration.
+func (c *EnumerationClient) QueryMaritalStatusPeople(e *Enumeration) *PersonQuery {
+	query := &PersonQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(person.Table, person.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumeration.MaritalStatusPeopleTable, enumeration.MaritalStatusPeopleColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryScopeWorkEfforts queries the scope_work_efforts edge of a Enumeration.
+func (c *EnumerationClient) QueryScopeWorkEfforts(e *Enumeration) *WorkEffortQuery {
+	query := &WorkEffortQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(workeffort.Table, workeffort.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumeration.ScopeWorkEffortsTable, enumeration.ScopeWorkEffortsColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryExpectationWorkEffortPartyAssignments queries the expectation_work_effort_party_assignments edge of a Enumeration.
+func (c *EnumerationClient) QueryExpectationWorkEffortPartyAssignments(e *Enumeration) *WorkEffortPartyAssignmentQuery {
+	query := &WorkEffortPartyAssignmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumeration.ExpectationWorkEffortPartyAssignmentsTable, enumeration.ExpectationWorkEffortPartyAssignmentsColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDelegateReasonWorkEffortPartyAssignments queries the delegate_reason_work_effort_party_assignments edge of a Enumeration.
+func (c *EnumerationClient) QueryDelegateReasonWorkEffortPartyAssignments(e *Enumeration) *WorkEffortPartyAssignmentQuery {
+	query := &WorkEffortPartyAssignmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := e.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumeration.Table, enumeration.FieldID, id),
+			sqlgraph.To(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumeration.DelegateReasonWorkEffortPartyAssignmentsTable, enumeration.DelegateReasonWorkEffortPartyAssignmentsColumn),
+		)
+		fromV = sqlgraph.Neighbors(e.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *EnumerationClient) Hooks() []Hook {
+	return c.hooks.Enumeration
+}
+
+// EnumerationTypeClient is a client for the EnumerationType schema.
+type EnumerationTypeClient struct {
+	config
+}
+
+// NewEnumerationTypeClient returns a client for the EnumerationType from the given config.
+func NewEnumerationTypeClient(c config) *EnumerationTypeClient {
+	return &EnumerationTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `enumerationtype.Hooks(f(g(h())))`.
+func (c *EnumerationTypeClient) Use(hooks ...Hook) {
+	c.hooks.EnumerationType = append(c.hooks.EnumerationType, hooks...)
+}
+
+// Create returns a create builder for EnumerationType.
+func (c *EnumerationTypeClient) Create() *EnumerationTypeCreate {
+	mutation := newEnumerationTypeMutation(c.config, OpCreate)
+	return &EnumerationTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of EnumerationType entities.
+func (c *EnumerationTypeClient) CreateBulk(builders ...*EnumerationTypeCreate) *EnumerationTypeCreateBulk {
+	return &EnumerationTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for EnumerationType.
+func (c *EnumerationTypeClient) Update() *EnumerationTypeUpdate {
+	mutation := newEnumerationTypeMutation(c.config, OpUpdate)
+	return &EnumerationTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *EnumerationTypeClient) UpdateOne(et *EnumerationType) *EnumerationTypeUpdateOne {
+	mutation := newEnumerationTypeMutation(c.config, OpUpdateOne, withEnumerationType(et))
+	return &EnumerationTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *EnumerationTypeClient) UpdateOneID(id int) *EnumerationTypeUpdateOne {
+	mutation := newEnumerationTypeMutation(c.config, OpUpdateOne, withEnumerationTypeID(id))
+	return &EnumerationTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for EnumerationType.
+func (c *EnumerationTypeClient) Delete() *EnumerationTypeDelete {
+	mutation := newEnumerationTypeMutation(c.config, OpDelete)
+	return &EnumerationTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *EnumerationTypeClient) DeleteOne(et *EnumerationType) *EnumerationTypeDeleteOne {
+	return c.DeleteOneID(et.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *EnumerationTypeClient) DeleteOneID(id int) *EnumerationTypeDeleteOne {
+	builder := c.Delete().Where(enumerationtype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &EnumerationTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for EnumerationType.
+func (c *EnumerationTypeClient) Query() *EnumerationTypeQuery {
+	return &EnumerationTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a EnumerationType entity by its id.
+func (c *EnumerationTypeClient) Get(ctx context.Context, id int) (*EnumerationType, error) {
+	return c.Query().Where(enumerationtype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *EnumerationTypeClient) GetX(ctx context.Context, id int) *EnumerationType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a EnumerationType.
+func (c *EnumerationTypeClient) QueryParent(et *EnumerationType) *EnumerationTypeQuery {
+	query := &EnumerationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := et.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumerationtype.Table, enumerationtype.FieldID, id),
+			sqlgraph.To(enumerationtype.Table, enumerationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, enumerationtype.ParentTable, enumerationtype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(et.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a EnumerationType.
+func (c *EnumerationTypeClient) QueryChildren(et *EnumerationType) *EnumerationTypeQuery {
+	query := &EnumerationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := et.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumerationtype.Table, enumerationtype.FieldID, id),
+			sqlgraph.To(enumerationtype.Table, enumerationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumerationtype.ChildrenTable, enumerationtype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(et.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryEnumerations queries the enumerations edge of a EnumerationType.
+func (c *EnumerationTypeClient) QueryEnumerations(et *EnumerationType) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := et.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumerationtype.Table, enumerationtype.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, enumerationtype.EnumerationsTable, enumerationtype.EnumerationsColumn),
+		)
+		fromV = sqlgraph.Neighbors(et.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildEnumerationTypes queries the child_enumeration_types edge of a EnumerationType.
+func (c *EnumerationTypeClient) QueryChildEnumerationTypes(et *EnumerationType) *EnumerationTypeQuery {
+	query := &EnumerationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := et.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(enumerationtype.Table, enumerationtype.FieldID, id),
+			sqlgraph.To(enumerationtype.Table, enumerationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, enumerationtype.ChildEnumerationTypesTable, enumerationtype.ChildEnumerationTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(et.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *EnumerationTypeClient) Hooks() []Hook {
+	return c.hooks.EnumerationType
 }
 
 // FixedAssetClient is a client for the FixedAsset schema.
@@ -386,6 +1560,22 @@ func (c *FixedAssetClient) QueryChildren(fa *FixedAsset) *FixedAssetQuery {
 			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, id),
 			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, fixedasset.ChildrenTable, fixedasset.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(fa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryClassEnumeration queries the class_enumeration edge of a FixedAsset.
+func (c *FixedAssetClient) QueryClassEnumeration(fa *FixedAsset) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := fa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, fixedasset.ClassEnumerationTable, fixedasset.ClassEnumerationColumn),
 		)
 		fromV = sqlgraph.Neighbors(fa.driver.Dialect(), step)
 		return fromV, nil
@@ -579,6 +1769,22 @@ func (c *PartyClient) GetX(ctx context.Context, id int) *Party {
 	return obj
 }
 
+// QueryPartyType queries the party_type edge of a Party.
+func (c *PartyClient) QueryPartyType(pa *Party) *PartyTypeQuery {
+	query := &PartyTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(party.Table, party.FieldID, id),
+			sqlgraph.To(partytype.Table, partytype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, party.PartyTypeTable, party.PartyTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryCreatedByUserLogin queries the created_by_user_login edge of a Party.
 func (c *PartyClient) QueryCreatedByUserLogin(pa *Party) *UserLoginQuery {
 	query := &UserLoginQuery{config: c.config}
@@ -744,6 +1950,144 @@ func (c *PartyClient) Hooks() []Hook {
 	return c.hooks.Party
 }
 
+// PartyClassificationTypeClient is a client for the PartyClassificationType schema.
+type PartyClassificationTypeClient struct {
+	config
+}
+
+// NewPartyClassificationTypeClient returns a client for the PartyClassificationType from the given config.
+func NewPartyClassificationTypeClient(c config) *PartyClassificationTypeClient {
+	return &PartyClassificationTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `partyclassificationtype.Hooks(f(g(h())))`.
+func (c *PartyClassificationTypeClient) Use(hooks ...Hook) {
+	c.hooks.PartyClassificationType = append(c.hooks.PartyClassificationType, hooks...)
+}
+
+// Create returns a create builder for PartyClassificationType.
+func (c *PartyClassificationTypeClient) Create() *PartyClassificationTypeCreate {
+	mutation := newPartyClassificationTypeMutation(c.config, OpCreate)
+	return &PartyClassificationTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PartyClassificationType entities.
+func (c *PartyClassificationTypeClient) CreateBulk(builders ...*PartyClassificationTypeCreate) *PartyClassificationTypeCreateBulk {
+	return &PartyClassificationTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PartyClassificationType.
+func (c *PartyClassificationTypeClient) Update() *PartyClassificationTypeUpdate {
+	mutation := newPartyClassificationTypeMutation(c.config, OpUpdate)
+	return &PartyClassificationTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PartyClassificationTypeClient) UpdateOne(pct *PartyClassificationType) *PartyClassificationTypeUpdateOne {
+	mutation := newPartyClassificationTypeMutation(c.config, OpUpdateOne, withPartyClassificationType(pct))
+	return &PartyClassificationTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PartyClassificationTypeClient) UpdateOneID(id int) *PartyClassificationTypeUpdateOne {
+	mutation := newPartyClassificationTypeMutation(c.config, OpUpdateOne, withPartyClassificationTypeID(id))
+	return &PartyClassificationTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PartyClassificationType.
+func (c *PartyClassificationTypeClient) Delete() *PartyClassificationTypeDelete {
+	mutation := newPartyClassificationTypeMutation(c.config, OpDelete)
+	return &PartyClassificationTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PartyClassificationTypeClient) DeleteOne(pct *PartyClassificationType) *PartyClassificationTypeDeleteOne {
+	return c.DeleteOneID(pct.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PartyClassificationTypeClient) DeleteOneID(id int) *PartyClassificationTypeDeleteOne {
+	builder := c.Delete().Where(partyclassificationtype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PartyClassificationTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for PartyClassificationType.
+func (c *PartyClassificationTypeClient) Query() *PartyClassificationTypeQuery {
+	return &PartyClassificationTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PartyClassificationType entity by its id.
+func (c *PartyClassificationTypeClient) Get(ctx context.Context, id int) (*PartyClassificationType, error) {
+	return c.Query().Where(partyclassificationtype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PartyClassificationTypeClient) GetX(ctx context.Context, id int) *PartyClassificationType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a PartyClassificationType.
+func (c *PartyClassificationTypeClient) QueryParent(pct *PartyClassificationType) *PartyClassificationTypeQuery {
+	query := &PartyClassificationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pct.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyclassificationtype.Table, partyclassificationtype.FieldID, id),
+			sqlgraph.To(partyclassificationtype.Table, partyclassificationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyclassificationtype.ParentTable, partyclassificationtype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(pct.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a PartyClassificationType.
+func (c *PartyClassificationTypeClient) QueryChildren(pct *PartyClassificationType) *PartyClassificationTypeQuery {
+	query := &PartyClassificationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pct.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyclassificationtype.Table, partyclassificationtype.FieldID, id),
+			sqlgraph.To(partyclassificationtype.Table, partyclassificationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partyclassificationtype.ChildrenTable, partyclassificationtype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(pct.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildPartyClassificationTypes queries the child_party_classification_types edge of a PartyClassificationType.
+func (c *PartyClassificationTypeClient) QueryChildPartyClassificationTypes(pct *PartyClassificationType) *PartyClassificationTypeQuery {
+	query := &PartyClassificationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pct.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyclassificationtype.Table, partyclassificationtype.FieldID, id),
+			sqlgraph.To(partyclassificationtype.Table, partyclassificationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, partyclassificationtype.ChildPartyClassificationTypesTable, partyclassificationtype.ChildPartyClassificationTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(pct.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PartyClassificationTypeClient) Hooks() []Hook {
+	return c.hooks.PartyClassificationType
+}
+
 // PartyContactMechClient is a client for the PartyContactMech schema.
 type PartyContactMechClient struct {
 	config
@@ -896,6 +2240,590 @@ func (c *PartyContactMechClient) QueryRoleType(pcm *PartyContactMech) *RoleTypeQ
 // Hooks returns the client hooks.
 func (c *PartyContactMechClient) Hooks() []Hook {
 	return c.hooks.PartyContactMech
+}
+
+// PartyContentTypeClient is a client for the PartyContentType schema.
+type PartyContentTypeClient struct {
+	config
+}
+
+// NewPartyContentTypeClient returns a client for the PartyContentType from the given config.
+func NewPartyContentTypeClient(c config) *PartyContentTypeClient {
+	return &PartyContentTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `partycontenttype.Hooks(f(g(h())))`.
+func (c *PartyContentTypeClient) Use(hooks ...Hook) {
+	c.hooks.PartyContentType = append(c.hooks.PartyContentType, hooks...)
+}
+
+// Create returns a create builder for PartyContentType.
+func (c *PartyContentTypeClient) Create() *PartyContentTypeCreate {
+	mutation := newPartyContentTypeMutation(c.config, OpCreate)
+	return &PartyContentTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PartyContentType entities.
+func (c *PartyContentTypeClient) CreateBulk(builders ...*PartyContentTypeCreate) *PartyContentTypeCreateBulk {
+	return &PartyContentTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PartyContentType.
+func (c *PartyContentTypeClient) Update() *PartyContentTypeUpdate {
+	mutation := newPartyContentTypeMutation(c.config, OpUpdate)
+	return &PartyContentTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PartyContentTypeClient) UpdateOne(pct *PartyContentType) *PartyContentTypeUpdateOne {
+	mutation := newPartyContentTypeMutation(c.config, OpUpdateOne, withPartyContentType(pct))
+	return &PartyContentTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PartyContentTypeClient) UpdateOneID(id int) *PartyContentTypeUpdateOne {
+	mutation := newPartyContentTypeMutation(c.config, OpUpdateOne, withPartyContentTypeID(id))
+	return &PartyContentTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PartyContentType.
+func (c *PartyContentTypeClient) Delete() *PartyContentTypeDelete {
+	mutation := newPartyContentTypeMutation(c.config, OpDelete)
+	return &PartyContentTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PartyContentTypeClient) DeleteOne(pct *PartyContentType) *PartyContentTypeDeleteOne {
+	return c.DeleteOneID(pct.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PartyContentTypeClient) DeleteOneID(id int) *PartyContentTypeDeleteOne {
+	builder := c.Delete().Where(partycontenttype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PartyContentTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for PartyContentType.
+func (c *PartyContentTypeClient) Query() *PartyContentTypeQuery {
+	return &PartyContentTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PartyContentType entity by its id.
+func (c *PartyContentTypeClient) Get(ctx context.Context, id int) (*PartyContentType, error) {
+	return c.Query().Where(partycontenttype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PartyContentTypeClient) GetX(ctx context.Context, id int) *PartyContentType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a PartyContentType.
+func (c *PartyContentTypeClient) QueryParent(pct *PartyContentType) *PartyContentTypeQuery {
+	query := &PartyContentTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pct.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partycontenttype.Table, partycontenttype.FieldID, id),
+			sqlgraph.To(partycontenttype.Table, partycontenttype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partycontenttype.ParentTable, partycontenttype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(pct.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a PartyContentType.
+func (c *PartyContentTypeClient) QueryChildren(pct *PartyContentType) *PartyContentTypeQuery {
+	query := &PartyContentTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pct.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partycontenttype.Table, partycontenttype.FieldID, id),
+			sqlgraph.To(partycontenttype.Table, partycontenttype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partycontenttype.ChildrenTable, partycontenttype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(pct.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildPartyContentTypes queries the child_party_content_types edge of a PartyContentType.
+func (c *PartyContentTypeClient) QueryChildPartyContentTypes(pct *PartyContentType) *PartyContentTypeQuery {
+	query := &PartyContentTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pct.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partycontenttype.Table, partycontenttype.FieldID, id),
+			sqlgraph.To(partycontenttype.Table, partycontenttype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, partycontenttype.ChildPartyContentTypesTable, partycontenttype.ChildPartyContentTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(pct.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PartyContentTypeClient) Hooks() []Hook {
+	return c.hooks.PartyContentType
+}
+
+// PartyIdentificationTypeClient is a client for the PartyIdentificationType schema.
+type PartyIdentificationTypeClient struct {
+	config
+}
+
+// NewPartyIdentificationTypeClient returns a client for the PartyIdentificationType from the given config.
+func NewPartyIdentificationTypeClient(c config) *PartyIdentificationTypeClient {
+	return &PartyIdentificationTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `partyidentificationtype.Hooks(f(g(h())))`.
+func (c *PartyIdentificationTypeClient) Use(hooks ...Hook) {
+	c.hooks.PartyIdentificationType = append(c.hooks.PartyIdentificationType, hooks...)
+}
+
+// Create returns a create builder for PartyIdentificationType.
+func (c *PartyIdentificationTypeClient) Create() *PartyIdentificationTypeCreate {
+	mutation := newPartyIdentificationTypeMutation(c.config, OpCreate)
+	return &PartyIdentificationTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PartyIdentificationType entities.
+func (c *PartyIdentificationTypeClient) CreateBulk(builders ...*PartyIdentificationTypeCreate) *PartyIdentificationTypeCreateBulk {
+	return &PartyIdentificationTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PartyIdentificationType.
+func (c *PartyIdentificationTypeClient) Update() *PartyIdentificationTypeUpdate {
+	mutation := newPartyIdentificationTypeMutation(c.config, OpUpdate)
+	return &PartyIdentificationTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PartyIdentificationTypeClient) UpdateOne(pit *PartyIdentificationType) *PartyIdentificationTypeUpdateOne {
+	mutation := newPartyIdentificationTypeMutation(c.config, OpUpdateOne, withPartyIdentificationType(pit))
+	return &PartyIdentificationTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PartyIdentificationTypeClient) UpdateOneID(id int) *PartyIdentificationTypeUpdateOne {
+	mutation := newPartyIdentificationTypeMutation(c.config, OpUpdateOne, withPartyIdentificationTypeID(id))
+	return &PartyIdentificationTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PartyIdentificationType.
+func (c *PartyIdentificationTypeClient) Delete() *PartyIdentificationTypeDelete {
+	mutation := newPartyIdentificationTypeMutation(c.config, OpDelete)
+	return &PartyIdentificationTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PartyIdentificationTypeClient) DeleteOne(pit *PartyIdentificationType) *PartyIdentificationTypeDeleteOne {
+	return c.DeleteOneID(pit.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PartyIdentificationTypeClient) DeleteOneID(id int) *PartyIdentificationTypeDeleteOne {
+	builder := c.Delete().Where(partyidentificationtype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PartyIdentificationTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for PartyIdentificationType.
+func (c *PartyIdentificationTypeClient) Query() *PartyIdentificationTypeQuery {
+	return &PartyIdentificationTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PartyIdentificationType entity by its id.
+func (c *PartyIdentificationTypeClient) Get(ctx context.Context, id int) (*PartyIdentificationType, error) {
+	return c.Query().Where(partyidentificationtype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PartyIdentificationTypeClient) GetX(ctx context.Context, id int) *PartyIdentificationType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a PartyIdentificationType.
+func (c *PartyIdentificationTypeClient) QueryParent(pit *PartyIdentificationType) *PartyIdentificationTypeQuery {
+	query := &PartyIdentificationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pit.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyidentificationtype.Table, partyidentificationtype.FieldID, id),
+			sqlgraph.To(partyidentificationtype.Table, partyidentificationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyidentificationtype.ParentTable, partyidentificationtype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(pit.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a PartyIdentificationType.
+func (c *PartyIdentificationTypeClient) QueryChildren(pit *PartyIdentificationType) *PartyIdentificationTypeQuery {
+	query := &PartyIdentificationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pit.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyidentificationtype.Table, partyidentificationtype.FieldID, id),
+			sqlgraph.To(partyidentificationtype.Table, partyidentificationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partyidentificationtype.ChildrenTable, partyidentificationtype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(pit.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildPartyIdentificationTypes queries the child_party_identification_types edge of a PartyIdentificationType.
+func (c *PartyIdentificationTypeClient) QueryChildPartyIdentificationTypes(pit *PartyIdentificationType) *PartyIdentificationTypeQuery {
+	query := &PartyIdentificationTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pit.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyidentificationtype.Table, partyidentificationtype.FieldID, id),
+			sqlgraph.To(partyidentificationtype.Table, partyidentificationtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, partyidentificationtype.ChildPartyIdentificationTypesTable, partyidentificationtype.ChildPartyIdentificationTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(pit.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PartyIdentificationTypeClient) Hooks() []Hook {
+	return c.hooks.PartyIdentificationType
+}
+
+// PartyQualTypeClient is a client for the PartyQualType schema.
+type PartyQualTypeClient struct {
+	config
+}
+
+// NewPartyQualTypeClient returns a client for the PartyQualType from the given config.
+func NewPartyQualTypeClient(c config) *PartyQualTypeClient {
+	return &PartyQualTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `partyqualtype.Hooks(f(g(h())))`.
+func (c *PartyQualTypeClient) Use(hooks ...Hook) {
+	c.hooks.PartyQualType = append(c.hooks.PartyQualType, hooks...)
+}
+
+// Create returns a create builder for PartyQualType.
+func (c *PartyQualTypeClient) Create() *PartyQualTypeCreate {
+	mutation := newPartyQualTypeMutation(c.config, OpCreate)
+	return &PartyQualTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PartyQualType entities.
+func (c *PartyQualTypeClient) CreateBulk(builders ...*PartyQualTypeCreate) *PartyQualTypeCreateBulk {
+	return &PartyQualTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PartyQualType.
+func (c *PartyQualTypeClient) Update() *PartyQualTypeUpdate {
+	mutation := newPartyQualTypeMutation(c.config, OpUpdate)
+	return &PartyQualTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PartyQualTypeClient) UpdateOne(pqt *PartyQualType) *PartyQualTypeUpdateOne {
+	mutation := newPartyQualTypeMutation(c.config, OpUpdateOne, withPartyQualType(pqt))
+	return &PartyQualTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PartyQualTypeClient) UpdateOneID(id int) *PartyQualTypeUpdateOne {
+	mutation := newPartyQualTypeMutation(c.config, OpUpdateOne, withPartyQualTypeID(id))
+	return &PartyQualTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PartyQualType.
+func (c *PartyQualTypeClient) Delete() *PartyQualTypeDelete {
+	mutation := newPartyQualTypeMutation(c.config, OpDelete)
+	return &PartyQualTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PartyQualTypeClient) DeleteOne(pqt *PartyQualType) *PartyQualTypeDeleteOne {
+	return c.DeleteOneID(pqt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PartyQualTypeClient) DeleteOneID(id int) *PartyQualTypeDeleteOne {
+	builder := c.Delete().Where(partyqualtype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PartyQualTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for PartyQualType.
+func (c *PartyQualTypeClient) Query() *PartyQualTypeQuery {
+	return &PartyQualTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PartyQualType entity by its id.
+func (c *PartyQualTypeClient) Get(ctx context.Context, id int) (*PartyQualType, error) {
+	return c.Query().Where(partyqualtype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PartyQualTypeClient) GetX(ctx context.Context, id int) *PartyQualType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a PartyQualType.
+func (c *PartyQualTypeClient) QueryParent(pqt *PartyQualType) *PartyQualTypeQuery {
+	query := &PartyQualTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pqt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyqualtype.Table, partyqualtype.FieldID, id),
+			sqlgraph.To(partyqualtype.Table, partyqualtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyqualtype.ParentTable, partyqualtype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(pqt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a PartyQualType.
+func (c *PartyQualTypeClient) QueryChildren(pqt *PartyQualType) *PartyQualTypeQuery {
+	query := &PartyQualTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pqt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyqualtype.Table, partyqualtype.FieldID, id),
+			sqlgraph.To(partyqualtype.Table, partyqualtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partyqualtype.ChildrenTable, partyqualtype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(pqt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildPartyQualTypes queries the child_party_qual_types edge of a PartyQualType.
+func (c *PartyQualTypeClient) QueryChildPartyQualTypes(pqt *PartyQualType) *PartyQualTypeQuery {
+	query := &PartyQualTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pqt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyqualtype.Table, partyqualtype.FieldID, id),
+			sqlgraph.To(partyqualtype.Table, partyqualtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, partyqualtype.ChildPartyQualTypesTable, partyqualtype.ChildPartyQualTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(pqt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PartyQualTypeClient) Hooks() []Hook {
+	return c.hooks.PartyQualType
+}
+
+// PartyRelationshipTypeClient is a client for the PartyRelationshipType schema.
+type PartyRelationshipTypeClient struct {
+	config
+}
+
+// NewPartyRelationshipTypeClient returns a client for the PartyRelationshipType from the given config.
+func NewPartyRelationshipTypeClient(c config) *PartyRelationshipTypeClient {
+	return &PartyRelationshipTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `partyrelationshiptype.Hooks(f(g(h())))`.
+func (c *PartyRelationshipTypeClient) Use(hooks ...Hook) {
+	c.hooks.PartyRelationshipType = append(c.hooks.PartyRelationshipType, hooks...)
+}
+
+// Create returns a create builder for PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) Create() *PartyRelationshipTypeCreate {
+	mutation := newPartyRelationshipTypeMutation(c.config, OpCreate)
+	return &PartyRelationshipTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PartyRelationshipType entities.
+func (c *PartyRelationshipTypeClient) CreateBulk(builders ...*PartyRelationshipTypeCreate) *PartyRelationshipTypeCreateBulk {
+	return &PartyRelationshipTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) Update() *PartyRelationshipTypeUpdate {
+	mutation := newPartyRelationshipTypeMutation(c.config, OpUpdate)
+	return &PartyRelationshipTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PartyRelationshipTypeClient) UpdateOne(prt *PartyRelationshipType) *PartyRelationshipTypeUpdateOne {
+	mutation := newPartyRelationshipTypeMutation(c.config, OpUpdateOne, withPartyRelationshipType(prt))
+	return &PartyRelationshipTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PartyRelationshipTypeClient) UpdateOneID(id int) *PartyRelationshipTypeUpdateOne {
+	mutation := newPartyRelationshipTypeMutation(c.config, OpUpdateOne, withPartyRelationshipTypeID(id))
+	return &PartyRelationshipTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) Delete() *PartyRelationshipTypeDelete {
+	mutation := newPartyRelationshipTypeMutation(c.config, OpDelete)
+	return &PartyRelationshipTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PartyRelationshipTypeClient) DeleteOne(prt *PartyRelationshipType) *PartyRelationshipTypeDeleteOne {
+	return c.DeleteOneID(prt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PartyRelationshipTypeClient) DeleteOneID(id int) *PartyRelationshipTypeDeleteOne {
+	builder := c.Delete().Where(partyrelationshiptype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PartyRelationshipTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) Query() *PartyRelationshipTypeQuery {
+	return &PartyRelationshipTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PartyRelationshipType entity by its id.
+func (c *PartyRelationshipTypeClient) Get(ctx context.Context, id int) (*PartyRelationshipType, error) {
+	return c.Query().Where(partyrelationshiptype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PartyRelationshipTypeClient) GetX(ctx context.Context, id int) *PartyRelationshipType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) QueryParent(prt *PartyRelationshipType) *PartyRelationshipTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := prt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrelationshiptype.Table, partyrelationshiptype.FieldID, id),
+			sqlgraph.To(partyrelationshiptype.Table, partyrelationshiptype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyrelationshiptype.ParentTable, partyrelationshiptype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(prt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) QueryChildren(prt *PartyRelationshipType) *PartyRelationshipTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := prt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrelationshiptype.Table, partyrelationshiptype.FieldID, id),
+			sqlgraph.To(partyrelationshiptype.Table, partyrelationshiptype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partyrelationshiptype.ChildrenTable, partyrelationshiptype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(prt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryValidFromRoleType queries the valid_from_role_type edge of a PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) QueryValidFromRoleType(prt *PartyRelationshipType) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := prt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrelationshiptype.Table, partyrelationshiptype.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyrelationshiptype.ValidFromRoleTypeTable, partyrelationshiptype.ValidFromRoleTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(prt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryValidToRoleType queries the valid_to_role_type edge of a PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) QueryValidToRoleType(prt *PartyRelationshipType) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := prt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrelationshiptype.Table, partyrelationshiptype.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyrelationshiptype.ValidToRoleTypeTable, partyrelationshiptype.ValidToRoleTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(prt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildPartyRelationshipTypes queries the child_party_relationship_types edge of a PartyRelationshipType.
+func (c *PartyRelationshipTypeClient) QueryChildPartyRelationshipTypes(prt *PartyRelationshipType) *PartyRelationshipTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := prt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrelationshiptype.Table, partyrelationshiptype.FieldID, id),
+			sqlgraph.To(partyrelationshiptype.Table, partyrelationshiptype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, partyrelationshiptype.ChildPartyRelationshipTypesTable, partyrelationshiptype.ChildPartyRelationshipTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(prt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PartyRelationshipTypeClient) Hooks() []Hook {
+	return c.hooks.PartyRelationshipType
 }
 
 // PartyRoleClient is a client for the PartyRole schema.
@@ -1206,6 +3134,176 @@ func (c *PartyStatusClient) Hooks() []Hook {
 	return c.hooks.PartyStatus
 }
 
+// PartyTypeClient is a client for the PartyType schema.
+type PartyTypeClient struct {
+	config
+}
+
+// NewPartyTypeClient returns a client for the PartyType from the given config.
+func NewPartyTypeClient(c config) *PartyTypeClient {
+	return &PartyTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `partytype.Hooks(f(g(h())))`.
+func (c *PartyTypeClient) Use(hooks ...Hook) {
+	c.hooks.PartyType = append(c.hooks.PartyType, hooks...)
+}
+
+// Create returns a create builder for PartyType.
+func (c *PartyTypeClient) Create() *PartyTypeCreate {
+	mutation := newPartyTypeMutation(c.config, OpCreate)
+	return &PartyTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PartyType entities.
+func (c *PartyTypeClient) CreateBulk(builders ...*PartyTypeCreate) *PartyTypeCreateBulk {
+	return &PartyTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PartyType.
+func (c *PartyTypeClient) Update() *PartyTypeUpdate {
+	mutation := newPartyTypeMutation(c.config, OpUpdate)
+	return &PartyTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PartyTypeClient) UpdateOne(pt *PartyType) *PartyTypeUpdateOne {
+	mutation := newPartyTypeMutation(c.config, OpUpdateOne, withPartyType(pt))
+	return &PartyTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PartyTypeClient) UpdateOneID(id int) *PartyTypeUpdateOne {
+	mutation := newPartyTypeMutation(c.config, OpUpdateOne, withPartyTypeID(id))
+	return &PartyTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PartyType.
+func (c *PartyTypeClient) Delete() *PartyTypeDelete {
+	mutation := newPartyTypeMutation(c.config, OpDelete)
+	return &PartyTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PartyTypeClient) DeleteOne(pt *PartyType) *PartyTypeDeleteOne {
+	return c.DeleteOneID(pt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PartyTypeClient) DeleteOneID(id int) *PartyTypeDeleteOne {
+	builder := c.Delete().Where(partytype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PartyTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for PartyType.
+func (c *PartyTypeClient) Query() *PartyTypeQuery {
+	return &PartyTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PartyType entity by its id.
+func (c *PartyTypeClient) Get(ctx context.Context, id int) (*PartyType, error) {
+	return c.Query().Where(partytype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PartyTypeClient) GetX(ctx context.Context, id int) *PartyType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a PartyType.
+func (c *PartyTypeClient) QueryParent(pt *PartyType) *PartyTypeQuery {
+	query := &PartyTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partytype.Table, partytype.FieldID, id),
+			sqlgraph.To(partytype.Table, partytype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partytype.ParentTable, partytype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(pt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a PartyType.
+func (c *PartyTypeClient) QueryChildren(pt *PartyType) *PartyTypeQuery {
+	query := &PartyTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partytype.Table, partytype.FieldID, id),
+			sqlgraph.To(partytype.Table, partytype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partytype.ChildrenTable, partytype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(pt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QuerySiblingPartyTypes queries the sibling_party_types edge of a PartyType.
+func (c *PartyTypeClient) QuerySiblingPartyTypes(pt *PartyType) *PartyTypeQuery {
+	query := &PartyTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partytype.Table, partytype.FieldID, id),
+			sqlgraph.To(partytype.Table, partytype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, partytype.SiblingPartyTypesTable, partytype.SiblingPartyTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(pt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryParties queries the parties edge of a PartyType.
+func (c *PartyTypeClient) QueryParties(pt *PartyType) *PartyQuery {
+	query := &PartyQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partytype.Table, partytype.FieldID, id),
+			sqlgraph.To(party.Table, party.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partytype.PartiesTable, partytype.PartiesColumn),
+		)
+		fromV = sqlgraph.Neighbors(pt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildPartyTypes queries the child_party_types edge of a PartyType.
+func (c *PartyTypeClient) QueryChildPartyTypes(pt *PartyType) *PartyTypeQuery {
+	query := &PartyTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partytype.Table, partytype.FieldID, id),
+			sqlgraph.To(partytype.Table, partytype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, partytype.ChildPartyTypesTable, partytype.ChildPartyTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(pt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PartyTypeClient) Hooks() []Hook {
+	return c.hooks.PartyType
+}
+
 // PersonClient is a client for the Person schema.
 type PersonClient struct {
 	config
@@ -1300,6 +3398,54 @@ func (c *PersonClient) QueryParty(pe *Person) *PartyQuery {
 			sqlgraph.From(person.Table, person.FieldID, id),
 			sqlgraph.To(party.Table, party.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, person.PartyTable, person.PartyColumn),
+		)
+		fromV = sqlgraph.Neighbors(pe.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryEmploymentStatusEnumeration queries the employment_status_enumeration edge of a Person.
+func (c *PersonClient) QueryEmploymentStatusEnumeration(pe *Person) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pe.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, person.EmploymentStatusEnumerationTable, person.EmploymentStatusEnumerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(pe.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryResidenceStatusEnumeration queries the residence_status_enumeration edge of a Person.
+func (c *PersonClient) QueryResidenceStatusEnumeration(pe *Person) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pe.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, person.ResidenceStatusEnumerationTable, person.ResidenceStatusEnumerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(pe.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMaritalStatusEnumeration queries the marital_status_enumeration edge of a Person.
+func (c *PersonClient) QueryMaritalStatusEnumeration(pe *Person) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pe.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, person.MaritalStatusEnumerationTable, person.MaritalStatusEnumerationColumn),
 		)
 		fromV = sqlgraph.Neighbors(pe.driver.Dialect(), step)
 		return fromV, nil
@@ -1486,6 +3632,38 @@ func (c *RoleTypeClient) QueryPartyContactMeches(rt *RoleType) *PartyContactMech
 			sqlgraph.From(roletype.Table, roletype.FieldID, id),
 			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, roletype.PartyContactMechesTable, roletype.PartyContactMechesColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryValidFromPartyRelationshipTypes queries the valid_from_party_relationship_types edge of a RoleType.
+func (c *RoleTypeClient) QueryValidFromPartyRelationshipTypes(rt *RoleType) *PartyRelationshipTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(partyrelationshiptype.Table, partyrelationshiptype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.ValidFromPartyRelationshipTypesTable, roletype.ValidFromPartyRelationshipTypesColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryValidToPartyRelationshipTypes queries the valid_to_party_relationship_types edge of a RoleType.
+func (c *RoleTypeClient) QueryValidToPartyRelationshipTypes(rt *RoleType) *PartyRelationshipTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(partyrelationshiptype.Table, partyrelationshiptype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.ValidToPartyRelationshipTypesTable, roletype.ValidToPartyRelationshipTypesColumn),
 		)
 		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
 		return fromV, nil
@@ -1769,9 +3947,131 @@ func (c *SecurityGroupPermissionClient) QuerySecurityGroup(sgp *SecurityGroupPer
 	return query
 }
 
+// QuerySecurityPermission queries the security_permission edge of a SecurityGroupPermission.
+func (c *SecurityGroupPermissionClient) QuerySecurityPermission(sgp *SecurityGroupPermission) *SecurityPermissionQuery {
+	query := &SecurityPermissionQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := sgp.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(securitygrouppermission.Table, securitygrouppermission.FieldID, id),
+			sqlgraph.To(securitypermission.Table, securitypermission.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, securitygrouppermission.SecurityPermissionTable, securitygrouppermission.SecurityPermissionColumn),
+		)
+		fromV = sqlgraph.Neighbors(sgp.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *SecurityGroupPermissionClient) Hooks() []Hook {
 	return c.hooks.SecurityGroupPermission
+}
+
+// SecurityPermissionClient is a client for the SecurityPermission schema.
+type SecurityPermissionClient struct {
+	config
+}
+
+// NewSecurityPermissionClient returns a client for the SecurityPermission from the given config.
+func NewSecurityPermissionClient(c config) *SecurityPermissionClient {
+	return &SecurityPermissionClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `securitypermission.Hooks(f(g(h())))`.
+func (c *SecurityPermissionClient) Use(hooks ...Hook) {
+	c.hooks.SecurityPermission = append(c.hooks.SecurityPermission, hooks...)
+}
+
+// Create returns a create builder for SecurityPermission.
+func (c *SecurityPermissionClient) Create() *SecurityPermissionCreate {
+	mutation := newSecurityPermissionMutation(c.config, OpCreate)
+	return &SecurityPermissionCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SecurityPermission entities.
+func (c *SecurityPermissionClient) CreateBulk(builders ...*SecurityPermissionCreate) *SecurityPermissionCreateBulk {
+	return &SecurityPermissionCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SecurityPermission.
+func (c *SecurityPermissionClient) Update() *SecurityPermissionUpdate {
+	mutation := newSecurityPermissionMutation(c.config, OpUpdate)
+	return &SecurityPermissionUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SecurityPermissionClient) UpdateOne(sp *SecurityPermission) *SecurityPermissionUpdateOne {
+	mutation := newSecurityPermissionMutation(c.config, OpUpdateOne, withSecurityPermission(sp))
+	return &SecurityPermissionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SecurityPermissionClient) UpdateOneID(id int) *SecurityPermissionUpdateOne {
+	mutation := newSecurityPermissionMutation(c.config, OpUpdateOne, withSecurityPermissionID(id))
+	return &SecurityPermissionUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SecurityPermission.
+func (c *SecurityPermissionClient) Delete() *SecurityPermissionDelete {
+	mutation := newSecurityPermissionMutation(c.config, OpDelete)
+	return &SecurityPermissionDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *SecurityPermissionClient) DeleteOne(sp *SecurityPermission) *SecurityPermissionDeleteOne {
+	return c.DeleteOneID(sp.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *SecurityPermissionClient) DeleteOneID(id int) *SecurityPermissionDeleteOne {
+	builder := c.Delete().Where(securitypermission.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SecurityPermissionDeleteOne{builder}
+}
+
+// Query returns a query builder for SecurityPermission.
+func (c *SecurityPermissionClient) Query() *SecurityPermissionQuery {
+	return &SecurityPermissionQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a SecurityPermission entity by its id.
+func (c *SecurityPermissionClient) Get(ctx context.Context, id int) (*SecurityPermission, error) {
+	return c.Query().Where(securitypermission.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SecurityPermissionClient) GetX(ctx context.Context, id int) *SecurityPermission {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QuerySecurityGroupPermissions queries the security_group_permissions edge of a SecurityPermission.
+func (c *SecurityPermissionClient) QuerySecurityGroupPermissions(sp *SecurityPermission) *SecurityGroupPermissionQuery {
+	query := &SecurityGroupPermissionQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := sp.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(securitypermission.Table, securitypermission.FieldID, id),
+			sqlgraph.To(securitygrouppermission.Table, securitygrouppermission.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, securitypermission.SecurityGroupPermissionsTable, securitypermission.SecurityGroupPermissionsColumn),
+		)
+		fromV = sqlgraph.Neighbors(sp.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *SecurityPermissionClient) Hooks() []Hook {
+	return c.hooks.SecurityPermission
 }
 
 // SkillTypeClient is a client for the SkillType schema.
@@ -2714,6 +5014,144 @@ func (c *TemporalExpressionAssocClient) Hooks() []Hook {
 	return c.hooks.TemporalExpressionAssoc
 }
 
+// TermTypeClient is a client for the TermType schema.
+type TermTypeClient struct {
+	config
+}
+
+// NewTermTypeClient returns a client for the TermType from the given config.
+func NewTermTypeClient(c config) *TermTypeClient {
+	return &TermTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `termtype.Hooks(f(g(h())))`.
+func (c *TermTypeClient) Use(hooks ...Hook) {
+	c.hooks.TermType = append(c.hooks.TermType, hooks...)
+}
+
+// Create returns a create builder for TermType.
+func (c *TermTypeClient) Create() *TermTypeCreate {
+	mutation := newTermTypeMutation(c.config, OpCreate)
+	return &TermTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of TermType entities.
+func (c *TermTypeClient) CreateBulk(builders ...*TermTypeCreate) *TermTypeCreateBulk {
+	return &TermTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for TermType.
+func (c *TermTypeClient) Update() *TermTypeUpdate {
+	mutation := newTermTypeMutation(c.config, OpUpdate)
+	return &TermTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *TermTypeClient) UpdateOne(tt *TermType) *TermTypeUpdateOne {
+	mutation := newTermTypeMutation(c.config, OpUpdateOne, withTermType(tt))
+	return &TermTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *TermTypeClient) UpdateOneID(id int) *TermTypeUpdateOne {
+	mutation := newTermTypeMutation(c.config, OpUpdateOne, withTermTypeID(id))
+	return &TermTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for TermType.
+func (c *TermTypeClient) Delete() *TermTypeDelete {
+	mutation := newTermTypeMutation(c.config, OpDelete)
+	return &TermTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *TermTypeClient) DeleteOne(tt *TermType) *TermTypeDeleteOne {
+	return c.DeleteOneID(tt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *TermTypeClient) DeleteOneID(id int) *TermTypeDeleteOne {
+	builder := c.Delete().Where(termtype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &TermTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for TermType.
+func (c *TermTypeClient) Query() *TermTypeQuery {
+	return &TermTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a TermType entity by its id.
+func (c *TermTypeClient) Get(ctx context.Context, id int) (*TermType, error) {
+	return c.Query().Where(termtype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *TermTypeClient) GetX(ctx context.Context, id int) *TermType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a TermType.
+func (c *TermTypeClient) QueryParent(tt *TermType) *TermTypeQuery {
+	query := &TermTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := tt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(termtype.Table, termtype.FieldID, id),
+			sqlgraph.To(termtype.Table, termtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, termtype.ParentTable, termtype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(tt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a TermType.
+func (c *TermTypeClient) QueryChildren(tt *TermType) *TermTypeQuery {
+	query := &TermTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := tt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(termtype.Table, termtype.FieldID, id),
+			sqlgraph.To(termtype.Table, termtype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, termtype.ChildrenTable, termtype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(tt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildTermTypes queries the child_term_types edge of a TermType.
+func (c *TermTypeClient) QueryChildTermTypes(tt *TermType) *TermTypeQuery {
+	query := &TermTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := tt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(termtype.Table, termtype.FieldID, id),
+			sqlgraph.To(termtype.Table, termtype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, termtype.ChildTermTypesTable, termtype.ChildTermTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(tt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *TermTypeClient) Hooks() []Hook {
+	return c.hooks.TermType
+}
+
 // UserLoginClient is a client for the UserLogin schema.
 type UserLoginClient struct {
 	config
@@ -2895,6 +5333,22 @@ func (c *UserLoginClient) QueryUserLoginSecurityGroups(ul *UserLogin) *UserLogin
 	return query
 }
 
+// QueryUserPreferences queries the user_preferences edge of a UserLogin.
+func (c *UserLoginClient) QueryUserPreferences(ul *UserLogin) *UserPreferenceQuery {
+	query := &UserPreferenceQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := ul.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(userlogin.Table, userlogin.FieldID, id),
+			sqlgraph.To(userpreference.Table, userpreference.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, userlogin.UserPreferencesTable, userlogin.UserPreferencesColumn),
+		)
+		fromV = sqlgraph.Neighbors(ul.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryAssignedByWorkEffortPartyAssignments queries the assigned_by_work_effort_party_assignments edge of a UserLogin.
 func (c *UserLoginClient) QueryAssignedByWorkEffortPartyAssignments(ul *UserLogin) *WorkEffortPartyAssignmentQuery {
 	query := &WorkEffortPartyAssignmentQuery{config: c.config}
@@ -3054,6 +5508,112 @@ func (c *UserLoginSecurityGroupClient) Hooks() []Hook {
 	return c.hooks.UserLoginSecurityGroup
 }
 
+// UserPreferenceClient is a client for the UserPreference schema.
+type UserPreferenceClient struct {
+	config
+}
+
+// NewUserPreferenceClient returns a client for the UserPreference from the given config.
+func NewUserPreferenceClient(c config) *UserPreferenceClient {
+	return &UserPreferenceClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `userpreference.Hooks(f(g(h())))`.
+func (c *UserPreferenceClient) Use(hooks ...Hook) {
+	c.hooks.UserPreference = append(c.hooks.UserPreference, hooks...)
+}
+
+// Create returns a create builder for UserPreference.
+func (c *UserPreferenceClient) Create() *UserPreferenceCreate {
+	mutation := newUserPreferenceMutation(c.config, OpCreate)
+	return &UserPreferenceCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of UserPreference entities.
+func (c *UserPreferenceClient) CreateBulk(builders ...*UserPreferenceCreate) *UserPreferenceCreateBulk {
+	return &UserPreferenceCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for UserPreference.
+func (c *UserPreferenceClient) Update() *UserPreferenceUpdate {
+	mutation := newUserPreferenceMutation(c.config, OpUpdate)
+	return &UserPreferenceUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *UserPreferenceClient) UpdateOne(up *UserPreference) *UserPreferenceUpdateOne {
+	mutation := newUserPreferenceMutation(c.config, OpUpdateOne, withUserPreference(up))
+	return &UserPreferenceUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *UserPreferenceClient) UpdateOneID(id int) *UserPreferenceUpdateOne {
+	mutation := newUserPreferenceMutation(c.config, OpUpdateOne, withUserPreferenceID(id))
+	return &UserPreferenceUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for UserPreference.
+func (c *UserPreferenceClient) Delete() *UserPreferenceDelete {
+	mutation := newUserPreferenceMutation(c.config, OpDelete)
+	return &UserPreferenceDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *UserPreferenceClient) DeleteOne(up *UserPreference) *UserPreferenceDeleteOne {
+	return c.DeleteOneID(up.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *UserPreferenceClient) DeleteOneID(id int) *UserPreferenceDeleteOne {
+	builder := c.Delete().Where(userpreference.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &UserPreferenceDeleteOne{builder}
+}
+
+// Query returns a query builder for UserPreference.
+func (c *UserPreferenceClient) Query() *UserPreferenceQuery {
+	return &UserPreferenceQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a UserPreference entity by its id.
+func (c *UserPreferenceClient) Get(ctx context.Context, id int) (*UserPreference, error) {
+	return c.Query().Where(userpreference.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *UserPreferenceClient) GetX(ctx context.Context, id int) *UserPreference {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryUserLogin queries the user_login edge of a UserPreference.
+func (c *UserPreferenceClient) QueryUserLogin(up *UserPreference) *UserLoginQuery {
+	query := &UserLoginQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := up.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(userpreference.Table, userpreference.FieldID, id),
+			sqlgraph.To(userlogin.Table, userlogin.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, userpreference.UserLoginTable, userpreference.UserLoginColumn),
+		)
+		fromV = sqlgraph.Neighbors(up.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *UserPreferenceClient) Hooks() []Hook {
+	return c.hooks.UserPreference
+}
+
 // WorkEffortClient is a client for the WorkEffort schema.
 type WorkEffortClient struct {
 	config
@@ -3196,6 +5756,22 @@ func (c *WorkEffortClient) QueryCurrentStatusItem(we *WorkEffort) *StatusItemQue
 			sqlgraph.From(workeffort.Table, workeffort.FieldID, id),
 			sqlgraph.To(statusitem.Table, statusitem.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.CurrentStatusItemTable, workeffort.CurrentStatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(we.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryScopeEnumeration queries the scope_enumeration edge of a WorkEffort.
+func (c *WorkEffortClient) QueryScopeEnumeration(we *WorkEffort) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := we.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.ScopeEnumerationTable, workeffort.ScopeEnumerationColumn),
 		)
 		fromV = sqlgraph.Neighbors(we.driver.Dialect(), step)
 		return fromV, nil
@@ -3786,6 +6362,38 @@ func (c *WorkEffortPartyAssignmentClient) QueryAssignmentStatusItem(wepa *WorkEf
 			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, id),
 			sqlgraph.To(statusitem.Table, statusitem.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.AssignmentStatusItemTable, workeffortpartyassignment.AssignmentStatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(wepa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryExpectationEnumeration queries the expectation_enumeration edge of a WorkEffortPartyAssignment.
+func (c *WorkEffortPartyAssignmentClient) QueryExpectationEnumeration(wepa *WorkEffortPartyAssignment) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wepa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.ExpectationEnumerationTable, workeffortpartyassignment.ExpectationEnumerationColumn),
+		)
+		fromV = sqlgraph.Neighbors(wepa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryDelegateReasonEnumeration queries the delegate_reason_enumeration edge of a WorkEffortPartyAssignment.
+func (c *WorkEffortPartyAssignmentClient) QueryDelegateReasonEnumeration(wepa *WorkEffortPartyAssignment) *EnumerationQuery {
+	query := &EnumerationQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wepa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, id),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.DelegateReasonEnumerationTable, workeffortpartyassignment.DelegateReasonEnumerationColumn),
 		)
 		fromV = sqlgraph.Neighbors(wepa.driver.Dialect(), step)
 		return fromV, nil

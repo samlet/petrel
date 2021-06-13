@@ -1,0 +1,170 @@
+{
+  "name": "PartyType",
+  "fields": [
+    {
+      "name": "partyTypeId",
+      "type": "id",
+      "col": "PARTY_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentPartyType",
+      "type": "one",
+      "relEntityName": "PartyType",
+      "fkName": "PARTY_TYPE_PAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "partyTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SiblingPartyType",
+      "type": "many",
+      "relEntityName": "PartyType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "many",
+      "relEntityName": "Party",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyTypeId",
+          "relFieldName": "partyTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyNeed",
+      "type": "many",
+      "relEntityName": "PartyNeed",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyTypeId",
+          "relFieldName": "partyTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildPartyType",
+      "type": "many",
+      "relEntityName": "PartyType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyTypeAttr",
+      "type": "many",
+      "relEntityName": "PartyTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyTypeId",
+          "relFieldName": "partyTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "partyTypeId"
+  ],
+  "isView": false
+}

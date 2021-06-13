@@ -14,6 +14,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitypermission"
 )
 
 // SecurityGroupPermissionQuery is the builder for querying SecurityGroupPermission entities.
@@ -26,8 +27,9 @@ type SecurityGroupPermissionQuery struct {
 	fields     []string
 	predicates []predicate.SecurityGroupPermission
 	// eager-loading edges.
-	withSecurityGroup *SecurityGroupQuery
-	withFKs           bool
+	withSecurityGroup      *SecurityGroupQuery
+	withSecurityPermission *SecurityPermissionQuery
+	withFKs                bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -79,6 +81,28 @@ func (sgpq *SecurityGroupPermissionQuery) QuerySecurityGroup() *SecurityGroupQue
 			sqlgraph.From(securitygrouppermission.Table, securitygrouppermission.FieldID, selector),
 			sqlgraph.To(securitygroup.Table, securitygroup.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, securitygrouppermission.SecurityGroupTable, securitygrouppermission.SecurityGroupColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(sgpq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QuerySecurityPermission chains the current query on the "security_permission" edge.
+func (sgpq *SecurityGroupPermissionQuery) QuerySecurityPermission() *SecurityPermissionQuery {
+	query := &SecurityPermissionQuery{config: sgpq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := sgpq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := sgpq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(securitygrouppermission.Table, securitygrouppermission.FieldID, selector),
+			sqlgraph.To(securitypermission.Table, securitypermission.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, securitygrouppermission.SecurityPermissionTable, securitygrouppermission.SecurityPermissionColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(sgpq.driver.Dialect(), step)
 		return fromU, nil
@@ -262,12 +286,13 @@ func (sgpq *SecurityGroupPermissionQuery) Clone() *SecurityGroupPermissionQuery 
 		return nil
 	}
 	return &SecurityGroupPermissionQuery{
-		config:            sgpq.config,
-		limit:             sgpq.limit,
-		offset:            sgpq.offset,
-		order:             append([]OrderFunc{}, sgpq.order...),
-		predicates:        append([]predicate.SecurityGroupPermission{}, sgpq.predicates...),
-		withSecurityGroup: sgpq.withSecurityGroup.Clone(),
+		config:                 sgpq.config,
+		limit:                  sgpq.limit,
+		offset:                 sgpq.offset,
+		order:                  append([]OrderFunc{}, sgpq.order...),
+		predicates:             append([]predicate.SecurityGroupPermission{}, sgpq.predicates...),
+		withSecurityGroup:      sgpq.withSecurityGroup.Clone(),
+		withSecurityPermission: sgpq.withSecurityPermission.Clone(),
 		// clone intermediate query.
 		sql:  sgpq.sql.Clone(),
 		path: sgpq.path,
@@ -282,6 +307,17 @@ func (sgpq *SecurityGroupPermissionQuery) WithSecurityGroup(opts ...func(*Securi
 		opt(query)
 	}
 	sgpq.withSecurityGroup = query
+	return sgpq
+}
+
+// WithSecurityPermission tells the query-builder to eager-load the nodes that are connected to
+// the "security_permission" edge. The optional arguments are used to configure the query builder of the edge.
+func (sgpq *SecurityGroupPermissionQuery) WithSecurityPermission(opts ...func(*SecurityPermissionQuery)) *SecurityGroupPermissionQuery {
+	query := &SecurityPermissionQuery{config: sgpq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	sgpq.withSecurityPermission = query
 	return sgpq
 }
 
@@ -351,11 +387,12 @@ func (sgpq *SecurityGroupPermissionQuery) sqlAll(ctx context.Context) ([]*Securi
 		nodes       = []*SecurityGroupPermission{}
 		withFKs     = sgpq.withFKs
 		_spec       = sgpq.querySpec()
-		loadedTypes = [1]bool{
+		loadedTypes = [2]bool{
 			sgpq.withSecurityGroup != nil,
+			sgpq.withSecurityPermission != nil,
 		}
 	)
-	if sgpq.withSecurityGroup != nil {
+	if sgpq.withSecurityGroup != nil || sgpq.withSecurityPermission != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -406,6 +443,35 @@ func (sgpq *SecurityGroupPermissionQuery) sqlAll(ctx context.Context) ([]*Securi
 			}
 			for i := range nodes {
 				nodes[i].Edges.SecurityGroup = n
+			}
+		}
+	}
+
+	if query := sgpq.withSecurityPermission; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*SecurityGroupPermission)
+		for i := range nodes {
+			if nodes[i].security_permission_security_group_permissions == nil {
+				continue
+			}
+			fk := *nodes[i].security_permission_security_group_permissions
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(securitypermission.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "security_permission_security_group_permissions" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.SecurityPermission = n
 			}
 		}
 	}

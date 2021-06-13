@@ -10,6 +10,7 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
@@ -106,34 +107,6 @@ func (wepac *WorkEffortPartyAssignmentCreate) SetStatusDateTime(t time.Time) *Wo
 func (wepac *WorkEffortPartyAssignmentCreate) SetNillableStatusDateTime(t *time.Time) *WorkEffortPartyAssignmentCreate {
 	if t != nil {
 		wepac.SetStatusDateTime(*t)
-	}
-	return wepac
-}
-
-// SetExpectationEnumID sets the "expectation_enum_id" field.
-func (wepac *WorkEffortPartyAssignmentCreate) SetExpectationEnumID(i int) *WorkEffortPartyAssignmentCreate {
-	wepac.mutation.SetExpectationEnumID(i)
-	return wepac
-}
-
-// SetNillableExpectationEnumID sets the "expectation_enum_id" field if the given value is not nil.
-func (wepac *WorkEffortPartyAssignmentCreate) SetNillableExpectationEnumID(i *int) *WorkEffortPartyAssignmentCreate {
-	if i != nil {
-		wepac.SetExpectationEnumID(*i)
-	}
-	return wepac
-}
-
-// SetDelegateReasonEnumID sets the "delegate_reason_enum_id" field.
-func (wepac *WorkEffortPartyAssignmentCreate) SetDelegateReasonEnumID(i int) *WorkEffortPartyAssignmentCreate {
-	wepac.mutation.SetDelegateReasonEnumID(i)
-	return wepac
-}
-
-// SetNillableDelegateReasonEnumID sets the "delegate_reason_enum_id" field if the given value is not nil.
-func (wepac *WorkEffortPartyAssignmentCreate) SetNillableDelegateReasonEnumID(i *int) *WorkEffortPartyAssignmentCreate {
-	if i != nil {
-		wepac.SetDelegateReasonEnumID(*i)
 	}
 	return wepac
 }
@@ -292,6 +265,44 @@ func (wepac *WorkEffortPartyAssignmentCreate) SetNillableAssignmentStatusItemID(
 // SetAssignmentStatusItem sets the "assignment_status_item" edge to the StatusItem entity.
 func (wepac *WorkEffortPartyAssignmentCreate) SetAssignmentStatusItem(s *StatusItem) *WorkEffortPartyAssignmentCreate {
 	return wepac.SetAssignmentStatusItemID(s.ID)
+}
+
+// SetExpectationEnumerationID sets the "expectation_enumeration" edge to the Enumeration entity by ID.
+func (wepac *WorkEffortPartyAssignmentCreate) SetExpectationEnumerationID(id int) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetExpectationEnumerationID(id)
+	return wepac
+}
+
+// SetNillableExpectationEnumerationID sets the "expectation_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableExpectationEnumerationID(id *int) *WorkEffortPartyAssignmentCreate {
+	if id != nil {
+		wepac = wepac.SetExpectationEnumerationID(*id)
+	}
+	return wepac
+}
+
+// SetExpectationEnumeration sets the "expectation_enumeration" edge to the Enumeration entity.
+func (wepac *WorkEffortPartyAssignmentCreate) SetExpectationEnumeration(e *Enumeration) *WorkEffortPartyAssignmentCreate {
+	return wepac.SetExpectationEnumerationID(e.ID)
+}
+
+// SetDelegateReasonEnumerationID sets the "delegate_reason_enumeration" edge to the Enumeration entity by ID.
+func (wepac *WorkEffortPartyAssignmentCreate) SetDelegateReasonEnumerationID(id int) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetDelegateReasonEnumerationID(id)
+	return wepac
+}
+
+// SetNillableDelegateReasonEnumerationID sets the "delegate_reason_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableDelegateReasonEnumerationID(id *int) *WorkEffortPartyAssignmentCreate {
+	if id != nil {
+		wepac = wepac.SetDelegateReasonEnumerationID(*id)
+	}
+	return wepac
+}
+
+// SetDelegateReasonEnumeration sets the "delegate_reason_enumeration" edge to the Enumeration entity.
+func (wepac *WorkEffortPartyAssignmentCreate) SetDelegateReasonEnumeration(e *Enumeration) *WorkEffortPartyAssignmentCreate {
+	return wepac.SetDelegateReasonEnumerationID(e.ID)
 }
 
 // SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
@@ -481,22 +492,6 @@ func (wepac *WorkEffortPartyAssignmentCreate) createSpec() (*WorkEffortPartyAssi
 		})
 		_node.StatusDateTime = value
 	}
-	if value, ok := wepac.mutation.ExpectationEnumID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldExpectationEnumID,
-		})
-		_node.ExpectationEnumID = value
-	}
-	if value, ok := wepac.mutation.DelegateReasonEnumID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldDelegateReasonEnumID,
-		})
-		_node.DelegateReasonEnumID = value
-	}
 	if value, ok := wepac.mutation.FacilityID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -639,6 +634,46 @@ func (wepac *WorkEffortPartyAssignmentCreate) createSpec() (*WorkEffortPartyAssi
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.status_item_assignment_work_effort_party_assignments = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := wepac.mutation.ExpectationEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.ExpectationEnumerationTable,
+			Columns: []string{workeffortpartyassignment.ExpectationEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.enumeration_expectation_work_effort_party_assignments = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := wepac.mutation.DelegateReasonEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.DelegateReasonEnumerationTable,
+			Columns: []string{workeffortpartyassignment.DelegateReasonEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.enumeration_delegate_reason_work_effort_party_assignments = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := wepac.mutation.AvailabilityStatusItemIDs(); len(nodes) > 0 {

@@ -21,8 +21,6 @@ const (
 	FieldFixedAssetTypeID = "fixed_asset_type_id"
 	// FieldInstanceOfProductID holds the string denoting the instance_of_product_id field in the database.
 	FieldInstanceOfProductID = "instance_of_product_id"
-	// FieldClassEnumID holds the string denoting the class_enum_id field in the database.
-	FieldClassEnumID = "class_enum_id"
 	// FieldFixedAssetName holds the string denoting the fixed_asset_name field in the database.
 	FieldFixedAssetName = "fixed_asset_name"
 	// FieldAcquireOrderID holds the string denoting the acquire_order_id field in the database.
@@ -63,6 +61,8 @@ const (
 	EdgeParent = "parent"
 	// EdgeChildren holds the string denoting the children edge name in mutations.
 	EdgeChildren = "children"
+	// EdgeClassEnumeration holds the string denoting the class_enumeration edge name in mutations.
+	EdgeClassEnumeration = "class_enumeration"
 	// EdgeParty holds the string denoting the party edge name in mutations.
 	EdgeParty = "party"
 	// EdgeRoleType holds the string denoting the role_type edge name in mutations.
@@ -85,6 +85,13 @@ const (
 	ChildrenTable = "fixed_assets"
 	// ChildrenColumn is the table column denoting the children relation/edge.
 	ChildrenColumn = "fixed_asset_children"
+	// ClassEnumerationTable is the table the holds the class_enumeration relation/edge.
+	ClassEnumerationTable = "fixed_assets"
+	// ClassEnumerationInverseTable is the table name for the Enumeration entity.
+	// It exists in this package in order to avoid circular dependency with the "enumeration" package.
+	ClassEnumerationInverseTable = "enumerations"
+	// ClassEnumerationColumn is the table column denoting the class_enumeration relation/edge.
+	ClassEnumerationColumn = "enumeration_class_fixed_assets"
 	// PartyTable is the table the holds the party relation/edge.
 	PartyTable = "fixed_assets"
 	// PartyInverseTable is the table name for the Party entity.
@@ -132,7 +139,6 @@ var Columns = []string{
 	FieldStringRef,
 	FieldFixedAssetTypeID,
 	FieldInstanceOfProductID,
-	FieldClassEnumID,
 	FieldFixedAssetName,
 	FieldAcquireOrderID,
 	FieldAcquireOrderItemSeqID,
@@ -156,6 +162,7 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the "fixed_assets"
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
+	"enumeration_class_fixed_assets",
 	"fixed_asset_children",
 	"party_fixed_assets",
 	"party_role_fixed_assets",

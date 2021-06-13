@@ -17,14 +17,14 @@ const (
 	FieldUpdateTime = "update_time"
 	// FieldStringRef holds the string denoting the string_ref field in the database.
 	FieldStringRef = "string_ref"
-	// FieldPermissionID holds the string denoting the permission_id field in the database.
-	FieldPermissionID = "permission_id"
 	// FieldFromDate holds the string denoting the from_date field in the database.
 	FieldFromDate = "from_date"
 	// FieldThruDate holds the string denoting the thru_date field in the database.
 	FieldThruDate = "thru_date"
 	// EdgeSecurityGroup holds the string denoting the security_group edge name in mutations.
 	EdgeSecurityGroup = "security_group"
+	// EdgeSecurityPermission holds the string denoting the security_permission edge name in mutations.
+	EdgeSecurityPermission = "security_permission"
 	// Table holds the table name of the securitygrouppermission in the database.
 	Table = "security_group_permissions"
 	// SecurityGroupTable is the table the holds the security_group relation/edge.
@@ -34,6 +34,13 @@ const (
 	SecurityGroupInverseTable = "security_groups"
 	// SecurityGroupColumn is the table column denoting the security_group relation/edge.
 	SecurityGroupColumn = "security_group_security_group_permissions"
+	// SecurityPermissionTable is the table the holds the security_permission relation/edge.
+	SecurityPermissionTable = "security_group_permissions"
+	// SecurityPermissionInverseTable is the table name for the SecurityPermission entity.
+	// It exists in this package in order to avoid circular dependency with the "securitypermission" package.
+	SecurityPermissionInverseTable = "security_permissions"
+	// SecurityPermissionColumn is the table column denoting the security_permission relation/edge.
+	SecurityPermissionColumn = "security_permission_security_group_permissions"
 )
 
 // Columns holds all SQL columns for securitygrouppermission fields.
@@ -42,7 +49,6 @@ var Columns = []string{
 	FieldCreateTime,
 	FieldUpdateTime,
 	FieldStringRef,
-	FieldPermissionID,
 	FieldFromDate,
 	FieldThruDate,
 }
@@ -51,6 +57,7 @@ var Columns = []string{
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
 	"security_group_security_group_permissions",
+	"security_permission_security_group_permissions",
 	"user_login_security_group_security_group_permissions",
 }
 
@@ -76,8 +83,6 @@ var (
 	DefaultUpdateTime func() time.Time
 	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
 	UpdateDefaultUpdateTime func() time.Time
-	// PermissionIDValidator is a validator for the "permission_id" field. It is called by the builders before save.
-	PermissionIDValidator func(string) error
 	// DefaultFromDate holds the default value on creation for the "from_date" field.
 	DefaultFromDate func() time.Time
 	// DefaultThruDate holds the default value on creation for the "thru_date" field.

@@ -1,0 +1,28 @@
+{{/* gotype: github.com/samlet/petrel/alfin.ModelPackage */}}
+package helper
+
+import (
+    "context"
+    "log"
+    "github.com/samlet/petrel/alfin/modules/{{.Name}}/ent"
+{{ range $.Entities }}
+    "github.com/samlet/petrel/alfin/modules/{{$.Name}}/ent/{{.Name|lower}}"
+{{- end }}
+)
+
+{{ range $.Entities }}
+func {{.Name}}Ref(ctx context.Context, stringId string) *ent.{{.Name}} {
+    client:=ent.FromContext(ctx)
+    rec, err := client.{{.Name}}.
+        Query().
+        Where({{.Name|lower}}.StringRefEQ(stringId)).
+        // `Only` fails if no record found,
+        // or more than 1 record returned.
+        Only(ctx)
+    if err != nil {
+        log.Fatalf("Cannot find {{.Name}} %s: %v", stringId, err)
+    }
+    return rec
+}
+{{ end }}
+

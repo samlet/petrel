@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
@@ -33,6 +34,7 @@ type FixedAssetQuery struct {
 	// eager-loading edges.
 	withParent                      *FixedAssetQuery
 	withChildren                    *FixedAssetQuery
+	withClassEnumeration            *EnumerationQuery
 	withParty                       *PartyQuery
 	withRoleType                    *RoleTypeQuery
 	withPartyRole                   *PartyRoleQuery
@@ -113,6 +115,28 @@ func (faq *FixedAssetQuery) QueryChildren() *FixedAssetQuery {
 			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, selector),
 			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, fixedasset.ChildrenTable, fixedasset.ChildrenColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(faq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryClassEnumeration chains the current query on the "class_enumeration" edge.
+func (faq *FixedAssetQuery) QueryClassEnumeration() *EnumerationQuery {
+	query := &EnumerationQuery{config: faq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := faq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := faq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, selector),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, fixedasset.ClassEnumerationTable, fixedasset.ClassEnumerationColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(faq.driver.Dialect(), step)
 		return fromU, nil
@@ -435,6 +459,7 @@ func (faq *FixedAssetQuery) Clone() *FixedAssetQuery {
 		predicates:                      append([]predicate.FixedAsset{}, faq.predicates...),
 		withParent:                      faq.withParent.Clone(),
 		withChildren:                    faq.withChildren.Clone(),
+		withClassEnumeration:            faq.withClassEnumeration.Clone(),
 		withParty:                       faq.withParty.Clone(),
 		withRoleType:                    faq.withRoleType.Clone(),
 		withPartyRole:                   faq.withPartyRole.Clone(),
@@ -466,6 +491,17 @@ func (faq *FixedAssetQuery) WithChildren(opts ...func(*FixedAssetQuery)) *FixedA
 		opt(query)
 	}
 	faq.withChildren = query
+	return faq
+}
+
+// WithClassEnumeration tells the query-builder to eager-load the nodes that are connected to
+// the "class_enumeration" edge. The optional arguments are used to configure the query builder of the edge.
+func (faq *FixedAssetQuery) WithClassEnumeration(opts ...func(*EnumerationQuery)) *FixedAssetQuery {
+	query := &EnumerationQuery{config: faq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	faq.withClassEnumeration = query
 	return faq
 }
 
@@ -601,9 +637,10 @@ func (faq *FixedAssetQuery) sqlAll(ctx context.Context) ([]*FixedAsset, error) {
 		nodes       = []*FixedAsset{}
 		withFKs     = faq.withFKs
 		_spec       = faq.querySpec()
-		loadedTypes = [8]bool{
+		loadedTypes = [9]bool{
 			faq.withParent != nil,
 			faq.withChildren != nil,
+			faq.withClassEnumeration != nil,
 			faq.withParty != nil,
 			faq.withRoleType != nil,
 			faq.withPartyRole != nil,
@@ -612,7 +649,7 @@ func (faq *FixedAssetQuery) sqlAll(ctx context.Context) ([]*FixedAsset, error) {
 			faq.withWorkEffortFixedAssetAssigns != nil,
 		}
 	)
-	if faq.withParent != nil || faq.withParty != nil || faq.withRoleType != nil || faq.withPartyRole != nil {
+	if faq.withParent != nil || faq.withClassEnumeration != nil || faq.withParty != nil || faq.withRoleType != nil || faq.withPartyRole != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -693,6 +730,35 @@ func (faq *FixedAssetQuery) sqlAll(ctx context.Context) ([]*FixedAsset, error) {
 				return nil, fmt.Errorf(`unexpected foreign-key "fixed_asset_children" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.Children = append(node.Edges.Children, n)
+		}
+	}
+
+	if query := faq.withClassEnumeration; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*FixedAsset)
+		for i := range nodes {
+			if nodes[i].enumeration_class_fixed_assets == nil {
+				continue
+			}
+			fk := *nodes[i].enumeration_class_fixed_assets
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(enumeration.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "enumeration_class_fixed_assets" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.ClassEnumeration = n
+			}
 		}
 	}
 

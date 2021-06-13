@@ -257,9 +257,11 @@ func GenModelEntity(templateFile string, inputFile string, writer io.Writer) err
 	return GenModelEntityWithMeta(templateFile, m, writer)
 }
 
-func GenModelEntityWithMeta(templateFile string, m *ModelEntity, writer io.Writer) error {
+// func GenModelEntityWithMeta(templateFile string, m *ModelEntity, writer io.Writer) error {
+func GenModelEntityWithMeta(templateFile string, m interface{}, writer io.Writer) error {
 	tf := template.FuncMap{
 		"title":     strings.Title,
+		"lower": strings.ToLower,
 		"snakecase": strcase.ToSnake,
 		"isUniquePk": func(ent ModelEntity, fld string) bool {
 			return ent.IsUniqueIdField(fld)

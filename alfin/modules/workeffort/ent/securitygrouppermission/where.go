@@ -114,13 +114,6 @@ func StringRef(v string) predicate.SecurityGroupPermission {
 	})
 }
 
-// PermissionID applies equality check predicate on the "permission_id" field. It's identical to PermissionIDEQ.
-func PermissionID(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPermissionID), v))
-	})
-}
-
 // FromDate applies equality check predicate on the "from_date" field. It's identical to FromDateEQ.
 func FromDate(v time.Time) predicate.SecurityGroupPermission {
 	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
@@ -412,117 +405,6 @@ func StringRefContainsFold(v string) predicate.SecurityGroupPermission {
 	})
 }
 
-// PermissionIDEQ applies the EQ predicate on the "permission_id" field.
-func PermissionIDEQ(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDNEQ applies the NEQ predicate on the "permission_id" field.
-func PermissionIDNEQ(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDIn applies the In predicate on the "permission_id" field.
-func PermissionIDIn(vs ...string) predicate.SecurityGroupPermission {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldPermissionID), v...))
-	})
-}
-
-// PermissionIDNotIn applies the NotIn predicate on the "permission_id" field.
-func PermissionIDNotIn(vs ...string) predicate.SecurityGroupPermission {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldPermissionID), v...))
-	})
-}
-
-// PermissionIDGT applies the GT predicate on the "permission_id" field.
-func PermissionIDGT(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDGTE applies the GTE predicate on the "permission_id" field.
-func PermissionIDGTE(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDLT applies the LT predicate on the "permission_id" field.
-func PermissionIDLT(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDLTE applies the LTE predicate on the "permission_id" field.
-func PermissionIDLTE(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDContains applies the Contains predicate on the "permission_id" field.
-func PermissionIDContains(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.Contains(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDHasPrefix applies the HasPrefix predicate on the "permission_id" field.
-func PermissionIDHasPrefix(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.HasPrefix(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDHasSuffix applies the HasSuffix predicate on the "permission_id" field.
-func PermissionIDHasSuffix(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.HasSuffix(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDEqualFold applies the EqualFold predicate on the "permission_id" field.
-func PermissionIDEqualFold(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.EqualFold(s.C(FieldPermissionID), v))
-	})
-}
-
-// PermissionIDContainsFold applies the ContainsFold predicate on the "permission_id" field.
-func PermissionIDContainsFold(v string) predicate.SecurityGroupPermission {
-	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
-		s.Where(sql.ContainsFold(s.C(FieldPermissionID), v))
-	})
-}
-
 // FromDateEQ applies the EQ predicate on the "from_date" field.
 func FromDateEQ(v time.Time) predicate.SecurityGroupPermission {
 	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
@@ -708,6 +590,34 @@ func HasSecurityGroupWith(preds ...predicate.SecurityGroup) predicate.SecurityGr
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(SecurityGroupInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, SecurityGroupTable, SecurityGroupColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasSecurityPermission applies the HasEdge predicate on the "security_permission" edge.
+func HasSecurityPermission() predicate.SecurityGroupPermission {
+	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(SecurityPermissionTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, SecurityPermissionTable, SecurityPermissionColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasSecurityPermissionWith applies the HasEdge predicate on the "security_permission" edge with a given conditions (other predicates).
+func HasSecurityPermissionWith(preds ...predicate.SecurityPermission) predicate.SecurityGroupPermission {
+	return predicate.SecurityGroupPermission(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(SecurityPermissionInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, SecurityPermissionTable, SecurityPermissionColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

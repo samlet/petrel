@@ -14,6 +14,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrelationshiptype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
@@ -30,14 +31,16 @@ type RoleTypeQuery struct {
 	fields     []string
 	predicates []predicate.RoleType
 	// eager-loading edges.
-	withParent                     *RoleTypeQuery
-	withChildren                   *RoleTypeQuery
-	withFixedAssets                *FixedAssetQuery
-	withPartyContactMeches         *PartyContactMechQuery
-	withPartyRoles                 *PartyRoleQuery
-	withChildRoleTypes             *RoleTypeQuery
-	withWorkEffortPartyAssignments *WorkEffortPartyAssignmentQuery
-	withFKs                        bool
+	withParent                          *RoleTypeQuery
+	withChildren                        *RoleTypeQuery
+	withFixedAssets                     *FixedAssetQuery
+	withPartyContactMeches              *PartyContactMechQuery
+	withValidFromPartyRelationshipTypes *PartyRelationshipTypeQuery
+	withValidToPartyRelationshipTypes   *PartyRelationshipTypeQuery
+	withPartyRoles                      *PartyRoleQuery
+	withChildRoleTypes                  *RoleTypeQuery
+	withWorkEffortPartyAssignments      *WorkEffortPartyAssignmentQuery
+	withFKs                             bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -155,6 +158,50 @@ func (rtq *RoleTypeQuery) QueryPartyContactMeches() *PartyContactMechQuery {
 			sqlgraph.From(roletype.Table, roletype.FieldID, selector),
 			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, roletype.PartyContactMechesTable, roletype.PartyContactMechesColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(rtq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryValidFromPartyRelationshipTypes chains the current query on the "valid_from_party_relationship_types" edge.
+func (rtq *RoleTypeQuery) QueryValidFromPartyRelationshipTypes() *PartyRelationshipTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: rtq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := rtq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := rtq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, selector),
+			sqlgraph.To(partyrelationshiptype.Table, partyrelationshiptype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.ValidFromPartyRelationshipTypesTable, roletype.ValidFromPartyRelationshipTypesColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(rtq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryValidToPartyRelationshipTypes chains the current query on the "valid_to_party_relationship_types" edge.
+func (rtq *RoleTypeQuery) QueryValidToPartyRelationshipTypes() *PartyRelationshipTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: rtq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := rtq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := rtq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, selector),
+			sqlgraph.To(partyrelationshiptype.Table, partyrelationshiptype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.ValidToPartyRelationshipTypesTable, roletype.ValidToPartyRelationshipTypesColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(rtq.driver.Dialect(), step)
 		return fromU, nil
@@ -404,18 +451,20 @@ func (rtq *RoleTypeQuery) Clone() *RoleTypeQuery {
 		return nil
 	}
 	return &RoleTypeQuery{
-		config:                         rtq.config,
-		limit:                          rtq.limit,
-		offset:                         rtq.offset,
-		order:                          append([]OrderFunc{}, rtq.order...),
-		predicates:                     append([]predicate.RoleType{}, rtq.predicates...),
-		withParent:                     rtq.withParent.Clone(),
-		withChildren:                   rtq.withChildren.Clone(),
-		withFixedAssets:                rtq.withFixedAssets.Clone(),
-		withPartyContactMeches:         rtq.withPartyContactMeches.Clone(),
-		withPartyRoles:                 rtq.withPartyRoles.Clone(),
-		withChildRoleTypes:             rtq.withChildRoleTypes.Clone(),
-		withWorkEffortPartyAssignments: rtq.withWorkEffortPartyAssignments.Clone(),
+		config:                              rtq.config,
+		limit:                               rtq.limit,
+		offset:                              rtq.offset,
+		order:                               append([]OrderFunc{}, rtq.order...),
+		predicates:                          append([]predicate.RoleType{}, rtq.predicates...),
+		withParent:                          rtq.withParent.Clone(),
+		withChildren:                        rtq.withChildren.Clone(),
+		withFixedAssets:                     rtq.withFixedAssets.Clone(),
+		withPartyContactMeches:              rtq.withPartyContactMeches.Clone(),
+		withValidFromPartyRelationshipTypes: rtq.withValidFromPartyRelationshipTypes.Clone(),
+		withValidToPartyRelationshipTypes:   rtq.withValidToPartyRelationshipTypes.Clone(),
+		withPartyRoles:                      rtq.withPartyRoles.Clone(),
+		withChildRoleTypes:                  rtq.withChildRoleTypes.Clone(),
+		withWorkEffortPartyAssignments:      rtq.withWorkEffortPartyAssignments.Clone(),
 		// clone intermediate query.
 		sql:  rtq.sql.Clone(),
 		path: rtq.path,
@@ -463,6 +512,28 @@ func (rtq *RoleTypeQuery) WithPartyContactMeches(opts ...func(*PartyContactMechQ
 		opt(query)
 	}
 	rtq.withPartyContactMeches = query
+	return rtq
+}
+
+// WithValidFromPartyRelationshipTypes tells the query-builder to eager-load the nodes that are connected to
+// the "valid_from_party_relationship_types" edge. The optional arguments are used to configure the query builder of the edge.
+func (rtq *RoleTypeQuery) WithValidFromPartyRelationshipTypes(opts ...func(*PartyRelationshipTypeQuery)) *RoleTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: rtq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	rtq.withValidFromPartyRelationshipTypes = query
+	return rtq
+}
+
+// WithValidToPartyRelationshipTypes tells the query-builder to eager-load the nodes that are connected to
+// the "valid_to_party_relationship_types" edge. The optional arguments are used to configure the query builder of the edge.
+func (rtq *RoleTypeQuery) WithValidToPartyRelationshipTypes(opts ...func(*PartyRelationshipTypeQuery)) *RoleTypeQuery {
+	query := &PartyRelationshipTypeQuery{config: rtq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	rtq.withValidToPartyRelationshipTypes = query
 	return rtq
 }
 
@@ -565,11 +636,13 @@ func (rtq *RoleTypeQuery) sqlAll(ctx context.Context) ([]*RoleType, error) {
 		nodes       = []*RoleType{}
 		withFKs     = rtq.withFKs
 		_spec       = rtq.querySpec()
-		loadedTypes = [7]bool{
+		loadedTypes = [9]bool{
 			rtq.withParent != nil,
 			rtq.withChildren != nil,
 			rtq.withFixedAssets != nil,
 			rtq.withPartyContactMeches != nil,
+			rtq.withValidFromPartyRelationshipTypes != nil,
+			rtq.withValidToPartyRelationshipTypes != nil,
 			rtq.withPartyRoles != nil,
 			rtq.withChildRoleTypes != nil,
 			rtq.withWorkEffortPartyAssignments != nil,
@@ -714,6 +787,64 @@ func (rtq *RoleTypeQuery) sqlAll(ctx context.Context) ([]*RoleType, error) {
 				return nil, fmt.Errorf(`unexpected foreign-key "role_type_party_contact_meches" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.PartyContactMeches = append(node.Edges.PartyContactMeches, n)
+		}
+	}
+
+	if query := rtq.withValidFromPartyRelationshipTypes; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int]*RoleType)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.ValidFromPartyRelationshipTypes = []*PartyRelationshipType{}
+		}
+		query.withFKs = true
+		query.Where(predicate.PartyRelationshipType(func(s *sql.Selector) {
+			s.Where(sql.InValues(roletype.ValidFromPartyRelationshipTypesColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.role_type_valid_from_party_relationship_types
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "role_type_valid_from_party_relationship_types" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "role_type_valid_from_party_relationship_types" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.ValidFromPartyRelationshipTypes = append(node.Edges.ValidFromPartyRelationshipTypes, n)
+		}
+	}
+
+	if query := rtq.withValidToPartyRelationshipTypes; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int]*RoleType)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.ValidToPartyRelationshipTypes = []*PartyRelationshipType{}
+		}
+		query.withFKs = true
+		query.Where(predicate.PartyRelationshipType(func(s *sql.Selector) {
+			s.Where(sql.InValues(roletype.ValidToPartyRelationshipTypesColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.role_type_valid_to_party_relationship_types
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "role_type_valid_to_party_relationship_types" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "role_type_valid_to_party_relationship_types" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.ValidToPartyRelationshipTypes = append(node.Edges.ValidToPartyRelationshipTypes, n)
 		}
 	}
 

@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrelationshiptype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
@@ -154,6 +155,36 @@ func (rtu *RoleTypeUpdate) AddPartyContactMeches(p ...*PartyContactMech) *RoleTy
 	return rtu.AddPartyContactMechIDs(ids...)
 }
 
+// AddValidFromPartyRelationshipTypeIDs adds the "valid_from_party_relationship_types" edge to the PartyRelationshipType entity by IDs.
+func (rtu *RoleTypeUpdate) AddValidFromPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdate {
+	rtu.mutation.AddValidFromPartyRelationshipTypeIDs(ids...)
+	return rtu
+}
+
+// AddValidFromPartyRelationshipTypes adds the "valid_from_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtu *RoleTypeUpdate) AddValidFromPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtu.AddValidFromPartyRelationshipTypeIDs(ids...)
+}
+
+// AddValidToPartyRelationshipTypeIDs adds the "valid_to_party_relationship_types" edge to the PartyRelationshipType entity by IDs.
+func (rtu *RoleTypeUpdate) AddValidToPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdate {
+	rtu.mutation.AddValidToPartyRelationshipTypeIDs(ids...)
+	return rtu
+}
+
+// AddValidToPartyRelationshipTypes adds the "valid_to_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtu *RoleTypeUpdate) AddValidToPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtu.AddValidToPartyRelationshipTypeIDs(ids...)
+}
+
 // AddPartyRoleIDs adds the "party_roles" edge to the PartyRole entity by IDs.
 func (rtu *RoleTypeUpdate) AddPartyRoleIDs(ids ...int) *RoleTypeUpdate {
 	rtu.mutation.AddPartyRoleIDs(ids...)
@@ -271,6 +302,48 @@ func (rtu *RoleTypeUpdate) RemovePartyContactMeches(p ...*PartyContactMech) *Rol
 		ids[i] = p[i].ID
 	}
 	return rtu.RemovePartyContactMechIDs(ids...)
+}
+
+// ClearValidFromPartyRelationshipTypes clears all "valid_from_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtu *RoleTypeUpdate) ClearValidFromPartyRelationshipTypes() *RoleTypeUpdate {
+	rtu.mutation.ClearValidFromPartyRelationshipTypes()
+	return rtu
+}
+
+// RemoveValidFromPartyRelationshipTypeIDs removes the "valid_from_party_relationship_types" edge to PartyRelationshipType entities by IDs.
+func (rtu *RoleTypeUpdate) RemoveValidFromPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdate {
+	rtu.mutation.RemoveValidFromPartyRelationshipTypeIDs(ids...)
+	return rtu
+}
+
+// RemoveValidFromPartyRelationshipTypes removes "valid_from_party_relationship_types" edges to PartyRelationshipType entities.
+func (rtu *RoleTypeUpdate) RemoveValidFromPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtu.RemoveValidFromPartyRelationshipTypeIDs(ids...)
+}
+
+// ClearValidToPartyRelationshipTypes clears all "valid_to_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtu *RoleTypeUpdate) ClearValidToPartyRelationshipTypes() *RoleTypeUpdate {
+	rtu.mutation.ClearValidToPartyRelationshipTypes()
+	return rtu
+}
+
+// RemoveValidToPartyRelationshipTypeIDs removes the "valid_to_party_relationship_types" edge to PartyRelationshipType entities by IDs.
+func (rtu *RoleTypeUpdate) RemoveValidToPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdate {
+	rtu.mutation.RemoveValidToPartyRelationshipTypeIDs(ids...)
+	return rtu
+}
+
+// RemoveValidToPartyRelationshipTypes removes "valid_to_party_relationship_types" edges to PartyRelationshipType entities.
+func (rtu *RoleTypeUpdate) RemoveValidToPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtu.RemoveValidToPartyRelationshipTypeIDs(ids...)
 }
 
 // ClearPartyRoles clears all "party_roles" edges to the PartyRole entity.
@@ -673,6 +746,114 @@ func (rtu *RoleTypeUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if rtu.mutation.ValidFromPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidFromPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidFromPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtu.mutation.RemovedValidFromPartyRelationshipTypesIDs(); len(nodes) > 0 && !rtu.mutation.ValidFromPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidFromPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidFromPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtu.mutation.ValidFromPartyRelationshipTypesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidFromPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidFromPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if rtu.mutation.ValidToPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidToPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidToPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtu.mutation.RemovedValidToPartyRelationshipTypesIDs(); len(nodes) > 0 && !rtu.mutation.ValidToPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidToPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidToPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtu.mutation.ValidToPartyRelationshipTypesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidToPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidToPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if rtu.mutation.PartyRolesCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -978,6 +1159,36 @@ func (rtuo *RoleTypeUpdateOne) AddPartyContactMeches(p ...*PartyContactMech) *Ro
 	return rtuo.AddPartyContactMechIDs(ids...)
 }
 
+// AddValidFromPartyRelationshipTypeIDs adds the "valid_from_party_relationship_types" edge to the PartyRelationshipType entity by IDs.
+func (rtuo *RoleTypeUpdateOne) AddValidFromPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdateOne {
+	rtuo.mutation.AddValidFromPartyRelationshipTypeIDs(ids...)
+	return rtuo
+}
+
+// AddValidFromPartyRelationshipTypes adds the "valid_from_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtuo *RoleTypeUpdateOne) AddValidFromPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtuo.AddValidFromPartyRelationshipTypeIDs(ids...)
+}
+
+// AddValidToPartyRelationshipTypeIDs adds the "valid_to_party_relationship_types" edge to the PartyRelationshipType entity by IDs.
+func (rtuo *RoleTypeUpdateOne) AddValidToPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdateOne {
+	rtuo.mutation.AddValidToPartyRelationshipTypeIDs(ids...)
+	return rtuo
+}
+
+// AddValidToPartyRelationshipTypes adds the "valid_to_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtuo *RoleTypeUpdateOne) AddValidToPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtuo.AddValidToPartyRelationshipTypeIDs(ids...)
+}
+
 // AddPartyRoleIDs adds the "party_roles" edge to the PartyRole entity by IDs.
 func (rtuo *RoleTypeUpdateOne) AddPartyRoleIDs(ids ...int) *RoleTypeUpdateOne {
 	rtuo.mutation.AddPartyRoleIDs(ids...)
@@ -1095,6 +1306,48 @@ func (rtuo *RoleTypeUpdateOne) RemovePartyContactMeches(p ...*PartyContactMech) 
 		ids[i] = p[i].ID
 	}
 	return rtuo.RemovePartyContactMechIDs(ids...)
+}
+
+// ClearValidFromPartyRelationshipTypes clears all "valid_from_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtuo *RoleTypeUpdateOne) ClearValidFromPartyRelationshipTypes() *RoleTypeUpdateOne {
+	rtuo.mutation.ClearValidFromPartyRelationshipTypes()
+	return rtuo
+}
+
+// RemoveValidFromPartyRelationshipTypeIDs removes the "valid_from_party_relationship_types" edge to PartyRelationshipType entities by IDs.
+func (rtuo *RoleTypeUpdateOne) RemoveValidFromPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdateOne {
+	rtuo.mutation.RemoveValidFromPartyRelationshipTypeIDs(ids...)
+	return rtuo
+}
+
+// RemoveValidFromPartyRelationshipTypes removes "valid_from_party_relationship_types" edges to PartyRelationshipType entities.
+func (rtuo *RoleTypeUpdateOne) RemoveValidFromPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtuo.RemoveValidFromPartyRelationshipTypeIDs(ids...)
+}
+
+// ClearValidToPartyRelationshipTypes clears all "valid_to_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtuo *RoleTypeUpdateOne) ClearValidToPartyRelationshipTypes() *RoleTypeUpdateOne {
+	rtuo.mutation.ClearValidToPartyRelationshipTypes()
+	return rtuo
+}
+
+// RemoveValidToPartyRelationshipTypeIDs removes the "valid_to_party_relationship_types" edge to PartyRelationshipType entities by IDs.
+func (rtuo *RoleTypeUpdateOne) RemoveValidToPartyRelationshipTypeIDs(ids ...int) *RoleTypeUpdateOne {
+	rtuo.mutation.RemoveValidToPartyRelationshipTypeIDs(ids...)
+	return rtuo
+}
+
+// RemoveValidToPartyRelationshipTypes removes "valid_to_party_relationship_types" edges to PartyRelationshipType entities.
+func (rtuo *RoleTypeUpdateOne) RemoveValidToPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtuo.RemoveValidToPartyRelationshipTypeIDs(ids...)
 }
 
 // ClearPartyRoles clears all "party_roles" edges to the PartyRole entity.
@@ -1513,6 +1766,114 @@ func (rtuo *RoleTypeUpdateOne) sqlSave(ctx context.Context) (_node *RoleType, er
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if rtuo.mutation.ValidFromPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidFromPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidFromPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtuo.mutation.RemovedValidFromPartyRelationshipTypesIDs(); len(nodes) > 0 && !rtuo.mutation.ValidFromPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidFromPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidFromPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtuo.mutation.ValidFromPartyRelationshipTypesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidFromPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidFromPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if rtuo.mutation.ValidToPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidToPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidToPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtuo.mutation.RemovedValidToPartyRelationshipTypesIDs(); len(nodes) > 0 && !rtuo.mutation.ValidToPartyRelationshipTypesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidToPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidToPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := rtuo.mutation.ValidToPartyRelationshipTypesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidToPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidToPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
 				},
 			},
 		}

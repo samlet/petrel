@@ -135,20 +135,6 @@ func StatusDateTime(v time.Time) predicate.WorkEffortPartyAssignment {
 	})
 }
 
-// ExpectationEnumID applies equality check predicate on the "expectation_enum_id" field. It's identical to ExpectationEnumIDEQ.
-func ExpectationEnumID(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldExpectationEnumID), v))
-	})
-}
-
-// DelegateReasonEnumID applies equality check predicate on the "delegate_reason_enum_id" field. It's identical to DelegateReasonEnumIDEQ.
-func DelegateReasonEnumID(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDelegateReasonEnumID), v))
-	})
-}
-
 // FacilityID applies equality check predicate on the "facility_id" field. It's identical to FacilityIDEQ.
 func FacilityID(v int) predicate.WorkEffortPartyAssignment {
 	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
@@ -696,186 +682,6 @@ func StatusDateTimeNotNil() predicate.WorkEffortPartyAssignment {
 	})
 }
 
-// ExpectationEnumIDEQ applies the EQ predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDEQ(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldExpectationEnumID), v))
-	})
-}
-
-// ExpectationEnumIDNEQ applies the NEQ predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDNEQ(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldExpectationEnumID), v))
-	})
-}
-
-// ExpectationEnumIDIn applies the In predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDIn(vs ...int) predicate.WorkEffortPartyAssignment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldExpectationEnumID), v...))
-	})
-}
-
-// ExpectationEnumIDNotIn applies the NotIn predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDNotIn(vs ...int) predicate.WorkEffortPartyAssignment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldExpectationEnumID), v...))
-	})
-}
-
-// ExpectationEnumIDGT applies the GT predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDGT(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldExpectationEnumID), v))
-	})
-}
-
-// ExpectationEnumIDGTE applies the GTE predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDGTE(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldExpectationEnumID), v))
-	})
-}
-
-// ExpectationEnumIDLT applies the LT predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDLT(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldExpectationEnumID), v))
-	})
-}
-
-// ExpectationEnumIDLTE applies the LTE predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDLTE(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldExpectationEnumID), v))
-	})
-}
-
-// ExpectationEnumIDIsNil applies the IsNil predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDIsNil() predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldExpectationEnumID)))
-	})
-}
-
-// ExpectationEnumIDNotNil applies the NotNil predicate on the "expectation_enum_id" field.
-func ExpectationEnumIDNotNil() predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldExpectationEnumID)))
-	})
-}
-
-// DelegateReasonEnumIDEQ applies the EQ predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDEQ(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldDelegateReasonEnumID), v))
-	})
-}
-
-// DelegateReasonEnumIDNEQ applies the NEQ predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDNEQ(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldDelegateReasonEnumID), v))
-	})
-}
-
-// DelegateReasonEnumIDIn applies the In predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDIn(vs ...int) predicate.WorkEffortPartyAssignment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldDelegateReasonEnumID), v...))
-	})
-}
-
-// DelegateReasonEnumIDNotIn applies the NotIn predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDNotIn(vs ...int) predicate.WorkEffortPartyAssignment {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldDelegateReasonEnumID), v...))
-	})
-}
-
-// DelegateReasonEnumIDGT applies the GT predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDGT(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldDelegateReasonEnumID), v))
-	})
-}
-
-// DelegateReasonEnumIDGTE applies the GTE predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDGTE(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldDelegateReasonEnumID), v))
-	})
-}
-
-// DelegateReasonEnumIDLT applies the LT predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDLT(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldDelegateReasonEnumID), v))
-	})
-}
-
-// DelegateReasonEnumIDLTE applies the LTE predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDLTE(v int) predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldDelegateReasonEnumID), v))
-	})
-}
-
-// DelegateReasonEnumIDIsNil applies the IsNil predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDIsNil() predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldDelegateReasonEnumID)))
-	})
-}
-
-// DelegateReasonEnumIDNotNil applies the NotNil predicate on the "delegate_reason_enum_id" field.
-func DelegateReasonEnumIDNotNil() predicate.WorkEffortPartyAssignment {
-	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldDelegateReasonEnumID)))
-	})
-}
-
 // FacilityIDEQ applies the EQ predicate on the "facility_id" field.
 func FacilityIDEQ(v int) predicate.WorkEffortPartyAssignment {
 	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
@@ -1312,6 +1118,62 @@ func HasAssignmentStatusItemWith(preds ...predicate.StatusItem) predicate.WorkEf
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(AssignmentStatusItemInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, AssignmentStatusItemTable, AssignmentStatusItemColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasExpectationEnumeration applies the HasEdge predicate on the "expectation_enumeration" edge.
+func HasExpectationEnumeration() predicate.WorkEffortPartyAssignment {
+	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ExpectationEnumerationTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ExpectationEnumerationTable, ExpectationEnumerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasExpectationEnumerationWith applies the HasEdge predicate on the "expectation_enumeration" edge with a given conditions (other predicates).
+func HasExpectationEnumerationWith(preds ...predicate.Enumeration) predicate.WorkEffortPartyAssignment {
+	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ExpectationEnumerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ExpectationEnumerationTable, ExpectationEnumerationColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasDelegateReasonEnumeration applies the HasEdge predicate on the "delegate_reason_enumeration" edge.
+func HasDelegateReasonEnumeration() predicate.WorkEffortPartyAssignment {
+	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(DelegateReasonEnumerationTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, DelegateReasonEnumerationTable, DelegateReasonEnumerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasDelegateReasonEnumerationWith applies the HasEdge predicate on the "delegate_reason_enumeration" edge with a given conditions (other predicates).
+func HasDelegateReasonEnumerationWith(preds ...predicate.Enumeration) predicate.WorkEffortPartyAssignment {
+	return predicate.WorkEffortPartyAssignment(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(DelegateReasonEnumerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, DelegateReasonEnumerationTable, DelegateReasonEnumerationColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

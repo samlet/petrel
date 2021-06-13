@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
@@ -38,6 +39,7 @@ type WorkEffortQuery struct {
 	withParent                      *WorkEffortQuery
 	withChildren                    *WorkEffortQuery
 	withCurrentStatusItem           *StatusItemQuery
+	withScopeEnumeration            *EnumerationQuery
 	withFixedAsset                  *FixedAssetQuery
 	withTemporalExpression          *TemporalExpressionQuery
 	withChildWorkEfforts            *WorkEffortQuery
@@ -164,6 +166,28 @@ func (weq *WorkEffortQuery) QueryCurrentStatusItem() *StatusItemQuery {
 			sqlgraph.From(workeffort.Table, workeffort.FieldID, selector),
 			sqlgraph.To(statusitem.Table, statusitem.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.CurrentStatusItemTable, workeffort.CurrentStatusItemColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(weq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryScopeEnumeration chains the current query on the "scope_enumeration" edge.
+func (weq *WorkEffortQuery) QueryScopeEnumeration() *EnumerationQuery {
+	query := &EnumerationQuery{config: weq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := weq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := weq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, selector),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.ScopeEnumerationTable, workeffort.ScopeEnumerationColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(weq.driver.Dialect(), step)
 		return fromU, nil
@@ -532,6 +556,7 @@ func (weq *WorkEffortQuery) Clone() *WorkEffortQuery {
 		withParent:                      weq.withParent.Clone(),
 		withChildren:                    weq.withChildren.Clone(),
 		withCurrentStatusItem:           weq.withCurrentStatusItem.Clone(),
+		withScopeEnumeration:            weq.withScopeEnumeration.Clone(),
 		withFixedAsset:                  weq.withFixedAsset.Clone(),
 		withTemporalExpression:          weq.withTemporalExpression.Clone(),
 		withChildWorkEfforts:            weq.withChildWorkEfforts.Clone(),
@@ -587,6 +612,17 @@ func (weq *WorkEffortQuery) WithCurrentStatusItem(opts ...func(*StatusItemQuery)
 		opt(query)
 	}
 	weq.withCurrentStatusItem = query
+	return weq
+}
+
+// WithScopeEnumeration tells the query-builder to eager-load the nodes that are connected to
+// the "scope_enumeration" edge. The optional arguments are used to configure the query builder of the edge.
+func (weq *WorkEffortQuery) WithScopeEnumeration(opts ...func(*EnumerationQuery)) *WorkEffortQuery {
+	query := &EnumerationQuery{config: weq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	weq.withScopeEnumeration = query
 	return weq
 }
 
@@ -744,11 +780,12 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 		nodes       = []*WorkEffort{}
 		withFKs     = weq.withFKs
 		_spec       = weq.querySpec()
-		loadedTypes = [12]bool{
+		loadedTypes = [13]bool{
 			weq.withWorkEffortType != nil,
 			weq.withParent != nil,
 			weq.withChildren != nil,
 			weq.withCurrentStatusItem != nil,
+			weq.withScopeEnumeration != nil,
 			weq.withFixedAsset != nil,
 			weq.withTemporalExpression != nil,
 			weq.withChildWorkEfforts != nil,
@@ -759,7 +796,7 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 			weq.withWorkEffortSkillStandards != nil,
 		}
 	)
-	if weq.withWorkEffortType != nil || weq.withParent != nil || weq.withCurrentStatusItem != nil || weq.withFixedAsset != nil || weq.withTemporalExpression != nil {
+	if weq.withWorkEffortType != nil || weq.withParent != nil || weq.withCurrentStatusItem != nil || weq.withScopeEnumeration != nil || weq.withFixedAsset != nil || weq.withTemporalExpression != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -897,6 +934,35 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 			}
 			for i := range nodes {
 				nodes[i].Edges.CurrentStatusItem = n
+			}
+		}
+	}
+
+	if query := weq.withScopeEnumeration; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffort)
+		for i := range nodes {
+			if nodes[i].enumeration_scope_work_efforts == nil {
+				continue
+			}
+			fk := *nodes[i].enumeration_scope_work_efforts
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(enumeration.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "enumeration_scope_work_efforts" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.ScopeEnumeration = n
 			}
 		}
 	}

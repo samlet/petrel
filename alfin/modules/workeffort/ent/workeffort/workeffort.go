@@ -22,8 +22,6 @@ const (
 	FieldLastStatusUpdate = "last_status_update"
 	// FieldWorkEffortPurposeTypeID holds the string denoting the work_effort_purpose_type_id field in the database.
 	FieldWorkEffortPurposeTypeID = "work_effort_purpose_type_id"
-	// FieldScopeEnumID holds the string denoting the scope_enum_id field in the database.
-	FieldScopeEnumID = "scope_enum_id"
 	// FieldPriority holds the string denoting the priority field in the database.
 	FieldPriority = "priority"
 	// FieldPercentComplete holds the string denoting the percent_complete field in the database.
@@ -118,6 +116,8 @@ const (
 	EdgeChildren = "children"
 	// EdgeCurrentStatusItem holds the string denoting the current_status_item edge name in mutations.
 	EdgeCurrentStatusItem = "current_status_item"
+	// EdgeScopeEnumeration holds the string denoting the scope_enumeration edge name in mutations.
+	EdgeScopeEnumeration = "scope_enumeration"
 	// EdgeFixedAsset holds the string denoting the fixed_asset edge name in mutations.
 	EdgeFixedAsset = "fixed_asset"
 	// EdgeTemporalExpression holds the string denoting the temporal_expression edge name in mutations.
@@ -158,6 +158,13 @@ const (
 	CurrentStatusItemInverseTable = "status_items"
 	// CurrentStatusItemColumn is the table column denoting the current_status_item relation/edge.
 	CurrentStatusItemColumn = "status_item_current_work_efforts"
+	// ScopeEnumerationTable is the table the holds the scope_enumeration relation/edge.
+	ScopeEnumerationTable = "work_efforts"
+	// ScopeEnumerationInverseTable is the table name for the Enumeration entity.
+	// It exists in this package in order to avoid circular dependency with the "enumeration" package.
+	ScopeEnumerationInverseTable = "enumerations"
+	// ScopeEnumerationColumn is the table column denoting the scope_enumeration relation/edge.
+	ScopeEnumerationColumn = "enumeration_scope_work_efforts"
 	// FixedAssetTable is the table the holds the fixed_asset relation/edge.
 	FixedAssetTable = "work_efforts"
 	// FixedAssetInverseTable is the table name for the FixedAsset entity.
@@ -219,7 +226,6 @@ var Columns = []string{
 	FieldStringRef,
 	FieldLastStatusUpdate,
 	FieldWorkEffortPurposeTypeID,
-	FieldScopeEnumID,
 	FieldPriority,
 	FieldPercentComplete,
 	FieldWorkEffortName,
@@ -268,6 +274,7 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the "work_efforts"
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
+	"enumeration_scope_work_efforts",
 	"fixed_asset_work_efforts",
 	"status_item_current_work_efforts",
 	"temporal_expression_work_efforts",

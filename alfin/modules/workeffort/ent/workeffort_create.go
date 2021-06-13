@@ -10,6 +10,7 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
@@ -94,20 +95,6 @@ func (wec *WorkEffortCreate) SetWorkEffortPurposeTypeID(i int) *WorkEffortCreate
 func (wec *WorkEffortCreate) SetNillableWorkEffortPurposeTypeID(i *int) *WorkEffortCreate {
 	if i != nil {
 		wec.SetWorkEffortPurposeTypeID(*i)
-	}
-	return wec
-}
-
-// SetScopeEnumID sets the "scope_enum_id" field.
-func (wec *WorkEffortCreate) SetScopeEnumID(i int) *WorkEffortCreate {
-	wec.mutation.SetScopeEnumID(i)
-	return wec
-}
-
-// SetNillableScopeEnumID sets the "scope_enum_id" field if the given value is not nil.
-func (wec *WorkEffortCreate) SetNillableScopeEnumID(i *int) *WorkEffortCreate {
-	if i != nil {
-		wec.SetScopeEnumID(*i)
 	}
 	return wec
 }
@@ -786,6 +773,25 @@ func (wec *WorkEffortCreate) SetCurrentStatusItem(s *StatusItem) *WorkEffortCrea
 	return wec.SetCurrentStatusItemID(s.ID)
 }
 
+// SetScopeEnumerationID sets the "scope_enumeration" edge to the Enumeration entity by ID.
+func (wec *WorkEffortCreate) SetScopeEnumerationID(id int) *WorkEffortCreate {
+	wec.mutation.SetScopeEnumerationID(id)
+	return wec
+}
+
+// SetNillableScopeEnumerationID sets the "scope_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (wec *WorkEffortCreate) SetNillableScopeEnumerationID(id *int) *WorkEffortCreate {
+	if id != nil {
+		wec = wec.SetScopeEnumerationID(*id)
+	}
+	return wec
+}
+
+// SetScopeEnumeration sets the "scope_enumeration" edge to the Enumeration entity.
+func (wec *WorkEffortCreate) SetScopeEnumeration(e *Enumeration) *WorkEffortCreate {
+	return wec.SetScopeEnumerationID(e.ID)
+}
+
 // SetFixedAssetID sets the "fixed_asset" edge to the FixedAsset entity by ID.
 func (wec *WorkEffortCreate) SetFixedAssetID(id int) *WorkEffortCreate {
 	wec.mutation.SetFixedAssetID(id)
@@ -1091,14 +1097,6 @@ func (wec *WorkEffortCreate) createSpec() (*WorkEffort, *sqlgraph.CreateSpec) {
 			Column: workeffort.FieldWorkEffortPurposeTypeID,
 		})
 		_node.WorkEffortPurposeTypeID = value
-	}
-	if value, ok := wec.mutation.ScopeEnumID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldScopeEnumID,
-		})
-		_node.ScopeEnumID = value
 	}
 	if value, ok := wec.mutation.Priority(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -1521,6 +1519,26 @@ func (wec *WorkEffortCreate) createSpec() (*WorkEffort, *sqlgraph.CreateSpec) {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.status_item_current_work_efforts = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := wec.mutation.ScopeEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.ScopeEnumerationTable,
+			Columns: []string{workeffort.ScopeEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.enumeration_scope_work_efforts = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := wec.mutation.FixedAssetIDs(); len(nodes) > 0 {

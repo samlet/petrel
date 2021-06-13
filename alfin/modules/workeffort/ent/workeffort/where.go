@@ -128,13 +128,6 @@ func WorkEffortPurposeTypeID(v int) predicate.WorkEffort {
 	})
 }
 
-// ScopeEnumID applies equality check predicate on the "scope_enum_id" field. It's identical to ScopeEnumIDEQ.
-func ScopeEnumID(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldScopeEnumID), v))
-	})
-}
-
 // Priority applies equality check predicate on the "priority" field. It's identical to PriorityEQ.
 func Priority(v int) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
@@ -883,96 +876,6 @@ func WorkEffortPurposeTypeIDIsNil() predicate.WorkEffort {
 func WorkEffortPurposeTypeIDNotNil() predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
 		s.Where(sql.NotNull(s.C(FieldWorkEffortPurposeTypeID)))
-	})
-}
-
-// ScopeEnumIDEQ applies the EQ predicate on the "scope_enum_id" field.
-func ScopeEnumIDEQ(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldScopeEnumID), v))
-	})
-}
-
-// ScopeEnumIDNEQ applies the NEQ predicate on the "scope_enum_id" field.
-func ScopeEnumIDNEQ(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldScopeEnumID), v))
-	})
-}
-
-// ScopeEnumIDIn applies the In predicate on the "scope_enum_id" field.
-func ScopeEnumIDIn(vs ...int) predicate.WorkEffort {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldScopeEnumID), v...))
-	})
-}
-
-// ScopeEnumIDNotIn applies the NotIn predicate on the "scope_enum_id" field.
-func ScopeEnumIDNotIn(vs ...int) predicate.WorkEffort {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldScopeEnumID), v...))
-	})
-}
-
-// ScopeEnumIDGT applies the GT predicate on the "scope_enum_id" field.
-func ScopeEnumIDGT(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldScopeEnumID), v))
-	})
-}
-
-// ScopeEnumIDGTE applies the GTE predicate on the "scope_enum_id" field.
-func ScopeEnumIDGTE(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldScopeEnumID), v))
-	})
-}
-
-// ScopeEnumIDLT applies the LT predicate on the "scope_enum_id" field.
-func ScopeEnumIDLT(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldScopeEnumID), v))
-	})
-}
-
-// ScopeEnumIDLTE applies the LTE predicate on the "scope_enum_id" field.
-func ScopeEnumIDLTE(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldScopeEnumID), v))
-	})
-}
-
-// ScopeEnumIDIsNil applies the IsNil predicate on the "scope_enum_id" field.
-func ScopeEnumIDIsNil() predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldScopeEnumID)))
-	})
-}
-
-// ScopeEnumIDNotNil applies the NotNil predicate on the "scope_enum_id" field.
-func ScopeEnumIDNotNil() predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldScopeEnumID)))
 	})
 }
 
@@ -5271,6 +5174,34 @@ func HasCurrentStatusItemWith(preds ...predicate.StatusItem) predicate.WorkEffor
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(CurrentStatusItemInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, CurrentStatusItemTable, CurrentStatusItemColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasScopeEnumeration applies the HasEdge predicate on the "scope_enumeration" edge.
+func HasScopeEnumeration() predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ScopeEnumerationTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ScopeEnumerationTable, ScopeEnumerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasScopeEnumerationWith applies the HasEdge predicate on the "scope_enumeration" edge with a given conditions (other predicates).
+func HasScopeEnumerationWith(preds ...predicate.Enumeration) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ScopeEnumerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ScopeEnumerationTable, ScopeEnumerationColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

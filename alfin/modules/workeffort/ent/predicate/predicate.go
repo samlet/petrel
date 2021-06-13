@@ -6,20 +6,59 @@ import (
 	"entgo.io/ent/dialect/sql"
 )
 
+// CommunicationEventPrpTyp is the predicate function for communicationeventprptyp builders.
+type CommunicationEventPrpTyp func(*sql.Selector)
+
+// CommunicationEventType is the predicate function for communicationeventtype builders.
+type CommunicationEventType func(*sql.Selector)
+
+// ContactMechPurposeType is the predicate function for contactmechpurposetype builders.
+type ContactMechPurposeType func(*sql.Selector)
+
+// ContactMechType is the predicate function for contactmechtype builders.
+type ContactMechType func(*sql.Selector)
+
+// ContactMechTypePurpose is the predicate function for contactmechtypepurpose builders.
+type ContactMechTypePurpose func(*sql.Selector)
+
+// Enumeration is the predicate function for enumeration builders.
+type Enumeration func(*sql.Selector)
+
+// EnumerationType is the predicate function for enumerationtype builders.
+type EnumerationType func(*sql.Selector)
+
 // FixedAsset is the predicate function for fixedasset builders.
 type FixedAsset func(*sql.Selector)
 
 // Party is the predicate function for party builders.
 type Party func(*sql.Selector)
 
+// PartyClassificationType is the predicate function for partyclassificationtype builders.
+type PartyClassificationType func(*sql.Selector)
+
 // PartyContactMech is the predicate function for partycontactmech builders.
 type PartyContactMech func(*sql.Selector)
+
+// PartyContentType is the predicate function for partycontenttype builders.
+type PartyContentType func(*sql.Selector)
+
+// PartyIdentificationType is the predicate function for partyidentificationtype builders.
+type PartyIdentificationType func(*sql.Selector)
+
+// PartyQualType is the predicate function for partyqualtype builders.
+type PartyQualType func(*sql.Selector)
+
+// PartyRelationshipType is the predicate function for partyrelationshiptype builders.
+type PartyRelationshipType func(*sql.Selector)
 
 // PartyRole is the predicate function for partyrole builders.
 type PartyRole func(*sql.Selector)
 
 // PartyStatus is the predicate function for partystatus builders.
 type PartyStatus func(*sql.Selector)
+
+// PartyType is the predicate function for partytype builders.
+type PartyType func(*sql.Selector)
 
 // Person is the predicate function for person builders.
 type Person func(*sql.Selector)
@@ -32,6 +71,9 @@ type SecurityGroup func(*sql.Selector)
 
 // SecurityGroupPermission is the predicate function for securitygrouppermission builders.
 type SecurityGroupPermission func(*sql.Selector)
+
+// SecurityPermission is the predicate function for securitypermission builders.
+type SecurityPermission func(*sql.Selector)
 
 // SkillType is the predicate function for skilltype builders.
 type SkillType func(*sql.Selector)
@@ -51,11 +93,17 @@ type TemporalExpression func(*sql.Selector)
 // TemporalExpressionAssoc is the predicate function for temporalexpressionassoc builders.
 type TemporalExpressionAssoc func(*sql.Selector)
 
+// TermType is the predicate function for termtype builders.
+type TermType func(*sql.Selector)
+
 // UserLogin is the predicate function for userlogin builders.
 type UserLogin func(*sql.Selector)
 
 // UserLoginSecurityGroup is the predicate function for userloginsecuritygroup builders.
 type UserLoginSecurityGroup func(*sql.Selector)
+
+// UserPreference is the predicate function for userpreference builders.
+type UserPreference func(*sql.Selector)
 
 // WorkEffort is the predicate function for workeffort builders.
 type WorkEffort func(*sql.Selector)

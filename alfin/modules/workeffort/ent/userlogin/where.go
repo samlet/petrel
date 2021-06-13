@@ -2022,6 +2022,34 @@ func HasUserLoginSecurityGroupsWith(preds ...predicate.UserLoginSecurityGroup) p
 	})
 }
 
+// HasUserPreferences applies the HasEdge predicate on the "user_preferences" edge.
+func HasUserPreferences() predicate.UserLogin {
+	return predicate.UserLogin(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(UserPreferencesTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, UserPreferencesTable, UserPreferencesColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasUserPreferencesWith applies the HasEdge predicate on the "user_preferences" edge with a given conditions (other predicates).
+func HasUserPreferencesWith(preds ...predicate.UserPreference) predicate.UserLogin {
+	return predicate.UserLogin(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(UserPreferencesInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, UserPreferencesTable, UserPreferencesColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // HasAssignedByWorkEffortPartyAssignments applies the HasEdge predicate on the "assigned_by_work_effort_party_assignments" edge.
 func HasAssignedByWorkEffortPartyAssignments() predicate.UserLogin {
 	return predicate.UserLogin(func(s *sql.Selector) {

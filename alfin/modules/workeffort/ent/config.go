@@ -24,23 +24,39 @@ type config struct {
 
 // hooks per client, for fast access.
 type hooks struct {
+	CommunicationEventPrpTyp   []ent.Hook
+	CommunicationEventType     []ent.Hook
+	ContactMechPurposeType     []ent.Hook
+	ContactMechType            []ent.Hook
+	ContactMechTypePurpose     []ent.Hook
+	Enumeration                []ent.Hook
+	EnumerationType            []ent.Hook
 	FixedAsset                 []ent.Hook
 	Party                      []ent.Hook
+	PartyClassificationType    []ent.Hook
 	PartyContactMech           []ent.Hook
+	PartyContentType           []ent.Hook
+	PartyIdentificationType    []ent.Hook
+	PartyQualType              []ent.Hook
+	PartyRelationshipType      []ent.Hook
 	PartyRole                  []ent.Hook
 	PartyStatus                []ent.Hook
+	PartyType                  []ent.Hook
 	Person                     []ent.Hook
 	RoleType                   []ent.Hook
 	SecurityGroup              []ent.Hook
 	SecurityGroupPermission    []ent.Hook
+	SecurityPermission         []ent.Hook
 	SkillType                  []ent.Hook
 	StatusItem                 []ent.Hook
 	StatusType                 []ent.Hook
 	StatusValidChange          []ent.Hook
 	TemporalExpression         []ent.Hook
 	TemporalExpressionAssoc    []ent.Hook
+	TermType                   []ent.Hook
 	UserLogin                  []ent.Hook
 	UserLoginSecurityGroup     []ent.Hook
+	UserPreference             []ent.Hook
 	WorkEffort                 []ent.Hook
 	WorkEffortAssoc            []ent.Hook
 	WorkEffortFixedAssetAssign []ent.Hook

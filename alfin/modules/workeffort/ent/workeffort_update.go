@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
@@ -99,33 +100,6 @@ func (weu *WorkEffortUpdate) AddWorkEffortPurposeTypeID(i int) *WorkEffortUpdate
 // ClearWorkEffortPurposeTypeID clears the value of the "work_effort_purpose_type_id" field.
 func (weu *WorkEffortUpdate) ClearWorkEffortPurposeTypeID() *WorkEffortUpdate {
 	weu.mutation.ClearWorkEffortPurposeTypeID()
-	return weu
-}
-
-// SetScopeEnumID sets the "scope_enum_id" field.
-func (weu *WorkEffortUpdate) SetScopeEnumID(i int) *WorkEffortUpdate {
-	weu.mutation.ResetScopeEnumID()
-	weu.mutation.SetScopeEnumID(i)
-	return weu
-}
-
-// SetNillableScopeEnumID sets the "scope_enum_id" field if the given value is not nil.
-func (weu *WorkEffortUpdate) SetNillableScopeEnumID(i *int) *WorkEffortUpdate {
-	if i != nil {
-		weu.SetScopeEnumID(*i)
-	}
-	return weu
-}
-
-// AddScopeEnumID adds i to the "scope_enum_id" field.
-func (weu *WorkEffortUpdate) AddScopeEnumID(i int) *WorkEffortUpdate {
-	weu.mutation.AddScopeEnumID(i)
-	return weu
-}
-
-// ClearScopeEnumID clears the value of the "scope_enum_id" field.
-func (weu *WorkEffortUpdate) ClearScopeEnumID() *WorkEffortUpdate {
-	weu.mutation.ClearScopeEnumID()
 	return weu
 }
 
@@ -1243,6 +1217,25 @@ func (weu *WorkEffortUpdate) SetCurrentStatusItem(s *StatusItem) *WorkEffortUpda
 	return weu.SetCurrentStatusItemID(s.ID)
 }
 
+// SetScopeEnumerationID sets the "scope_enumeration" edge to the Enumeration entity by ID.
+func (weu *WorkEffortUpdate) SetScopeEnumerationID(id int) *WorkEffortUpdate {
+	weu.mutation.SetScopeEnumerationID(id)
+	return weu
+}
+
+// SetNillableScopeEnumerationID sets the "scope_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (weu *WorkEffortUpdate) SetNillableScopeEnumerationID(id *int) *WorkEffortUpdate {
+	if id != nil {
+		weu = weu.SetScopeEnumerationID(*id)
+	}
+	return weu
+}
+
+// SetScopeEnumeration sets the "scope_enumeration" edge to the Enumeration entity.
+func (weu *WorkEffortUpdate) SetScopeEnumeration(e *Enumeration) *WorkEffortUpdate {
+	return weu.SetScopeEnumerationID(e.ID)
+}
+
 // SetFixedAssetID sets the "fixed_asset" edge to the FixedAsset entity by ID.
 func (weu *WorkEffortUpdate) SetFixedAssetID(id int) *WorkEffortUpdate {
 	weu.mutation.SetFixedAssetID(id)
@@ -1412,6 +1405,12 @@ func (weu *WorkEffortUpdate) RemoveChildren(w ...*WorkEffort) *WorkEffortUpdate 
 // ClearCurrentStatusItem clears the "current_status_item" edge to the StatusItem entity.
 func (weu *WorkEffortUpdate) ClearCurrentStatusItem() *WorkEffortUpdate {
 	weu.mutation.ClearCurrentStatusItem()
+	return weu
+}
+
+// ClearScopeEnumeration clears the "scope_enumeration" edge to the Enumeration entity.
+func (weu *WorkEffortUpdate) ClearScopeEnumeration() *WorkEffortUpdate {
+	weu.mutation.ClearScopeEnumeration()
 	return weu
 }
 
@@ -1703,26 +1702,6 @@ func (weu *WorkEffortUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Column: workeffort.FieldWorkEffortPurposeTypeID,
-		})
-	}
-	if value, ok := weu.mutation.ScopeEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldScopeEnumID,
-		})
-	}
-	if value, ok := weu.mutation.AddedScopeEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldScopeEnumID,
-		})
-	}
-	if weu.mutation.ScopeEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffort.FieldScopeEnumID,
 		})
 	}
 	if value, ok := weu.mutation.Priority(); ok {
@@ -2625,6 +2604,41 @@ func (weu *WorkEffortUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if weu.mutation.ScopeEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.ScopeEnumerationTable,
+			Columns: []string{workeffort.ScopeEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weu.mutation.ScopeEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.ScopeEnumerationTable,
+			Columns: []string{workeffort.ScopeEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if weu.mutation.FixedAssetCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -3102,33 +3116,6 @@ func (weuo *WorkEffortUpdateOne) AddWorkEffortPurposeTypeID(i int) *WorkEffortUp
 // ClearWorkEffortPurposeTypeID clears the value of the "work_effort_purpose_type_id" field.
 func (weuo *WorkEffortUpdateOne) ClearWorkEffortPurposeTypeID() *WorkEffortUpdateOne {
 	weuo.mutation.ClearWorkEffortPurposeTypeID()
-	return weuo
-}
-
-// SetScopeEnumID sets the "scope_enum_id" field.
-func (weuo *WorkEffortUpdateOne) SetScopeEnumID(i int) *WorkEffortUpdateOne {
-	weuo.mutation.ResetScopeEnumID()
-	weuo.mutation.SetScopeEnumID(i)
-	return weuo
-}
-
-// SetNillableScopeEnumID sets the "scope_enum_id" field if the given value is not nil.
-func (weuo *WorkEffortUpdateOne) SetNillableScopeEnumID(i *int) *WorkEffortUpdateOne {
-	if i != nil {
-		weuo.SetScopeEnumID(*i)
-	}
-	return weuo
-}
-
-// AddScopeEnumID adds i to the "scope_enum_id" field.
-func (weuo *WorkEffortUpdateOne) AddScopeEnumID(i int) *WorkEffortUpdateOne {
-	weuo.mutation.AddScopeEnumID(i)
-	return weuo
-}
-
-// ClearScopeEnumID clears the value of the "scope_enum_id" field.
-func (weuo *WorkEffortUpdateOne) ClearScopeEnumID() *WorkEffortUpdateOne {
-	weuo.mutation.ClearScopeEnumID()
 	return weuo
 }
 
@@ -4246,6 +4233,25 @@ func (weuo *WorkEffortUpdateOne) SetCurrentStatusItem(s *StatusItem) *WorkEffort
 	return weuo.SetCurrentStatusItemID(s.ID)
 }
 
+// SetScopeEnumerationID sets the "scope_enumeration" edge to the Enumeration entity by ID.
+func (weuo *WorkEffortUpdateOne) SetScopeEnumerationID(id int) *WorkEffortUpdateOne {
+	weuo.mutation.SetScopeEnumerationID(id)
+	return weuo
+}
+
+// SetNillableScopeEnumerationID sets the "scope_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (weuo *WorkEffortUpdateOne) SetNillableScopeEnumerationID(id *int) *WorkEffortUpdateOne {
+	if id != nil {
+		weuo = weuo.SetScopeEnumerationID(*id)
+	}
+	return weuo
+}
+
+// SetScopeEnumeration sets the "scope_enumeration" edge to the Enumeration entity.
+func (weuo *WorkEffortUpdateOne) SetScopeEnumeration(e *Enumeration) *WorkEffortUpdateOne {
+	return weuo.SetScopeEnumerationID(e.ID)
+}
+
 // SetFixedAssetID sets the "fixed_asset" edge to the FixedAsset entity by ID.
 func (weuo *WorkEffortUpdateOne) SetFixedAssetID(id int) *WorkEffortUpdateOne {
 	weuo.mutation.SetFixedAssetID(id)
@@ -4415,6 +4421,12 @@ func (weuo *WorkEffortUpdateOne) RemoveChildren(w ...*WorkEffort) *WorkEffortUpd
 // ClearCurrentStatusItem clears the "current_status_item" edge to the StatusItem entity.
 func (weuo *WorkEffortUpdateOne) ClearCurrentStatusItem() *WorkEffortUpdateOne {
 	weuo.mutation.ClearCurrentStatusItem()
+	return weuo
+}
+
+// ClearScopeEnumeration clears the "scope_enumeration" edge to the Enumeration entity.
+func (weuo *WorkEffortUpdateOne) ClearScopeEnumeration() *WorkEffortUpdateOne {
+	weuo.mutation.ClearScopeEnumeration()
 	return weuo
 }
 
@@ -4730,26 +4742,6 @@ func (weuo *WorkEffortUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffort
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Column: workeffort.FieldWorkEffortPurposeTypeID,
-		})
-	}
-	if value, ok := weuo.mutation.ScopeEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldScopeEnumID,
-		})
-	}
-	if value, ok := weuo.mutation.AddedScopeEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldScopeEnumID,
-		})
-	}
-	if weuo.mutation.ScopeEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffort.FieldScopeEnumID,
 		})
 	}
 	if value, ok := weuo.mutation.Priority(); ok {
@@ -5644,6 +5636,41 @@ func (weuo *WorkEffortUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffort
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if weuo.mutation.ScopeEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.ScopeEnumerationTable,
+			Columns: []string{workeffort.ScopeEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weuo.mutation.ScopeEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.ScopeEnumerationTable,
+			Columns: []string{workeffort.ScopeEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
 				},
 			},
 		}

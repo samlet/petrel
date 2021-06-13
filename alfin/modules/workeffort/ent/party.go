@@ -9,6 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partytype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
@@ -25,8 +26,6 @@ type Party struct {
 	UpdateTime time.Time `json:"update_time,omitempty"`
 	// StringRef holds the value of the "string_ref" field.
 	StringRef string `json:"string_ref,omitempty"`
-	// PartyTypeID holds the value of the "party_type_id" field.
-	PartyTypeID int `json:"party_type_id,omitempty"`
 	// ExternalID holds the value of the "external_id" field.
 	ExternalID int `json:"external_id,omitempty"`
 	// PreferredCurrencyUomID holds the value of the "preferred_currency_uom_id" field.
@@ -44,6 +43,7 @@ type Party struct {
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PartyQuery when eager-loading is set.
 	Edges                               PartyEdges `json:"edges"`
+	party_type_parties                  *int
 	status_item_parties                 *int
 	user_login_created_by_parties       *int
 	user_login_last_modified_by_parties *int
@@ -51,6 +51,8 @@ type Party struct {
 
 // PartyEdges holds the relations/edges for other nodes in the graph.
 type PartyEdges struct {
+	// PartyType holds the value of the party_type edge.
+	PartyType *PartyType `json:"party_type,omitempty"`
 	// CreatedByUserLogin holds the value of the created_by_user_login edge.
 	CreatedByUserLogin *UserLogin `json:"created_by_user_login,omitempty"`
 	// LastModifiedByUserLogin holds the value of the last_modified_by_user_login edge.
@@ -73,13 +75,27 @@ type PartyEdges struct {
 	WorkEffortPartyAssignments []*WorkEffortPartyAssignment `json:"work_effort_party_assignments,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [10]bool
+	loadedTypes [11]bool
+}
+
+// PartyTypeOrErr returns the PartyType value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e PartyEdges) PartyTypeOrErr() (*PartyType, error) {
+	if e.loadedTypes[0] {
+		if e.PartyType == nil {
+			// The edge party_type was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: partytype.Label}
+		}
+		return e.PartyType, nil
+	}
+	return nil, &NotLoadedError{edge: "party_type"}
 }
 
 // CreatedByUserLoginOrErr returns the CreatedByUserLogin value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e PartyEdges) CreatedByUserLoginOrErr() (*UserLogin, error) {
-	if e.loadedTypes[0] {
+	if e.loadedTypes[1] {
 		if e.CreatedByUserLogin == nil {
 			// The edge created_by_user_login was loaded in eager-loading,
 			// but was not found.
@@ -93,7 +109,7 @@ func (e PartyEdges) CreatedByUserLoginOrErr() (*UserLogin, error) {
 // LastModifiedByUserLoginOrErr returns the LastModifiedByUserLogin value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e PartyEdges) LastModifiedByUserLoginOrErr() (*UserLogin, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[2] {
 		if e.LastModifiedByUserLogin == nil {
 			// The edge last_modified_by_user_login was loaded in eager-loading,
 			// but was not found.
@@ -107,7 +123,7 @@ func (e PartyEdges) LastModifiedByUserLoginOrErr() (*UserLogin, error) {
 // StatusItemOrErr returns the StatusItem value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e PartyEdges) StatusItemOrErr() (*StatusItem, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[3] {
 		if e.StatusItem == nil {
 			// The edge status_item was loaded in eager-loading,
 			// but was not found.
@@ -121,7 +137,7 @@ func (e PartyEdges) StatusItemOrErr() (*StatusItem, error) {
 // FixedAssetsOrErr returns the FixedAssets value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyEdges) FixedAssetsOrErr() ([]*FixedAsset, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[4] {
 		return e.FixedAssets, nil
 	}
 	return nil, &NotLoadedError{edge: "fixed_assets"}
@@ -130,7 +146,7 @@ func (e PartyEdges) FixedAssetsOrErr() ([]*FixedAsset, error) {
 // PartyContactMechesOrErr returns the PartyContactMeches value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyEdges) PartyContactMechesOrErr() ([]*PartyContactMech, error) {
-	if e.loadedTypes[4] {
+	if e.loadedTypes[5] {
 		return e.PartyContactMeches, nil
 	}
 	return nil, &NotLoadedError{edge: "party_contact_meches"}
@@ -139,7 +155,7 @@ func (e PartyEdges) PartyContactMechesOrErr() ([]*PartyContactMech, error) {
 // PartyRolesOrErr returns the PartyRoles value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyEdges) PartyRolesOrErr() ([]*PartyRole, error) {
-	if e.loadedTypes[5] {
+	if e.loadedTypes[6] {
 		return e.PartyRoles, nil
 	}
 	return nil, &NotLoadedError{edge: "party_roles"}
@@ -148,7 +164,7 @@ func (e PartyEdges) PartyRolesOrErr() ([]*PartyRole, error) {
 // PartyStatusesOrErr returns the PartyStatuses value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyEdges) PartyStatusesOrErr() ([]*PartyStatus, error) {
-	if e.loadedTypes[6] {
+	if e.loadedTypes[7] {
 		return e.PartyStatuses, nil
 	}
 	return nil, &NotLoadedError{edge: "party_statuses"}
@@ -157,7 +173,7 @@ func (e PartyEdges) PartyStatusesOrErr() ([]*PartyStatus, error) {
 // PersonOrErr returns the Person value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e PartyEdges) PersonOrErr() (*Person, error) {
-	if e.loadedTypes[7] {
+	if e.loadedTypes[8] {
 		if e.Person == nil {
 			// The edge person was loaded in eager-loading,
 			// but was not found.
@@ -171,7 +187,7 @@ func (e PartyEdges) PersonOrErr() (*Person, error) {
 // UserLoginsOrErr returns the UserLogins value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyEdges) UserLoginsOrErr() ([]*UserLogin, error) {
-	if e.loadedTypes[8] {
+	if e.loadedTypes[9] {
 		return e.UserLogins, nil
 	}
 	return nil, &NotLoadedError{edge: "user_logins"}
@@ -180,7 +196,7 @@ func (e PartyEdges) UserLoginsOrErr() ([]*UserLogin, error) {
 // WorkEffortPartyAssignmentsOrErr returns the WorkEffortPartyAssignments value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyEdges) WorkEffortPartyAssignmentsOrErr() ([]*WorkEffortPartyAssignment, error) {
-	if e.loadedTypes[9] {
+	if e.loadedTypes[10] {
 		return e.WorkEffortPartyAssignments, nil
 	}
 	return nil, &NotLoadedError{edge: "work_effort_party_assignments"}
@@ -191,17 +207,19 @@ func (*Party) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case party.FieldID, party.FieldPartyTypeID, party.FieldExternalID, party.FieldPreferredCurrencyUomID, party.FieldDataSourceID:
+		case party.FieldID, party.FieldExternalID, party.FieldPreferredCurrencyUomID, party.FieldDataSourceID:
 			values[i] = new(sql.NullInt64)
 		case party.FieldStringRef, party.FieldDescription, party.FieldIsUnread:
 			values[i] = new(sql.NullString)
 		case party.FieldCreateTime, party.FieldUpdateTime, party.FieldCreatedDate, party.FieldLastModifiedDate:
 			values[i] = new(sql.NullTime)
-		case party.ForeignKeys[0]: // status_item_parties
+		case party.ForeignKeys[0]: // party_type_parties
 			values[i] = new(sql.NullInt64)
-		case party.ForeignKeys[1]: // user_login_created_by_parties
+		case party.ForeignKeys[1]: // status_item_parties
 			values[i] = new(sql.NullInt64)
-		case party.ForeignKeys[2]: // user_login_last_modified_by_parties
+		case party.ForeignKeys[2]: // user_login_created_by_parties
+			values[i] = new(sql.NullInt64)
+		case party.ForeignKeys[3]: // user_login_last_modified_by_parties
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Party", columns[i])
@@ -241,12 +259,6 @@ func (pa *Party) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
 			} else if value.Valid {
 				pa.StringRef = value.String
-			}
-		case party.FieldPartyTypeID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field party_type_id", values[i])
-			} else if value.Valid {
-				pa.PartyTypeID = int(value.Int64)
 			}
 		case party.FieldExternalID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -292,19 +304,26 @@ func (pa *Party) assignValues(columns []string, values []interface{}) error {
 			}
 		case party.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field party_type_parties", value)
+			} else if value.Valid {
+				pa.party_type_parties = new(int)
+				*pa.party_type_parties = int(value.Int64)
+			}
+		case party.ForeignKeys[1]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field status_item_parties", value)
 			} else if value.Valid {
 				pa.status_item_parties = new(int)
 				*pa.status_item_parties = int(value.Int64)
 			}
-		case party.ForeignKeys[1]:
+		case party.ForeignKeys[2]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field user_login_created_by_parties", value)
 			} else if value.Valid {
 				pa.user_login_created_by_parties = new(int)
 				*pa.user_login_created_by_parties = int(value.Int64)
 			}
-		case party.ForeignKeys[2]:
+		case party.ForeignKeys[3]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field user_login_last_modified_by_parties", value)
 			} else if value.Valid {
@@ -314,6 +333,11 @@ func (pa *Party) assignValues(columns []string, values []interface{}) error {
 		}
 	}
 	return nil
+}
+
+// QueryPartyType queries the "party_type" edge of the Party entity.
+func (pa *Party) QueryPartyType() *PartyTypeQuery {
+	return (&PartyClient{config: pa.config}).QueryPartyType(pa)
 }
 
 // QueryCreatedByUserLogin queries the "created_by_user_login" edge of the Party entity.
@@ -395,8 +419,6 @@ func (pa *Party) String() string {
 	builder.WriteString(pa.UpdateTime.Format(time.ANSIC))
 	builder.WriteString(", string_ref=")
 	builder.WriteString(pa.StringRef)
-	builder.WriteString(", party_type_id=")
-	builder.WriteString(fmt.Sprintf("%v", pa.PartyTypeID))
 	builder.WriteString(", external_id=")
 	builder.WriteString(fmt.Sprintf("%v", pa.ExternalID))
 	builder.WriteString(", preferred_currency_uom_id=")

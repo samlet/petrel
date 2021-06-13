@@ -30,6 +30,10 @@ const (
 	EdgeFixedAssets = "fixed_assets"
 	// EdgePartyContactMeches holds the string denoting the party_contact_meches edge name in mutations.
 	EdgePartyContactMeches = "party_contact_meches"
+	// EdgeValidFromPartyRelationshipTypes holds the string denoting the valid_from_party_relationship_types edge name in mutations.
+	EdgeValidFromPartyRelationshipTypes = "valid_from_party_relationship_types"
+	// EdgeValidToPartyRelationshipTypes holds the string denoting the valid_to_party_relationship_types edge name in mutations.
+	EdgeValidToPartyRelationshipTypes = "valid_to_party_relationship_types"
 	// EdgePartyRoles holds the string denoting the party_roles edge name in mutations.
 	EdgePartyRoles = "party_roles"
 	// EdgeChildRoleTypes holds the string denoting the child_role_types edge name in mutations.
@@ -60,6 +64,20 @@ const (
 	PartyContactMechesInverseTable = "party_contact_meches"
 	// PartyContactMechesColumn is the table column denoting the party_contact_meches relation/edge.
 	PartyContactMechesColumn = "role_type_party_contact_meches"
+	// ValidFromPartyRelationshipTypesTable is the table the holds the valid_from_party_relationship_types relation/edge.
+	ValidFromPartyRelationshipTypesTable = "party_relationship_types"
+	// ValidFromPartyRelationshipTypesInverseTable is the table name for the PartyRelationshipType entity.
+	// It exists in this package in order to avoid circular dependency with the "partyrelationshiptype" package.
+	ValidFromPartyRelationshipTypesInverseTable = "party_relationship_types"
+	// ValidFromPartyRelationshipTypesColumn is the table column denoting the valid_from_party_relationship_types relation/edge.
+	ValidFromPartyRelationshipTypesColumn = "role_type_valid_from_party_relationship_types"
+	// ValidToPartyRelationshipTypesTable is the table the holds the valid_to_party_relationship_types relation/edge.
+	ValidToPartyRelationshipTypesTable = "party_relationship_types"
+	// ValidToPartyRelationshipTypesInverseTable is the table name for the PartyRelationshipType entity.
+	// It exists in this package in order to avoid circular dependency with the "partyrelationshiptype" package.
+	ValidToPartyRelationshipTypesInverseTable = "party_relationship_types"
+	// ValidToPartyRelationshipTypesColumn is the table column denoting the valid_to_party_relationship_types relation/edge.
+	ValidToPartyRelationshipTypesColumn = "role_type_valid_to_party_relationship_types"
 	// PartyRolesTable is the table the holds the party_roles relation/edge.
 	PartyRolesTable = "party_roles"
 	// PartyRolesInverseTable is the table name for the PartyRole entity.

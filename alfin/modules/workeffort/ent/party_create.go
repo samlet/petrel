@@ -15,6 +15,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partytype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
@@ -66,20 +67,6 @@ func (pc *PartyCreate) SetStringRef(s string) *PartyCreate {
 func (pc *PartyCreate) SetNillableStringRef(s *string) *PartyCreate {
 	if s != nil {
 		pc.SetStringRef(*s)
-	}
-	return pc
-}
-
-// SetPartyTypeID sets the "party_type_id" field.
-func (pc *PartyCreate) SetPartyTypeID(i int) *PartyCreate {
-	pc.mutation.SetPartyTypeID(i)
-	return pc
-}
-
-// SetNillablePartyTypeID sets the "party_type_id" field if the given value is not nil.
-func (pc *PartyCreate) SetNillablePartyTypeID(i *int) *PartyCreate {
-	if i != nil {
-		pc.SetPartyTypeID(*i)
 	}
 	return pc
 }
@@ -180,6 +167,25 @@ func (pc *PartyCreate) SetNillableIsUnread(pu *party.IsUnread) *PartyCreate {
 		pc.SetIsUnread(*pu)
 	}
 	return pc
+}
+
+// SetPartyTypeID sets the "party_type" edge to the PartyType entity by ID.
+func (pc *PartyCreate) SetPartyTypeID(id int) *PartyCreate {
+	pc.mutation.SetPartyTypeID(id)
+	return pc
+}
+
+// SetNillablePartyTypeID sets the "party_type" edge to the PartyType entity by ID if the given value is not nil.
+func (pc *PartyCreate) SetNillablePartyTypeID(id *int) *PartyCreate {
+	if id != nil {
+		pc = pc.SetPartyTypeID(*id)
+	}
+	return pc
+}
+
+// SetPartyType sets the "party_type" edge to the PartyType entity.
+func (pc *PartyCreate) SetPartyType(p *PartyType) *PartyCreate {
+	return pc.SetPartyTypeID(p.ID)
 }
 
 // SetCreatedByUserLoginID sets the "created_by_user_login" edge to the UserLogin entity by ID.
@@ -485,14 +491,6 @@ func (pc *PartyCreate) createSpec() (*Party, *sqlgraph.CreateSpec) {
 		})
 		_node.StringRef = value
 	}
-	if value, ok := pc.mutation.PartyTypeID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldPartyTypeID,
-		})
-		_node.PartyTypeID = value
-	}
 	if value, ok := pc.mutation.ExternalID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -548,6 +546,26 @@ func (pc *PartyCreate) createSpec() (*Party, *sqlgraph.CreateSpec) {
 			Column: party.FieldIsUnread,
 		})
 		_node.IsUnread = value
+	}
+	if nodes := pc.mutation.PartyTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.PartyTypeTable,
+			Columns: []string{party.PartyTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partytype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.party_type_parties = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := pc.mutation.CreatedByUserLoginIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{

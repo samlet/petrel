@@ -27,3 +27,5 @@ gencase modname:
     mage CreateMod {{modname}}
     mage WriteSchemas {{modname}}
 
+onlygen mod:
+    mage OnlyWriteSchemas {{mod}}

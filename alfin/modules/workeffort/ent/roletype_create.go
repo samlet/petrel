@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrelationshiptype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
@@ -156,6 +157,36 @@ func (rtc *RoleTypeCreate) AddPartyContactMeches(p ...*PartyContactMech) *RoleTy
 		ids[i] = p[i].ID
 	}
 	return rtc.AddPartyContactMechIDs(ids...)
+}
+
+// AddValidFromPartyRelationshipTypeIDs adds the "valid_from_party_relationship_types" edge to the PartyRelationshipType entity by IDs.
+func (rtc *RoleTypeCreate) AddValidFromPartyRelationshipTypeIDs(ids ...int) *RoleTypeCreate {
+	rtc.mutation.AddValidFromPartyRelationshipTypeIDs(ids...)
+	return rtc
+}
+
+// AddValidFromPartyRelationshipTypes adds the "valid_from_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtc *RoleTypeCreate) AddValidFromPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeCreate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtc.AddValidFromPartyRelationshipTypeIDs(ids...)
+}
+
+// AddValidToPartyRelationshipTypeIDs adds the "valid_to_party_relationship_types" edge to the PartyRelationshipType entity by IDs.
+func (rtc *RoleTypeCreate) AddValidToPartyRelationshipTypeIDs(ids ...int) *RoleTypeCreate {
+	rtc.mutation.AddValidToPartyRelationshipTypeIDs(ids...)
+	return rtc
+}
+
+// AddValidToPartyRelationshipTypes adds the "valid_to_party_relationship_types" edges to the PartyRelationshipType entity.
+func (rtc *RoleTypeCreate) AddValidToPartyRelationshipTypes(p ...*PartyRelationshipType) *RoleTypeCreate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return rtc.AddValidToPartyRelationshipTypeIDs(ids...)
 }
 
 // AddPartyRoleIDs adds the "party_roles" edge to the PartyRole entity by IDs.
@@ -417,6 +448,44 @@ func (rtc *RoleTypeCreate) createSpec() (*RoleType, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := rtc.mutation.ValidFromPartyRelationshipTypesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidFromPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidFromPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := rtc.mutation.ValidToPartyRelationshipTypesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   roletype.ValidToPartyRelationshipTypesTable,
+			Columns: []string{roletype.ValidToPartyRelationshipTypesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partyrelationshiptype.FieldID,
 				},
 			},
 		}

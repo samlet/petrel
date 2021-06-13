@@ -17,6 +17,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partytype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
@@ -34,6 +35,7 @@ type PartyQuery struct {
 	fields     []string
 	predicates []predicate.Party
 	// eager-loading edges.
+	withPartyType                  *PartyTypeQuery
 	withCreatedByUserLogin         *UserLoginQuery
 	withLastModifiedByUserLogin    *UserLoginQuery
 	withStatusItem                 *StatusItemQuery
@@ -79,6 +81,28 @@ func (pq *PartyQuery) Unique(unique bool) *PartyQuery {
 func (pq *PartyQuery) Order(o ...OrderFunc) *PartyQuery {
 	pq.order = append(pq.order, o...)
 	return pq
+}
+
+// QueryPartyType chains the current query on the "party_type" edge.
+func (pq *PartyQuery) QueryPartyType() *PartyTypeQuery {
+	query := &PartyTypeQuery{config: pq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(party.Table, party.FieldID, selector),
+			sqlgraph.To(partytype.Table, partytype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, party.PartyTypeTable, party.PartyTypeColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // QueryCreatedByUserLogin chains the current query on the "created_by_user_login" edge.
@@ -482,6 +506,7 @@ func (pq *PartyQuery) Clone() *PartyQuery {
 		offset:                         pq.offset,
 		order:                          append([]OrderFunc{}, pq.order...),
 		predicates:                     append([]predicate.Party{}, pq.predicates...),
+		withPartyType:                  pq.withPartyType.Clone(),
 		withCreatedByUserLogin:         pq.withCreatedByUserLogin.Clone(),
 		withLastModifiedByUserLogin:    pq.withLastModifiedByUserLogin.Clone(),
 		withStatusItem:                 pq.withStatusItem.Clone(),
@@ -496,6 +521,17 @@ func (pq *PartyQuery) Clone() *PartyQuery {
 		sql:  pq.sql.Clone(),
 		path: pq.path,
 	}
+}
+
+// WithPartyType tells the query-builder to eager-load the nodes that are connected to
+// the "party_type" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PartyQuery) WithPartyType(opts ...func(*PartyTypeQuery)) *PartyQuery {
+	query := &PartyTypeQuery{config: pq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withPartyType = query
+	return pq
 }
 
 // WithCreatedByUserLogin tells the query-builder to eager-load the nodes that are connected to
@@ -674,7 +710,8 @@ func (pq *PartyQuery) sqlAll(ctx context.Context) ([]*Party, error) {
 		nodes       = []*Party{}
 		withFKs     = pq.withFKs
 		_spec       = pq.querySpec()
-		loadedTypes = [10]bool{
+		loadedTypes = [11]bool{
+			pq.withPartyType != nil,
 			pq.withCreatedByUserLogin != nil,
 			pq.withLastModifiedByUserLogin != nil,
 			pq.withStatusItem != nil,
@@ -687,7 +724,7 @@ func (pq *PartyQuery) sqlAll(ctx context.Context) ([]*Party, error) {
 			pq.withWorkEffortPartyAssignments != nil,
 		}
 	)
-	if pq.withCreatedByUserLogin != nil || pq.withLastModifiedByUserLogin != nil || pq.withStatusItem != nil {
+	if pq.withPartyType != nil || pq.withCreatedByUserLogin != nil || pq.withLastModifiedByUserLogin != nil || pq.withStatusItem != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -711,6 +748,35 @@ func (pq *PartyQuery) sqlAll(ctx context.Context) ([]*Party, error) {
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
+	}
+
+	if query := pq.withPartyType; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*Party)
+		for i := range nodes {
+			if nodes[i].party_type_parties == nil {
+				continue
+			}
+			fk := *nodes[i].party_type_parties
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(partytype.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "party_type_parties" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.PartyType = n
+			}
+		}
 	}
 
 	if query := pq.withCreatedByUserLogin; query != nil {

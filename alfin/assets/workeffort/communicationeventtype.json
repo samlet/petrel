@@ -1,0 +1,154 @@
+{
+  "name": "CommunicationEventType",
+  "fields": [
+    {
+      "name": "communicationEventTypeId",
+      "type": "id",
+      "col": "COMMUNICATION_EVENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "contactMechTypeId",
+      "type": "id",
+      "col": "CONTACT_MECH_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentCommunicationEventType",
+      "type": "one",
+      "relEntityName": "CommunicationEventType",
+      "fkName": "COM_EVNT_TYPE_PAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "communicationEventTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContacMechTypeContactMechType",
+      "type": "one",
+      "relEntityName": "ContactMechType",
+      "fkName": "COM_EVNT_TYPE_CMT",
+      "keymaps": [
+        {
+          "fieldName": "contactMechTypeId",
+          "relFieldName": "contactMechTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventTypeId",
+          "relFieldName": "communicationEventTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildCommunicationEventType",
+      "type": "many",
+      "relEntityName": "CommunicationEventType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "communicationEventTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "communicationEventTypeId"
+  ],
+  "isView": false
+}

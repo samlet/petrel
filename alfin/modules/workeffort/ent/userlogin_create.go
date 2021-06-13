@@ -15,6 +15,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userloginsecuritygroup"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userpreference"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
 
@@ -359,6 +360,21 @@ func (ulc *UserLoginCreate) AddUserLoginSecurityGroups(u ...*UserLoginSecurityGr
 		ids[i] = u[i].ID
 	}
 	return ulc.AddUserLoginSecurityGroupIDs(ids...)
+}
+
+// AddUserPreferenceIDs adds the "user_preferences" edge to the UserPreference entity by IDs.
+func (ulc *UserLoginCreate) AddUserPreferenceIDs(ids ...int) *UserLoginCreate {
+	ulc.mutation.AddUserPreferenceIDs(ids...)
+	return ulc
+}
+
+// AddUserPreferences adds the "user_preferences" edges to the UserPreference entity.
+func (ulc *UserLoginCreate) AddUserPreferences(u ...*UserPreference) *UserLoginCreate {
+	ids := make([]int, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return ulc.AddUserPreferenceIDs(ids...)
 }
 
 // AddAssignedByWorkEffortPartyAssignmentIDs adds the "assigned_by_work_effort_party_assignments" edge to the WorkEffortPartyAssignment entity by IDs.
@@ -754,6 +770,25 @@ func (ulc *UserLoginCreate) createSpec() (*UserLogin, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: userloginsecuritygroup.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := ulc.mutation.UserPreferencesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   userlogin.UserPreferencesTable,
+			Columns: []string{userlogin.UserPreferencesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: userpreference.FieldID,
 				},
 			},
 		}

@@ -1,0 +1,131 @@
+{
+  "name": "PartyClassificationType",
+  "fields": [
+    {
+      "name": "partyClassificationTypeId",
+      "type": "id",
+      "col": "PARTY_CLASSIFICATION_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentPartyClassificationType",
+      "type": "one",
+      "relEntityName": "PartyClassificationType",
+      "fkName": "PARTY_CLASS_TYPPAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "partyClassificationTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyClassificationGroup",
+      "type": "many",
+      "relEntityName": "PartyClassificationGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyClassificationTypeId",
+          "relFieldName": "partyClassificationTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildPartyClassificationType",
+      "type": "many",
+      "relEntityName": "PartyClassificationType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyClassificationTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "partyClassificationTypeId"
+  ],
+  "isView": false
+}

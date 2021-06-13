@@ -1,0 +1,129 @@
+{
+  "name": "UserPreference",
+  "fields": [
+    {
+      "name": "userLoginId",
+      "type": "id-vlong",
+      "col": "USER_LOGIN_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "userPrefTypeId",
+      "type": "id-long",
+      "col": "USER_PREF_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "userPrefGroupTypeId",
+      "type": "id-long",
+      "col": "USER_PREF_GROUP_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "userPrefValue",
+      "type": "value",
+      "col": "USER_PREF_VALUE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "userPrefDataType",
+      "type": "id-long",
+      "col": "USER_PREF_DATA_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "UserLogin",
+      "type": "one-nofk",
+      "relEntityName": "UserLogin",
+      "fkName": "UP_USER_LOGIN",
+      "keymaps": [
+        {
+          "fieldName": "userLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserPrefGroupType",
+      "type": "one",
+      "relEntityName": "UserPrefGroupType",
+      "fkName": "UP_USER_GROUP_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "userPrefGroupTypeId",
+          "relFieldName": "userPrefGroupTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "userLoginId",
+    "userPrefTypeId"
+  ],
+  "isView": false
+}

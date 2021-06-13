@@ -88,7 +88,11 @@ func check(e error) {
 
 func WriteSchemas(pkg string) {
 	//pkg:="workload"
-	alfin.WriteSchemas(pkg)
+	alfin.WriteSchemas(pkg, false)
+}
+
+func OnlyWriteSchemas(pkg string) {
+	alfin.WriteSchemas(pkg, true)
 }
 
 func CreateMod(modName string){
@@ -102,4 +106,5 @@ $ mage -l
 $ mage gen example
 	or $ mage genrelations example
 $ mage WriteSchemas workload
+$ mage OnlyWriteSchemas workeffort
 */

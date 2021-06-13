@@ -9,6 +9,97 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 )
 
+// The CommunicationEventPrpTypFunc type is an adapter to allow the use of ordinary
+// function as CommunicationEventPrpTyp mutator.
+type CommunicationEventPrpTypFunc func(context.Context, *ent.CommunicationEventPrpTypMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f CommunicationEventPrpTypFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.CommunicationEventPrpTypMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CommunicationEventPrpTypMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The CommunicationEventTypeFunc type is an adapter to allow the use of ordinary
+// function as CommunicationEventType mutator.
+type CommunicationEventTypeFunc func(context.Context, *ent.CommunicationEventTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f CommunicationEventTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.CommunicationEventTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.CommunicationEventTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The ContactMechPurposeTypeFunc type is an adapter to allow the use of ordinary
+// function as ContactMechPurposeType mutator.
+type ContactMechPurposeTypeFunc func(context.Context, *ent.ContactMechPurposeTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f ContactMechPurposeTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.ContactMechPurposeTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ContactMechPurposeTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The ContactMechTypeFunc type is an adapter to allow the use of ordinary
+// function as ContactMechType mutator.
+type ContactMechTypeFunc func(context.Context, *ent.ContactMechTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f ContactMechTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.ContactMechTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ContactMechTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The ContactMechTypePurposeFunc type is an adapter to allow the use of ordinary
+// function as ContactMechTypePurpose mutator.
+type ContactMechTypePurposeFunc func(context.Context, *ent.ContactMechTypePurposeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f ContactMechTypePurposeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.ContactMechTypePurposeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.ContactMechTypePurposeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The EnumerationFunc type is an adapter to allow the use of ordinary
+// function as Enumeration mutator.
+type EnumerationFunc func(context.Context, *ent.EnumerationMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f EnumerationFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.EnumerationMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.EnumerationMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The EnumerationTypeFunc type is an adapter to allow the use of ordinary
+// function as EnumerationType mutator.
+type EnumerationTypeFunc func(context.Context, *ent.EnumerationTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f EnumerationTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.EnumerationTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.EnumerationTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The FixedAssetFunc type is an adapter to allow the use of ordinary
 // function as FixedAsset mutator.
 type FixedAssetFunc func(context.Context, *ent.FixedAssetMutation) (ent.Value, error)
@@ -35,6 +126,19 @@ func (f PartyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error
 	return f(ctx, mv)
 }
 
+// The PartyClassificationTypeFunc type is an adapter to allow the use of ordinary
+// function as PartyClassificationType mutator.
+type PartyClassificationTypeFunc func(context.Context, *ent.PartyClassificationTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PartyClassificationTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PartyClassificationTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyClassificationTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The PartyContactMechFunc type is an adapter to allow the use of ordinary
 // function as PartyContactMech mutator.
 type PartyContactMechFunc func(context.Context, *ent.PartyContactMechMutation) (ent.Value, error)
@@ -44,6 +148,58 @@ func (f PartyContactMechFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.V
 	mv, ok := m.(*ent.PartyContactMechMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyContactMechMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PartyContentTypeFunc type is an adapter to allow the use of ordinary
+// function as PartyContentType mutator.
+type PartyContentTypeFunc func(context.Context, *ent.PartyContentTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PartyContentTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PartyContentTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyContentTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PartyIdentificationTypeFunc type is an adapter to allow the use of ordinary
+// function as PartyIdentificationType mutator.
+type PartyIdentificationTypeFunc func(context.Context, *ent.PartyIdentificationTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PartyIdentificationTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PartyIdentificationTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyIdentificationTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PartyQualTypeFunc type is an adapter to allow the use of ordinary
+// function as PartyQualType mutator.
+type PartyQualTypeFunc func(context.Context, *ent.PartyQualTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PartyQualTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PartyQualTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyQualTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PartyRelationshipTypeFunc type is an adapter to allow the use of ordinary
+// function as PartyRelationshipType mutator.
+type PartyRelationshipTypeFunc func(context.Context, *ent.PartyRelationshipTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PartyRelationshipTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PartyRelationshipTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyRelationshipTypeMutation", m)
 	}
 	return f(ctx, mv)
 }
@@ -70,6 +226,19 @@ func (f PartyStatusFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value,
 	mv, ok := m.(*ent.PartyStatusMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyStatusMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The PartyTypeFunc type is an adapter to allow the use of ordinary
+// function as PartyType mutator.
+type PartyTypeFunc func(context.Context, *ent.PartyTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PartyTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PartyTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyTypeMutation", m)
 	}
 	return f(ctx, mv)
 }
@@ -122,6 +291,19 @@ func (f SecurityGroupPermissionFunc) Mutate(ctx context.Context, m ent.Mutation)
 	mv, ok := m.(*ent.SecurityGroupPermissionMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SecurityGroupPermissionMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The SecurityPermissionFunc type is an adapter to allow the use of ordinary
+// function as SecurityPermission mutator.
+type SecurityPermissionFunc func(context.Context, *ent.SecurityPermissionMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SecurityPermissionFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.SecurityPermissionMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SecurityPermissionMutation", m)
 	}
 	return f(ctx, mv)
 }
@@ -204,6 +386,19 @@ func (f TemporalExpressionAssocFunc) Mutate(ctx context.Context, m ent.Mutation)
 	return f(ctx, mv)
 }
 
+// The TermTypeFunc type is an adapter to allow the use of ordinary
+// function as TermType mutator.
+type TermTypeFunc func(context.Context, *ent.TermTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f TermTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.TermTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.TermTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The UserLoginFunc type is an adapter to allow the use of ordinary
 // function as UserLogin mutator.
 type UserLoginFunc func(context.Context, *ent.UserLoginMutation) (ent.Value, error)
@@ -226,6 +421,19 @@ func (f UserLoginSecurityGroupFunc) Mutate(ctx context.Context, m ent.Mutation) 
 	mv, ok := m.(*ent.UserLoginSecurityGroupMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserLoginSecurityGroupMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The UserPreferenceFunc type is an adapter to allow the use of ordinary
+// function as UserPreference mutator.
+type UserPreferenceFunc func(context.Context, *ent.UserPreferenceMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f UserPreferenceFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.UserPreferenceMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.UserPreferenceMutation", m)
 	}
 	return f(ctx, mv)
 }

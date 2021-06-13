@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 )
@@ -61,8 +62,6 @@ type Person struct {
 	MothersMaidenName string `json:"mothers_maiden_name,omitempty"`
 	// OldMaritalStatus holds the value of the "old_marital_status" field.
 	OldMaritalStatus person.OldMaritalStatus `json:"old_marital_status,omitempty"`
-	// MaritalStatusEnumID holds the value of the "marital_status_enum_id" field.
-	MaritalStatusEnumID int `json:"marital_status_enum_id,omitempty"`
 	// SocialSecurityNumber holds the value of the "social_security_number" field.
 	SocialSecurityNumber string `json:"social_security_number,omitempty"`
 	// PassportNumber holds the value of the "passport_number" field.
@@ -73,10 +72,6 @@ type Person struct {
 	TotalYearsWorkExperience float64 `json:"total_years_work_experience,omitempty"`
 	// Comments holds the value of the "comments" field.
 	Comments string `json:"comments,omitempty"`
-	// EmploymentStatusEnumID holds the value of the "employment_status_enum_id" field.
-	EmploymentStatusEnumID int `json:"employment_status_enum_id,omitempty"`
-	// ResidenceStatusEnumID holds the value of the "residence_status_enum_id" field.
-	ResidenceStatusEnumID int `json:"residence_status_enum_id,omitempty"`
 	// Occupation holds the value of the "occupation" field.
 	Occupation string `json:"occupation,omitempty"`
 	// YearsWithEmployer holds the value of the "years_with_employer" field.
@@ -89,21 +84,30 @@ type Person struct {
 	CardID string `json:"card_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PersonQuery when eager-loading is set.
-	Edges        PersonEdges `json:"edges"`
-	party_person *int
+	Edges                                PersonEdges `json:"edges"`
+	enumeration_employment_status_people *int
+	enumeration_residence_status_people  *int
+	enumeration_marital_status_people    *int
+	party_person                         *int
 }
 
 // PersonEdges holds the relations/edges for other nodes in the graph.
 type PersonEdges struct {
 	// Party holds the value of the party edge.
 	Party *Party `json:"party,omitempty"`
+	// EmploymentStatusEnumeration holds the value of the employment_status_enumeration edge.
+	EmploymentStatusEnumeration *Enumeration `json:"employment_status_enumeration,omitempty"`
+	// ResidenceStatusEnumeration holds the value of the residence_status_enumeration edge.
+	ResidenceStatusEnumeration *Enumeration `json:"residence_status_enumeration,omitempty"`
+	// MaritalStatusEnumeration holds the value of the marital_status_enumeration edge.
+	MaritalStatusEnumeration *Enumeration `json:"marital_status_enumeration,omitempty"`
 	// PartyContactMeches holds the value of the party_contact_meches edge.
 	PartyContactMeches []*PartyContactMech `json:"party_contact_meches,omitempty"`
 	// UserLogins holds the value of the user_logins edge.
 	UserLogins []*UserLogin `json:"user_logins,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
+	loadedTypes [6]bool
 }
 
 // PartyOrErr returns the Party value or an error if the edge
@@ -120,10 +124,52 @@ func (e PersonEdges) PartyOrErr() (*Party, error) {
 	return nil, &NotLoadedError{edge: "party"}
 }
 
+// EmploymentStatusEnumerationOrErr returns the EmploymentStatusEnumeration value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e PersonEdges) EmploymentStatusEnumerationOrErr() (*Enumeration, error) {
+	if e.loadedTypes[1] {
+		if e.EmploymentStatusEnumeration == nil {
+			// The edge employment_status_enumeration was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: enumeration.Label}
+		}
+		return e.EmploymentStatusEnumeration, nil
+	}
+	return nil, &NotLoadedError{edge: "employment_status_enumeration"}
+}
+
+// ResidenceStatusEnumerationOrErr returns the ResidenceStatusEnumeration value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e PersonEdges) ResidenceStatusEnumerationOrErr() (*Enumeration, error) {
+	if e.loadedTypes[2] {
+		if e.ResidenceStatusEnumeration == nil {
+			// The edge residence_status_enumeration was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: enumeration.Label}
+		}
+		return e.ResidenceStatusEnumeration, nil
+	}
+	return nil, &NotLoadedError{edge: "residence_status_enumeration"}
+}
+
+// MaritalStatusEnumerationOrErr returns the MaritalStatusEnumeration value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e PersonEdges) MaritalStatusEnumerationOrErr() (*Enumeration, error) {
+	if e.loadedTypes[3] {
+		if e.MaritalStatusEnumeration == nil {
+			// The edge marital_status_enumeration was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: enumeration.Label}
+		}
+		return e.MaritalStatusEnumeration, nil
+	}
+	return nil, &NotLoadedError{edge: "marital_status_enumeration"}
+}
+
 // PartyContactMechesOrErr returns the PartyContactMeches value or an error if the edge
 // was not loaded in eager-loading.
 func (e PersonEdges) PartyContactMechesOrErr() ([]*PartyContactMech, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[4] {
 		return e.PartyContactMeches, nil
 	}
 	return nil, &NotLoadedError{edge: "party_contact_meches"}
@@ -132,7 +178,7 @@ func (e PersonEdges) PartyContactMechesOrErr() ([]*PartyContactMech, error) {
 // UserLoginsOrErr returns the UserLogins value or an error if the edge
 // was not loaded in eager-loading.
 func (e PersonEdges) UserLoginsOrErr() ([]*UserLogin, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[5] {
 		return e.UserLogins, nil
 	}
 	return nil, &NotLoadedError{edge: "user_logins"}
@@ -145,13 +191,19 @@ func (*Person) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case person.FieldHeight, person.FieldWeight, person.FieldTotalYearsWorkExperience:
 			values[i] = new(sql.NullFloat64)
-		case person.FieldID, person.FieldMemberID, person.FieldMaritalStatusEnumID, person.FieldEmploymentStatusEnumID, person.FieldResidenceStatusEnumID, person.FieldYearsWithEmployer, person.FieldMonthsWithEmployer:
+		case person.FieldID, person.FieldMemberID, person.FieldYearsWithEmployer, person.FieldMonthsWithEmployer:
 			values[i] = new(sql.NullInt64)
 		case person.FieldStringRef, person.FieldSalutation, person.FieldFirstName, person.FieldMiddleName, person.FieldLastName, person.FieldPersonalTitle, person.FieldSuffix, person.FieldNickname, person.FieldFirstNameLocal, person.FieldMiddleNameLocal, person.FieldLastNameLocal, person.FieldOtherLocal, person.FieldGender, person.FieldMothersMaidenName, person.FieldOldMaritalStatus, person.FieldSocialSecurityNumber, person.FieldPassportNumber, person.FieldComments, person.FieldOccupation, person.FieldExistingCustomer, person.FieldCardID:
 			values[i] = new(sql.NullString)
 		case person.FieldCreateTime, person.FieldUpdateTime, person.FieldBirthDate, person.FieldDeceasedDate, person.FieldPassportExpireDate:
 			values[i] = new(sql.NullTime)
-		case person.ForeignKeys[0]: // party_person
+		case person.ForeignKeys[0]: // enumeration_employment_status_people
+			values[i] = new(sql.NullInt64)
+		case person.ForeignKeys[1]: // enumeration_residence_status_people
+			values[i] = new(sql.NullInt64)
+		case person.ForeignKeys[2]: // enumeration_marital_status_people
+			values[i] = new(sql.NullInt64)
+		case person.ForeignKeys[3]: // party_person
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type Person", columns[i])
@@ -306,12 +358,6 @@ func (pe *Person) assignValues(columns []string, values []interface{}) error {
 			} else if value.Valid {
 				pe.OldMaritalStatus = person.OldMaritalStatus(value.String)
 			}
-		case person.FieldMaritalStatusEnumID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field marital_status_enum_id", values[i])
-			} else if value.Valid {
-				pe.MaritalStatusEnumID = int(value.Int64)
-			}
 		case person.FieldSocialSecurityNumber:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field social_security_number", values[i])
@@ -341,18 +387,6 @@ func (pe *Person) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field comments", values[i])
 			} else if value.Valid {
 				pe.Comments = value.String
-			}
-		case person.FieldEmploymentStatusEnumID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field employment_status_enum_id", values[i])
-			} else if value.Valid {
-				pe.EmploymentStatusEnumID = int(value.Int64)
-			}
-		case person.FieldResidenceStatusEnumID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field residence_status_enum_id", values[i])
-			} else if value.Valid {
-				pe.ResidenceStatusEnumID = int(value.Int64)
 			}
 		case person.FieldOccupation:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -386,6 +420,27 @@ func (pe *Person) assignValues(columns []string, values []interface{}) error {
 			}
 		case person.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field enumeration_employment_status_people", value)
+			} else if value.Valid {
+				pe.enumeration_employment_status_people = new(int)
+				*pe.enumeration_employment_status_people = int(value.Int64)
+			}
+		case person.ForeignKeys[1]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field enumeration_residence_status_people", value)
+			} else if value.Valid {
+				pe.enumeration_residence_status_people = new(int)
+				*pe.enumeration_residence_status_people = int(value.Int64)
+			}
+		case person.ForeignKeys[2]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field enumeration_marital_status_people", value)
+			} else if value.Valid {
+				pe.enumeration_marital_status_people = new(int)
+				*pe.enumeration_marital_status_people = int(value.Int64)
+			}
+		case person.ForeignKeys[3]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field party_person", value)
 			} else if value.Valid {
 				pe.party_person = new(int)
@@ -399,6 +454,21 @@ func (pe *Person) assignValues(columns []string, values []interface{}) error {
 // QueryParty queries the "party" edge of the Person entity.
 func (pe *Person) QueryParty() *PartyQuery {
 	return (&PersonClient{config: pe.config}).QueryParty(pe)
+}
+
+// QueryEmploymentStatusEnumeration queries the "employment_status_enumeration" edge of the Person entity.
+func (pe *Person) QueryEmploymentStatusEnumeration() *EnumerationQuery {
+	return (&PersonClient{config: pe.config}).QueryEmploymentStatusEnumeration(pe)
+}
+
+// QueryResidenceStatusEnumeration queries the "residence_status_enumeration" edge of the Person entity.
+func (pe *Person) QueryResidenceStatusEnumeration() *EnumerationQuery {
+	return (&PersonClient{config: pe.config}).QueryResidenceStatusEnumeration(pe)
+}
+
+// QueryMaritalStatusEnumeration queries the "marital_status_enumeration" edge of the Person entity.
+func (pe *Person) QueryMaritalStatusEnumeration() *EnumerationQuery {
+	return (&PersonClient{config: pe.config}).QueryMaritalStatusEnumeration(pe)
 }
 
 // QueryPartyContactMeches queries the "party_contact_meches" edge of the Person entity.
@@ -478,8 +548,6 @@ func (pe *Person) String() string {
 	builder.WriteString(pe.MothersMaidenName)
 	builder.WriteString(", old_marital_status=")
 	builder.WriteString(fmt.Sprintf("%v", pe.OldMaritalStatus))
-	builder.WriteString(", marital_status_enum_id=")
-	builder.WriteString(fmt.Sprintf("%v", pe.MaritalStatusEnumID))
 	builder.WriteString(", social_security_number=")
 	builder.WriteString(pe.SocialSecurityNumber)
 	builder.WriteString(", passport_number=")
@@ -490,10 +558,6 @@ func (pe *Person) String() string {
 	builder.WriteString(fmt.Sprintf("%v", pe.TotalYearsWorkExperience))
 	builder.WriteString(", comments=")
 	builder.WriteString(pe.Comments)
-	builder.WriteString(", employment_status_enum_id=")
-	builder.WriteString(fmt.Sprintf("%v", pe.EmploymentStatusEnumID))
-	builder.WriteString(", residence_status_enum_id=")
-	builder.WriteString(fmt.Sprintf("%v", pe.ResidenceStatusEnumID))
 	builder.WriteString(", occupation=")
 	builder.WriteString(pe.Occupation)
 	builder.WriteString(", years_with_employer=")

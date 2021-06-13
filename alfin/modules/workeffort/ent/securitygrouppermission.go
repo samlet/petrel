@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitypermission"
 )
 
 // SecurityGroupPermission is the model entity for the SecurityGroupPermission schema.
@@ -23,8 +24,6 @@ type SecurityGroupPermission struct {
 	UpdateTime time.Time `json:"update_time,omitempty"`
 	// StringRef holds the value of the "string_ref" field.
 	StringRef string `json:"string_ref,omitempty"`
-	// PermissionID holds the value of the "permission_id" field.
-	PermissionID string `json:"permission_id,omitempty"`
 	// FromDate holds the value of the "from_date" field.
 	FromDate time.Time `json:"from_date,omitempty"`
 	// ThruDate holds the value of the "thru_date" field.
@@ -33,6 +32,7 @@ type SecurityGroupPermission struct {
 	// The values are being populated by the SecurityGroupPermissionQuery when eager-loading is set.
 	Edges                                                SecurityGroupPermissionEdges `json:"edges"`
 	security_group_security_group_permissions            *int
+	security_permission_security_group_permissions       *int
 	user_login_security_group_security_group_permissions *int
 }
 
@@ -40,9 +40,11 @@ type SecurityGroupPermission struct {
 type SecurityGroupPermissionEdges struct {
 	// SecurityGroup holds the value of the security_group edge.
 	SecurityGroup *SecurityGroup `json:"security_group,omitempty"`
+	// SecurityPermission holds the value of the security_permission edge.
+	SecurityPermission *SecurityPermission `json:"security_permission,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [1]bool
+	loadedTypes [2]bool
 }
 
 // SecurityGroupOrErr returns the SecurityGroup value or an error if the edge
@@ -59,6 +61,20 @@ func (e SecurityGroupPermissionEdges) SecurityGroupOrErr() (*SecurityGroup, erro
 	return nil, &NotLoadedError{edge: "security_group"}
 }
 
+// SecurityPermissionOrErr returns the SecurityPermission value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e SecurityGroupPermissionEdges) SecurityPermissionOrErr() (*SecurityPermission, error) {
+	if e.loadedTypes[1] {
+		if e.SecurityPermission == nil {
+			// The edge security_permission was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: securitypermission.Label}
+		}
+		return e.SecurityPermission, nil
+	}
+	return nil, &NotLoadedError{edge: "security_permission"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*SecurityGroupPermission) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
@@ -66,13 +82,15 @@ func (*SecurityGroupPermission) scanValues(columns []string) ([]interface{}, err
 		switch columns[i] {
 		case securitygrouppermission.FieldID:
 			values[i] = new(sql.NullInt64)
-		case securitygrouppermission.FieldStringRef, securitygrouppermission.FieldPermissionID:
+		case securitygrouppermission.FieldStringRef:
 			values[i] = new(sql.NullString)
 		case securitygrouppermission.FieldCreateTime, securitygrouppermission.FieldUpdateTime, securitygrouppermission.FieldFromDate, securitygrouppermission.FieldThruDate:
 			values[i] = new(sql.NullTime)
 		case securitygrouppermission.ForeignKeys[0]: // security_group_security_group_permissions
 			values[i] = new(sql.NullInt64)
-		case securitygrouppermission.ForeignKeys[1]: // user_login_security_group_security_group_permissions
+		case securitygrouppermission.ForeignKeys[1]: // security_permission_security_group_permissions
+			values[i] = new(sql.NullInt64)
+		case securitygrouppermission.ForeignKeys[2]: // user_login_security_group_security_group_permissions
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SecurityGroupPermission", columns[i])
@@ -113,12 +131,6 @@ func (sgp *SecurityGroupPermission) assignValues(columns []string, values []inte
 			} else if value.Valid {
 				sgp.StringRef = value.String
 			}
-		case securitygrouppermission.FieldPermissionID:
-			if value, ok := values[i].(*sql.NullString); !ok {
-				return fmt.Errorf("unexpected type %T for field permission_id", values[i])
-			} else if value.Valid {
-				sgp.PermissionID = value.String
-			}
 		case securitygrouppermission.FieldFromDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field from_date", values[i])
@@ -140,6 +152,13 @@ func (sgp *SecurityGroupPermission) assignValues(columns []string, values []inte
 			}
 		case securitygrouppermission.ForeignKeys[1]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field security_permission_security_group_permissions", value)
+			} else if value.Valid {
+				sgp.security_permission_security_group_permissions = new(int)
+				*sgp.security_permission_security_group_permissions = int(value.Int64)
+			}
+		case securitygrouppermission.ForeignKeys[2]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field user_login_security_group_security_group_permissions", value)
 			} else if value.Valid {
 				sgp.user_login_security_group_security_group_permissions = new(int)
@@ -153,6 +172,11 @@ func (sgp *SecurityGroupPermission) assignValues(columns []string, values []inte
 // QuerySecurityGroup queries the "security_group" edge of the SecurityGroupPermission entity.
 func (sgp *SecurityGroupPermission) QuerySecurityGroup() *SecurityGroupQuery {
 	return (&SecurityGroupPermissionClient{config: sgp.config}).QuerySecurityGroup(sgp)
+}
+
+// QuerySecurityPermission queries the "security_permission" edge of the SecurityGroupPermission entity.
+func (sgp *SecurityGroupPermission) QuerySecurityPermission() *SecurityPermissionQuery {
+	return (&SecurityGroupPermissionClient{config: sgp.config}).QuerySecurityPermission(sgp)
 }
 
 // Update returns a builder for updating this SecurityGroupPermission.
@@ -184,8 +208,6 @@ func (sgp *SecurityGroupPermission) String() string {
 	builder.WriteString(sgp.UpdateTime.Format(time.ANSIC))
 	builder.WriteString(", string_ref=")
 	builder.WriteString(sgp.StringRef)
-	builder.WriteString(", permission_id=")
-	builder.WriteString(sgp.PermissionID)
 	builder.WriteString(", from_date=")
 	builder.WriteString(sgp.FromDate.Format(time.ANSIC))
 	builder.WriteString(", thru_date=")

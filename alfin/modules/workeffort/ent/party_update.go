@@ -15,6 +15,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partytype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
@@ -52,33 +53,6 @@ func (pu *PartyUpdate) SetNillableStringRef(s *string) *PartyUpdate {
 // ClearStringRef clears the value of the "string_ref" field.
 func (pu *PartyUpdate) ClearStringRef() *PartyUpdate {
 	pu.mutation.ClearStringRef()
-	return pu
-}
-
-// SetPartyTypeID sets the "party_type_id" field.
-func (pu *PartyUpdate) SetPartyTypeID(i int) *PartyUpdate {
-	pu.mutation.ResetPartyTypeID()
-	pu.mutation.SetPartyTypeID(i)
-	return pu
-}
-
-// SetNillablePartyTypeID sets the "party_type_id" field if the given value is not nil.
-func (pu *PartyUpdate) SetNillablePartyTypeID(i *int) *PartyUpdate {
-	if i != nil {
-		pu.SetPartyTypeID(*i)
-	}
-	return pu
-}
-
-// AddPartyTypeID adds i to the "party_type_id" field.
-func (pu *PartyUpdate) AddPartyTypeID(i int) *PartyUpdate {
-	pu.mutation.AddPartyTypeID(i)
-	return pu
-}
-
-// ClearPartyTypeID clears the value of the "party_type_id" field.
-func (pu *PartyUpdate) ClearPartyTypeID() *PartyUpdate {
-	pu.mutation.ClearPartyTypeID()
 	return pu
 }
 
@@ -241,6 +215,25 @@ func (pu *PartyUpdate) SetNillableIsUnread(value *party.IsUnread) *PartyUpdate {
 func (pu *PartyUpdate) ClearIsUnread() *PartyUpdate {
 	pu.mutation.ClearIsUnread()
 	return pu
+}
+
+// SetPartyTypeID sets the "party_type" edge to the PartyType entity by ID.
+func (pu *PartyUpdate) SetPartyTypeID(id int) *PartyUpdate {
+	pu.mutation.SetPartyTypeID(id)
+	return pu
+}
+
+// SetNillablePartyTypeID sets the "party_type" edge to the PartyType entity by ID if the given value is not nil.
+func (pu *PartyUpdate) SetNillablePartyTypeID(id *int) *PartyUpdate {
+	if id != nil {
+		pu = pu.SetPartyTypeID(*id)
+	}
+	return pu
+}
+
+// SetPartyType sets the "party_type" edge to the PartyType entity.
+func (pu *PartyUpdate) SetPartyType(p *PartyType) *PartyUpdate {
+	return pu.SetPartyTypeID(p.ID)
 }
 
 // SetCreatedByUserLoginID sets the "created_by_user_login" edge to the UserLogin entity by ID.
@@ -412,6 +405,12 @@ func (pu *PartyUpdate) AddWorkEffortPartyAssignments(w ...*WorkEffortPartyAssign
 // Mutation returns the PartyMutation object of the builder.
 func (pu *PartyUpdate) Mutation() *PartyMutation {
 	return pu.mutation
+}
+
+// ClearPartyType clears the "party_type" edge to the PartyType entity.
+func (pu *PartyUpdate) ClearPartyType() *PartyUpdate {
+	pu.mutation.ClearPartyType()
+	return pu
 }
 
 // ClearCreatedByUserLogin clears the "created_by_user_login" edge to the UserLogin entity.
@@ -678,26 +677,6 @@ func (pu *PartyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: party.FieldStringRef,
 		})
 	}
-	if value, ok := pu.mutation.PartyTypeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldPartyTypeID,
-		})
-	}
-	if value, ok := pu.mutation.AddedPartyTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldPartyTypeID,
-		})
-	}
-	if pu.mutation.PartyTypeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: party.FieldPartyTypeID,
-		})
-	}
 	if value, ok := pu.mutation.ExternalID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -809,6 +788,41 @@ func (pu *PartyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Type:   field.TypeEnum,
 			Column: party.FieldIsUnread,
 		})
+	}
+	if pu.mutation.PartyTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.PartyTypeTable,
+			Columns: []string{party.PartyTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partytype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.PartyTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.PartyTypeTable,
+			Columns: []string{party.PartyTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partytype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if pu.mutation.CreatedByUserLoginCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -1313,33 +1327,6 @@ func (puo *PartyUpdateOne) ClearStringRef() *PartyUpdateOne {
 	return puo
 }
 
-// SetPartyTypeID sets the "party_type_id" field.
-func (puo *PartyUpdateOne) SetPartyTypeID(i int) *PartyUpdateOne {
-	puo.mutation.ResetPartyTypeID()
-	puo.mutation.SetPartyTypeID(i)
-	return puo
-}
-
-// SetNillablePartyTypeID sets the "party_type_id" field if the given value is not nil.
-func (puo *PartyUpdateOne) SetNillablePartyTypeID(i *int) *PartyUpdateOne {
-	if i != nil {
-		puo.SetPartyTypeID(*i)
-	}
-	return puo
-}
-
-// AddPartyTypeID adds i to the "party_type_id" field.
-func (puo *PartyUpdateOne) AddPartyTypeID(i int) *PartyUpdateOne {
-	puo.mutation.AddPartyTypeID(i)
-	return puo
-}
-
-// ClearPartyTypeID clears the value of the "party_type_id" field.
-func (puo *PartyUpdateOne) ClearPartyTypeID() *PartyUpdateOne {
-	puo.mutation.ClearPartyTypeID()
-	return puo
-}
-
 // SetExternalID sets the "external_id" field.
 func (puo *PartyUpdateOne) SetExternalID(i int) *PartyUpdateOne {
 	puo.mutation.ResetExternalID()
@@ -1499,6 +1486,25 @@ func (puo *PartyUpdateOne) SetNillableIsUnread(pu *party.IsUnread) *PartyUpdateO
 func (puo *PartyUpdateOne) ClearIsUnread() *PartyUpdateOne {
 	puo.mutation.ClearIsUnread()
 	return puo
+}
+
+// SetPartyTypeID sets the "party_type" edge to the PartyType entity by ID.
+func (puo *PartyUpdateOne) SetPartyTypeID(id int) *PartyUpdateOne {
+	puo.mutation.SetPartyTypeID(id)
+	return puo
+}
+
+// SetNillablePartyTypeID sets the "party_type" edge to the PartyType entity by ID if the given value is not nil.
+func (puo *PartyUpdateOne) SetNillablePartyTypeID(id *int) *PartyUpdateOne {
+	if id != nil {
+		puo = puo.SetPartyTypeID(*id)
+	}
+	return puo
+}
+
+// SetPartyType sets the "party_type" edge to the PartyType entity.
+func (puo *PartyUpdateOne) SetPartyType(p *PartyType) *PartyUpdateOne {
+	return puo.SetPartyTypeID(p.ID)
 }
 
 // SetCreatedByUserLoginID sets the "created_by_user_login" edge to the UserLogin entity by ID.
@@ -1670,6 +1676,12 @@ func (puo *PartyUpdateOne) AddWorkEffortPartyAssignments(w ...*WorkEffortPartyAs
 // Mutation returns the PartyMutation object of the builder.
 func (puo *PartyUpdateOne) Mutation() *PartyMutation {
 	return puo.mutation
+}
+
+// ClearPartyType clears the "party_type" edge to the PartyType entity.
+func (puo *PartyUpdateOne) ClearPartyType() *PartyUpdateOne {
+	puo.mutation.ClearPartyType()
+	return puo
 }
 
 // ClearCreatedByUserLogin clears the "created_by_user_login" edge to the UserLogin entity.
@@ -1960,26 +1972,6 @@ func (puo *PartyUpdateOne) sqlSave(ctx context.Context) (_node *Party, err error
 			Column: party.FieldStringRef,
 		})
 	}
-	if value, ok := puo.mutation.PartyTypeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldPartyTypeID,
-		})
-	}
-	if value, ok := puo.mutation.AddedPartyTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldPartyTypeID,
-		})
-	}
-	if puo.mutation.PartyTypeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: party.FieldPartyTypeID,
-		})
-	}
 	if value, ok := puo.mutation.ExternalID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -2091,6 +2083,41 @@ func (puo *PartyUpdateOne) sqlSave(ctx context.Context) (_node *Party, err error
 			Type:   field.TypeEnum,
 			Column: party.FieldIsUnread,
 		})
+	}
+	if puo.mutation.PartyTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.PartyTypeTable,
+			Columns: []string{party.PartyTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partytype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.PartyTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.PartyTypeTable,
+			Columns: []string{party.PartyTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partytype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if puo.mutation.CreatedByUserLoginCleared() {
 		edge := &sqlgraph.EdgeSpec{

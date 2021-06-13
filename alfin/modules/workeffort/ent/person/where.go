@@ -233,13 +233,6 @@ func MothersMaidenName(v string) predicate.Person {
 	})
 }
 
-// MaritalStatusEnumID applies equality check predicate on the "marital_status_enum_id" field. It's identical to MaritalStatusEnumIDEQ.
-func MaritalStatusEnumID(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMaritalStatusEnumID), v))
-	})
-}
-
 // SocialSecurityNumber applies equality check predicate on the "social_security_number" field. It's identical to SocialSecurityNumberEQ.
 func SocialSecurityNumber(v string) predicate.Person {
 	return predicate.Person(func(s *sql.Selector) {
@@ -272,20 +265,6 @@ func TotalYearsWorkExperience(v float64) predicate.Person {
 func Comments(v string) predicate.Person {
 	return predicate.Person(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldComments), v))
-	})
-}
-
-// EmploymentStatusEnumID applies equality check predicate on the "employment_status_enum_id" field. It's identical to EmploymentStatusEnumIDEQ.
-func EmploymentStatusEnumID(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldEmploymentStatusEnumID), v))
-	})
-}
-
-// ResidenceStatusEnumID applies equality check predicate on the "residence_status_enum_id" field. It's identical to ResidenceStatusEnumIDEQ.
-func ResidenceStatusEnumID(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldResidenceStatusEnumID), v))
 	})
 }
 
@@ -2668,96 +2647,6 @@ func OldMaritalStatusNotNil() predicate.Person {
 	})
 }
 
-// MaritalStatusEnumIDEQ applies the EQ predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDEQ(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldMaritalStatusEnumID), v))
-	})
-}
-
-// MaritalStatusEnumIDNEQ applies the NEQ predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDNEQ(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldMaritalStatusEnumID), v))
-	})
-}
-
-// MaritalStatusEnumIDIn applies the In predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDIn(vs ...int) predicate.Person {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Person(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldMaritalStatusEnumID), v...))
-	})
-}
-
-// MaritalStatusEnumIDNotIn applies the NotIn predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDNotIn(vs ...int) predicate.Person {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Person(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldMaritalStatusEnumID), v...))
-	})
-}
-
-// MaritalStatusEnumIDGT applies the GT predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDGT(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldMaritalStatusEnumID), v))
-	})
-}
-
-// MaritalStatusEnumIDGTE applies the GTE predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDGTE(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldMaritalStatusEnumID), v))
-	})
-}
-
-// MaritalStatusEnumIDLT applies the LT predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDLT(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldMaritalStatusEnumID), v))
-	})
-}
-
-// MaritalStatusEnumIDLTE applies the LTE predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDLTE(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldMaritalStatusEnumID), v))
-	})
-}
-
-// MaritalStatusEnumIDIsNil applies the IsNil predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDIsNil() predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldMaritalStatusEnumID)))
-	})
-}
-
-// MaritalStatusEnumIDNotNil applies the NotNil predicate on the "marital_status_enum_id" field.
-func MaritalStatusEnumIDNotNil() predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldMaritalStatusEnumID)))
-	})
-}
-
 // SocialSecurityNumberEQ applies the EQ predicate on the "social_security_number" field.
 func SocialSecurityNumberEQ(v string) predicate.Person {
 	return predicate.Person(func(s *sql.Selector) {
@@ -3313,186 +3202,6 @@ func CommentsContainsFold(v string) predicate.Person {
 	})
 }
 
-// EmploymentStatusEnumIDEQ applies the EQ predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDEQ(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldEmploymentStatusEnumID), v))
-	})
-}
-
-// EmploymentStatusEnumIDNEQ applies the NEQ predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDNEQ(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldEmploymentStatusEnumID), v))
-	})
-}
-
-// EmploymentStatusEnumIDIn applies the In predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDIn(vs ...int) predicate.Person {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Person(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldEmploymentStatusEnumID), v...))
-	})
-}
-
-// EmploymentStatusEnumIDNotIn applies the NotIn predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDNotIn(vs ...int) predicate.Person {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Person(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldEmploymentStatusEnumID), v...))
-	})
-}
-
-// EmploymentStatusEnumIDGT applies the GT predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDGT(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldEmploymentStatusEnumID), v))
-	})
-}
-
-// EmploymentStatusEnumIDGTE applies the GTE predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDGTE(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldEmploymentStatusEnumID), v))
-	})
-}
-
-// EmploymentStatusEnumIDLT applies the LT predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDLT(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldEmploymentStatusEnumID), v))
-	})
-}
-
-// EmploymentStatusEnumIDLTE applies the LTE predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDLTE(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldEmploymentStatusEnumID), v))
-	})
-}
-
-// EmploymentStatusEnumIDIsNil applies the IsNil predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDIsNil() predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldEmploymentStatusEnumID)))
-	})
-}
-
-// EmploymentStatusEnumIDNotNil applies the NotNil predicate on the "employment_status_enum_id" field.
-func EmploymentStatusEnumIDNotNil() predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldEmploymentStatusEnumID)))
-	})
-}
-
-// ResidenceStatusEnumIDEQ applies the EQ predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDEQ(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldResidenceStatusEnumID), v))
-	})
-}
-
-// ResidenceStatusEnumIDNEQ applies the NEQ predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDNEQ(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldResidenceStatusEnumID), v))
-	})
-}
-
-// ResidenceStatusEnumIDIn applies the In predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDIn(vs ...int) predicate.Person {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Person(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldResidenceStatusEnumID), v...))
-	})
-}
-
-// ResidenceStatusEnumIDNotIn applies the NotIn predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDNotIn(vs ...int) predicate.Person {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Person(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldResidenceStatusEnumID), v...))
-	})
-}
-
-// ResidenceStatusEnumIDGT applies the GT predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDGT(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldResidenceStatusEnumID), v))
-	})
-}
-
-// ResidenceStatusEnumIDGTE applies the GTE predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDGTE(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldResidenceStatusEnumID), v))
-	})
-}
-
-// ResidenceStatusEnumIDLT applies the LT predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDLT(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldResidenceStatusEnumID), v))
-	})
-}
-
-// ResidenceStatusEnumIDLTE applies the LTE predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDLTE(v int) predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldResidenceStatusEnumID), v))
-	})
-}
-
-// ResidenceStatusEnumIDIsNil applies the IsNil predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDIsNil() predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldResidenceStatusEnumID)))
-	})
-}
-
-// ResidenceStatusEnumIDNotNil applies the NotNil predicate on the "residence_status_enum_id" field.
-func ResidenceStatusEnumIDNotNil() predicate.Person {
-	return predicate.Person(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldResidenceStatusEnumID)))
-	})
-}
-
 // OccupationEQ applies the EQ predicate on the "occupation" field.
 func OccupationEQ(v string) predicate.Person {
 	return predicate.Person(func(s *sql.Selector) {
@@ -4004,6 +3713,90 @@ func HasPartyWith(preds ...predicate.Party) predicate.Person {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(PartyInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, PartyTable, PartyColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasEmploymentStatusEnumeration applies the HasEdge predicate on the "employment_status_enumeration" edge.
+func HasEmploymentStatusEnumeration() predicate.Person {
+	return predicate.Person(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(EmploymentStatusEnumerationTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, EmploymentStatusEnumerationTable, EmploymentStatusEnumerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasEmploymentStatusEnumerationWith applies the HasEdge predicate on the "employment_status_enumeration" edge with a given conditions (other predicates).
+func HasEmploymentStatusEnumerationWith(preds ...predicate.Enumeration) predicate.Person {
+	return predicate.Person(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(EmploymentStatusEnumerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, EmploymentStatusEnumerationTable, EmploymentStatusEnumerationColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasResidenceStatusEnumeration applies the HasEdge predicate on the "residence_status_enumeration" edge.
+func HasResidenceStatusEnumeration() predicate.Person {
+	return predicate.Person(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ResidenceStatusEnumerationTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ResidenceStatusEnumerationTable, ResidenceStatusEnumerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasResidenceStatusEnumerationWith applies the HasEdge predicate on the "residence_status_enumeration" edge with a given conditions (other predicates).
+func HasResidenceStatusEnumerationWith(preds ...predicate.Enumeration) predicate.Person {
+	return predicate.Person(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ResidenceStatusEnumerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ResidenceStatusEnumerationTable, ResidenceStatusEnumerationColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasMaritalStatusEnumeration applies the HasEdge predicate on the "marital_status_enumeration" edge.
+func HasMaritalStatusEnumeration() predicate.Person {
+	return predicate.Person(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(MaritalStatusEnumerationTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, MaritalStatusEnumerationTable, MaritalStatusEnumerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasMaritalStatusEnumerationWith applies the HasEdge predicate on the "marital_status_enumeration" edge with a given conditions (other predicates).
+func HasMaritalStatusEnumerationWith(preds ...predicate.Enumeration) predicate.Person {
+	return predicate.Person(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(MaritalStatusEnumerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, MaritalStatusEnumerationTable, MaritalStatusEnumerationColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

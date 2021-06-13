@@ -128,13 +128,6 @@ func InstanceOfProductID(v int) predicate.FixedAsset {
 	})
 }
 
-// ClassEnumID applies equality check predicate on the "class_enum_id" field. It's identical to ClassEnumIDEQ.
-func ClassEnumID(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldClassEnumID), v))
-	})
-}
-
 // FixedAssetName applies equality check predicate on the "fixed_asset_name" field. It's identical to FixedAssetNameEQ.
 func FixedAssetName(v string) predicate.FixedAsset {
 	return predicate.FixedAsset(func(s *sql.Selector) {
@@ -715,96 +708,6 @@ func InstanceOfProductIDIsNil() predicate.FixedAsset {
 func InstanceOfProductIDNotNil() predicate.FixedAsset {
 	return predicate.FixedAsset(func(s *sql.Selector) {
 		s.Where(sql.NotNull(s.C(FieldInstanceOfProductID)))
-	})
-}
-
-// ClassEnumIDEQ applies the EQ predicate on the "class_enum_id" field.
-func ClassEnumIDEQ(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldClassEnumID), v))
-	})
-}
-
-// ClassEnumIDNEQ applies the NEQ predicate on the "class_enum_id" field.
-func ClassEnumIDNEQ(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldClassEnumID), v))
-	})
-}
-
-// ClassEnumIDIn applies the In predicate on the "class_enum_id" field.
-func ClassEnumIDIn(vs ...int) predicate.FixedAsset {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldClassEnumID), v...))
-	})
-}
-
-// ClassEnumIDNotIn applies the NotIn predicate on the "class_enum_id" field.
-func ClassEnumIDNotIn(vs ...int) predicate.FixedAsset {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldClassEnumID), v...))
-	})
-}
-
-// ClassEnumIDGT applies the GT predicate on the "class_enum_id" field.
-func ClassEnumIDGT(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldClassEnumID), v))
-	})
-}
-
-// ClassEnumIDGTE applies the GTE predicate on the "class_enum_id" field.
-func ClassEnumIDGTE(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldClassEnumID), v))
-	})
-}
-
-// ClassEnumIDLT applies the LT predicate on the "class_enum_id" field.
-func ClassEnumIDLT(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldClassEnumID), v))
-	})
-}
-
-// ClassEnumIDLTE applies the LTE predicate on the "class_enum_id" field.
-func ClassEnumIDLTE(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldClassEnumID), v))
-	})
-}
-
-// ClassEnumIDIsNil applies the IsNil predicate on the "class_enum_id" field.
-func ClassEnumIDIsNil() predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldClassEnumID)))
-	})
-}
-
-// ClassEnumIDNotNil applies the NotNil predicate on the "class_enum_id" field.
-func ClassEnumIDNotNil() predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldClassEnumID)))
 	})
 }
 
@@ -2545,6 +2448,34 @@ func HasChildrenWith(preds ...predicate.FixedAsset) predicate.FixedAsset {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasClassEnumeration applies the HasEdge predicate on the "class_enumeration" edge.
+func HasClassEnumeration() predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ClassEnumerationTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ClassEnumerationTable, ClassEnumerationColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasClassEnumerationWith applies the HasEdge predicate on the "class_enumeration" edge with a given conditions (other predicates).
+func HasClassEnumerationWith(preds ...predicate.Enumeration) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ClassEnumerationInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, ClassEnumerationTable, ClassEnumerationColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

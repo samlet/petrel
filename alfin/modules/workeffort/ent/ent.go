@@ -9,23 +9,39 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/communicationeventprptyp"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/communicationeventtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/contactmechpurposetype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/contactmechtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/contactmechtypepurpose"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumerationtype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyclassificationtype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontenttype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyidentificationtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyqualtype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrelationshiptype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partytype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitypermission"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/skilltype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statustype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusvalidchange"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpressionassoc"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/termtype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userloginsecuritygroup"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userpreference"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
@@ -52,23 +68,39 @@ type OrderFunc func(*sql.Selector)
 // columnChecker returns a function indicates if the column exists in the given column.
 func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
+		communicationeventprptyp.Table:   communicationeventprptyp.ValidColumn,
+		communicationeventtype.Table:     communicationeventtype.ValidColumn,
+		contactmechpurposetype.Table:     contactmechpurposetype.ValidColumn,
+		contactmechtype.Table:            contactmechtype.ValidColumn,
+		contactmechtypepurpose.Table:     contactmechtypepurpose.ValidColumn,
+		enumeration.Table:                enumeration.ValidColumn,
+		enumerationtype.Table:            enumerationtype.ValidColumn,
 		fixedasset.Table:                 fixedasset.ValidColumn,
 		party.Table:                      party.ValidColumn,
+		partyclassificationtype.Table:    partyclassificationtype.ValidColumn,
 		partycontactmech.Table:           partycontactmech.ValidColumn,
+		partycontenttype.Table:           partycontenttype.ValidColumn,
+		partyidentificationtype.Table:    partyidentificationtype.ValidColumn,
+		partyqualtype.Table:              partyqualtype.ValidColumn,
+		partyrelationshiptype.Table:      partyrelationshiptype.ValidColumn,
 		partyrole.Table:                  partyrole.ValidColumn,
 		partystatus.Table:                partystatus.ValidColumn,
+		partytype.Table:                  partytype.ValidColumn,
 		person.Table:                     person.ValidColumn,
 		roletype.Table:                   roletype.ValidColumn,
 		securitygroup.Table:              securitygroup.ValidColumn,
 		securitygrouppermission.Table:    securitygrouppermission.ValidColumn,
+		securitypermission.Table:         securitypermission.ValidColumn,
 		skilltype.Table:                  skilltype.ValidColumn,
 		statusitem.Table:                 statusitem.ValidColumn,
 		statustype.Table:                 statustype.ValidColumn,
 		statusvalidchange.Table:          statusvalidchange.ValidColumn,
 		temporalexpression.Table:         temporalexpression.ValidColumn,
 		temporalexpressionassoc.Table:    temporalexpressionassoc.ValidColumn,
+		termtype.Table:                   termtype.ValidColumn,
 		userlogin.Table:                  userlogin.ValidColumn,
 		userloginsecuritygroup.Table:     userloginsecuritygroup.ValidColumn,
+		userpreference.Table:             userpreference.ValidColumn,
 		workeffort.Table:                 workeffort.ValidColumn,
 		workeffortassoc.Table:            workeffortassoc.ValidColumn,
 		workeffortfixedassetassign.Table: workeffortfixedassetassign.ValidColumn,

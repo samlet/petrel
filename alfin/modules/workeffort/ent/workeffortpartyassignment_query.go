@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
@@ -31,14 +32,16 @@ type WorkEffortPartyAssignmentQuery struct {
 	fields     []string
 	predicates []predicate.WorkEffortPartyAssignment
 	// eager-loading edges.
-	withWorkEffort             *WorkEffortQuery
-	withParty                  *PartyQuery
-	withPartyRole              *PartyRoleQuery
-	withRoleType               *RoleTypeQuery
-	withAssignedByUserLogin    *UserLoginQuery
-	withAssignmentStatusItem   *StatusItemQuery
-	withAvailabilityStatusItem *StatusItemQuery
-	withFKs                    bool
+	withWorkEffort                *WorkEffortQuery
+	withParty                     *PartyQuery
+	withPartyRole                 *PartyRoleQuery
+	withRoleType                  *RoleTypeQuery
+	withAssignedByUserLogin       *UserLoginQuery
+	withAssignmentStatusItem      *StatusItemQuery
+	withExpectationEnumeration    *EnumerationQuery
+	withDelegateReasonEnumeration *EnumerationQuery
+	withAvailabilityStatusItem    *StatusItemQuery
+	withFKs                       bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -200,6 +203,50 @@ func (wepaq *WorkEffortPartyAssignmentQuery) QueryAssignmentStatusItem() *Status
 			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, selector),
 			sqlgraph.To(statusitem.Table, statusitem.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.AssignmentStatusItemTable, workeffortpartyassignment.AssignmentStatusItemColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(wepaq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryExpectationEnumeration chains the current query on the "expectation_enumeration" edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) QueryExpectationEnumeration() *EnumerationQuery {
+	query := &EnumerationQuery{config: wepaq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := wepaq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := wepaq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, selector),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.ExpectationEnumerationTable, workeffortpartyassignment.ExpectationEnumerationColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(wepaq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryDelegateReasonEnumeration chains the current query on the "delegate_reason_enumeration" edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) QueryDelegateReasonEnumeration() *EnumerationQuery {
+	query := &EnumerationQuery{config: wepaq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := wepaq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := wepaq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, selector),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.DelegateReasonEnumerationTable, workeffortpartyassignment.DelegateReasonEnumerationColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(wepaq.driver.Dialect(), step)
 		return fromU, nil
@@ -405,18 +452,20 @@ func (wepaq *WorkEffortPartyAssignmentQuery) Clone() *WorkEffortPartyAssignmentQ
 		return nil
 	}
 	return &WorkEffortPartyAssignmentQuery{
-		config:                     wepaq.config,
-		limit:                      wepaq.limit,
-		offset:                     wepaq.offset,
-		order:                      append([]OrderFunc{}, wepaq.order...),
-		predicates:                 append([]predicate.WorkEffortPartyAssignment{}, wepaq.predicates...),
-		withWorkEffort:             wepaq.withWorkEffort.Clone(),
-		withParty:                  wepaq.withParty.Clone(),
-		withPartyRole:              wepaq.withPartyRole.Clone(),
-		withRoleType:               wepaq.withRoleType.Clone(),
-		withAssignedByUserLogin:    wepaq.withAssignedByUserLogin.Clone(),
-		withAssignmentStatusItem:   wepaq.withAssignmentStatusItem.Clone(),
-		withAvailabilityStatusItem: wepaq.withAvailabilityStatusItem.Clone(),
+		config:                        wepaq.config,
+		limit:                         wepaq.limit,
+		offset:                        wepaq.offset,
+		order:                         append([]OrderFunc{}, wepaq.order...),
+		predicates:                    append([]predicate.WorkEffortPartyAssignment{}, wepaq.predicates...),
+		withWorkEffort:                wepaq.withWorkEffort.Clone(),
+		withParty:                     wepaq.withParty.Clone(),
+		withPartyRole:                 wepaq.withPartyRole.Clone(),
+		withRoleType:                  wepaq.withRoleType.Clone(),
+		withAssignedByUserLogin:       wepaq.withAssignedByUserLogin.Clone(),
+		withAssignmentStatusItem:      wepaq.withAssignmentStatusItem.Clone(),
+		withExpectationEnumeration:    wepaq.withExpectationEnumeration.Clone(),
+		withDelegateReasonEnumeration: wepaq.withDelegateReasonEnumeration.Clone(),
+		withAvailabilityStatusItem:    wepaq.withAvailabilityStatusItem.Clone(),
 		// clone intermediate query.
 		sql:  wepaq.sql.Clone(),
 		path: wepaq.path,
@@ -486,6 +535,28 @@ func (wepaq *WorkEffortPartyAssignmentQuery) WithAssignmentStatusItem(opts ...fu
 		opt(query)
 	}
 	wepaq.withAssignmentStatusItem = query
+	return wepaq
+}
+
+// WithExpectationEnumeration tells the query-builder to eager-load the nodes that are connected to
+// the "expectation_enumeration" edge. The optional arguments are used to configure the query builder of the edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) WithExpectationEnumeration(opts ...func(*EnumerationQuery)) *WorkEffortPartyAssignmentQuery {
+	query := &EnumerationQuery{config: wepaq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	wepaq.withExpectationEnumeration = query
+	return wepaq
+}
+
+// WithDelegateReasonEnumeration tells the query-builder to eager-load the nodes that are connected to
+// the "delegate_reason_enumeration" edge. The optional arguments are used to configure the query builder of the edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) WithDelegateReasonEnumeration(opts ...func(*EnumerationQuery)) *WorkEffortPartyAssignmentQuery {
+	query := &EnumerationQuery{config: wepaq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	wepaq.withDelegateReasonEnumeration = query
 	return wepaq
 }
 
@@ -566,17 +637,19 @@ func (wepaq *WorkEffortPartyAssignmentQuery) sqlAll(ctx context.Context) ([]*Wor
 		nodes       = []*WorkEffortPartyAssignment{}
 		withFKs     = wepaq.withFKs
 		_spec       = wepaq.querySpec()
-		loadedTypes = [7]bool{
+		loadedTypes = [9]bool{
 			wepaq.withWorkEffort != nil,
 			wepaq.withParty != nil,
 			wepaq.withPartyRole != nil,
 			wepaq.withRoleType != nil,
 			wepaq.withAssignedByUserLogin != nil,
 			wepaq.withAssignmentStatusItem != nil,
+			wepaq.withExpectationEnumeration != nil,
+			wepaq.withDelegateReasonEnumeration != nil,
 			wepaq.withAvailabilityStatusItem != nil,
 		}
 	)
-	if wepaq.withWorkEffort != nil || wepaq.withParty != nil || wepaq.withPartyRole != nil || wepaq.withRoleType != nil || wepaq.withAssignedByUserLogin != nil || wepaq.withAssignmentStatusItem != nil || wepaq.withAvailabilityStatusItem != nil {
+	if wepaq.withWorkEffort != nil || wepaq.withParty != nil || wepaq.withPartyRole != nil || wepaq.withRoleType != nil || wepaq.withAssignedByUserLogin != nil || wepaq.withAssignmentStatusItem != nil || wepaq.withExpectationEnumeration != nil || wepaq.withDelegateReasonEnumeration != nil || wepaq.withAvailabilityStatusItem != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -772,6 +845,64 @@ func (wepaq *WorkEffortPartyAssignmentQuery) sqlAll(ctx context.Context) ([]*Wor
 			}
 			for i := range nodes {
 				nodes[i].Edges.AssignmentStatusItem = n
+			}
+		}
+	}
+
+	if query := wepaq.withExpectationEnumeration; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffortPartyAssignment)
+		for i := range nodes {
+			if nodes[i].enumeration_expectation_work_effort_party_assignments == nil {
+				continue
+			}
+			fk := *nodes[i].enumeration_expectation_work_effort_party_assignments
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(enumeration.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "enumeration_expectation_work_effort_party_assignments" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.ExpectationEnumeration = n
+			}
+		}
+	}
+
+	if query := wepaq.withDelegateReasonEnumeration; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffortPartyAssignment)
+		for i := range nodes {
+			if nodes[i].enumeration_delegate_reason_work_effort_party_assignments == nil {
+				continue
+			}
+			fk := *nodes[i].enumeration_delegate_reason_work_effort_party_assignments
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(enumeration.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "enumeration_delegate_reason_work_effort_party_assignments" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.DelegateReasonEnumeration = n
 			}
 		}
 	}

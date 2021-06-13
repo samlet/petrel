@@ -18,6 +18,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userloginsecuritygroup"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userpreference"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
 
@@ -37,6 +38,7 @@ type UserLoginQuery struct {
 	withLastModifiedByParties                *PartyQuery
 	withChangeByPartyStatuses                *PartyStatusQuery
 	withUserLoginSecurityGroups              *UserLoginSecurityGroupQuery
+	withUserPreferences                      *UserPreferenceQuery
 	withAssignedByWorkEffortPartyAssignments *WorkEffortPartyAssignmentQuery
 	withFKs                                  bool
 	// intermediate query (i.e. traversal path).
@@ -200,6 +202,28 @@ func (ulq *UserLoginQuery) QueryUserLoginSecurityGroups() *UserLoginSecurityGrou
 			sqlgraph.From(userlogin.Table, userlogin.FieldID, selector),
 			sqlgraph.To(userloginsecuritygroup.Table, userloginsecuritygroup.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, userlogin.UserLoginSecurityGroupsTable, userlogin.UserLoginSecurityGroupsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(ulq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryUserPreferences chains the current query on the "user_preferences" edge.
+func (ulq *UserLoginQuery) QueryUserPreferences() *UserPreferenceQuery {
+	query := &UserPreferenceQuery{config: ulq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := ulq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := ulq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(userlogin.Table, userlogin.FieldID, selector),
+			sqlgraph.To(userpreference.Table, userpreference.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, userlogin.UserPreferencesTable, userlogin.UserPreferencesColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(ulq.driver.Dialect(), step)
 		return fromU, nil
@@ -416,6 +440,7 @@ func (ulq *UserLoginQuery) Clone() *UserLoginQuery {
 		withLastModifiedByParties:                ulq.withLastModifiedByParties.Clone(),
 		withChangeByPartyStatuses:                ulq.withChangeByPartyStatuses.Clone(),
 		withUserLoginSecurityGroups:              ulq.withUserLoginSecurityGroups.Clone(),
+		withUserPreferences:                      ulq.withUserPreferences.Clone(),
 		withAssignedByWorkEffortPartyAssignments: ulq.withAssignedByWorkEffortPartyAssignments.Clone(),
 		// clone intermediate query.
 		sql:  ulq.sql.Clone(),
@@ -486,6 +511,17 @@ func (ulq *UserLoginQuery) WithUserLoginSecurityGroups(opts ...func(*UserLoginSe
 		opt(query)
 	}
 	ulq.withUserLoginSecurityGroups = query
+	return ulq
+}
+
+// WithUserPreferences tells the query-builder to eager-load the nodes that are connected to
+// the "user_preferences" edge. The optional arguments are used to configure the query builder of the edge.
+func (ulq *UserLoginQuery) WithUserPreferences(opts ...func(*UserPreferenceQuery)) *UserLoginQuery {
+	query := &UserPreferenceQuery{config: ulq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	ulq.withUserPreferences = query
 	return ulq
 }
 
@@ -566,13 +602,14 @@ func (ulq *UserLoginQuery) sqlAll(ctx context.Context) ([]*UserLogin, error) {
 		nodes       = []*UserLogin{}
 		withFKs     = ulq.withFKs
 		_spec       = ulq.querySpec()
-		loadedTypes = [7]bool{
+		loadedTypes = [8]bool{
 			ulq.withParty != nil,
 			ulq.withPerson != nil,
 			ulq.withCreatedByParties != nil,
 			ulq.withLastModifiedByParties != nil,
 			ulq.withChangeByPartyStatuses != nil,
 			ulq.withUserLoginSecurityGroups != nil,
+			ulq.withUserPreferences != nil,
 			ulq.withAssignedByWorkEffortPartyAssignments != nil,
 		}
 	)
@@ -773,6 +810,35 @@ func (ulq *UserLoginQuery) sqlAll(ctx context.Context) ([]*UserLogin, error) {
 				return nil, fmt.Errorf(`unexpected foreign-key "user_login_user_login_security_groups" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.UserLoginSecurityGroups = append(node.Edges.UserLoginSecurityGroups, n)
+		}
+	}
+
+	if query := ulq.withUserPreferences; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int]*UserLogin)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.UserPreferences = []*UserPreference{}
+		}
+		query.withFKs = true
+		query.Where(predicate.UserPreference(func(s *sql.Selector) {
+			s.Where(sql.InValues(userlogin.UserPreferencesColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.user_login_user_preferences
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "user_login_user_preferences" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "user_login_user_preferences" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.UserPreferences = append(node.Edges.UserPreferences, n)
 		}
 	}
 

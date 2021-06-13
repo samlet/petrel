@@ -114,13 +114,6 @@ func StringRef(v string) predicate.Party {
 	})
 }
 
-// PartyTypeID applies equality check predicate on the "party_type_id" field. It's identical to PartyTypeIDEQ.
-func PartyTypeID(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPartyTypeID), v))
-	})
-}
-
 // ExternalID applies equality check predicate on the "external_id" field. It's identical to ExternalIDEQ.
 func ExternalID(v int) predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
@@ -437,96 +430,6 @@ func StringRefEqualFold(v string) predicate.Party {
 func StringRefContainsFold(v string) predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldStringRef), v))
-	})
-}
-
-// PartyTypeIDEQ applies the EQ predicate on the "party_type_id" field.
-func PartyTypeIDEQ(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldPartyTypeID), v))
-	})
-}
-
-// PartyTypeIDNEQ applies the NEQ predicate on the "party_type_id" field.
-func PartyTypeIDNEQ(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldPartyTypeID), v))
-	})
-}
-
-// PartyTypeIDIn applies the In predicate on the "party_type_id" field.
-func PartyTypeIDIn(vs ...int) predicate.Party {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Party(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldPartyTypeID), v...))
-	})
-}
-
-// PartyTypeIDNotIn applies the NotIn predicate on the "party_type_id" field.
-func PartyTypeIDNotIn(vs ...int) predicate.Party {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Party(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldPartyTypeID), v...))
-	})
-}
-
-// PartyTypeIDGT applies the GT predicate on the "party_type_id" field.
-func PartyTypeIDGT(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldPartyTypeID), v))
-	})
-}
-
-// PartyTypeIDGTE applies the GTE predicate on the "party_type_id" field.
-func PartyTypeIDGTE(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldPartyTypeID), v))
-	})
-}
-
-// PartyTypeIDLT applies the LT predicate on the "party_type_id" field.
-func PartyTypeIDLT(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldPartyTypeID), v))
-	})
-}
-
-// PartyTypeIDLTE applies the LTE predicate on the "party_type_id" field.
-func PartyTypeIDLTE(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldPartyTypeID), v))
-	})
-}
-
-// PartyTypeIDIsNil applies the IsNil predicate on the "party_type_id" field.
-func PartyTypeIDIsNil() predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldPartyTypeID)))
-	})
-}
-
-// PartyTypeIDNotNil applies the NotNil predicate on the "party_type_id" field.
-func PartyTypeIDNotNil() predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldPartyTypeID)))
 	})
 }
 
@@ -1164,6 +1067,34 @@ func IsUnreadIsNil() predicate.Party {
 func IsUnreadNotNil() predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
 		s.Where(sql.NotNull(s.C(FieldIsUnread)))
+	})
+}
+
+// HasPartyType applies the HasEdge predicate on the "party_type" edge.
+func HasPartyType() predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(PartyTypeTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, PartyTypeTable, PartyTypeColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasPartyTypeWith applies the HasEdge predicate on the "party_type" edge with a given conditions (other predicates).
+func HasPartyTypeWith(preds ...predicate.PartyType) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(PartyTypeInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, PartyTypeTable, PartyTypeColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
 	})
 }
 

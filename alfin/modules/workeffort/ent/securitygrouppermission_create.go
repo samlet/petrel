@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitypermission"
 )
 
 // SecurityGroupPermissionCreate is the builder for creating a SecurityGroupPermission entity.
@@ -63,12 +64,6 @@ func (sgpc *SecurityGroupPermissionCreate) SetNillableStringRef(s *string) *Secu
 	return sgpc
 }
 
-// SetPermissionID sets the "permission_id" field.
-func (sgpc *SecurityGroupPermissionCreate) SetPermissionID(s string) *SecurityGroupPermissionCreate {
-	sgpc.mutation.SetPermissionID(s)
-	return sgpc
-}
-
 // SetFromDate sets the "from_date" field.
 func (sgpc *SecurityGroupPermissionCreate) SetFromDate(t time.Time) *SecurityGroupPermissionCreate {
 	sgpc.mutation.SetFromDate(t)
@@ -114,6 +109,25 @@ func (sgpc *SecurityGroupPermissionCreate) SetNillableSecurityGroupID(id *int) *
 // SetSecurityGroup sets the "security_group" edge to the SecurityGroup entity.
 func (sgpc *SecurityGroupPermissionCreate) SetSecurityGroup(s *SecurityGroup) *SecurityGroupPermissionCreate {
 	return sgpc.SetSecurityGroupID(s.ID)
+}
+
+// SetSecurityPermissionID sets the "security_permission" edge to the SecurityPermission entity by ID.
+func (sgpc *SecurityGroupPermissionCreate) SetSecurityPermissionID(id int) *SecurityGroupPermissionCreate {
+	sgpc.mutation.SetSecurityPermissionID(id)
+	return sgpc
+}
+
+// SetNillableSecurityPermissionID sets the "security_permission" edge to the SecurityPermission entity by ID if the given value is not nil.
+func (sgpc *SecurityGroupPermissionCreate) SetNillableSecurityPermissionID(id *int) *SecurityGroupPermissionCreate {
+	if id != nil {
+		sgpc = sgpc.SetSecurityPermissionID(*id)
+	}
+	return sgpc
+}
+
+// SetSecurityPermission sets the "security_permission" edge to the SecurityPermission entity.
+func (sgpc *SecurityGroupPermissionCreate) SetSecurityPermission(s *SecurityPermission) *SecurityGroupPermissionCreate {
+	return sgpc.SetSecurityPermissionID(s.ID)
 }
 
 // Mutation returns the SecurityGroupPermissionMutation object of the builder.
@@ -197,14 +211,6 @@ func (sgpc *SecurityGroupPermissionCreate) check() error {
 	if _, ok := sgpc.mutation.UpdateTime(); !ok {
 		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
 	}
-	if _, ok := sgpc.mutation.PermissionID(); !ok {
-		return &ValidationError{Name: "permission_id", err: errors.New("ent: missing required field \"permission_id\"")}
-	}
-	if v, ok := sgpc.mutation.PermissionID(); ok {
-		if err := securitygrouppermission.PermissionIDValidator(v); err != nil {
-			return &ValidationError{Name: "permission_id", err: fmt.Errorf("ent: validator failed for field \"permission_id\": %w", err)}
-		}
-	}
 	if _, ok := sgpc.mutation.FromDate(); !ok {
 		return &ValidationError{Name: "from_date", err: errors.New("ent: missing required field \"from_date\"")}
 	}
@@ -259,14 +265,6 @@ func (sgpc *SecurityGroupPermissionCreate) createSpec() (*SecurityGroupPermissio
 		})
 		_node.StringRef = value
 	}
-	if value, ok := sgpc.mutation.PermissionID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: securitygrouppermission.FieldPermissionID,
-		})
-		_node.PermissionID = value
-	}
 	if value, ok := sgpc.mutation.FromDate(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -301,6 +299,26 @@ func (sgpc *SecurityGroupPermissionCreate) createSpec() (*SecurityGroupPermissio
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.security_group_security_group_permissions = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := sgpc.mutation.SecurityPermissionIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   securitygrouppermission.SecurityPermissionTable,
+			Columns: []string{securitygrouppermission.SecurityPermissionColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: securitypermission.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.security_permission_security_group_permissions = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec

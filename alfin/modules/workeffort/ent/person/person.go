@@ -56,8 +56,6 @@ const (
 	FieldMothersMaidenName = "mothers_maiden_name"
 	// FieldOldMaritalStatus holds the string denoting the old_marital_status field in the database.
 	FieldOldMaritalStatus = "old_marital_status"
-	// FieldMaritalStatusEnumID holds the string denoting the marital_status_enum_id field in the database.
-	FieldMaritalStatusEnumID = "marital_status_enum_id"
 	// FieldSocialSecurityNumber holds the string denoting the social_security_number field in the database.
 	FieldSocialSecurityNumber = "social_security_number"
 	// FieldPassportNumber holds the string denoting the passport_number field in the database.
@@ -68,10 +66,6 @@ const (
 	FieldTotalYearsWorkExperience = "total_years_work_experience"
 	// FieldComments holds the string denoting the comments field in the database.
 	FieldComments = "comments"
-	// FieldEmploymentStatusEnumID holds the string denoting the employment_status_enum_id field in the database.
-	FieldEmploymentStatusEnumID = "employment_status_enum_id"
-	// FieldResidenceStatusEnumID holds the string denoting the residence_status_enum_id field in the database.
-	FieldResidenceStatusEnumID = "residence_status_enum_id"
 	// FieldOccupation holds the string denoting the occupation field in the database.
 	FieldOccupation = "occupation"
 	// FieldYearsWithEmployer holds the string denoting the years_with_employer field in the database.
@@ -84,6 +78,12 @@ const (
 	FieldCardID = "card_id"
 	// EdgeParty holds the string denoting the party edge name in mutations.
 	EdgeParty = "party"
+	// EdgeEmploymentStatusEnumeration holds the string denoting the employment_status_enumeration edge name in mutations.
+	EdgeEmploymentStatusEnumeration = "employment_status_enumeration"
+	// EdgeResidenceStatusEnumeration holds the string denoting the residence_status_enumeration edge name in mutations.
+	EdgeResidenceStatusEnumeration = "residence_status_enumeration"
+	// EdgeMaritalStatusEnumeration holds the string denoting the marital_status_enumeration edge name in mutations.
+	EdgeMaritalStatusEnumeration = "marital_status_enumeration"
 	// EdgePartyContactMeches holds the string denoting the party_contact_meches edge name in mutations.
 	EdgePartyContactMeches = "party_contact_meches"
 	// EdgeUserLogins holds the string denoting the user_logins edge name in mutations.
@@ -97,6 +97,27 @@ const (
 	PartyInverseTable = "parties"
 	// PartyColumn is the table column denoting the party relation/edge.
 	PartyColumn = "party_person"
+	// EmploymentStatusEnumerationTable is the table the holds the employment_status_enumeration relation/edge.
+	EmploymentStatusEnumerationTable = "persons"
+	// EmploymentStatusEnumerationInverseTable is the table name for the Enumeration entity.
+	// It exists in this package in order to avoid circular dependency with the "enumeration" package.
+	EmploymentStatusEnumerationInverseTable = "enumerations"
+	// EmploymentStatusEnumerationColumn is the table column denoting the employment_status_enumeration relation/edge.
+	EmploymentStatusEnumerationColumn = "enumeration_employment_status_people"
+	// ResidenceStatusEnumerationTable is the table the holds the residence_status_enumeration relation/edge.
+	ResidenceStatusEnumerationTable = "persons"
+	// ResidenceStatusEnumerationInverseTable is the table name for the Enumeration entity.
+	// It exists in this package in order to avoid circular dependency with the "enumeration" package.
+	ResidenceStatusEnumerationInverseTable = "enumerations"
+	// ResidenceStatusEnumerationColumn is the table column denoting the residence_status_enumeration relation/edge.
+	ResidenceStatusEnumerationColumn = "enumeration_residence_status_people"
+	// MaritalStatusEnumerationTable is the table the holds the marital_status_enumeration relation/edge.
+	MaritalStatusEnumerationTable = "persons"
+	// MaritalStatusEnumerationInverseTable is the table name for the Enumeration entity.
+	// It exists in this package in order to avoid circular dependency with the "enumeration" package.
+	MaritalStatusEnumerationInverseTable = "enumerations"
+	// MaritalStatusEnumerationColumn is the table column denoting the marital_status_enumeration relation/edge.
+	MaritalStatusEnumerationColumn = "enumeration_marital_status_people"
 	// PartyContactMechesTable is the table the holds the party_contact_meches relation/edge.
 	PartyContactMechesTable = "party_contact_meches"
 	// PartyContactMechesInverseTable is the table name for the PartyContactMech entity.
@@ -138,14 +159,11 @@ var Columns = []string{
 	FieldWeight,
 	FieldMothersMaidenName,
 	FieldOldMaritalStatus,
-	FieldMaritalStatusEnumID,
 	FieldSocialSecurityNumber,
 	FieldPassportNumber,
 	FieldPassportExpireDate,
 	FieldTotalYearsWorkExperience,
 	FieldComments,
-	FieldEmploymentStatusEnumID,
-	FieldResidenceStatusEnumID,
 	FieldOccupation,
 	FieldYearsWithEmployer,
 	FieldMonthsWithEmployer,
@@ -156,6 +174,9 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the "persons"
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
+	"enumeration_employment_status_people",
+	"enumeration_residence_status_people",
+	"enumeration_marital_status_people",
 	"party_person",
 }
 

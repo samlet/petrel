@@ -13,6 +13,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitypermission"
 )
 
 // SecurityGroupPermissionUpdate is the builder for updating SecurityGroupPermission entities.
@@ -45,12 +46,6 @@ func (sgpu *SecurityGroupPermissionUpdate) SetNillableStringRef(s *string) *Secu
 // ClearStringRef clears the value of the "string_ref" field.
 func (sgpu *SecurityGroupPermissionUpdate) ClearStringRef() *SecurityGroupPermissionUpdate {
 	sgpu.mutation.ClearStringRef()
-	return sgpu
-}
-
-// SetPermissionID sets the "permission_id" field.
-func (sgpu *SecurityGroupPermissionUpdate) SetPermissionID(s string) *SecurityGroupPermissionUpdate {
-	sgpu.mutation.SetPermissionID(s)
 	return sgpu
 }
 
@@ -107,6 +102,25 @@ func (sgpu *SecurityGroupPermissionUpdate) SetSecurityGroup(s *SecurityGroup) *S
 	return sgpu.SetSecurityGroupID(s.ID)
 }
 
+// SetSecurityPermissionID sets the "security_permission" edge to the SecurityPermission entity by ID.
+func (sgpu *SecurityGroupPermissionUpdate) SetSecurityPermissionID(id int) *SecurityGroupPermissionUpdate {
+	sgpu.mutation.SetSecurityPermissionID(id)
+	return sgpu
+}
+
+// SetNillableSecurityPermissionID sets the "security_permission" edge to the SecurityPermission entity by ID if the given value is not nil.
+func (sgpu *SecurityGroupPermissionUpdate) SetNillableSecurityPermissionID(id *int) *SecurityGroupPermissionUpdate {
+	if id != nil {
+		sgpu = sgpu.SetSecurityPermissionID(*id)
+	}
+	return sgpu
+}
+
+// SetSecurityPermission sets the "security_permission" edge to the SecurityPermission entity.
+func (sgpu *SecurityGroupPermissionUpdate) SetSecurityPermission(s *SecurityPermission) *SecurityGroupPermissionUpdate {
+	return sgpu.SetSecurityPermissionID(s.ID)
+}
+
 // Mutation returns the SecurityGroupPermissionMutation object of the builder.
 func (sgpu *SecurityGroupPermissionUpdate) Mutation() *SecurityGroupPermissionMutation {
 	return sgpu.mutation
@@ -118,6 +132,12 @@ func (sgpu *SecurityGroupPermissionUpdate) ClearSecurityGroup() *SecurityGroupPe
 	return sgpu
 }
 
+// ClearSecurityPermission clears the "security_permission" edge to the SecurityPermission entity.
+func (sgpu *SecurityGroupPermissionUpdate) ClearSecurityPermission() *SecurityGroupPermissionUpdate {
+	sgpu.mutation.ClearSecurityPermission()
+	return sgpu
+}
+
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (sgpu *SecurityGroupPermissionUpdate) Save(ctx context.Context) (int, error) {
 	var (
@@ -126,18 +146,12 @@ func (sgpu *SecurityGroupPermissionUpdate) Save(ctx context.Context) (int, error
 	)
 	sgpu.defaults()
 	if len(sgpu.hooks) == 0 {
-		if err = sgpu.check(); err != nil {
-			return 0, err
-		}
 		affected, err = sgpu.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SecurityGroupPermissionMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sgpu.check(); err != nil {
-				return 0, err
 			}
 			sgpu.mutation = mutation
 			affected, err = sgpu.sqlSave(ctx)
@@ -184,16 +198,6 @@ func (sgpu *SecurityGroupPermissionUpdate) defaults() {
 	}
 }
 
-// check runs all checks and user-defined validators on the builder.
-func (sgpu *SecurityGroupPermissionUpdate) check() error {
-	if v, ok := sgpu.mutation.PermissionID(); ok {
-		if err := securitygrouppermission.PermissionIDValidator(v); err != nil {
-			return &ValidationError{Name: "permission_id", err: fmt.Errorf("ent: validator failed for field \"permission_id\": %w", err)}
-		}
-	}
-	return nil
-}
-
 func (sgpu *SecurityGroupPermissionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -230,13 +234,6 @@ func (sgpu *SecurityGroupPermissionUpdate) sqlSave(ctx context.Context) (n int, 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: securitygrouppermission.FieldStringRef,
-		})
-	}
-	if value, ok := sgpu.mutation.PermissionID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: securitygrouppermission.FieldPermissionID,
 		})
 	}
 	if value, ok := sgpu.mutation.FromDate(); ok {
@@ -294,6 +291,41 @@ func (sgpu *SecurityGroupPermissionUpdate) sqlSave(ctx context.Context) (n int, 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if sgpu.mutation.SecurityPermissionCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   securitygrouppermission.SecurityPermissionTable,
+			Columns: []string{securitygrouppermission.SecurityPermissionColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: securitypermission.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sgpu.mutation.SecurityPermissionIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   securitygrouppermission.SecurityPermissionTable,
+			Columns: []string{securitygrouppermission.SecurityPermissionColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: securitypermission.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, sgpu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{securitygrouppermission.Label}
@@ -330,12 +362,6 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) SetNillableStringRef(s *string) *
 // ClearStringRef clears the value of the "string_ref" field.
 func (sgpuo *SecurityGroupPermissionUpdateOne) ClearStringRef() *SecurityGroupPermissionUpdateOne {
 	sgpuo.mutation.ClearStringRef()
-	return sgpuo
-}
-
-// SetPermissionID sets the "permission_id" field.
-func (sgpuo *SecurityGroupPermissionUpdateOne) SetPermissionID(s string) *SecurityGroupPermissionUpdateOne {
-	sgpuo.mutation.SetPermissionID(s)
 	return sgpuo
 }
 
@@ -392,6 +418,25 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) SetSecurityGroup(s *SecurityGroup
 	return sgpuo.SetSecurityGroupID(s.ID)
 }
 
+// SetSecurityPermissionID sets the "security_permission" edge to the SecurityPermission entity by ID.
+func (sgpuo *SecurityGroupPermissionUpdateOne) SetSecurityPermissionID(id int) *SecurityGroupPermissionUpdateOne {
+	sgpuo.mutation.SetSecurityPermissionID(id)
+	return sgpuo
+}
+
+// SetNillableSecurityPermissionID sets the "security_permission" edge to the SecurityPermission entity by ID if the given value is not nil.
+func (sgpuo *SecurityGroupPermissionUpdateOne) SetNillableSecurityPermissionID(id *int) *SecurityGroupPermissionUpdateOne {
+	if id != nil {
+		sgpuo = sgpuo.SetSecurityPermissionID(*id)
+	}
+	return sgpuo
+}
+
+// SetSecurityPermission sets the "security_permission" edge to the SecurityPermission entity.
+func (sgpuo *SecurityGroupPermissionUpdateOne) SetSecurityPermission(s *SecurityPermission) *SecurityGroupPermissionUpdateOne {
+	return sgpuo.SetSecurityPermissionID(s.ID)
+}
+
 // Mutation returns the SecurityGroupPermissionMutation object of the builder.
 func (sgpuo *SecurityGroupPermissionUpdateOne) Mutation() *SecurityGroupPermissionMutation {
 	return sgpuo.mutation
@@ -400,6 +445,12 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) Mutation() *SecurityGroupPermissi
 // ClearSecurityGroup clears the "security_group" edge to the SecurityGroup entity.
 func (sgpuo *SecurityGroupPermissionUpdateOne) ClearSecurityGroup() *SecurityGroupPermissionUpdateOne {
 	sgpuo.mutation.ClearSecurityGroup()
+	return sgpuo
+}
+
+// ClearSecurityPermission clears the "security_permission" edge to the SecurityPermission entity.
+func (sgpuo *SecurityGroupPermissionUpdateOne) ClearSecurityPermission() *SecurityGroupPermissionUpdateOne {
+	sgpuo.mutation.ClearSecurityPermission()
 	return sgpuo
 }
 
@@ -418,18 +469,12 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) Save(ctx context.Context) (*Secur
 	)
 	sgpuo.defaults()
 	if len(sgpuo.hooks) == 0 {
-		if err = sgpuo.check(); err != nil {
-			return nil, err
-		}
 		node, err = sgpuo.sqlSave(ctx)
 	} else {
 		var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 			mutation, ok := m.(*SecurityGroupPermissionMutation)
 			if !ok {
 				return nil, fmt.Errorf("unexpected mutation type %T", m)
-			}
-			if err = sgpuo.check(); err != nil {
-				return nil, err
 			}
 			sgpuo.mutation = mutation
 			node, err = sgpuo.sqlSave(ctx)
@@ -474,16 +519,6 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) defaults() {
 		v := securitygrouppermission.UpdateDefaultUpdateTime()
 		sgpuo.mutation.SetUpdateTime(v)
 	}
-}
-
-// check runs all checks and user-defined validators on the builder.
-func (sgpuo *SecurityGroupPermissionUpdateOne) check() error {
-	if v, ok := sgpuo.mutation.PermissionID(); ok {
-		if err := securitygrouppermission.PermissionIDValidator(v); err != nil {
-			return &ValidationError{Name: "permission_id", err: fmt.Errorf("ent: validator failed for field \"permission_id\": %w", err)}
-		}
-	}
-	return nil
 }
 
 func (sgpuo *SecurityGroupPermissionUpdateOne) sqlSave(ctx context.Context) (_node *SecurityGroupPermission, err error) {
@@ -541,13 +576,6 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) sqlSave(ctx context.Context) (_no
 			Column: securitygrouppermission.FieldStringRef,
 		})
 	}
-	if value, ok := sgpuo.mutation.PermissionID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeString,
-			Value:  value,
-			Column: securitygrouppermission.FieldPermissionID,
-		})
-	}
 	if value, ok := sgpuo.mutation.FromDate(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -595,6 +623,41 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) sqlSave(ctx context.Context) (_no
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: securitygroup.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if sgpuo.mutation.SecurityPermissionCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   securitygrouppermission.SecurityPermissionTable,
+			Columns: []string{securitygrouppermission.SecurityPermissionColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: securitypermission.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := sgpuo.mutation.SecurityPermissionIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   securitygrouppermission.SecurityPermissionTable,
+			Columns: []string{securitygrouppermission.SecurityPermissionColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: securitypermission.FieldID,
 				},
 			},
 		}

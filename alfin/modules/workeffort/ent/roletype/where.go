@@ -697,6 +697,62 @@ func HasPartyContactMechesWith(preds ...predicate.PartyContactMech) predicate.Ro
 	})
 }
 
+// HasValidFromPartyRelationshipTypes applies the HasEdge predicate on the "valid_from_party_relationship_types" edge.
+func HasValidFromPartyRelationshipTypes() predicate.RoleType {
+	return predicate.RoleType(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ValidFromPartyRelationshipTypesTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ValidFromPartyRelationshipTypesTable, ValidFromPartyRelationshipTypesColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasValidFromPartyRelationshipTypesWith applies the HasEdge predicate on the "valid_from_party_relationship_types" edge with a given conditions (other predicates).
+func HasValidFromPartyRelationshipTypesWith(preds ...predicate.PartyRelationshipType) predicate.RoleType {
+	return predicate.RoleType(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ValidFromPartyRelationshipTypesInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ValidFromPartyRelationshipTypesTable, ValidFromPartyRelationshipTypesColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasValidToPartyRelationshipTypes applies the HasEdge predicate on the "valid_to_party_relationship_types" edge.
+func HasValidToPartyRelationshipTypes() predicate.RoleType {
+	return predicate.RoleType(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ValidToPartyRelationshipTypesTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ValidToPartyRelationshipTypesTable, ValidToPartyRelationshipTypesColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasValidToPartyRelationshipTypesWith applies the HasEdge predicate on the "valid_to_party_relationship_types" edge with a given conditions (other predicates).
+func HasValidToPartyRelationshipTypesWith(preds ...predicate.PartyRelationshipType) predicate.RoleType {
+	return predicate.RoleType(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(ValidToPartyRelationshipTypesInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, ValidToPartyRelationshipTypesTable, ValidToPartyRelationshipTypesColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // HasPartyRoles applies the HasEdge predicate on the "party_roles" edge.
 func HasPartyRoles() predicate.RoleType {
 	return predicate.RoleType(func(s *sql.Selector) {

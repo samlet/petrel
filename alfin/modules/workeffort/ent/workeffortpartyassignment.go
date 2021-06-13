@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
@@ -34,10 +35,6 @@ type WorkEffortPartyAssignment struct {
 	ThruDate time.Time `json:"thru_date,omitempty"`
 	// StatusDateTime holds the value of the "status_date_time" field.
 	StatusDateTime time.Time `json:"status_date_time,omitempty"`
-	// ExpectationEnumID holds the value of the "expectation_enum_id" field.
-	ExpectationEnumID int `json:"expectation_enum_id,omitempty"`
-	// DelegateReasonEnumID holds the value of the "delegate_reason_enum_id" field.
-	DelegateReasonEnumID int `json:"delegate_reason_enum_id,omitempty"`
 	// FacilityID holds the value of the "facility_id" field.
 	FacilityID int `json:"facility_id,omitempty"`
 	// Comments holds the value of the "comments" field.
@@ -46,14 +43,16 @@ type WorkEffortPartyAssignment struct {
 	MustRsvp workeffortpartyassignment.MustRsvp `json:"must_rsvp,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the WorkEffortPartyAssignmentQuery when eager-loading is set.
-	Edges                                                  WorkEffortPartyAssignmentEdges `json:"edges"`
-	party_work_effort_party_assignments                    *int
-	party_role_work_effort_party_assignments               *int
-	role_type_work_effort_party_assignments                *int
-	status_item_assignment_work_effort_party_assignments   *int
-	status_item_availability_work_effort_party_assignments *int
-	user_login_assigned_by_work_effort_party_assignments   *int
-	work_effort_work_effort_party_assignments              *int
+	Edges                                                     WorkEffortPartyAssignmentEdges `json:"edges"`
+	enumeration_expectation_work_effort_party_assignments     *int
+	enumeration_delegate_reason_work_effort_party_assignments *int
+	party_work_effort_party_assignments                       *int
+	party_role_work_effort_party_assignments                  *int
+	role_type_work_effort_party_assignments                   *int
+	status_item_assignment_work_effort_party_assignments      *int
+	status_item_availability_work_effort_party_assignments    *int
+	user_login_assigned_by_work_effort_party_assignments      *int
+	work_effort_work_effort_party_assignments                 *int
 }
 
 // WorkEffortPartyAssignmentEdges holds the relations/edges for other nodes in the graph.
@@ -70,11 +69,15 @@ type WorkEffortPartyAssignmentEdges struct {
 	AssignedByUserLogin *UserLogin `json:"assigned_by_user_login,omitempty"`
 	// AssignmentStatusItem holds the value of the assignment_status_item edge.
 	AssignmentStatusItem *StatusItem `json:"assignment_status_item,omitempty"`
+	// ExpectationEnumeration holds the value of the expectation_enumeration edge.
+	ExpectationEnumeration *Enumeration `json:"expectation_enumeration,omitempty"`
+	// DelegateReasonEnumeration holds the value of the delegate_reason_enumeration edge.
+	DelegateReasonEnumeration *Enumeration `json:"delegate_reason_enumeration,omitempty"`
 	// AvailabilityStatusItem holds the value of the availability_status_item edge.
 	AvailabilityStatusItem *StatusItem `json:"availability_status_item,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [7]bool
+	loadedTypes [9]bool
 }
 
 // WorkEffortOrErr returns the WorkEffort value or an error if the edge
@@ -161,10 +164,38 @@ func (e WorkEffortPartyAssignmentEdges) AssignmentStatusItemOrErr() (*StatusItem
 	return nil, &NotLoadedError{edge: "assignment_status_item"}
 }
 
+// ExpectationEnumerationOrErr returns the ExpectationEnumeration value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortPartyAssignmentEdges) ExpectationEnumerationOrErr() (*Enumeration, error) {
+	if e.loadedTypes[6] {
+		if e.ExpectationEnumeration == nil {
+			// The edge expectation_enumeration was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: enumeration.Label}
+		}
+		return e.ExpectationEnumeration, nil
+	}
+	return nil, &NotLoadedError{edge: "expectation_enumeration"}
+}
+
+// DelegateReasonEnumerationOrErr returns the DelegateReasonEnumeration value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortPartyAssignmentEdges) DelegateReasonEnumerationOrErr() (*Enumeration, error) {
+	if e.loadedTypes[7] {
+		if e.DelegateReasonEnumeration == nil {
+			// The edge delegate_reason_enumeration was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: enumeration.Label}
+		}
+		return e.DelegateReasonEnumeration, nil
+	}
+	return nil, &NotLoadedError{edge: "delegate_reason_enumeration"}
+}
+
 // AvailabilityStatusItemOrErr returns the AvailabilityStatusItem value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e WorkEffortPartyAssignmentEdges) AvailabilityStatusItemOrErr() (*StatusItem, error) {
-	if e.loadedTypes[6] {
+	if e.loadedTypes[8] {
 		if e.AvailabilityStatusItem == nil {
 			// The edge availability_status_item was loaded in eager-loading,
 			// but was not found.
@@ -180,25 +211,29 @@ func (*WorkEffortPartyAssignment) scanValues(columns []string) ([]interface{}, e
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case workeffortpartyassignment.FieldID, workeffortpartyassignment.FieldExpectationEnumID, workeffortpartyassignment.FieldDelegateReasonEnumID, workeffortpartyassignment.FieldFacilityID:
+		case workeffortpartyassignment.FieldID, workeffortpartyassignment.FieldFacilityID:
 			values[i] = new(sql.NullInt64)
 		case workeffortpartyassignment.FieldStringRef, workeffortpartyassignment.FieldComments, workeffortpartyassignment.FieldMustRsvp:
 			values[i] = new(sql.NullString)
 		case workeffortpartyassignment.FieldCreateTime, workeffortpartyassignment.FieldUpdateTime, workeffortpartyassignment.FieldFromDate, workeffortpartyassignment.FieldThruDate, workeffortpartyassignment.FieldStatusDateTime:
 			values[i] = new(sql.NullTime)
-		case workeffortpartyassignment.ForeignKeys[0]: // party_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[0]: // enumeration_expectation_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[1]: // party_role_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[1]: // enumeration_delegate_reason_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[2]: // role_type_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[2]: // party_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[3]: // status_item_assignment_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[3]: // party_role_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[4]: // status_item_availability_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[4]: // role_type_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[5]: // user_login_assigned_by_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[5]: // status_item_assignment_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[6]: // work_effort_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[6]: // status_item_availability_work_effort_party_assignments
+			values[i] = new(sql.NullInt64)
+		case workeffortpartyassignment.ForeignKeys[7]: // user_login_assigned_by_work_effort_party_assignments
+			values[i] = new(sql.NullInt64)
+		case workeffortpartyassignment.ForeignKeys[8]: // work_effort_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type WorkEffortPartyAssignment", columns[i])
@@ -257,18 +292,6 @@ func (wepa *WorkEffortPartyAssignment) assignValues(columns []string, values []i
 			} else if value.Valid {
 				wepa.StatusDateTime = value.Time
 			}
-		case workeffortpartyassignment.FieldExpectationEnumID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field expectation_enum_id", values[i])
-			} else if value.Valid {
-				wepa.ExpectationEnumID = int(value.Int64)
-			}
-		case workeffortpartyassignment.FieldDelegateReasonEnumID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field delegate_reason_enum_id", values[i])
-			} else if value.Valid {
-				wepa.DelegateReasonEnumID = int(value.Int64)
-			}
 		case workeffortpartyassignment.FieldFacilityID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field facility_id", values[i])
@@ -289,47 +312,61 @@ func (wepa *WorkEffortPartyAssignment) assignValues(columns []string, values []i
 			}
 		case workeffortpartyassignment.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field enumeration_expectation_work_effort_party_assignments", value)
+			} else if value.Valid {
+				wepa.enumeration_expectation_work_effort_party_assignments = new(int)
+				*wepa.enumeration_expectation_work_effort_party_assignments = int(value.Int64)
+			}
+		case workeffortpartyassignment.ForeignKeys[1]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field enumeration_delegate_reason_work_effort_party_assignments", value)
+			} else if value.Valid {
+				wepa.enumeration_delegate_reason_work_effort_party_assignments = new(int)
+				*wepa.enumeration_delegate_reason_work_effort_party_assignments = int(value.Int64)
+			}
+		case workeffortpartyassignment.ForeignKeys[2]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field party_work_effort_party_assignments", value)
 			} else if value.Valid {
 				wepa.party_work_effort_party_assignments = new(int)
 				*wepa.party_work_effort_party_assignments = int(value.Int64)
 			}
-		case workeffortpartyassignment.ForeignKeys[1]:
+		case workeffortpartyassignment.ForeignKeys[3]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field party_role_work_effort_party_assignments", value)
 			} else if value.Valid {
 				wepa.party_role_work_effort_party_assignments = new(int)
 				*wepa.party_role_work_effort_party_assignments = int(value.Int64)
 			}
-		case workeffortpartyassignment.ForeignKeys[2]:
+		case workeffortpartyassignment.ForeignKeys[4]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field role_type_work_effort_party_assignments", value)
 			} else if value.Valid {
 				wepa.role_type_work_effort_party_assignments = new(int)
 				*wepa.role_type_work_effort_party_assignments = int(value.Int64)
 			}
-		case workeffortpartyassignment.ForeignKeys[3]:
+		case workeffortpartyassignment.ForeignKeys[5]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field status_item_assignment_work_effort_party_assignments", value)
 			} else if value.Valid {
 				wepa.status_item_assignment_work_effort_party_assignments = new(int)
 				*wepa.status_item_assignment_work_effort_party_assignments = int(value.Int64)
 			}
-		case workeffortpartyassignment.ForeignKeys[4]:
+		case workeffortpartyassignment.ForeignKeys[6]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field status_item_availability_work_effort_party_assignments", value)
 			} else if value.Valid {
 				wepa.status_item_availability_work_effort_party_assignments = new(int)
 				*wepa.status_item_availability_work_effort_party_assignments = int(value.Int64)
 			}
-		case workeffortpartyassignment.ForeignKeys[5]:
+		case workeffortpartyassignment.ForeignKeys[7]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field user_login_assigned_by_work_effort_party_assignments", value)
 			} else if value.Valid {
 				wepa.user_login_assigned_by_work_effort_party_assignments = new(int)
 				*wepa.user_login_assigned_by_work_effort_party_assignments = int(value.Int64)
 			}
-		case workeffortpartyassignment.ForeignKeys[6]:
+		case workeffortpartyassignment.ForeignKeys[8]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field work_effort_work_effort_party_assignments", value)
 			} else if value.Valid {
@@ -369,6 +406,16 @@ func (wepa *WorkEffortPartyAssignment) QueryAssignedByUserLogin() *UserLoginQuer
 // QueryAssignmentStatusItem queries the "assignment_status_item" edge of the WorkEffortPartyAssignment entity.
 func (wepa *WorkEffortPartyAssignment) QueryAssignmentStatusItem() *StatusItemQuery {
 	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryAssignmentStatusItem(wepa)
+}
+
+// QueryExpectationEnumeration queries the "expectation_enumeration" edge of the WorkEffortPartyAssignment entity.
+func (wepa *WorkEffortPartyAssignment) QueryExpectationEnumeration() *EnumerationQuery {
+	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryExpectationEnumeration(wepa)
+}
+
+// QueryDelegateReasonEnumeration queries the "delegate_reason_enumeration" edge of the WorkEffortPartyAssignment entity.
+func (wepa *WorkEffortPartyAssignment) QueryDelegateReasonEnumeration() *EnumerationQuery {
+	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryDelegateReasonEnumeration(wepa)
 }
 
 // QueryAvailabilityStatusItem queries the "availability_status_item" edge of the WorkEffortPartyAssignment entity.
@@ -411,10 +458,6 @@ func (wepa *WorkEffortPartyAssignment) String() string {
 	builder.WriteString(wepa.ThruDate.Format(time.ANSIC))
 	builder.WriteString(", status_date_time=")
 	builder.WriteString(wepa.StatusDateTime.Format(time.ANSIC))
-	builder.WriteString(", expectation_enum_id=")
-	builder.WriteString(fmt.Sprintf("%v", wepa.ExpectationEnumID))
-	builder.WriteString(", delegate_reason_enum_id=")
-	builder.WriteString(fmt.Sprintf("%v", wepa.DelegateReasonEnumID))
 	builder.WriteString(", facility_id=")
 	builder.WriteString(fmt.Sprintf("%v", wepa.FacilityID))
 	builder.WriteString(", comments=")

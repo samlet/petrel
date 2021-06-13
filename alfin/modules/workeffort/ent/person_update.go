@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
@@ -451,33 +452,6 @@ func (pu *PersonUpdate) ClearOldMaritalStatus() *PersonUpdate {
 	return pu
 }
 
-// SetMaritalStatusEnumID sets the "marital_status_enum_id" field.
-func (pu *PersonUpdate) SetMaritalStatusEnumID(i int) *PersonUpdate {
-	pu.mutation.ResetMaritalStatusEnumID()
-	pu.mutation.SetMaritalStatusEnumID(i)
-	return pu
-}
-
-// SetNillableMaritalStatusEnumID sets the "marital_status_enum_id" field if the given value is not nil.
-func (pu *PersonUpdate) SetNillableMaritalStatusEnumID(i *int) *PersonUpdate {
-	if i != nil {
-		pu.SetMaritalStatusEnumID(*i)
-	}
-	return pu
-}
-
-// AddMaritalStatusEnumID adds i to the "marital_status_enum_id" field.
-func (pu *PersonUpdate) AddMaritalStatusEnumID(i int) *PersonUpdate {
-	pu.mutation.AddMaritalStatusEnumID(i)
-	return pu
-}
-
-// ClearMaritalStatusEnumID clears the value of the "marital_status_enum_id" field.
-func (pu *PersonUpdate) ClearMaritalStatusEnumID() *PersonUpdate {
-	pu.mutation.ClearMaritalStatusEnumID()
-	return pu
-}
-
 // SetSocialSecurityNumber sets the "social_security_number" field.
 func (pu *PersonUpdate) SetSocialSecurityNumber(s string) *PersonUpdate {
 	pu.mutation.SetSocialSecurityNumber(s)
@@ -582,60 +556,6 @@ func (pu *PersonUpdate) SetNillableComments(s *string) *PersonUpdate {
 // ClearComments clears the value of the "comments" field.
 func (pu *PersonUpdate) ClearComments() *PersonUpdate {
 	pu.mutation.ClearComments()
-	return pu
-}
-
-// SetEmploymentStatusEnumID sets the "employment_status_enum_id" field.
-func (pu *PersonUpdate) SetEmploymentStatusEnumID(i int) *PersonUpdate {
-	pu.mutation.ResetEmploymentStatusEnumID()
-	pu.mutation.SetEmploymentStatusEnumID(i)
-	return pu
-}
-
-// SetNillableEmploymentStatusEnumID sets the "employment_status_enum_id" field if the given value is not nil.
-func (pu *PersonUpdate) SetNillableEmploymentStatusEnumID(i *int) *PersonUpdate {
-	if i != nil {
-		pu.SetEmploymentStatusEnumID(*i)
-	}
-	return pu
-}
-
-// AddEmploymentStatusEnumID adds i to the "employment_status_enum_id" field.
-func (pu *PersonUpdate) AddEmploymentStatusEnumID(i int) *PersonUpdate {
-	pu.mutation.AddEmploymentStatusEnumID(i)
-	return pu
-}
-
-// ClearEmploymentStatusEnumID clears the value of the "employment_status_enum_id" field.
-func (pu *PersonUpdate) ClearEmploymentStatusEnumID() *PersonUpdate {
-	pu.mutation.ClearEmploymentStatusEnumID()
-	return pu
-}
-
-// SetResidenceStatusEnumID sets the "residence_status_enum_id" field.
-func (pu *PersonUpdate) SetResidenceStatusEnumID(i int) *PersonUpdate {
-	pu.mutation.ResetResidenceStatusEnumID()
-	pu.mutation.SetResidenceStatusEnumID(i)
-	return pu
-}
-
-// SetNillableResidenceStatusEnumID sets the "residence_status_enum_id" field if the given value is not nil.
-func (pu *PersonUpdate) SetNillableResidenceStatusEnumID(i *int) *PersonUpdate {
-	if i != nil {
-		pu.SetResidenceStatusEnumID(*i)
-	}
-	return pu
-}
-
-// AddResidenceStatusEnumID adds i to the "residence_status_enum_id" field.
-func (pu *PersonUpdate) AddResidenceStatusEnumID(i int) *PersonUpdate {
-	pu.mutation.AddResidenceStatusEnumID(i)
-	return pu
-}
-
-// ClearResidenceStatusEnumID clears the value of the "residence_status_enum_id" field.
-func (pu *PersonUpdate) ClearResidenceStatusEnumID() *PersonUpdate {
-	pu.mutation.ClearResidenceStatusEnumID()
 	return pu
 }
 
@@ -772,6 +692,63 @@ func (pu *PersonUpdate) SetParty(p *Party) *PersonUpdate {
 	return pu.SetPartyID(p.ID)
 }
 
+// SetEmploymentStatusEnumerationID sets the "employment_status_enumeration" edge to the Enumeration entity by ID.
+func (pu *PersonUpdate) SetEmploymentStatusEnumerationID(id int) *PersonUpdate {
+	pu.mutation.SetEmploymentStatusEnumerationID(id)
+	return pu
+}
+
+// SetNillableEmploymentStatusEnumerationID sets the "employment_status_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (pu *PersonUpdate) SetNillableEmploymentStatusEnumerationID(id *int) *PersonUpdate {
+	if id != nil {
+		pu = pu.SetEmploymentStatusEnumerationID(*id)
+	}
+	return pu
+}
+
+// SetEmploymentStatusEnumeration sets the "employment_status_enumeration" edge to the Enumeration entity.
+func (pu *PersonUpdate) SetEmploymentStatusEnumeration(e *Enumeration) *PersonUpdate {
+	return pu.SetEmploymentStatusEnumerationID(e.ID)
+}
+
+// SetResidenceStatusEnumerationID sets the "residence_status_enumeration" edge to the Enumeration entity by ID.
+func (pu *PersonUpdate) SetResidenceStatusEnumerationID(id int) *PersonUpdate {
+	pu.mutation.SetResidenceStatusEnumerationID(id)
+	return pu
+}
+
+// SetNillableResidenceStatusEnumerationID sets the "residence_status_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (pu *PersonUpdate) SetNillableResidenceStatusEnumerationID(id *int) *PersonUpdate {
+	if id != nil {
+		pu = pu.SetResidenceStatusEnumerationID(*id)
+	}
+	return pu
+}
+
+// SetResidenceStatusEnumeration sets the "residence_status_enumeration" edge to the Enumeration entity.
+func (pu *PersonUpdate) SetResidenceStatusEnumeration(e *Enumeration) *PersonUpdate {
+	return pu.SetResidenceStatusEnumerationID(e.ID)
+}
+
+// SetMaritalStatusEnumerationID sets the "marital_status_enumeration" edge to the Enumeration entity by ID.
+func (pu *PersonUpdate) SetMaritalStatusEnumerationID(id int) *PersonUpdate {
+	pu.mutation.SetMaritalStatusEnumerationID(id)
+	return pu
+}
+
+// SetNillableMaritalStatusEnumerationID sets the "marital_status_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (pu *PersonUpdate) SetNillableMaritalStatusEnumerationID(id *int) *PersonUpdate {
+	if id != nil {
+		pu = pu.SetMaritalStatusEnumerationID(*id)
+	}
+	return pu
+}
+
+// SetMaritalStatusEnumeration sets the "marital_status_enumeration" edge to the Enumeration entity.
+func (pu *PersonUpdate) SetMaritalStatusEnumeration(e *Enumeration) *PersonUpdate {
+	return pu.SetMaritalStatusEnumerationID(e.ID)
+}
+
 // AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
 func (pu *PersonUpdate) AddPartyContactMechIDs(ids ...int) *PersonUpdate {
 	pu.mutation.AddPartyContactMechIDs(ids...)
@@ -810,6 +787,24 @@ func (pu *PersonUpdate) Mutation() *PersonMutation {
 // ClearParty clears the "party" edge to the Party entity.
 func (pu *PersonUpdate) ClearParty() *PersonUpdate {
 	pu.mutation.ClearParty()
+	return pu
+}
+
+// ClearEmploymentStatusEnumeration clears the "employment_status_enumeration" edge to the Enumeration entity.
+func (pu *PersonUpdate) ClearEmploymentStatusEnumeration() *PersonUpdate {
+	pu.mutation.ClearEmploymentStatusEnumeration()
+	return pu
+}
+
+// ClearResidenceStatusEnumeration clears the "residence_status_enumeration" edge to the Enumeration entity.
+func (pu *PersonUpdate) ClearResidenceStatusEnumeration() *PersonUpdate {
+	pu.mutation.ClearResidenceStatusEnumeration()
+	return pu
+}
+
+// ClearMaritalStatusEnumeration clears the "marital_status_enumeration" edge to the Enumeration entity.
+func (pu *PersonUpdate) ClearMaritalStatusEnumeration() *PersonUpdate {
+	pu.mutation.ClearMaritalStatusEnumeration()
 	return pu
 }
 
@@ -1252,26 +1247,6 @@ func (pu *PersonUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: person.FieldOldMaritalStatus,
 		})
 	}
-	if value, ok := pu.mutation.MaritalStatusEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldMaritalStatusEnumID,
-		})
-	}
-	if value, ok := pu.mutation.AddedMaritalStatusEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldMaritalStatusEnumID,
-		})
-	}
-	if pu.mutation.MaritalStatusEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: person.FieldMaritalStatusEnumID,
-		})
-	}
 	if value, ok := pu.mutation.SocialSecurityNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -1342,46 +1317,6 @@ func (pu *PersonUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: person.FieldComments,
-		})
-	}
-	if value, ok := pu.mutation.EmploymentStatusEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldEmploymentStatusEnumID,
-		})
-	}
-	if value, ok := pu.mutation.AddedEmploymentStatusEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldEmploymentStatusEnumID,
-		})
-	}
-	if pu.mutation.EmploymentStatusEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: person.FieldEmploymentStatusEnumID,
-		})
-	}
-	if value, ok := pu.mutation.ResidenceStatusEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldResidenceStatusEnumID,
-		})
-	}
-	if value, ok := pu.mutation.AddedResidenceStatusEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldResidenceStatusEnumID,
-		})
-	}
-	if pu.mutation.ResidenceStatusEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: person.FieldResidenceStatusEnumID,
 		})
 	}
 	if value, ok := pu.mutation.Occupation(); ok {
@@ -1490,6 +1425,111 @@ func (pu *PersonUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: party.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pu.mutation.EmploymentStatusEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.EmploymentStatusEnumerationTable,
+			Columns: []string{person.EmploymentStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.EmploymentStatusEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.EmploymentStatusEnumerationTable,
+			Columns: []string{person.EmploymentStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pu.mutation.ResidenceStatusEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.ResidenceStatusEnumerationTable,
+			Columns: []string{person.ResidenceStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.ResidenceStatusEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.ResidenceStatusEnumerationTable,
+			Columns: []string{person.ResidenceStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pu.mutation.MaritalStatusEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.MaritalStatusEnumerationTable,
+			Columns: []string{person.MaritalStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.MaritalStatusEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.MaritalStatusEnumerationTable,
+			Columns: []string{person.MaritalStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
 				},
 			},
 		}
@@ -2046,33 +2086,6 @@ func (puo *PersonUpdateOne) ClearOldMaritalStatus() *PersonUpdateOne {
 	return puo
 }
 
-// SetMaritalStatusEnumID sets the "marital_status_enum_id" field.
-func (puo *PersonUpdateOne) SetMaritalStatusEnumID(i int) *PersonUpdateOne {
-	puo.mutation.ResetMaritalStatusEnumID()
-	puo.mutation.SetMaritalStatusEnumID(i)
-	return puo
-}
-
-// SetNillableMaritalStatusEnumID sets the "marital_status_enum_id" field if the given value is not nil.
-func (puo *PersonUpdateOne) SetNillableMaritalStatusEnumID(i *int) *PersonUpdateOne {
-	if i != nil {
-		puo.SetMaritalStatusEnumID(*i)
-	}
-	return puo
-}
-
-// AddMaritalStatusEnumID adds i to the "marital_status_enum_id" field.
-func (puo *PersonUpdateOne) AddMaritalStatusEnumID(i int) *PersonUpdateOne {
-	puo.mutation.AddMaritalStatusEnumID(i)
-	return puo
-}
-
-// ClearMaritalStatusEnumID clears the value of the "marital_status_enum_id" field.
-func (puo *PersonUpdateOne) ClearMaritalStatusEnumID() *PersonUpdateOne {
-	puo.mutation.ClearMaritalStatusEnumID()
-	return puo
-}
-
 // SetSocialSecurityNumber sets the "social_security_number" field.
 func (puo *PersonUpdateOne) SetSocialSecurityNumber(s string) *PersonUpdateOne {
 	puo.mutation.SetSocialSecurityNumber(s)
@@ -2177,60 +2190,6 @@ func (puo *PersonUpdateOne) SetNillableComments(s *string) *PersonUpdateOne {
 // ClearComments clears the value of the "comments" field.
 func (puo *PersonUpdateOne) ClearComments() *PersonUpdateOne {
 	puo.mutation.ClearComments()
-	return puo
-}
-
-// SetEmploymentStatusEnumID sets the "employment_status_enum_id" field.
-func (puo *PersonUpdateOne) SetEmploymentStatusEnumID(i int) *PersonUpdateOne {
-	puo.mutation.ResetEmploymentStatusEnumID()
-	puo.mutation.SetEmploymentStatusEnumID(i)
-	return puo
-}
-
-// SetNillableEmploymentStatusEnumID sets the "employment_status_enum_id" field if the given value is not nil.
-func (puo *PersonUpdateOne) SetNillableEmploymentStatusEnumID(i *int) *PersonUpdateOne {
-	if i != nil {
-		puo.SetEmploymentStatusEnumID(*i)
-	}
-	return puo
-}
-
-// AddEmploymentStatusEnumID adds i to the "employment_status_enum_id" field.
-func (puo *PersonUpdateOne) AddEmploymentStatusEnumID(i int) *PersonUpdateOne {
-	puo.mutation.AddEmploymentStatusEnumID(i)
-	return puo
-}
-
-// ClearEmploymentStatusEnumID clears the value of the "employment_status_enum_id" field.
-func (puo *PersonUpdateOne) ClearEmploymentStatusEnumID() *PersonUpdateOne {
-	puo.mutation.ClearEmploymentStatusEnumID()
-	return puo
-}
-
-// SetResidenceStatusEnumID sets the "residence_status_enum_id" field.
-func (puo *PersonUpdateOne) SetResidenceStatusEnumID(i int) *PersonUpdateOne {
-	puo.mutation.ResetResidenceStatusEnumID()
-	puo.mutation.SetResidenceStatusEnumID(i)
-	return puo
-}
-
-// SetNillableResidenceStatusEnumID sets the "residence_status_enum_id" field if the given value is not nil.
-func (puo *PersonUpdateOne) SetNillableResidenceStatusEnumID(i *int) *PersonUpdateOne {
-	if i != nil {
-		puo.SetResidenceStatusEnumID(*i)
-	}
-	return puo
-}
-
-// AddResidenceStatusEnumID adds i to the "residence_status_enum_id" field.
-func (puo *PersonUpdateOne) AddResidenceStatusEnumID(i int) *PersonUpdateOne {
-	puo.mutation.AddResidenceStatusEnumID(i)
-	return puo
-}
-
-// ClearResidenceStatusEnumID clears the value of the "residence_status_enum_id" field.
-func (puo *PersonUpdateOne) ClearResidenceStatusEnumID() *PersonUpdateOne {
-	puo.mutation.ClearResidenceStatusEnumID()
 	return puo
 }
 
@@ -2367,6 +2326,63 @@ func (puo *PersonUpdateOne) SetParty(p *Party) *PersonUpdateOne {
 	return puo.SetPartyID(p.ID)
 }
 
+// SetEmploymentStatusEnumerationID sets the "employment_status_enumeration" edge to the Enumeration entity by ID.
+func (puo *PersonUpdateOne) SetEmploymentStatusEnumerationID(id int) *PersonUpdateOne {
+	puo.mutation.SetEmploymentStatusEnumerationID(id)
+	return puo
+}
+
+// SetNillableEmploymentStatusEnumerationID sets the "employment_status_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (puo *PersonUpdateOne) SetNillableEmploymentStatusEnumerationID(id *int) *PersonUpdateOne {
+	if id != nil {
+		puo = puo.SetEmploymentStatusEnumerationID(*id)
+	}
+	return puo
+}
+
+// SetEmploymentStatusEnumeration sets the "employment_status_enumeration" edge to the Enumeration entity.
+func (puo *PersonUpdateOne) SetEmploymentStatusEnumeration(e *Enumeration) *PersonUpdateOne {
+	return puo.SetEmploymentStatusEnumerationID(e.ID)
+}
+
+// SetResidenceStatusEnumerationID sets the "residence_status_enumeration" edge to the Enumeration entity by ID.
+func (puo *PersonUpdateOne) SetResidenceStatusEnumerationID(id int) *PersonUpdateOne {
+	puo.mutation.SetResidenceStatusEnumerationID(id)
+	return puo
+}
+
+// SetNillableResidenceStatusEnumerationID sets the "residence_status_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (puo *PersonUpdateOne) SetNillableResidenceStatusEnumerationID(id *int) *PersonUpdateOne {
+	if id != nil {
+		puo = puo.SetResidenceStatusEnumerationID(*id)
+	}
+	return puo
+}
+
+// SetResidenceStatusEnumeration sets the "residence_status_enumeration" edge to the Enumeration entity.
+func (puo *PersonUpdateOne) SetResidenceStatusEnumeration(e *Enumeration) *PersonUpdateOne {
+	return puo.SetResidenceStatusEnumerationID(e.ID)
+}
+
+// SetMaritalStatusEnumerationID sets the "marital_status_enumeration" edge to the Enumeration entity by ID.
+func (puo *PersonUpdateOne) SetMaritalStatusEnumerationID(id int) *PersonUpdateOne {
+	puo.mutation.SetMaritalStatusEnumerationID(id)
+	return puo
+}
+
+// SetNillableMaritalStatusEnumerationID sets the "marital_status_enumeration" edge to the Enumeration entity by ID if the given value is not nil.
+func (puo *PersonUpdateOne) SetNillableMaritalStatusEnumerationID(id *int) *PersonUpdateOne {
+	if id != nil {
+		puo = puo.SetMaritalStatusEnumerationID(*id)
+	}
+	return puo
+}
+
+// SetMaritalStatusEnumeration sets the "marital_status_enumeration" edge to the Enumeration entity.
+func (puo *PersonUpdateOne) SetMaritalStatusEnumeration(e *Enumeration) *PersonUpdateOne {
+	return puo.SetMaritalStatusEnumerationID(e.ID)
+}
+
 // AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
 func (puo *PersonUpdateOne) AddPartyContactMechIDs(ids ...int) *PersonUpdateOne {
 	puo.mutation.AddPartyContactMechIDs(ids...)
@@ -2405,6 +2421,24 @@ func (puo *PersonUpdateOne) Mutation() *PersonMutation {
 // ClearParty clears the "party" edge to the Party entity.
 func (puo *PersonUpdateOne) ClearParty() *PersonUpdateOne {
 	puo.mutation.ClearParty()
+	return puo
+}
+
+// ClearEmploymentStatusEnumeration clears the "employment_status_enumeration" edge to the Enumeration entity.
+func (puo *PersonUpdateOne) ClearEmploymentStatusEnumeration() *PersonUpdateOne {
+	puo.mutation.ClearEmploymentStatusEnumeration()
+	return puo
+}
+
+// ClearResidenceStatusEnumeration clears the "residence_status_enumeration" edge to the Enumeration entity.
+func (puo *PersonUpdateOne) ClearResidenceStatusEnumeration() *PersonUpdateOne {
+	puo.mutation.ClearResidenceStatusEnumeration()
+	return puo
+}
+
+// ClearMaritalStatusEnumeration clears the "marital_status_enumeration" edge to the Enumeration entity.
+func (puo *PersonUpdateOne) ClearMaritalStatusEnumeration() *PersonUpdateOne {
+	puo.mutation.ClearMaritalStatusEnumeration()
 	return puo
 }
 
@@ -2871,26 +2905,6 @@ func (puo *PersonUpdateOne) sqlSave(ctx context.Context) (_node *Person, err err
 			Column: person.FieldOldMaritalStatus,
 		})
 	}
-	if value, ok := puo.mutation.MaritalStatusEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldMaritalStatusEnumID,
-		})
-	}
-	if value, ok := puo.mutation.AddedMaritalStatusEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldMaritalStatusEnumID,
-		})
-	}
-	if puo.mutation.MaritalStatusEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: person.FieldMaritalStatusEnumID,
-		})
-	}
 	if value, ok := puo.mutation.SocialSecurityNumber(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -2961,46 +2975,6 @@ func (puo *PersonUpdateOne) sqlSave(ctx context.Context) (_node *Person, err err
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: person.FieldComments,
-		})
-	}
-	if value, ok := puo.mutation.EmploymentStatusEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldEmploymentStatusEnumID,
-		})
-	}
-	if value, ok := puo.mutation.AddedEmploymentStatusEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldEmploymentStatusEnumID,
-		})
-	}
-	if puo.mutation.EmploymentStatusEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: person.FieldEmploymentStatusEnumID,
-		})
-	}
-	if value, ok := puo.mutation.ResidenceStatusEnumID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldResidenceStatusEnumID,
-		})
-	}
-	if value, ok := puo.mutation.AddedResidenceStatusEnumID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: person.FieldResidenceStatusEnumID,
-		})
-	}
-	if puo.mutation.ResidenceStatusEnumIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: person.FieldResidenceStatusEnumID,
 		})
 	}
 	if value, ok := puo.mutation.Occupation(); ok {
@@ -3109,6 +3083,111 @@ func (puo *PersonUpdateOne) sqlSave(ctx context.Context) (_node *Person, err err
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: party.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if puo.mutation.EmploymentStatusEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.EmploymentStatusEnumerationTable,
+			Columns: []string{person.EmploymentStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.EmploymentStatusEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.EmploymentStatusEnumerationTable,
+			Columns: []string{person.EmploymentStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if puo.mutation.ResidenceStatusEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.ResidenceStatusEnumerationTable,
+			Columns: []string{person.ResidenceStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.ResidenceStatusEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.ResidenceStatusEnumerationTable,
+			Columns: []string{person.ResidenceStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if puo.mutation.MaritalStatusEnumerationCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.MaritalStatusEnumerationTable,
+			Columns: []string{person.MaritalStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.MaritalStatusEnumerationIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   person.MaritalStatusEnumerationTable,
+			Columns: []string{person.MaritalStatusEnumerationColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: enumeration.FieldID,
 				},
 			},
 		}

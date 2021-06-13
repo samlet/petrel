@@ -24,10 +24,6 @@ const (
 	FieldThruDate = "thru_date"
 	// FieldStatusDateTime holds the string denoting the status_date_time field in the database.
 	FieldStatusDateTime = "status_date_time"
-	// FieldExpectationEnumID holds the string denoting the expectation_enum_id field in the database.
-	FieldExpectationEnumID = "expectation_enum_id"
-	// FieldDelegateReasonEnumID holds the string denoting the delegate_reason_enum_id field in the database.
-	FieldDelegateReasonEnumID = "delegate_reason_enum_id"
 	// FieldFacilityID holds the string denoting the facility_id field in the database.
 	FieldFacilityID = "facility_id"
 	// FieldComments holds the string denoting the comments field in the database.
@@ -46,6 +42,10 @@ const (
 	EdgeAssignedByUserLogin = "assigned_by_user_login"
 	// EdgeAssignmentStatusItem holds the string denoting the assignment_status_item edge name in mutations.
 	EdgeAssignmentStatusItem = "assignment_status_item"
+	// EdgeExpectationEnumeration holds the string denoting the expectation_enumeration edge name in mutations.
+	EdgeExpectationEnumeration = "expectation_enumeration"
+	// EdgeDelegateReasonEnumeration holds the string denoting the delegate_reason_enumeration edge name in mutations.
+	EdgeDelegateReasonEnumeration = "delegate_reason_enumeration"
 	// EdgeAvailabilityStatusItem holds the string denoting the availability_status_item edge name in mutations.
 	EdgeAvailabilityStatusItem = "availability_status_item"
 	// Table holds the table name of the workeffortpartyassignment in the database.
@@ -92,6 +92,20 @@ const (
 	AssignmentStatusItemInverseTable = "status_items"
 	// AssignmentStatusItemColumn is the table column denoting the assignment_status_item relation/edge.
 	AssignmentStatusItemColumn = "status_item_assignment_work_effort_party_assignments"
+	// ExpectationEnumerationTable is the table the holds the expectation_enumeration relation/edge.
+	ExpectationEnumerationTable = "work_effort_party_assignments"
+	// ExpectationEnumerationInverseTable is the table name for the Enumeration entity.
+	// It exists in this package in order to avoid circular dependency with the "enumeration" package.
+	ExpectationEnumerationInverseTable = "enumerations"
+	// ExpectationEnumerationColumn is the table column denoting the expectation_enumeration relation/edge.
+	ExpectationEnumerationColumn = "enumeration_expectation_work_effort_party_assignments"
+	// DelegateReasonEnumerationTable is the table the holds the delegate_reason_enumeration relation/edge.
+	DelegateReasonEnumerationTable = "work_effort_party_assignments"
+	// DelegateReasonEnumerationInverseTable is the table name for the Enumeration entity.
+	// It exists in this package in order to avoid circular dependency with the "enumeration" package.
+	DelegateReasonEnumerationInverseTable = "enumerations"
+	// DelegateReasonEnumerationColumn is the table column denoting the delegate_reason_enumeration relation/edge.
+	DelegateReasonEnumerationColumn = "enumeration_delegate_reason_work_effort_party_assignments"
 	// AvailabilityStatusItemTable is the table the holds the availability_status_item relation/edge.
 	AvailabilityStatusItemTable = "work_effort_party_assignments"
 	// AvailabilityStatusItemInverseTable is the table name for the StatusItem entity.
@@ -110,8 +124,6 @@ var Columns = []string{
 	FieldFromDate,
 	FieldThruDate,
 	FieldStatusDateTime,
-	FieldExpectationEnumID,
-	FieldDelegateReasonEnumID,
 	FieldFacilityID,
 	FieldComments,
 	FieldMustRsvp,
@@ -120,6 +132,8 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the "work_effort_party_assignments"
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
+	"enumeration_expectation_work_effort_party_assignments",
+	"enumeration_delegate_reason_work_effort_party_assignments",
 	"party_work_effort_party_assignments",
 	"party_role_work_effort_party_assignments",
 	"role_type_work_effort_party_assignments",

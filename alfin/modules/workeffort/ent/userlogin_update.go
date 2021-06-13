@@ -16,6 +16,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userloginsecuritygroup"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userpreference"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
 
@@ -444,6 +445,21 @@ func (ulu *UserLoginUpdate) AddUserLoginSecurityGroups(u ...*UserLoginSecurityGr
 	return ulu.AddUserLoginSecurityGroupIDs(ids...)
 }
 
+// AddUserPreferenceIDs adds the "user_preferences" edge to the UserPreference entity by IDs.
+func (ulu *UserLoginUpdate) AddUserPreferenceIDs(ids ...int) *UserLoginUpdate {
+	ulu.mutation.AddUserPreferenceIDs(ids...)
+	return ulu
+}
+
+// AddUserPreferences adds the "user_preferences" edges to the UserPreference entity.
+func (ulu *UserLoginUpdate) AddUserPreferences(u ...*UserPreference) *UserLoginUpdate {
+	ids := make([]int, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return ulu.AddUserPreferenceIDs(ids...)
+}
+
 // AddAssignedByWorkEffortPartyAssignmentIDs adds the "assigned_by_work_effort_party_assignments" edge to the WorkEffortPartyAssignment entity by IDs.
 func (ulu *UserLoginUpdate) AddAssignedByWorkEffortPartyAssignmentIDs(ids ...int) *UserLoginUpdate {
 	ulu.mutation.AddAssignedByWorkEffortPartyAssignmentIDs(ids...)
@@ -558,6 +574,27 @@ func (ulu *UserLoginUpdate) RemoveUserLoginSecurityGroups(u ...*UserLoginSecurit
 		ids[i] = u[i].ID
 	}
 	return ulu.RemoveUserLoginSecurityGroupIDs(ids...)
+}
+
+// ClearUserPreferences clears all "user_preferences" edges to the UserPreference entity.
+func (ulu *UserLoginUpdate) ClearUserPreferences() *UserLoginUpdate {
+	ulu.mutation.ClearUserPreferences()
+	return ulu
+}
+
+// RemoveUserPreferenceIDs removes the "user_preferences" edge to UserPreference entities by IDs.
+func (ulu *UserLoginUpdate) RemoveUserPreferenceIDs(ids ...int) *UserLoginUpdate {
+	ulu.mutation.RemoveUserPreferenceIDs(ids...)
+	return ulu
+}
+
+// RemoveUserPreferences removes "user_preferences" edges to UserPreference entities.
+func (ulu *UserLoginUpdate) RemoveUserPreferences(u ...*UserPreference) *UserLoginUpdate {
+	ids := make([]int, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return ulu.RemoveUserPreferenceIDs(ids...)
 }
 
 // ClearAssignedByWorkEffortPartyAssignments clears all "assigned_by_work_effort_party_assignments" edges to the WorkEffortPartyAssignment entity.
@@ -1202,6 +1239,60 @@ func (ulu *UserLoginUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if ulu.mutation.UserPreferencesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   userlogin.UserPreferencesTable,
+			Columns: []string{userlogin.UserPreferencesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: userpreference.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ulu.mutation.RemovedUserPreferencesIDs(); len(nodes) > 0 && !ulu.mutation.UserPreferencesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   userlogin.UserPreferencesTable,
+			Columns: []string{userlogin.UserPreferencesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: userpreference.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := ulu.mutation.UserPreferencesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   userlogin.UserPreferencesTable,
+			Columns: []string{userlogin.UserPreferencesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: userpreference.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if ulu.mutation.AssignedByWorkEffortPartyAssignmentsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -1687,6 +1778,21 @@ func (uluo *UserLoginUpdateOne) AddUserLoginSecurityGroups(u ...*UserLoginSecuri
 	return uluo.AddUserLoginSecurityGroupIDs(ids...)
 }
 
+// AddUserPreferenceIDs adds the "user_preferences" edge to the UserPreference entity by IDs.
+func (uluo *UserLoginUpdateOne) AddUserPreferenceIDs(ids ...int) *UserLoginUpdateOne {
+	uluo.mutation.AddUserPreferenceIDs(ids...)
+	return uluo
+}
+
+// AddUserPreferences adds the "user_preferences" edges to the UserPreference entity.
+func (uluo *UserLoginUpdateOne) AddUserPreferences(u ...*UserPreference) *UserLoginUpdateOne {
+	ids := make([]int, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return uluo.AddUserPreferenceIDs(ids...)
+}
+
 // AddAssignedByWorkEffortPartyAssignmentIDs adds the "assigned_by_work_effort_party_assignments" edge to the WorkEffortPartyAssignment entity by IDs.
 func (uluo *UserLoginUpdateOne) AddAssignedByWorkEffortPartyAssignmentIDs(ids ...int) *UserLoginUpdateOne {
 	uluo.mutation.AddAssignedByWorkEffortPartyAssignmentIDs(ids...)
@@ -1801,6 +1907,27 @@ func (uluo *UserLoginUpdateOne) RemoveUserLoginSecurityGroups(u ...*UserLoginSec
 		ids[i] = u[i].ID
 	}
 	return uluo.RemoveUserLoginSecurityGroupIDs(ids...)
+}
+
+// ClearUserPreferences clears all "user_preferences" edges to the UserPreference entity.
+func (uluo *UserLoginUpdateOne) ClearUserPreferences() *UserLoginUpdateOne {
+	uluo.mutation.ClearUserPreferences()
+	return uluo
+}
+
+// RemoveUserPreferenceIDs removes the "user_preferences" edge to UserPreference entities by IDs.
+func (uluo *UserLoginUpdateOne) RemoveUserPreferenceIDs(ids ...int) *UserLoginUpdateOne {
+	uluo.mutation.RemoveUserPreferenceIDs(ids...)
+	return uluo
+}
+
+// RemoveUserPreferences removes "user_preferences" edges to UserPreference entities.
+func (uluo *UserLoginUpdateOne) RemoveUserPreferences(u ...*UserPreference) *UserLoginUpdateOne {
+	ids := make([]int, len(u))
+	for i := range u {
+		ids[i] = u[i].ID
+	}
+	return uluo.RemoveUserPreferenceIDs(ids...)
 }
 
 // ClearAssignedByWorkEffortPartyAssignments clears all "assigned_by_work_effort_party_assignments" edges to the WorkEffortPartyAssignment entity.
@@ -2461,6 +2588,60 @@ func (uluo *UserLoginUpdateOne) sqlSave(ctx context.Context) (_node *UserLogin, 
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: userloginsecuritygroup.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if uluo.mutation.UserPreferencesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   userlogin.UserPreferencesTable,
+			Columns: []string{userlogin.UserPreferencesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: userpreference.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uluo.mutation.RemovedUserPreferencesIDs(); len(nodes) > 0 && !uluo.mutation.UserPreferencesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   userlogin.UserPreferencesTable,
+			Columns: []string{userlogin.UserPreferencesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: userpreference.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := uluo.mutation.UserPreferencesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   userlogin.UserPreferencesTable,
+			Columns: []string{userlogin.UserPreferencesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: userpreference.FieldID,
 				},
 			},
 		}

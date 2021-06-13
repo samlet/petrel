@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
@@ -30,8 +31,6 @@ type WorkEffort struct {
 	LastStatusUpdate time.Time `json:"last_status_update,omitempty"`
 	// WorkEffortPurposeTypeID holds the value of the "work_effort_purpose_type_id" field.
 	WorkEffortPurposeTypeID int `json:"work_effort_purpose_type_id,omitempty"`
-	// ScopeEnumID holds the value of the "scope_enum_id" field.
-	ScopeEnumID int `json:"scope_enum_id,omitempty"`
 	// Priority holds the value of the "priority" field.
 	Priority int `json:"priority,omitempty"`
 	// PercentComplete holds the value of the "percent_complete" field.
@@ -121,6 +120,7 @@ type WorkEffort struct {
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the WorkEffortQuery when eager-loading is set.
 	Edges                            WorkEffortEdges `json:"edges"`
+	enumeration_scope_work_efforts   *int
 	fixed_asset_work_efforts         *int
 	status_item_current_work_efforts *int
 	temporal_expression_work_efforts *int
@@ -138,6 +138,8 @@ type WorkEffortEdges struct {
 	Children []*WorkEffort `json:"children,omitempty"`
 	// CurrentStatusItem holds the value of the current_status_item edge.
 	CurrentStatusItem *StatusItem `json:"current_status_item,omitempty"`
+	// ScopeEnumeration holds the value of the scope_enumeration edge.
+	ScopeEnumeration *Enumeration `json:"scope_enumeration,omitempty"`
 	// FixedAsset holds the value of the fixed_asset edge.
 	FixedAsset *FixedAsset `json:"fixed_asset,omitempty"`
 	// TemporalExpression holds the value of the temporal_expression edge.
@@ -156,7 +158,7 @@ type WorkEffortEdges struct {
 	WorkEffortSkillStandards []*WorkEffortSkillStandard `json:"work_effort_skill_standards,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [12]bool
+	loadedTypes [13]bool
 }
 
 // WorkEffortTypeOrErr returns the WorkEffortType value or an error if the edge
@@ -210,10 +212,24 @@ func (e WorkEffortEdges) CurrentStatusItemOrErr() (*StatusItem, error) {
 	return nil, &NotLoadedError{edge: "current_status_item"}
 }
 
+// ScopeEnumerationOrErr returns the ScopeEnumeration value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortEdges) ScopeEnumerationOrErr() (*Enumeration, error) {
+	if e.loadedTypes[4] {
+		if e.ScopeEnumeration == nil {
+			// The edge scope_enumeration was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: enumeration.Label}
+		}
+		return e.ScopeEnumeration, nil
+	}
+	return nil, &NotLoadedError{edge: "scope_enumeration"}
+}
+
 // FixedAssetOrErr returns the FixedAsset value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e WorkEffortEdges) FixedAssetOrErr() (*FixedAsset, error) {
-	if e.loadedTypes[4] {
+	if e.loadedTypes[5] {
 		if e.FixedAsset == nil {
 			// The edge fixed_asset was loaded in eager-loading,
 			// but was not found.
@@ -227,7 +243,7 @@ func (e WorkEffortEdges) FixedAssetOrErr() (*FixedAsset, error) {
 // TemporalExpressionOrErr returns the TemporalExpression value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e WorkEffortEdges) TemporalExpressionOrErr() (*TemporalExpression, error) {
-	if e.loadedTypes[5] {
+	if e.loadedTypes[6] {
 		if e.TemporalExpression == nil {
 			// The edge temporal_expression was loaded in eager-loading,
 			// but was not found.
@@ -241,7 +257,7 @@ func (e WorkEffortEdges) TemporalExpressionOrErr() (*TemporalExpression, error) 
 // ChildWorkEffortsOrErr returns the ChildWorkEfforts value or an error if the edge
 // was not loaded in eager-loading.
 func (e WorkEffortEdges) ChildWorkEffortsOrErr() ([]*WorkEffort, error) {
-	if e.loadedTypes[6] {
+	if e.loadedTypes[7] {
 		return e.ChildWorkEfforts, nil
 	}
 	return nil, &NotLoadedError{edge: "child_work_efforts"}
@@ -250,7 +266,7 @@ func (e WorkEffortEdges) ChildWorkEffortsOrErr() ([]*WorkEffort, error) {
 // FromWorkEffortAssocsOrErr returns the FromWorkEffortAssocs value or an error if the edge
 // was not loaded in eager-loading.
 func (e WorkEffortEdges) FromWorkEffortAssocsOrErr() ([]*WorkEffortAssoc, error) {
-	if e.loadedTypes[7] {
+	if e.loadedTypes[8] {
 		return e.FromWorkEffortAssocs, nil
 	}
 	return nil, &NotLoadedError{edge: "from_work_effort_assocs"}
@@ -259,7 +275,7 @@ func (e WorkEffortEdges) FromWorkEffortAssocsOrErr() ([]*WorkEffortAssoc, error)
 // ToWorkEffortAssocsOrErr returns the ToWorkEffortAssocs value or an error if the edge
 // was not loaded in eager-loading.
 func (e WorkEffortEdges) ToWorkEffortAssocsOrErr() ([]*WorkEffortAssoc, error) {
-	if e.loadedTypes[8] {
+	if e.loadedTypes[9] {
 		return e.ToWorkEffortAssocs, nil
 	}
 	return nil, &NotLoadedError{edge: "to_work_effort_assocs"}
@@ -268,7 +284,7 @@ func (e WorkEffortEdges) ToWorkEffortAssocsOrErr() ([]*WorkEffortAssoc, error) {
 // WorkEffortFixedAssetAssignsOrErr returns the WorkEffortFixedAssetAssigns value or an error if the edge
 // was not loaded in eager-loading.
 func (e WorkEffortEdges) WorkEffortFixedAssetAssignsOrErr() ([]*WorkEffortFixedAssetAssign, error) {
-	if e.loadedTypes[9] {
+	if e.loadedTypes[10] {
 		return e.WorkEffortFixedAssetAssigns, nil
 	}
 	return nil, &NotLoadedError{edge: "work_effort_fixed_asset_assigns"}
@@ -277,7 +293,7 @@ func (e WorkEffortEdges) WorkEffortFixedAssetAssignsOrErr() ([]*WorkEffortFixedA
 // WorkEffortPartyAssignmentsOrErr returns the WorkEffortPartyAssignments value or an error if the edge
 // was not loaded in eager-loading.
 func (e WorkEffortEdges) WorkEffortPartyAssignmentsOrErr() ([]*WorkEffortPartyAssignment, error) {
-	if e.loadedTypes[10] {
+	if e.loadedTypes[11] {
 		return e.WorkEffortPartyAssignments, nil
 	}
 	return nil, &NotLoadedError{edge: "work_effort_party_assignments"}
@@ -286,7 +302,7 @@ func (e WorkEffortEdges) WorkEffortPartyAssignmentsOrErr() ([]*WorkEffortPartyAs
 // WorkEffortSkillStandardsOrErr returns the WorkEffortSkillStandards value or an error if the edge
 // was not loaded in eager-loading.
 func (e WorkEffortEdges) WorkEffortSkillStandardsOrErr() ([]*WorkEffortSkillStandard, error) {
-	if e.loadedTypes[11] {
+	if e.loadedTypes[12] {
 		return e.WorkEffortSkillStandards, nil
 	}
 	return nil, &NotLoadedError{edge: "work_effort_skill_standards"}
@@ -299,21 +315,23 @@ func (*WorkEffort) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case workeffort.FieldEstimatedMilliSeconds, workeffort.FieldEstimatedSetupMillis, workeffort.FieldActualMilliSeconds, workeffort.FieldActualSetupMillis, workeffort.FieldTotalMilliSecondsAllowed, workeffort.FieldTotalMoneyAllowed, workeffort.FieldQuantityToProduce, workeffort.FieldQuantityProduced, workeffort.FieldQuantityRejected, workeffort.FieldReservPersons, workeffort.FieldReserv2NdPpPerc, workeffort.FieldReservNthPpPerc:
 			values[i] = new(sql.NullFloat64)
-		case workeffort.FieldID, workeffort.FieldWorkEffortPurposeTypeID, workeffort.FieldScopeEnumID, workeffort.FieldPriority, workeffort.FieldPercentComplete, workeffort.FieldShowAsEnumID, workeffort.FieldEstimateCalcMethod, workeffort.FieldMoneyUomID, workeffort.FieldTimeTransparency, workeffort.FieldFacilityID, workeffort.FieldRecurrenceInfoID, workeffort.FieldRuntimeDataID, workeffort.FieldNoteID, workeffort.FieldAccommodationMapID, workeffort.FieldAccommodationSpotID, workeffort.FieldRevisionNumber, workeffort.FieldSequenceNum:
+		case workeffort.FieldID, workeffort.FieldWorkEffortPurposeTypeID, workeffort.FieldPriority, workeffort.FieldPercentComplete, workeffort.FieldShowAsEnumID, workeffort.FieldEstimateCalcMethod, workeffort.FieldMoneyUomID, workeffort.FieldTimeTransparency, workeffort.FieldFacilityID, workeffort.FieldRecurrenceInfoID, workeffort.FieldRuntimeDataID, workeffort.FieldNoteID, workeffort.FieldAccommodationMapID, workeffort.FieldAccommodationSpotID, workeffort.FieldRevisionNumber, workeffort.FieldSequenceNum:
 			values[i] = new(sql.NullInt64)
 		case workeffort.FieldStringRef, workeffort.FieldWorkEffortName, workeffort.FieldSendNotificationEmail, workeffort.FieldDescription, workeffort.FieldLocationDesc, workeffort.FieldSpecialTerms, workeffort.FieldUniversalID, workeffort.FieldSourceReferenceID, workeffort.FieldInfoURL, workeffort.FieldServiceLoaderName, workeffort.FieldCreatedByUserLogin, workeffort.FieldLastModifiedByUserLogin:
 			values[i] = new(sql.NullString)
 		case workeffort.FieldCreateTime, workeffort.FieldUpdateTime, workeffort.FieldLastStatusUpdate, workeffort.FieldEstimatedStartDate, workeffort.FieldEstimatedCompletionDate, workeffort.FieldActualStartDate, workeffort.FieldActualCompletionDate, workeffort.FieldCreatedDate, workeffort.FieldLastModifiedDate:
 			values[i] = new(sql.NullTime)
-		case workeffort.ForeignKeys[0]: // fixed_asset_work_efforts
+		case workeffort.ForeignKeys[0]: // enumeration_scope_work_efforts
 			values[i] = new(sql.NullInt64)
-		case workeffort.ForeignKeys[1]: // status_item_current_work_efforts
+		case workeffort.ForeignKeys[1]: // fixed_asset_work_efforts
 			values[i] = new(sql.NullInt64)
-		case workeffort.ForeignKeys[2]: // temporal_expression_work_efforts
+		case workeffort.ForeignKeys[2]: // status_item_current_work_efforts
 			values[i] = new(sql.NullInt64)
-		case workeffort.ForeignKeys[3]: // work_effort_children
+		case workeffort.ForeignKeys[3]: // temporal_expression_work_efforts
 			values[i] = new(sql.NullInt64)
-		case workeffort.ForeignKeys[4]: // work_effort_type_work_efforts
+		case workeffort.ForeignKeys[4]: // work_effort_children
+			values[i] = new(sql.NullInt64)
+		case workeffort.ForeignKeys[5]: // work_effort_type_work_efforts
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type WorkEffort", columns[i])
@@ -365,12 +383,6 @@ func (we *WorkEffort) assignValues(columns []string, values []interface{}) error
 				return fmt.Errorf("unexpected type %T for field work_effort_purpose_type_id", values[i])
 			} else if value.Valid {
 				we.WorkEffortPurposeTypeID = int(value.Int64)
-			}
-		case workeffort.FieldScopeEnumID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field scope_enum_id", values[i])
-			} else if value.Valid {
-				we.ScopeEnumID = int(value.Int64)
 			}
 		case workeffort.FieldPriority:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -632,33 +644,40 @@ func (we *WorkEffort) assignValues(columns []string, values []interface{}) error
 			}
 		case workeffort.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field enumeration_scope_work_efforts", value)
+			} else if value.Valid {
+				we.enumeration_scope_work_efforts = new(int)
+				*we.enumeration_scope_work_efforts = int(value.Int64)
+			}
+		case workeffort.ForeignKeys[1]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field fixed_asset_work_efforts", value)
 			} else if value.Valid {
 				we.fixed_asset_work_efforts = new(int)
 				*we.fixed_asset_work_efforts = int(value.Int64)
 			}
-		case workeffort.ForeignKeys[1]:
+		case workeffort.ForeignKeys[2]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field status_item_current_work_efforts", value)
 			} else if value.Valid {
 				we.status_item_current_work_efforts = new(int)
 				*we.status_item_current_work_efforts = int(value.Int64)
 			}
-		case workeffort.ForeignKeys[2]:
+		case workeffort.ForeignKeys[3]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field temporal_expression_work_efforts", value)
 			} else if value.Valid {
 				we.temporal_expression_work_efforts = new(int)
 				*we.temporal_expression_work_efforts = int(value.Int64)
 			}
-		case workeffort.ForeignKeys[3]:
+		case workeffort.ForeignKeys[4]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field work_effort_children", value)
 			} else if value.Valid {
 				we.work_effort_children = new(int)
 				*we.work_effort_children = int(value.Int64)
 			}
-		case workeffort.ForeignKeys[4]:
+		case workeffort.ForeignKeys[5]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field work_effort_type_work_efforts", value)
 			} else if value.Valid {
@@ -688,6 +707,11 @@ func (we *WorkEffort) QueryChildren() *WorkEffortQuery {
 // QueryCurrentStatusItem queries the "current_status_item" edge of the WorkEffort entity.
 func (we *WorkEffort) QueryCurrentStatusItem() *StatusItemQuery {
 	return (&WorkEffortClient{config: we.config}).QueryCurrentStatusItem(we)
+}
+
+// QueryScopeEnumeration queries the "scope_enumeration" edge of the WorkEffort entity.
+func (we *WorkEffort) QueryScopeEnumeration() *EnumerationQuery {
+	return (&WorkEffortClient{config: we.config}).QueryScopeEnumeration(we)
 }
 
 // QueryFixedAsset queries the "fixed_asset" edge of the WorkEffort entity.
@@ -763,8 +787,6 @@ func (we *WorkEffort) String() string {
 	builder.WriteString(we.LastStatusUpdate.Format(time.ANSIC))
 	builder.WriteString(", work_effort_purpose_type_id=")
 	builder.WriteString(fmt.Sprintf("%v", we.WorkEffortPurposeTypeID))
-	builder.WriteString(", scope_enum_id=")
-	builder.WriteString(fmt.Sprintf("%v", we.ScopeEnumID))
 	builder.WriteString(", priority=")
 	builder.WriteString(fmt.Sprintf("%v", we.Priority))
 	builder.WriteString(", percent_complete=")

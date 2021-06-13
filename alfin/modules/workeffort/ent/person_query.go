@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/enumeration"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
@@ -29,10 +30,13 @@ type PersonQuery struct {
 	fields     []string
 	predicates []predicate.Person
 	// eager-loading edges.
-	withParty              *PartyQuery
-	withPartyContactMeches *PartyContactMechQuery
-	withUserLogins         *UserLoginQuery
-	withFKs                bool
+	withParty                       *PartyQuery
+	withEmploymentStatusEnumeration *EnumerationQuery
+	withResidenceStatusEnumeration  *EnumerationQuery
+	withMaritalStatusEnumeration    *EnumerationQuery
+	withPartyContactMeches          *PartyContactMechQuery
+	withUserLogins                  *UserLoginQuery
+	withFKs                         bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -84,6 +88,72 @@ func (pq *PersonQuery) QueryParty() *PartyQuery {
 			sqlgraph.From(person.Table, person.FieldID, selector),
 			sqlgraph.To(party.Table, party.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, person.PartyTable, person.PartyColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryEmploymentStatusEnumeration chains the current query on the "employment_status_enumeration" edge.
+func (pq *PersonQuery) QueryEmploymentStatusEnumeration() *EnumerationQuery {
+	query := &EnumerationQuery{config: pq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, selector),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, person.EmploymentStatusEnumerationTable, person.EmploymentStatusEnumerationColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryResidenceStatusEnumeration chains the current query on the "residence_status_enumeration" edge.
+func (pq *PersonQuery) QueryResidenceStatusEnumeration() *EnumerationQuery {
+	query := &EnumerationQuery{config: pq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, selector),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, person.ResidenceStatusEnumerationTable, person.ResidenceStatusEnumerationColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryMaritalStatusEnumeration chains the current query on the "marital_status_enumeration" edge.
+func (pq *PersonQuery) QueryMaritalStatusEnumeration() *EnumerationQuery {
+	query := &EnumerationQuery{config: pq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, selector),
+			sqlgraph.To(enumeration.Table, enumeration.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, person.MaritalStatusEnumerationTable, person.MaritalStatusEnumerationColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
 		return fromU, nil
@@ -311,14 +381,17 @@ func (pq *PersonQuery) Clone() *PersonQuery {
 		return nil
 	}
 	return &PersonQuery{
-		config:                 pq.config,
-		limit:                  pq.limit,
-		offset:                 pq.offset,
-		order:                  append([]OrderFunc{}, pq.order...),
-		predicates:             append([]predicate.Person{}, pq.predicates...),
-		withParty:              pq.withParty.Clone(),
-		withPartyContactMeches: pq.withPartyContactMeches.Clone(),
-		withUserLogins:         pq.withUserLogins.Clone(),
+		config:                          pq.config,
+		limit:                           pq.limit,
+		offset:                          pq.offset,
+		order:                           append([]OrderFunc{}, pq.order...),
+		predicates:                      append([]predicate.Person{}, pq.predicates...),
+		withParty:                       pq.withParty.Clone(),
+		withEmploymentStatusEnumeration: pq.withEmploymentStatusEnumeration.Clone(),
+		withResidenceStatusEnumeration:  pq.withResidenceStatusEnumeration.Clone(),
+		withMaritalStatusEnumeration:    pq.withMaritalStatusEnumeration.Clone(),
+		withPartyContactMeches:          pq.withPartyContactMeches.Clone(),
+		withUserLogins:                  pq.withUserLogins.Clone(),
 		// clone intermediate query.
 		sql:  pq.sql.Clone(),
 		path: pq.path,
@@ -333,6 +406,39 @@ func (pq *PersonQuery) WithParty(opts ...func(*PartyQuery)) *PersonQuery {
 		opt(query)
 	}
 	pq.withParty = query
+	return pq
+}
+
+// WithEmploymentStatusEnumeration tells the query-builder to eager-load the nodes that are connected to
+// the "employment_status_enumeration" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PersonQuery) WithEmploymentStatusEnumeration(opts ...func(*EnumerationQuery)) *PersonQuery {
+	query := &EnumerationQuery{config: pq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withEmploymentStatusEnumeration = query
+	return pq
+}
+
+// WithResidenceStatusEnumeration tells the query-builder to eager-load the nodes that are connected to
+// the "residence_status_enumeration" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PersonQuery) WithResidenceStatusEnumeration(opts ...func(*EnumerationQuery)) *PersonQuery {
+	query := &EnumerationQuery{config: pq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withResidenceStatusEnumeration = query
+	return pq
+}
+
+// WithMaritalStatusEnumeration tells the query-builder to eager-load the nodes that are connected to
+// the "marital_status_enumeration" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PersonQuery) WithMaritalStatusEnumeration(opts ...func(*EnumerationQuery)) *PersonQuery {
+	query := &EnumerationQuery{config: pq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withMaritalStatusEnumeration = query
 	return pq
 }
 
@@ -424,13 +530,16 @@ func (pq *PersonQuery) sqlAll(ctx context.Context) ([]*Person, error) {
 		nodes       = []*Person{}
 		withFKs     = pq.withFKs
 		_spec       = pq.querySpec()
-		loadedTypes = [3]bool{
+		loadedTypes = [6]bool{
 			pq.withParty != nil,
+			pq.withEmploymentStatusEnumeration != nil,
+			pq.withResidenceStatusEnumeration != nil,
+			pq.withMaritalStatusEnumeration != nil,
 			pq.withPartyContactMeches != nil,
 			pq.withUserLogins != nil,
 		}
 	)
-	if pq.withParty != nil {
+	if pq.withParty != nil || pq.withEmploymentStatusEnumeration != nil || pq.withResidenceStatusEnumeration != nil || pq.withMaritalStatusEnumeration != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -481,6 +590,93 @@ func (pq *PersonQuery) sqlAll(ctx context.Context) ([]*Person, error) {
 			}
 			for i := range nodes {
 				nodes[i].Edges.Party = n
+			}
+		}
+	}
+
+	if query := pq.withEmploymentStatusEnumeration; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*Person)
+		for i := range nodes {
+			if nodes[i].enumeration_employment_status_people == nil {
+				continue
+			}
+			fk := *nodes[i].enumeration_employment_status_people
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(enumeration.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "enumeration_employment_status_people" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.EmploymentStatusEnumeration = n
+			}
+		}
+	}
+
+	if query := pq.withResidenceStatusEnumeration; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*Person)
+		for i := range nodes {
+			if nodes[i].enumeration_residence_status_people == nil {
+				continue
+			}
+			fk := *nodes[i].enumeration_residence_status_people
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(enumeration.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "enumeration_residence_status_people" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.ResidenceStatusEnumeration = n
+			}
+		}
+	}
+
+	if query := pq.withMaritalStatusEnumeration; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*Person)
+		for i := range nodes {
+			if nodes[i].enumeration_marital_status_people == nil {
+				continue
+			}
+			fk := *nodes[i].enumeration_marital_status_people
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(enumeration.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "enumeration_marital_status_people" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.MaritalStatusEnumeration = n
 			}
 		}
 	}

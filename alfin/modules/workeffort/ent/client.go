@@ -11,11 +11,17 @@ import (
 
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/skilltype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statustype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusvalidchange"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpressionassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
@@ -24,6 +30,8 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortskillstandard"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workefforttype"
 
 	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
@@ -39,16 +47,28 @@ type Client struct {
 	FixedAsset *FixedAssetClient
 	// Party is the client for interacting with the Party builders.
 	Party *PartyClient
+	// PartyContactMech is the client for interacting with the PartyContactMech builders.
+	PartyContactMech *PartyContactMechClient
 	// PartyRole is the client for interacting with the PartyRole builders.
 	PartyRole *PartyRoleClient
 	// PartyStatus is the client for interacting with the PartyStatus builders.
 	PartyStatus *PartyStatusClient
 	// Person is the client for interacting with the Person builders.
 	Person *PersonClient
+	// RoleType is the client for interacting with the RoleType builders.
+	RoleType *RoleTypeClient
 	// SecurityGroup is the client for interacting with the SecurityGroup builders.
 	SecurityGroup *SecurityGroupClient
 	// SecurityGroupPermission is the client for interacting with the SecurityGroupPermission builders.
 	SecurityGroupPermission *SecurityGroupPermissionClient
+	// SkillType is the client for interacting with the SkillType builders.
+	SkillType *SkillTypeClient
+	// StatusItem is the client for interacting with the StatusItem builders.
+	StatusItem *StatusItemClient
+	// StatusType is the client for interacting with the StatusType builders.
+	StatusType *StatusTypeClient
+	// StatusValidChange is the client for interacting with the StatusValidChange builders.
+	StatusValidChange *StatusValidChangeClient
 	// TemporalExpression is the client for interacting with the TemporalExpression builders.
 	TemporalExpression *TemporalExpressionClient
 	// TemporalExpressionAssoc is the client for interacting with the TemporalExpressionAssoc builders.
@@ -65,6 +85,10 @@ type Client struct {
 	WorkEffortFixedAssetAssign *WorkEffortFixedAssetAssignClient
 	// WorkEffortPartyAssignment is the client for interacting with the WorkEffortPartyAssignment builders.
 	WorkEffortPartyAssignment *WorkEffortPartyAssignmentClient
+	// WorkEffortSkillStandard is the client for interacting with the WorkEffortSkillStandard builders.
+	WorkEffortSkillStandard *WorkEffortSkillStandardClient
+	// WorkEffortType is the client for interacting with the WorkEffortType builders.
+	WorkEffortType *WorkEffortTypeClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -80,11 +104,17 @@ func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
 	c.FixedAsset = NewFixedAssetClient(c.config)
 	c.Party = NewPartyClient(c.config)
+	c.PartyContactMech = NewPartyContactMechClient(c.config)
 	c.PartyRole = NewPartyRoleClient(c.config)
 	c.PartyStatus = NewPartyStatusClient(c.config)
 	c.Person = NewPersonClient(c.config)
+	c.RoleType = NewRoleTypeClient(c.config)
 	c.SecurityGroup = NewSecurityGroupClient(c.config)
 	c.SecurityGroupPermission = NewSecurityGroupPermissionClient(c.config)
+	c.SkillType = NewSkillTypeClient(c.config)
+	c.StatusItem = NewStatusItemClient(c.config)
+	c.StatusType = NewStatusTypeClient(c.config)
+	c.StatusValidChange = NewStatusValidChangeClient(c.config)
 	c.TemporalExpression = NewTemporalExpressionClient(c.config)
 	c.TemporalExpressionAssoc = NewTemporalExpressionAssocClient(c.config)
 	c.UserLogin = NewUserLoginClient(c.config)
@@ -93,6 +123,8 @@ func (c *Client) init() {
 	c.WorkEffortAssoc = NewWorkEffortAssocClient(c.config)
 	c.WorkEffortFixedAssetAssign = NewWorkEffortFixedAssetAssignClient(c.config)
 	c.WorkEffortPartyAssignment = NewWorkEffortPartyAssignmentClient(c.config)
+	c.WorkEffortSkillStandard = NewWorkEffortSkillStandardClient(c.config)
+	c.WorkEffortType = NewWorkEffortTypeClient(c.config)
 }
 
 // Open opens a database/sql.DB specified by the driver name and
@@ -128,11 +160,17 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		config:                     cfg,
 		FixedAsset:                 NewFixedAssetClient(cfg),
 		Party:                      NewPartyClient(cfg),
+		PartyContactMech:           NewPartyContactMechClient(cfg),
 		PartyRole:                  NewPartyRoleClient(cfg),
 		PartyStatus:                NewPartyStatusClient(cfg),
 		Person:                     NewPersonClient(cfg),
+		RoleType:                   NewRoleTypeClient(cfg),
 		SecurityGroup:              NewSecurityGroupClient(cfg),
 		SecurityGroupPermission:    NewSecurityGroupPermissionClient(cfg),
+		SkillType:                  NewSkillTypeClient(cfg),
+		StatusItem:                 NewStatusItemClient(cfg),
+		StatusType:                 NewStatusTypeClient(cfg),
+		StatusValidChange:          NewStatusValidChangeClient(cfg),
 		TemporalExpression:         NewTemporalExpressionClient(cfg),
 		TemporalExpressionAssoc:    NewTemporalExpressionAssocClient(cfg),
 		UserLogin:                  NewUserLoginClient(cfg),
@@ -141,6 +179,8 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 		WorkEffortAssoc:            NewWorkEffortAssocClient(cfg),
 		WorkEffortFixedAssetAssign: NewWorkEffortFixedAssetAssignClient(cfg),
 		WorkEffortPartyAssignment:  NewWorkEffortPartyAssignmentClient(cfg),
+		WorkEffortSkillStandard:    NewWorkEffortSkillStandardClient(cfg),
+		WorkEffortType:             NewWorkEffortTypeClient(cfg),
 	}, nil
 }
 
@@ -161,11 +201,17 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		config:                     cfg,
 		FixedAsset:                 NewFixedAssetClient(cfg),
 		Party:                      NewPartyClient(cfg),
+		PartyContactMech:           NewPartyContactMechClient(cfg),
 		PartyRole:                  NewPartyRoleClient(cfg),
 		PartyStatus:                NewPartyStatusClient(cfg),
 		Person:                     NewPersonClient(cfg),
+		RoleType:                   NewRoleTypeClient(cfg),
 		SecurityGroup:              NewSecurityGroupClient(cfg),
 		SecurityGroupPermission:    NewSecurityGroupPermissionClient(cfg),
+		SkillType:                  NewSkillTypeClient(cfg),
+		StatusItem:                 NewStatusItemClient(cfg),
+		StatusType:                 NewStatusTypeClient(cfg),
+		StatusValidChange:          NewStatusValidChangeClient(cfg),
 		TemporalExpression:         NewTemporalExpressionClient(cfg),
 		TemporalExpressionAssoc:    NewTemporalExpressionAssocClient(cfg),
 		UserLogin:                  NewUserLoginClient(cfg),
@@ -174,6 +220,8 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 		WorkEffortAssoc:            NewWorkEffortAssocClient(cfg),
 		WorkEffortFixedAssetAssign: NewWorkEffortFixedAssetAssignClient(cfg),
 		WorkEffortPartyAssignment:  NewWorkEffortPartyAssignmentClient(cfg),
+		WorkEffortSkillStandard:    NewWorkEffortSkillStandardClient(cfg),
+		WorkEffortType:             NewWorkEffortTypeClient(cfg),
 	}, nil
 }
 
@@ -205,11 +253,17 @@ func (c *Client) Close() error {
 func (c *Client) Use(hooks ...Hook) {
 	c.FixedAsset.Use(hooks...)
 	c.Party.Use(hooks...)
+	c.PartyContactMech.Use(hooks...)
 	c.PartyRole.Use(hooks...)
 	c.PartyStatus.Use(hooks...)
 	c.Person.Use(hooks...)
+	c.RoleType.Use(hooks...)
 	c.SecurityGroup.Use(hooks...)
 	c.SecurityGroupPermission.Use(hooks...)
+	c.SkillType.Use(hooks...)
+	c.StatusItem.Use(hooks...)
+	c.StatusType.Use(hooks...)
+	c.StatusValidChange.Use(hooks...)
 	c.TemporalExpression.Use(hooks...)
 	c.TemporalExpressionAssoc.Use(hooks...)
 	c.UserLogin.Use(hooks...)
@@ -218,6 +272,8 @@ func (c *Client) Use(hooks ...Hook) {
 	c.WorkEffortAssoc.Use(hooks...)
 	c.WorkEffortFixedAssetAssign.Use(hooks...)
 	c.WorkEffortPartyAssignment.Use(hooks...)
+	c.WorkEffortSkillStandard.Use(hooks...)
+	c.WorkEffortType.Use(hooks...)
 }
 
 // FixedAssetClient is a client for the FixedAsset schema.
@@ -346,6 +402,22 @@ func (c *FixedAssetClient) QueryParty(fa *FixedAsset) *PartyQuery {
 			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, id),
 			sqlgraph.To(party.Table, party.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, fixedasset.PartyTable, fixedasset.PartyColumn),
+		)
+		fromV = sqlgraph.Neighbors(fa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryRoleType queries the role_type edge of a FixedAsset.
+func (c *FixedAssetClient) QueryRoleType(fa *FixedAsset) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := fa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, fixedasset.RoleTypeTable, fixedasset.RoleTypeColumn),
 		)
 		fromV = sqlgraph.Neighbors(fa.driver.Dialect(), step)
 		return fromV, nil
@@ -539,6 +611,22 @@ func (c *PartyClient) QueryLastModifiedByUserLogin(pa *Party) *UserLoginQuery {
 	return query
 }
 
+// QueryStatusItem queries the status_item edge of a Party.
+func (c *PartyClient) QueryStatusItem(pa *Party) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(party.Table, party.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, party.StatusItemTable, party.StatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryFixedAssets queries the fixed_assets edge of a Party.
 func (c *PartyClient) QueryFixedAssets(pa *Party) *FixedAssetQuery {
 	query := &FixedAssetQuery{config: c.config}
@@ -548,6 +636,22 @@ func (c *PartyClient) QueryFixedAssets(pa *Party) *FixedAssetQuery {
 			sqlgraph.From(party.Table, party.FieldID, id),
 			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, party.FixedAssetsTable, party.FixedAssetsColumn),
+		)
+		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPartyContactMeches queries the party_contact_meches edge of a Party.
+func (c *PartyClient) QueryPartyContactMeches(pa *Party) *PartyContactMechQuery {
+	query := &PartyContactMechQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(party.Table, party.FieldID, id),
+			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, party.PartyContactMechesTable, party.PartyContactMechesColumn),
 		)
 		fromV = sqlgraph.Neighbors(pa.driver.Dialect(), step)
 		return fromV, nil
@@ -638,6 +742,160 @@ func (c *PartyClient) QueryWorkEffortPartyAssignments(pa *Party) *WorkEffortPart
 // Hooks returns the client hooks.
 func (c *PartyClient) Hooks() []Hook {
 	return c.hooks.Party
+}
+
+// PartyContactMechClient is a client for the PartyContactMech schema.
+type PartyContactMechClient struct {
+	config
+}
+
+// NewPartyContactMechClient returns a client for the PartyContactMech from the given config.
+func NewPartyContactMechClient(c config) *PartyContactMechClient {
+	return &PartyContactMechClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `partycontactmech.Hooks(f(g(h())))`.
+func (c *PartyContactMechClient) Use(hooks ...Hook) {
+	c.hooks.PartyContactMech = append(c.hooks.PartyContactMech, hooks...)
+}
+
+// Create returns a create builder for PartyContactMech.
+func (c *PartyContactMechClient) Create() *PartyContactMechCreate {
+	mutation := newPartyContactMechMutation(c.config, OpCreate)
+	return &PartyContactMechCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of PartyContactMech entities.
+func (c *PartyContactMechClient) CreateBulk(builders ...*PartyContactMechCreate) *PartyContactMechCreateBulk {
+	return &PartyContactMechCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for PartyContactMech.
+func (c *PartyContactMechClient) Update() *PartyContactMechUpdate {
+	mutation := newPartyContactMechMutation(c.config, OpUpdate)
+	return &PartyContactMechUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *PartyContactMechClient) UpdateOne(pcm *PartyContactMech) *PartyContactMechUpdateOne {
+	mutation := newPartyContactMechMutation(c.config, OpUpdateOne, withPartyContactMech(pcm))
+	return &PartyContactMechUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *PartyContactMechClient) UpdateOneID(id int) *PartyContactMechUpdateOne {
+	mutation := newPartyContactMechMutation(c.config, OpUpdateOne, withPartyContactMechID(id))
+	return &PartyContactMechUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for PartyContactMech.
+func (c *PartyContactMechClient) Delete() *PartyContactMechDelete {
+	mutation := newPartyContactMechMutation(c.config, OpDelete)
+	return &PartyContactMechDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *PartyContactMechClient) DeleteOne(pcm *PartyContactMech) *PartyContactMechDeleteOne {
+	return c.DeleteOneID(pcm.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *PartyContactMechClient) DeleteOneID(id int) *PartyContactMechDeleteOne {
+	builder := c.Delete().Where(partycontactmech.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &PartyContactMechDeleteOne{builder}
+}
+
+// Query returns a query builder for PartyContactMech.
+func (c *PartyContactMechClient) Query() *PartyContactMechQuery {
+	return &PartyContactMechQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a PartyContactMech entity by its id.
+func (c *PartyContactMechClient) Get(ctx context.Context, id int) (*PartyContactMech, error) {
+	return c.Query().Where(partycontactmech.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *PartyContactMechClient) GetX(ctx context.Context, id int) *PartyContactMech {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParty queries the party edge of a PartyContactMech.
+func (c *PartyContactMechClient) QueryParty(pcm *PartyContactMech) *PartyQuery {
+	query := &PartyQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pcm.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partycontactmech.Table, partycontactmech.FieldID, id),
+			sqlgraph.To(party.Table, party.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partycontactmech.PartyTable, partycontactmech.PartyColumn),
+		)
+		fromV = sqlgraph.Neighbors(pcm.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPerson queries the person edge of a PartyContactMech.
+func (c *PartyContactMechClient) QueryPerson(pcm *PartyContactMech) *PersonQuery {
+	query := &PersonQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pcm.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partycontactmech.Table, partycontactmech.FieldID, id),
+			sqlgraph.To(person.Table, person.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partycontactmech.PersonTable, partycontactmech.PersonColumn),
+		)
+		fromV = sqlgraph.Neighbors(pcm.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPartyRole queries the party_role edge of a PartyContactMech.
+func (c *PartyContactMechClient) QueryPartyRole(pcm *PartyContactMech) *PartyRoleQuery {
+	query := &PartyRoleQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pcm.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partycontactmech.Table, partycontactmech.FieldID, id),
+			sqlgraph.To(partyrole.Table, partyrole.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partycontactmech.PartyRoleTable, partycontactmech.PartyRoleColumn),
+		)
+		fromV = sqlgraph.Neighbors(pcm.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryRoleType queries the role_type edge of a PartyContactMech.
+func (c *PartyContactMechClient) QueryRoleType(pcm *PartyContactMech) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pcm.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partycontactmech.Table, partycontactmech.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partycontactmech.RoleTypeTable, partycontactmech.RoleTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(pcm.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *PartyContactMechClient) Hooks() []Hook {
+	return c.hooks.PartyContactMech
 }
 
 // PartyRoleClient is a client for the PartyRole schema.
@@ -741,6 +999,22 @@ func (c *PartyRoleClient) QueryParty(pr *PartyRole) *PartyQuery {
 	return query
 }
 
+// QueryRoleType queries the role_type edge of a PartyRole.
+func (c *PartyRoleClient) QueryRoleType(pr *PartyRole) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pr.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrole.Table, partyrole.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyrole.RoleTypeTable, partyrole.RoleTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(pr.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryFixedAssets queries the fixed_assets edge of a PartyRole.
 func (c *PartyRoleClient) QueryFixedAssets(pr *PartyRole) *FixedAssetQuery {
 	query := &FixedAssetQuery{config: c.config}
@@ -750,6 +1024,22 @@ func (c *PartyRoleClient) QueryFixedAssets(pr *PartyRole) *FixedAssetQuery {
 			sqlgraph.From(partyrole.Table, partyrole.FieldID, id),
 			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, partyrole.FixedAssetsTable, partyrole.FixedAssetsColumn),
+		)
+		fromV = sqlgraph.Neighbors(pr.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPartyContactMeches queries the party_contact_meches edge of a PartyRole.
+func (c *PartyRoleClient) QueryPartyContactMeches(pr *PartyRole) *PartyContactMechQuery {
+	query := &PartyContactMechQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pr.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrole.Table, partyrole.FieldID, id),
+			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partyrole.PartyContactMechesTable, partyrole.PartyContactMechesColumn),
 		)
 		fromV = sqlgraph.Neighbors(pr.driver.Dialect(), step)
 		return fromV, nil
@@ -861,6 +1151,22 @@ func (c *PartyStatusClient) GetX(ctx context.Context, id int) *PartyStatus {
 		panic(err)
 	}
 	return obj
+}
+
+// QueryStatusItem queries the status_item edge of a PartyStatus.
+func (c *PartyStatusClient) QueryStatusItem(ps *PartyStatus) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := ps.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partystatus.Table, partystatus.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partystatus.StatusItemTable, partystatus.StatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(ps.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
 }
 
 // QueryParty queries the party edge of a PartyStatus.
@@ -1001,6 +1307,22 @@ func (c *PersonClient) QueryParty(pe *Person) *PartyQuery {
 	return query
 }
 
+// QueryPartyContactMeches queries the party_contact_meches edge of a Person.
+func (c *PersonClient) QueryPartyContactMeches(pe *Person) *PartyContactMechQuery {
+	query := &PartyContactMechQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := pe.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, id),
+			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, person.PartyContactMechesTable, person.PartyContactMechesColumn),
+		)
+		fromV = sqlgraph.Neighbors(pe.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryUserLogins queries the user_logins edge of a Person.
 func (c *PersonClient) QueryUserLogins(pe *Person) *UserLoginQuery {
 	query := &UserLoginQuery{config: c.config}
@@ -1020,6 +1342,208 @@ func (c *PersonClient) QueryUserLogins(pe *Person) *UserLoginQuery {
 // Hooks returns the client hooks.
 func (c *PersonClient) Hooks() []Hook {
 	return c.hooks.Person
+}
+
+// RoleTypeClient is a client for the RoleType schema.
+type RoleTypeClient struct {
+	config
+}
+
+// NewRoleTypeClient returns a client for the RoleType from the given config.
+func NewRoleTypeClient(c config) *RoleTypeClient {
+	return &RoleTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `roletype.Hooks(f(g(h())))`.
+func (c *RoleTypeClient) Use(hooks ...Hook) {
+	c.hooks.RoleType = append(c.hooks.RoleType, hooks...)
+}
+
+// Create returns a create builder for RoleType.
+func (c *RoleTypeClient) Create() *RoleTypeCreate {
+	mutation := newRoleTypeMutation(c.config, OpCreate)
+	return &RoleTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of RoleType entities.
+func (c *RoleTypeClient) CreateBulk(builders ...*RoleTypeCreate) *RoleTypeCreateBulk {
+	return &RoleTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for RoleType.
+func (c *RoleTypeClient) Update() *RoleTypeUpdate {
+	mutation := newRoleTypeMutation(c.config, OpUpdate)
+	return &RoleTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *RoleTypeClient) UpdateOne(rt *RoleType) *RoleTypeUpdateOne {
+	mutation := newRoleTypeMutation(c.config, OpUpdateOne, withRoleType(rt))
+	return &RoleTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *RoleTypeClient) UpdateOneID(id int) *RoleTypeUpdateOne {
+	mutation := newRoleTypeMutation(c.config, OpUpdateOne, withRoleTypeID(id))
+	return &RoleTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for RoleType.
+func (c *RoleTypeClient) Delete() *RoleTypeDelete {
+	mutation := newRoleTypeMutation(c.config, OpDelete)
+	return &RoleTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *RoleTypeClient) DeleteOne(rt *RoleType) *RoleTypeDeleteOne {
+	return c.DeleteOneID(rt.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *RoleTypeClient) DeleteOneID(id int) *RoleTypeDeleteOne {
+	builder := c.Delete().Where(roletype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &RoleTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for RoleType.
+func (c *RoleTypeClient) Query() *RoleTypeQuery {
+	return &RoleTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a RoleType entity by its id.
+func (c *RoleTypeClient) Get(ctx context.Context, id int) (*RoleType, error) {
+	return c.Query().Where(roletype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *RoleTypeClient) GetX(ctx context.Context, id int) *RoleType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a RoleType.
+func (c *RoleTypeClient) QueryParent(rt *RoleType) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, roletype.ParentTable, roletype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a RoleType.
+func (c *RoleTypeClient) QueryChildren(rt *RoleType) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.ChildrenTable, roletype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryFixedAssets queries the fixed_assets edge of a RoleType.
+func (c *RoleTypeClient) QueryFixedAssets(rt *RoleType) *FixedAssetQuery {
+	query := &FixedAssetQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.FixedAssetsTable, roletype.FixedAssetsColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPartyContactMeches queries the party_contact_meches edge of a RoleType.
+func (c *RoleTypeClient) QueryPartyContactMeches(rt *RoleType) *PartyContactMechQuery {
+	query := &PartyContactMechQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.PartyContactMechesTable, roletype.PartyContactMechesColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPartyRoles queries the party_roles edge of a RoleType.
+func (c *RoleTypeClient) QueryPartyRoles(rt *RoleType) *PartyRoleQuery {
+	query := &PartyRoleQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(partyrole.Table, partyrole.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.PartyRolesTable, roletype.PartyRolesColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildRoleTypes queries the child_role_types edge of a RoleType.
+func (c *RoleTypeClient) QueryChildRoleTypes(rt *RoleType) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, roletype.ChildRoleTypesTable, roletype.ChildRoleTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryWorkEffortPartyAssignments queries the work_effort_party_assignments edge of a RoleType.
+func (c *RoleTypeClient) QueryWorkEffortPartyAssignments(rt *RoleType) *WorkEffortPartyAssignmentQuery {
+	query := &WorkEffortPartyAssignmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := rt.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(roletype.Table, roletype.FieldID, id),
+			sqlgraph.To(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, roletype.WorkEffortPartyAssignmentsTable, roletype.WorkEffortPartyAssignmentsColumn),
+		)
+		fromV = sqlgraph.Neighbors(rt.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *RoleTypeClient) Hooks() []Hook {
+	return c.hooks.RoleType
 }
 
 // SecurityGroupClient is a client for the SecurityGroup schema.
@@ -1248,6 +1772,686 @@ func (c *SecurityGroupPermissionClient) QuerySecurityGroup(sgp *SecurityGroupPer
 // Hooks returns the client hooks.
 func (c *SecurityGroupPermissionClient) Hooks() []Hook {
 	return c.hooks.SecurityGroupPermission
+}
+
+// SkillTypeClient is a client for the SkillType schema.
+type SkillTypeClient struct {
+	config
+}
+
+// NewSkillTypeClient returns a client for the SkillType from the given config.
+func NewSkillTypeClient(c config) *SkillTypeClient {
+	return &SkillTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `skilltype.Hooks(f(g(h())))`.
+func (c *SkillTypeClient) Use(hooks ...Hook) {
+	c.hooks.SkillType = append(c.hooks.SkillType, hooks...)
+}
+
+// Create returns a create builder for SkillType.
+func (c *SkillTypeClient) Create() *SkillTypeCreate {
+	mutation := newSkillTypeMutation(c.config, OpCreate)
+	return &SkillTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of SkillType entities.
+func (c *SkillTypeClient) CreateBulk(builders ...*SkillTypeCreate) *SkillTypeCreateBulk {
+	return &SkillTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for SkillType.
+func (c *SkillTypeClient) Update() *SkillTypeUpdate {
+	mutation := newSkillTypeMutation(c.config, OpUpdate)
+	return &SkillTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *SkillTypeClient) UpdateOne(st *SkillType) *SkillTypeUpdateOne {
+	mutation := newSkillTypeMutation(c.config, OpUpdateOne, withSkillType(st))
+	return &SkillTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *SkillTypeClient) UpdateOneID(id int) *SkillTypeUpdateOne {
+	mutation := newSkillTypeMutation(c.config, OpUpdateOne, withSkillTypeID(id))
+	return &SkillTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for SkillType.
+func (c *SkillTypeClient) Delete() *SkillTypeDelete {
+	mutation := newSkillTypeMutation(c.config, OpDelete)
+	return &SkillTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *SkillTypeClient) DeleteOne(st *SkillType) *SkillTypeDeleteOne {
+	return c.DeleteOneID(st.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *SkillTypeClient) DeleteOneID(id int) *SkillTypeDeleteOne {
+	builder := c.Delete().Where(skilltype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &SkillTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for SkillType.
+func (c *SkillTypeClient) Query() *SkillTypeQuery {
+	return &SkillTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a SkillType entity by its id.
+func (c *SkillTypeClient) Get(ctx context.Context, id int) (*SkillType, error) {
+	return c.Query().Where(skilltype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *SkillTypeClient) GetX(ctx context.Context, id int) *SkillType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a SkillType.
+func (c *SkillTypeClient) QueryParent(st *SkillType) *SkillTypeQuery {
+	query := &SkillTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(skilltype.Table, skilltype.FieldID, id),
+			sqlgraph.To(skilltype.Table, skilltype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, skilltype.ParentTable, skilltype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a SkillType.
+func (c *SkillTypeClient) QueryChildren(st *SkillType) *SkillTypeQuery {
+	query := &SkillTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(skilltype.Table, skilltype.FieldID, id),
+			sqlgraph.To(skilltype.Table, skilltype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, skilltype.ChildrenTable, skilltype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildSkillTypes queries the child_skill_types edge of a SkillType.
+func (c *SkillTypeClient) QueryChildSkillTypes(st *SkillType) *SkillTypeQuery {
+	query := &SkillTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(skilltype.Table, skilltype.FieldID, id),
+			sqlgraph.To(skilltype.Table, skilltype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, skilltype.ChildSkillTypesTable, skilltype.ChildSkillTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryWorkEffortSkillStandards queries the work_effort_skill_standards edge of a SkillType.
+func (c *SkillTypeClient) QueryWorkEffortSkillStandards(st *SkillType) *WorkEffortSkillStandardQuery {
+	query := &WorkEffortSkillStandardQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(skilltype.Table, skilltype.FieldID, id),
+			sqlgraph.To(workeffortskillstandard.Table, workeffortskillstandard.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, skilltype.WorkEffortSkillStandardsTable, skilltype.WorkEffortSkillStandardsColumn),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *SkillTypeClient) Hooks() []Hook {
+	return c.hooks.SkillType
+}
+
+// StatusItemClient is a client for the StatusItem schema.
+type StatusItemClient struct {
+	config
+}
+
+// NewStatusItemClient returns a client for the StatusItem from the given config.
+func NewStatusItemClient(c config) *StatusItemClient {
+	return &StatusItemClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `statusitem.Hooks(f(g(h())))`.
+func (c *StatusItemClient) Use(hooks ...Hook) {
+	c.hooks.StatusItem = append(c.hooks.StatusItem, hooks...)
+}
+
+// Create returns a create builder for StatusItem.
+func (c *StatusItemClient) Create() *StatusItemCreate {
+	mutation := newStatusItemMutation(c.config, OpCreate)
+	return &StatusItemCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of StatusItem entities.
+func (c *StatusItemClient) CreateBulk(builders ...*StatusItemCreate) *StatusItemCreateBulk {
+	return &StatusItemCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for StatusItem.
+func (c *StatusItemClient) Update() *StatusItemUpdate {
+	mutation := newStatusItemMutation(c.config, OpUpdate)
+	return &StatusItemUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *StatusItemClient) UpdateOne(si *StatusItem) *StatusItemUpdateOne {
+	mutation := newStatusItemMutation(c.config, OpUpdateOne, withStatusItem(si))
+	return &StatusItemUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *StatusItemClient) UpdateOneID(id int) *StatusItemUpdateOne {
+	mutation := newStatusItemMutation(c.config, OpUpdateOne, withStatusItemID(id))
+	return &StatusItemUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for StatusItem.
+func (c *StatusItemClient) Delete() *StatusItemDelete {
+	mutation := newStatusItemMutation(c.config, OpDelete)
+	return &StatusItemDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *StatusItemClient) DeleteOne(si *StatusItem) *StatusItemDeleteOne {
+	return c.DeleteOneID(si.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *StatusItemClient) DeleteOneID(id int) *StatusItemDeleteOne {
+	builder := c.Delete().Where(statusitem.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &StatusItemDeleteOne{builder}
+}
+
+// Query returns a query builder for StatusItem.
+func (c *StatusItemClient) Query() *StatusItemQuery {
+	return &StatusItemQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a StatusItem entity by its id.
+func (c *StatusItemClient) Get(ctx context.Context, id int) (*StatusItem, error) {
+	return c.Query().Where(statusitem.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *StatusItemClient) GetX(ctx context.Context, id int) *StatusItem {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryStatusType queries the status_type edge of a StatusItem.
+func (c *StatusItemClient) QueryStatusType(si *StatusItem) *StatusTypeQuery {
+	query := &StatusTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(statustype.Table, statustype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, statusitem.StatusTypeTable, statusitem.StatusTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryParties queries the parties edge of a StatusItem.
+func (c *StatusItemClient) QueryParties(si *StatusItem) *PartyQuery {
+	query := &PartyQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(party.Table, party.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.PartiesTable, statusitem.PartiesColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryPartyStatuses queries the party_statuses edge of a StatusItem.
+func (c *StatusItemClient) QueryPartyStatuses(si *StatusItem) *PartyStatusQuery {
+	query := &PartyStatusQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(partystatus.Table, partystatus.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.PartyStatusesTable, statusitem.PartyStatusesColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryMainStatusValidChanges queries the main_status_valid_changes edge of a StatusItem.
+func (c *StatusItemClient) QueryMainStatusValidChanges(si *StatusItem) *StatusValidChangeQuery {
+	query := &StatusValidChangeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(statusvalidchange.Table, statusvalidchange.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.MainStatusValidChangesTable, statusitem.MainStatusValidChangesColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryToStatusValidChanges queries the to_status_valid_changes edge of a StatusItem.
+func (c *StatusItemClient) QueryToStatusValidChanges(si *StatusItem) *StatusValidChangeQuery {
+	query := &StatusValidChangeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(statusvalidchange.Table, statusvalidchange.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.ToStatusValidChangesTable, statusitem.ToStatusValidChangesColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryCurrentWorkEfforts queries the current_work_efforts edge of a StatusItem.
+func (c *StatusItemClient) QueryCurrentWorkEfforts(si *StatusItem) *WorkEffortQuery {
+	query := &WorkEffortQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(workeffort.Table, workeffort.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.CurrentWorkEffortsTable, statusitem.CurrentWorkEffortsColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryWorkEffortFixedAssetAssigns queries the work_effort_fixed_asset_assigns edge of a StatusItem.
+func (c *StatusItemClient) QueryWorkEffortFixedAssetAssigns(si *StatusItem) *WorkEffortFixedAssetAssignQuery {
+	query := &WorkEffortFixedAssetAssignQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(workeffortfixedassetassign.Table, workeffortfixedassetassign.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.WorkEffortFixedAssetAssignsTable, statusitem.WorkEffortFixedAssetAssignsColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAvailabilityWorkEffortFixedAssetAssigns queries the availability_work_effort_fixed_asset_assigns edge of a StatusItem.
+func (c *StatusItemClient) QueryAvailabilityWorkEffortFixedAssetAssigns(si *StatusItem) *WorkEffortFixedAssetAssignQuery {
+	query := &WorkEffortFixedAssetAssignQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(workeffortfixedassetassign.Table, workeffortfixedassetassign.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.AvailabilityWorkEffortFixedAssetAssignsTable, statusitem.AvailabilityWorkEffortFixedAssetAssignsColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAssignmentWorkEffortPartyAssignments queries the assignment_work_effort_party_assignments edge of a StatusItem.
+func (c *StatusItemClient) QueryAssignmentWorkEffortPartyAssignments(si *StatusItem) *WorkEffortPartyAssignmentQuery {
+	query := &WorkEffortPartyAssignmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.AssignmentWorkEffortPartyAssignmentsTable, statusitem.AssignmentWorkEffortPartyAssignmentsColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAvailabilityWorkEffortPartyAssignments queries the availability_work_effort_party_assignments edge of a StatusItem.
+func (c *StatusItemClient) QueryAvailabilityWorkEffortPartyAssignments(si *StatusItem) *WorkEffortPartyAssignmentQuery {
+	query := &WorkEffortPartyAssignmentQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := si.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusitem.Table, statusitem.FieldID, id),
+			sqlgraph.To(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statusitem.AvailabilityWorkEffortPartyAssignmentsTable, statusitem.AvailabilityWorkEffortPartyAssignmentsColumn),
+		)
+		fromV = sqlgraph.Neighbors(si.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *StatusItemClient) Hooks() []Hook {
+	return c.hooks.StatusItem
+}
+
+// StatusTypeClient is a client for the StatusType schema.
+type StatusTypeClient struct {
+	config
+}
+
+// NewStatusTypeClient returns a client for the StatusType from the given config.
+func NewStatusTypeClient(c config) *StatusTypeClient {
+	return &StatusTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `statustype.Hooks(f(g(h())))`.
+func (c *StatusTypeClient) Use(hooks ...Hook) {
+	c.hooks.StatusType = append(c.hooks.StatusType, hooks...)
+}
+
+// Create returns a create builder for StatusType.
+func (c *StatusTypeClient) Create() *StatusTypeCreate {
+	mutation := newStatusTypeMutation(c.config, OpCreate)
+	return &StatusTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of StatusType entities.
+func (c *StatusTypeClient) CreateBulk(builders ...*StatusTypeCreate) *StatusTypeCreateBulk {
+	return &StatusTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for StatusType.
+func (c *StatusTypeClient) Update() *StatusTypeUpdate {
+	mutation := newStatusTypeMutation(c.config, OpUpdate)
+	return &StatusTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *StatusTypeClient) UpdateOne(st *StatusType) *StatusTypeUpdateOne {
+	mutation := newStatusTypeMutation(c.config, OpUpdateOne, withStatusType(st))
+	return &StatusTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *StatusTypeClient) UpdateOneID(id int) *StatusTypeUpdateOne {
+	mutation := newStatusTypeMutation(c.config, OpUpdateOne, withStatusTypeID(id))
+	return &StatusTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for StatusType.
+func (c *StatusTypeClient) Delete() *StatusTypeDelete {
+	mutation := newStatusTypeMutation(c.config, OpDelete)
+	return &StatusTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *StatusTypeClient) DeleteOne(st *StatusType) *StatusTypeDeleteOne {
+	return c.DeleteOneID(st.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *StatusTypeClient) DeleteOneID(id int) *StatusTypeDeleteOne {
+	builder := c.Delete().Where(statustype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &StatusTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for StatusType.
+func (c *StatusTypeClient) Query() *StatusTypeQuery {
+	return &StatusTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a StatusType entity by its id.
+func (c *StatusTypeClient) Get(ctx context.Context, id int) (*StatusType, error) {
+	return c.Query().Where(statustype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *StatusTypeClient) GetX(ctx context.Context, id int) *StatusType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a StatusType.
+func (c *StatusTypeClient) QueryParent(st *StatusType) *StatusTypeQuery {
+	query := &StatusTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statustype.Table, statustype.FieldID, id),
+			sqlgraph.To(statustype.Table, statustype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, statustype.ParentTable, statustype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a StatusType.
+func (c *StatusTypeClient) QueryChildren(st *StatusType) *StatusTypeQuery {
+	query := &StatusTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statustype.Table, statustype.FieldID, id),
+			sqlgraph.To(statustype.Table, statustype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statustype.ChildrenTable, statustype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryStatusItems queries the status_items edge of a StatusType.
+func (c *StatusTypeClient) QueryStatusItems(st *StatusType) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statustype.Table, statustype.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, statustype.StatusItemsTable, statustype.StatusItemsColumn),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildStatusTypes queries the child_status_types edge of a StatusType.
+func (c *StatusTypeClient) QueryChildStatusTypes(st *StatusType) *StatusTypeQuery {
+	query := &StatusTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := st.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statustype.Table, statustype.FieldID, id),
+			sqlgraph.To(statustype.Table, statustype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, statustype.ChildStatusTypesTable, statustype.ChildStatusTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(st.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *StatusTypeClient) Hooks() []Hook {
+	return c.hooks.StatusType
+}
+
+// StatusValidChangeClient is a client for the StatusValidChange schema.
+type StatusValidChangeClient struct {
+	config
+}
+
+// NewStatusValidChangeClient returns a client for the StatusValidChange from the given config.
+func NewStatusValidChangeClient(c config) *StatusValidChangeClient {
+	return &StatusValidChangeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `statusvalidchange.Hooks(f(g(h())))`.
+func (c *StatusValidChangeClient) Use(hooks ...Hook) {
+	c.hooks.StatusValidChange = append(c.hooks.StatusValidChange, hooks...)
+}
+
+// Create returns a create builder for StatusValidChange.
+func (c *StatusValidChangeClient) Create() *StatusValidChangeCreate {
+	mutation := newStatusValidChangeMutation(c.config, OpCreate)
+	return &StatusValidChangeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of StatusValidChange entities.
+func (c *StatusValidChangeClient) CreateBulk(builders ...*StatusValidChangeCreate) *StatusValidChangeCreateBulk {
+	return &StatusValidChangeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for StatusValidChange.
+func (c *StatusValidChangeClient) Update() *StatusValidChangeUpdate {
+	mutation := newStatusValidChangeMutation(c.config, OpUpdate)
+	return &StatusValidChangeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *StatusValidChangeClient) UpdateOne(svc *StatusValidChange) *StatusValidChangeUpdateOne {
+	mutation := newStatusValidChangeMutation(c.config, OpUpdateOne, withStatusValidChange(svc))
+	return &StatusValidChangeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *StatusValidChangeClient) UpdateOneID(id int) *StatusValidChangeUpdateOne {
+	mutation := newStatusValidChangeMutation(c.config, OpUpdateOne, withStatusValidChangeID(id))
+	return &StatusValidChangeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for StatusValidChange.
+func (c *StatusValidChangeClient) Delete() *StatusValidChangeDelete {
+	mutation := newStatusValidChangeMutation(c.config, OpDelete)
+	return &StatusValidChangeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *StatusValidChangeClient) DeleteOne(svc *StatusValidChange) *StatusValidChangeDeleteOne {
+	return c.DeleteOneID(svc.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *StatusValidChangeClient) DeleteOneID(id int) *StatusValidChangeDeleteOne {
+	builder := c.Delete().Where(statusvalidchange.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &StatusValidChangeDeleteOne{builder}
+}
+
+// Query returns a query builder for StatusValidChange.
+func (c *StatusValidChangeClient) Query() *StatusValidChangeQuery {
+	return &StatusValidChangeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a StatusValidChange entity by its id.
+func (c *StatusValidChangeClient) Get(ctx context.Context, id int) (*StatusValidChange, error) {
+	return c.Query().Where(statusvalidchange.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *StatusValidChangeClient) GetX(ctx context.Context, id int) *StatusValidChange {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryMainStatusItem queries the main_status_item edge of a StatusValidChange.
+func (c *StatusValidChangeClient) QueryMainStatusItem(svc *StatusValidChange) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := svc.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusvalidchange.Table, statusvalidchange.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, statusvalidchange.MainStatusItemTable, statusvalidchange.MainStatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(svc.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryToStatusItem queries the to_status_item edge of a StatusValidChange.
+func (c *StatusValidChangeClient) QueryToStatusItem(svc *StatusValidChange) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := svc.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(statusvalidchange.Table, statusvalidchange.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, statusvalidchange.ToStatusItemTable, statusvalidchange.ToStatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(svc.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *StatusValidChangeClient) Hooks() []Hook {
+	return c.hooks.StatusValidChange
 }
 
 // TemporalExpressionClient is a client for the TemporalExpression schema.
@@ -1935,6 +3139,22 @@ func (c *WorkEffortClient) GetX(ctx context.Context, id int) *WorkEffort {
 	return obj
 }
 
+// QueryWorkEffortType queries the work_effort_type edge of a WorkEffort.
+func (c *WorkEffortClient) QueryWorkEffortType(we *WorkEffort) *WorkEffortTypeQuery {
+	query := &WorkEffortTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := we.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, id),
+			sqlgraph.To(workefforttype.Table, workefforttype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.WorkEffortTypeTable, workeffort.WorkEffortTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(we.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryParent queries the parent edge of a WorkEffort.
 func (c *WorkEffortClient) QueryParent(we *WorkEffort) *WorkEffortQuery {
 	query := &WorkEffortQuery{config: c.config}
@@ -1960,6 +3180,22 @@ func (c *WorkEffortClient) QueryChildren(we *WorkEffort) *WorkEffortQuery {
 			sqlgraph.From(workeffort.Table, workeffort.FieldID, id),
 			sqlgraph.To(workeffort.Table, workeffort.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, workeffort.ChildrenTable, workeffort.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(we.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryCurrentStatusItem queries the current_status_item edge of a WorkEffort.
+func (c *WorkEffortClient) QueryCurrentStatusItem(we *WorkEffort) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := we.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.CurrentStatusItemTable, workeffort.CurrentStatusItemColumn),
 		)
 		fromV = sqlgraph.Neighbors(we.driver.Dialect(), step)
 		return fromV, nil
@@ -2072,6 +3308,22 @@ func (c *WorkEffortClient) QueryWorkEffortPartyAssignments(we *WorkEffort) *Work
 			sqlgraph.From(workeffort.Table, workeffort.FieldID, id),
 			sqlgraph.To(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, workeffort.WorkEffortPartyAssignmentsTable, workeffort.WorkEffortPartyAssignmentsColumn),
+		)
+		fromV = sqlgraph.Neighbors(we.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryWorkEffortSkillStandards queries the work_effort_skill_standards edge of a WorkEffort.
+func (c *WorkEffortClient) QueryWorkEffortSkillStandards(we *WorkEffort) *WorkEffortSkillStandardQuery {
+	query := &WorkEffortSkillStandardQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := we.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, id),
+			sqlgraph.To(workeffortskillstandard.Table, workeffortskillstandard.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, workeffort.WorkEffortSkillStandardsTable, workeffort.WorkEffortSkillStandardsColumn),
 		)
 		fromV = sqlgraph.Neighbors(we.driver.Dialect(), step)
 		return fromV, nil
@@ -2323,6 +3575,38 @@ func (c *WorkEffortFixedAssetAssignClient) QueryFixedAsset(wefaa *WorkEffortFixe
 	return query
 }
 
+// QueryStatusItem queries the status_item edge of a WorkEffortFixedAssetAssign.
+func (c *WorkEffortFixedAssetAssignClient) QueryStatusItem(wefaa *WorkEffortFixedAssetAssign) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wefaa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortfixedassetassign.Table, workeffortfixedassetassign.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortfixedassetassign.StatusItemTable, workeffortfixedassetassign.StatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(wefaa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAvailabilityStatusItem queries the availability_status_item edge of a WorkEffortFixedAssetAssign.
+func (c *WorkEffortFixedAssetAssignClient) QueryAvailabilityStatusItem(wefaa *WorkEffortFixedAssetAssign) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wefaa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortfixedassetassign.Table, workeffortfixedassetassign.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortfixedassetassign.AvailabilityStatusItemTable, workeffortfixedassetassign.AvailabilityStatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(wefaa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *WorkEffortFixedAssetAssignClient) Hooks() []Hook {
 	return c.hooks.WorkEffortFixedAssetAssign
@@ -2461,6 +3745,22 @@ func (c *WorkEffortPartyAssignmentClient) QueryPartyRole(wepa *WorkEffortPartyAs
 	return query
 }
 
+// QueryRoleType queries the role_type edge of a WorkEffortPartyAssignment.
+func (c *WorkEffortPartyAssignmentClient) QueryRoleType(wepa *WorkEffortPartyAssignment) *RoleTypeQuery {
+	query := &RoleTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wepa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, id),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.RoleTypeTable, workeffortpartyassignment.RoleTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(wepa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // QueryAssignedByUserLogin queries the assigned_by_user_login edge of a WorkEffortPartyAssignment.
 func (c *WorkEffortPartyAssignmentClient) QueryAssignedByUserLogin(wepa *WorkEffortPartyAssignment) *UserLoginQuery {
 	query := &UserLoginQuery{config: c.config}
@@ -2477,7 +3777,315 @@ func (c *WorkEffortPartyAssignmentClient) QueryAssignedByUserLogin(wepa *WorkEff
 	return query
 }
 
+// QueryAssignmentStatusItem queries the assignment_status_item edge of a WorkEffortPartyAssignment.
+func (c *WorkEffortPartyAssignmentClient) QueryAssignmentStatusItem(wepa *WorkEffortPartyAssignment) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wepa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.AssignmentStatusItemTable, workeffortpartyassignment.AssignmentStatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(wepa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryAvailabilityStatusItem queries the availability_status_item edge of a WorkEffortPartyAssignment.
+func (c *WorkEffortPartyAssignmentClient) QueryAvailabilityStatusItem(wepa *WorkEffortPartyAssignment) *StatusItemQuery {
+	query := &StatusItemQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wepa.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, id),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.AvailabilityStatusItemTable, workeffortpartyassignment.AvailabilityStatusItemColumn),
+		)
+		fromV = sqlgraph.Neighbors(wepa.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
 // Hooks returns the client hooks.
 func (c *WorkEffortPartyAssignmentClient) Hooks() []Hook {
 	return c.hooks.WorkEffortPartyAssignment
+}
+
+// WorkEffortSkillStandardClient is a client for the WorkEffortSkillStandard schema.
+type WorkEffortSkillStandardClient struct {
+	config
+}
+
+// NewWorkEffortSkillStandardClient returns a client for the WorkEffortSkillStandard from the given config.
+func NewWorkEffortSkillStandardClient(c config) *WorkEffortSkillStandardClient {
+	return &WorkEffortSkillStandardClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `workeffortskillstandard.Hooks(f(g(h())))`.
+func (c *WorkEffortSkillStandardClient) Use(hooks ...Hook) {
+	c.hooks.WorkEffortSkillStandard = append(c.hooks.WorkEffortSkillStandard, hooks...)
+}
+
+// Create returns a create builder for WorkEffortSkillStandard.
+func (c *WorkEffortSkillStandardClient) Create() *WorkEffortSkillStandardCreate {
+	mutation := newWorkEffortSkillStandardMutation(c.config, OpCreate)
+	return &WorkEffortSkillStandardCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of WorkEffortSkillStandard entities.
+func (c *WorkEffortSkillStandardClient) CreateBulk(builders ...*WorkEffortSkillStandardCreate) *WorkEffortSkillStandardCreateBulk {
+	return &WorkEffortSkillStandardCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for WorkEffortSkillStandard.
+func (c *WorkEffortSkillStandardClient) Update() *WorkEffortSkillStandardUpdate {
+	mutation := newWorkEffortSkillStandardMutation(c.config, OpUpdate)
+	return &WorkEffortSkillStandardUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *WorkEffortSkillStandardClient) UpdateOne(wess *WorkEffortSkillStandard) *WorkEffortSkillStandardUpdateOne {
+	mutation := newWorkEffortSkillStandardMutation(c.config, OpUpdateOne, withWorkEffortSkillStandard(wess))
+	return &WorkEffortSkillStandardUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *WorkEffortSkillStandardClient) UpdateOneID(id int) *WorkEffortSkillStandardUpdateOne {
+	mutation := newWorkEffortSkillStandardMutation(c.config, OpUpdateOne, withWorkEffortSkillStandardID(id))
+	return &WorkEffortSkillStandardUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for WorkEffortSkillStandard.
+func (c *WorkEffortSkillStandardClient) Delete() *WorkEffortSkillStandardDelete {
+	mutation := newWorkEffortSkillStandardMutation(c.config, OpDelete)
+	return &WorkEffortSkillStandardDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *WorkEffortSkillStandardClient) DeleteOne(wess *WorkEffortSkillStandard) *WorkEffortSkillStandardDeleteOne {
+	return c.DeleteOneID(wess.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *WorkEffortSkillStandardClient) DeleteOneID(id int) *WorkEffortSkillStandardDeleteOne {
+	builder := c.Delete().Where(workeffortskillstandard.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &WorkEffortSkillStandardDeleteOne{builder}
+}
+
+// Query returns a query builder for WorkEffortSkillStandard.
+func (c *WorkEffortSkillStandardClient) Query() *WorkEffortSkillStandardQuery {
+	return &WorkEffortSkillStandardQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a WorkEffortSkillStandard entity by its id.
+func (c *WorkEffortSkillStandardClient) Get(ctx context.Context, id int) (*WorkEffortSkillStandard, error) {
+	return c.Query().Where(workeffortskillstandard.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *WorkEffortSkillStandardClient) GetX(ctx context.Context, id int) *WorkEffortSkillStandard {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryWorkEffort queries the work_effort edge of a WorkEffortSkillStandard.
+func (c *WorkEffortSkillStandardClient) QueryWorkEffort(wess *WorkEffortSkillStandard) *WorkEffortQuery {
+	query := &WorkEffortQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wess.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortskillstandard.Table, workeffortskillstandard.FieldID, id),
+			sqlgraph.To(workeffort.Table, workeffort.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortskillstandard.WorkEffortTable, workeffortskillstandard.WorkEffortColumn),
+		)
+		fromV = sqlgraph.Neighbors(wess.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QuerySkillType queries the skill_type edge of a WorkEffortSkillStandard.
+func (c *WorkEffortSkillStandardClient) QuerySkillType(wess *WorkEffortSkillStandard) *SkillTypeQuery {
+	query := &SkillTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wess.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortskillstandard.Table, workeffortskillstandard.FieldID, id),
+			sqlgraph.To(skilltype.Table, skilltype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortskillstandard.SkillTypeTable, workeffortskillstandard.SkillTypeColumn),
+		)
+		fromV = sqlgraph.Neighbors(wess.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *WorkEffortSkillStandardClient) Hooks() []Hook {
+	return c.hooks.WorkEffortSkillStandard
+}
+
+// WorkEffortTypeClient is a client for the WorkEffortType schema.
+type WorkEffortTypeClient struct {
+	config
+}
+
+// NewWorkEffortTypeClient returns a client for the WorkEffortType from the given config.
+func NewWorkEffortTypeClient(c config) *WorkEffortTypeClient {
+	return &WorkEffortTypeClient{config: c}
+}
+
+// Use adds a list of mutation hooks to the hooks stack.
+// A call to `Use(f, g, h)` equals to `workefforttype.Hooks(f(g(h())))`.
+func (c *WorkEffortTypeClient) Use(hooks ...Hook) {
+	c.hooks.WorkEffortType = append(c.hooks.WorkEffortType, hooks...)
+}
+
+// Create returns a create builder for WorkEffortType.
+func (c *WorkEffortTypeClient) Create() *WorkEffortTypeCreate {
+	mutation := newWorkEffortTypeMutation(c.config, OpCreate)
+	return &WorkEffortTypeCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// CreateBulk returns a builder for creating a bulk of WorkEffortType entities.
+func (c *WorkEffortTypeClient) CreateBulk(builders ...*WorkEffortTypeCreate) *WorkEffortTypeCreateBulk {
+	return &WorkEffortTypeCreateBulk{config: c.config, builders: builders}
+}
+
+// Update returns an update builder for WorkEffortType.
+func (c *WorkEffortTypeClient) Update() *WorkEffortTypeUpdate {
+	mutation := newWorkEffortTypeMutation(c.config, OpUpdate)
+	return &WorkEffortTypeUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOne returns an update builder for the given entity.
+func (c *WorkEffortTypeClient) UpdateOne(wet *WorkEffortType) *WorkEffortTypeUpdateOne {
+	mutation := newWorkEffortTypeMutation(c.config, OpUpdateOne, withWorkEffortType(wet))
+	return &WorkEffortTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// UpdateOneID returns an update builder for the given id.
+func (c *WorkEffortTypeClient) UpdateOneID(id int) *WorkEffortTypeUpdateOne {
+	mutation := newWorkEffortTypeMutation(c.config, OpUpdateOne, withWorkEffortTypeID(id))
+	return &WorkEffortTypeUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// Delete returns a delete builder for WorkEffortType.
+func (c *WorkEffortTypeClient) Delete() *WorkEffortTypeDelete {
+	mutation := newWorkEffortTypeMutation(c.config, OpDelete)
+	return &WorkEffortTypeDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+}
+
+// DeleteOne returns a delete builder for the given entity.
+func (c *WorkEffortTypeClient) DeleteOne(wet *WorkEffortType) *WorkEffortTypeDeleteOne {
+	return c.DeleteOneID(wet.ID)
+}
+
+// DeleteOneID returns a delete builder for the given id.
+func (c *WorkEffortTypeClient) DeleteOneID(id int) *WorkEffortTypeDeleteOne {
+	builder := c.Delete().Where(workefforttype.ID(id))
+	builder.mutation.id = &id
+	builder.mutation.op = OpDeleteOne
+	return &WorkEffortTypeDeleteOne{builder}
+}
+
+// Query returns a query builder for WorkEffortType.
+func (c *WorkEffortTypeClient) Query() *WorkEffortTypeQuery {
+	return &WorkEffortTypeQuery{
+		config: c.config,
+	}
+}
+
+// Get returns a WorkEffortType entity by its id.
+func (c *WorkEffortTypeClient) Get(ctx context.Context, id int) (*WorkEffortType, error) {
+	return c.Query().Where(workefforttype.ID(id)).Only(ctx)
+}
+
+// GetX is like Get, but panics if an error occurs.
+func (c *WorkEffortTypeClient) GetX(ctx context.Context, id int) *WorkEffortType {
+	obj, err := c.Get(ctx, id)
+	if err != nil {
+		panic(err)
+	}
+	return obj
+}
+
+// QueryParent queries the parent edge of a WorkEffortType.
+func (c *WorkEffortTypeClient) QueryParent(wet *WorkEffortType) *WorkEffortTypeQuery {
+	query := &WorkEffortTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workefforttype.Table, workefforttype.FieldID, id),
+			sqlgraph.To(workefforttype.Table, workefforttype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workefforttype.ParentTable, workefforttype.ParentColumn),
+		)
+		fromV = sqlgraph.Neighbors(wet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildren queries the children edge of a WorkEffortType.
+func (c *WorkEffortTypeClient) QueryChildren(wet *WorkEffortType) *WorkEffortTypeQuery {
+	query := &WorkEffortTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workefforttype.Table, workefforttype.FieldID, id),
+			sqlgraph.To(workefforttype.Table, workefforttype.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, workefforttype.ChildrenTable, workefforttype.ChildrenColumn),
+		)
+		fromV = sqlgraph.Neighbors(wet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryWorkEfforts queries the work_efforts edge of a WorkEffortType.
+func (c *WorkEffortTypeClient) QueryWorkEfforts(wet *WorkEffortType) *WorkEffortQuery {
+	query := &WorkEffortQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workefforttype.Table, workefforttype.FieldID, id),
+			sqlgraph.To(workeffort.Table, workeffort.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, workefforttype.WorkEffortsTable, workefforttype.WorkEffortsColumn),
+		)
+		fromV = sqlgraph.Neighbors(wet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// QueryChildWorkEffortTypes queries the child_work_effort_types edge of a WorkEffortType.
+func (c *WorkEffortTypeClient) QueryChildWorkEffortTypes(wet *WorkEffortType) *WorkEffortTypeQuery {
+	query := &WorkEffortTypeQuery{config: c.config}
+	query.path = func(ctx context.Context) (fromV *sql.Selector, _ error) {
+		id := wet.ID
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workefforttype.Table, workefforttype.FieldID, id),
+			sqlgraph.To(workefforttype.Table, workefforttype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2M, false, workefforttype.ChildWorkEffortTypesTable, workefforttype.ChildWorkEffortTypesPrimaryKey...),
+		)
+		fromV = sqlgraph.Neighbors(wet.driver.Dialect(), step)
+		return fromV, nil
+	}
+	return query
+}
+
+// Hooks returns the client hooks.
+func (c *WorkEffortTypeClient) Hooks() []Hook {
+	return c.hooks.WorkEffortType
 }

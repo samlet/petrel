@@ -12,6 +12,12 @@ const (
 	Label = "person"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldSalutation holds the string denoting the salutation field in the database.
 	FieldSalutation = "salutation"
 	// FieldFirstName holds the string denoting the first_name field in the database.
@@ -78,6 +84,8 @@ const (
 	FieldCardID = "card_id"
 	// EdgeParty holds the string denoting the party edge name in mutations.
 	EdgeParty = "party"
+	// EdgePartyContactMeches holds the string denoting the party_contact_meches edge name in mutations.
+	EdgePartyContactMeches = "party_contact_meches"
 	// EdgeUserLogins holds the string denoting the user_logins edge name in mutations.
 	EdgeUserLogins = "user_logins"
 	// Table holds the table name of the person in the database.
@@ -89,6 +97,13 @@ const (
 	PartyInverseTable = "parties"
 	// PartyColumn is the table column denoting the party relation/edge.
 	PartyColumn = "party_person"
+	// PartyContactMechesTable is the table the holds the party_contact_meches relation/edge.
+	PartyContactMechesTable = "party_contact_meches"
+	// PartyContactMechesInverseTable is the table name for the PartyContactMech entity.
+	// It exists in this package in order to avoid circular dependency with the "partycontactmech" package.
+	PartyContactMechesInverseTable = "party_contact_meches"
+	// PartyContactMechesColumn is the table column denoting the party_contact_meches relation/edge.
+	PartyContactMechesColumn = "person_party_contact_meches"
 	// UserLoginsTable is the table the holds the user_logins relation/edge.
 	UserLoginsTable = "user_logins"
 	// UserLoginsInverseTable is the table name for the UserLogin entity.
@@ -101,6 +116,9 @@ const (
 // Columns holds all SQL columns for person fields.
 var Columns = []string{
 	FieldID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldSalutation,
 	FieldFirstName,
 	FieldMiddleName,
@@ -157,6 +175,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultBirthDate holds the default value on creation for the "birth_date" field.
 	DefaultBirthDate func() time.Time
 	// DefaultDeceasedDate holds the default value on creation for the "deceased_date" field.

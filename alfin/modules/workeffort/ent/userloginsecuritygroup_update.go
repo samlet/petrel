@@ -30,6 +30,26 @@ func (ulsgu *UserLoginSecurityGroupUpdate) Where(ps ...predicate.UserLoginSecuri
 	return ulsgu
 }
 
+// SetStringRef sets the "string_ref" field.
+func (ulsgu *UserLoginSecurityGroupUpdate) SetStringRef(s string) *UserLoginSecurityGroupUpdate {
+	ulsgu.mutation.SetStringRef(s)
+	return ulsgu
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (ulsgu *UserLoginSecurityGroupUpdate) SetNillableStringRef(s *string) *UserLoginSecurityGroupUpdate {
+	if s != nil {
+		ulsgu.SetStringRef(*s)
+	}
+	return ulsgu
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (ulsgu *UserLoginSecurityGroupUpdate) ClearStringRef() *UserLoginSecurityGroupUpdate {
+	ulsgu.mutation.ClearStringRef()
+	return ulsgu
+}
+
 // SetFromDate sets the "from_date" field.
 func (ulsgu *UserLoginSecurityGroupUpdate) SetFromDate(t time.Time) *UserLoginSecurityGroupUpdate {
 	ulsgu.mutation.SetFromDate(t)
@@ -161,6 +181,7 @@ func (ulsgu *UserLoginSecurityGroupUpdate) Save(ctx context.Context) (int, error
 		err      error
 		affected int
 	)
+	ulsgu.defaults()
 	if len(ulsgu.hooks) == 0 {
 		affected, err = ulsgu.sqlSave(ctx)
 	} else {
@@ -206,6 +227,14 @@ func (ulsgu *UserLoginSecurityGroupUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (ulsgu *UserLoginSecurityGroupUpdate) defaults() {
+	if _, ok := ulsgu.mutation.UpdateTime(); !ok {
+		v := userloginsecuritygroup.UpdateDefaultUpdateTime()
+		ulsgu.mutation.SetUpdateTime(v)
+	}
+}
+
 func (ulsgu *UserLoginSecurityGroupUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -223,6 +252,26 @@ func (ulsgu *UserLoginSecurityGroupUpdate) sqlSave(ctx context.Context) (n int, 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := ulsgu.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userloginsecuritygroup.FieldUpdateTime,
+		})
+	}
+	if value, ok := ulsgu.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: userloginsecuritygroup.FieldStringRef,
+		})
+	}
+	if ulsgu.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: userloginsecuritygroup.FieldStringRef,
+		})
 	}
 	if value, ok := ulsgu.mutation.FromDate(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -387,6 +436,26 @@ type UserLoginSecurityGroupUpdateOne struct {
 	mutation *UserLoginSecurityGroupMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (ulsguo *UserLoginSecurityGroupUpdateOne) SetStringRef(s string) *UserLoginSecurityGroupUpdateOne {
+	ulsguo.mutation.SetStringRef(s)
+	return ulsguo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (ulsguo *UserLoginSecurityGroupUpdateOne) SetNillableStringRef(s *string) *UserLoginSecurityGroupUpdateOne {
+	if s != nil {
+		ulsguo.SetStringRef(*s)
+	}
+	return ulsguo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (ulsguo *UserLoginSecurityGroupUpdateOne) ClearStringRef() *UserLoginSecurityGroupUpdateOne {
+	ulsguo.mutation.ClearStringRef()
+	return ulsguo
+}
+
 // SetFromDate sets the "from_date" field.
 func (ulsguo *UserLoginSecurityGroupUpdateOne) SetFromDate(t time.Time) *UserLoginSecurityGroupUpdateOne {
 	ulsguo.mutation.SetFromDate(t)
@@ -525,6 +594,7 @@ func (ulsguo *UserLoginSecurityGroupUpdateOne) Save(ctx context.Context) (*UserL
 		err  error
 		node *UserLoginSecurityGroup
 	)
+	ulsguo.defaults()
 	if len(ulsguo.hooks) == 0 {
 		node, err = ulsguo.sqlSave(ctx)
 	} else {
@@ -570,6 +640,14 @@ func (ulsguo *UserLoginSecurityGroupUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (ulsguo *UserLoginSecurityGroupUpdateOne) defaults() {
+	if _, ok := ulsguo.mutation.UpdateTime(); !ok {
+		v := userloginsecuritygroup.UpdateDefaultUpdateTime()
+		ulsguo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (ulsguo *UserLoginSecurityGroupUpdateOne) sqlSave(ctx context.Context) (_node *UserLoginSecurityGroup, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -604,6 +682,26 @@ func (ulsguo *UserLoginSecurityGroupUpdateOne) sqlSave(ctx context.Context) (_no
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := ulsguo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userloginsecuritygroup.FieldUpdateTime,
+		})
+	}
+	if value, ok := ulsguo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: userloginsecuritygroup.FieldStringRef,
+		})
+	}
+	if ulsguo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: userloginsecuritygroup.FieldStringRef,
+		})
 	}
 	if value, ok := ulsguo.mutation.FromDate(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

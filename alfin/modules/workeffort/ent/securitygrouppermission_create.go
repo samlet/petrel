@@ -21,6 +21,48 @@ type SecurityGroupPermissionCreate struct {
 	hooks    []Hook
 }
 
+// SetCreateTime sets the "create_time" field.
+func (sgpc *SecurityGroupPermissionCreate) SetCreateTime(t time.Time) *SecurityGroupPermissionCreate {
+	sgpc.mutation.SetCreateTime(t)
+	return sgpc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (sgpc *SecurityGroupPermissionCreate) SetNillableCreateTime(t *time.Time) *SecurityGroupPermissionCreate {
+	if t != nil {
+		sgpc.SetCreateTime(*t)
+	}
+	return sgpc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (sgpc *SecurityGroupPermissionCreate) SetUpdateTime(t time.Time) *SecurityGroupPermissionCreate {
+	sgpc.mutation.SetUpdateTime(t)
+	return sgpc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (sgpc *SecurityGroupPermissionCreate) SetNillableUpdateTime(t *time.Time) *SecurityGroupPermissionCreate {
+	if t != nil {
+		sgpc.SetUpdateTime(*t)
+	}
+	return sgpc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (sgpc *SecurityGroupPermissionCreate) SetStringRef(s string) *SecurityGroupPermissionCreate {
+	sgpc.mutation.SetStringRef(s)
+	return sgpc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (sgpc *SecurityGroupPermissionCreate) SetNillableStringRef(s *string) *SecurityGroupPermissionCreate {
+	if s != nil {
+		sgpc.SetStringRef(*s)
+	}
+	return sgpc
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (sgpc *SecurityGroupPermissionCreate) SetPermissionID(s string) *SecurityGroupPermissionCreate {
 	sgpc.mutation.SetPermissionID(s)
@@ -101,7 +143,10 @@ func (sgpc *SecurityGroupPermissionCreate) Save(ctx context.Context) (*SecurityG
 				return nil, err
 			}
 			sgpc.mutation = mutation
-			node, err = sgpc.sqlSave(ctx)
+			if node, err = sgpc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -126,6 +171,14 @@ func (sgpc *SecurityGroupPermissionCreate) SaveX(ctx context.Context) *SecurityG
 
 // defaults sets the default values of the builder before save.
 func (sgpc *SecurityGroupPermissionCreate) defaults() {
+	if _, ok := sgpc.mutation.CreateTime(); !ok {
+		v := securitygrouppermission.DefaultCreateTime()
+		sgpc.mutation.SetCreateTime(v)
+	}
+	if _, ok := sgpc.mutation.UpdateTime(); !ok {
+		v := securitygrouppermission.DefaultUpdateTime()
+		sgpc.mutation.SetUpdateTime(v)
+	}
 	if _, ok := sgpc.mutation.FromDate(); !ok {
 		v := securitygrouppermission.DefaultFromDate()
 		sgpc.mutation.SetFromDate(v)
@@ -138,6 +191,12 @@ func (sgpc *SecurityGroupPermissionCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (sgpc *SecurityGroupPermissionCreate) check() error {
+	if _, ok := sgpc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := sgpc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if _, ok := sgpc.mutation.PermissionID(); !ok {
 		return &ValidationError{Name: "permission_id", err: errors.New("ent: missing required field \"permission_id\"")}
 	}
@@ -176,6 +235,30 @@ func (sgpc *SecurityGroupPermissionCreate) createSpec() (*SecurityGroupPermissio
 			},
 		}
 	)
+	if value, ok := sgpc.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygrouppermission.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := sgpc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygrouppermission.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := sgpc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: securitygrouppermission.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := sgpc.mutation.PermissionID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -259,10 +342,11 @@ func (sgpcb *SecurityGroupPermissionCreateBulk) Save(ctx context.Context) ([]*Se
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

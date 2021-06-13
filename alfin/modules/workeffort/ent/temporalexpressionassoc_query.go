@@ -326,12 +326,12 @@ func (teaq *TemporalExpressionAssocQuery) WithToTemporalExpression(opts ...func(
 // Example:
 //
 //	var v []struct {
-//		ExprAssocType int `json:"expr_assoc_type,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.TemporalExpressionAssoc.Query().
-//		GroupBy(temporalexpressionassoc.FieldExprAssocType).
+//		GroupBy(temporalexpressionassoc.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -353,11 +353,11 @@ func (teaq *TemporalExpressionAssocQuery) GroupBy(field string, fields ...string
 // Example:
 //
 //	var v []struct {
-//		ExprAssocType int `json:"expr_assoc_type,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.TemporalExpressionAssoc.Query().
-//		Select(temporalexpressionassoc.FieldExprAssocType).
+//		Select(temporalexpressionassoc.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (teaq *TemporalExpressionAssocQuery) Select(field string, fields ...string) *TemporalExpressionAssocSelect {
@@ -542,10 +542,14 @@ func (teaq *TemporalExpressionAssocQuery) querySpec() *sqlgraph.QuerySpec {
 func (teaq *TemporalExpressionAssocQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(teaq.driver.Dialect())
 	t1 := builder.Table(temporalexpressionassoc.Table)
-	selector := builder.Select(t1.Columns(temporalexpressionassoc.Columns...)...).From(t1)
+	columns := teaq.fields
+	if len(columns) == 0 {
+		columns = temporalexpressionassoc.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if teaq.sql != nil {
 		selector = teaq.sql
-		selector.Select(selector.Columns(temporalexpressionassoc.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range teaq.predicates {
 		p(selector)
@@ -813,13 +817,24 @@ func (teagb *TemporalExpressionAssocGroupBy) sqlScan(ctx context.Context, v inte
 }
 
 func (teagb *TemporalExpressionAssocGroupBy) sqlQuery() *sql.Selector {
-	selector := teagb.sql
-	columns := make([]string, 0, len(teagb.fields)+len(teagb.fns))
-	columns = append(columns, teagb.fields...)
+	selector := teagb.sql.Select()
+	aggregation := make([]string, 0, len(teagb.fns))
 	for _, fn := range teagb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(teagb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(teagb.fields)+len(teagb.fns))
+		for _, f := range teagb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(teagb.fields...)...)
 }
 
 // TemporalExpressionAssocSelect is the builder for selecting fields of TemporalExpressionAssoc entities.
@@ -1035,16 +1050,10 @@ func (teas *TemporalExpressionAssocSelect) BoolX(ctx context.Context) bool {
 
 func (teas *TemporalExpressionAssocSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := teas.sqlQuery().Query()
+	query, args := teas.sql.Query()
 	if err := teas.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (teas *TemporalExpressionAssocSelect) sqlQuery() sql.Querier {
-	selector := teas.sql
-	selector.Select(selector.Columns(teas.fields...)...)
-	return selector
 }

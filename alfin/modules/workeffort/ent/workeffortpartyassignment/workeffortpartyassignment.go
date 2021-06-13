@@ -12,14 +12,16 @@ const (
 	Label = "work_effort_party_assignment"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldRoleTypeID holds the string denoting the role_type_id field in the database.
-	FieldRoleTypeID = "role_type_id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldFromDate holds the string denoting the from_date field in the database.
 	FieldFromDate = "from_date"
 	// FieldThruDate holds the string denoting the thru_date field in the database.
 	FieldThruDate = "thru_date"
-	// FieldStatusID holds the string denoting the status_id field in the database.
-	FieldStatusID = "status_id"
 	// FieldStatusDateTime holds the string denoting the status_date_time field in the database.
 	FieldStatusDateTime = "status_date_time"
 	// FieldExpectationEnumID holds the string denoting the expectation_enum_id field in the database.
@@ -32,16 +34,20 @@ const (
 	FieldComments = "comments"
 	// FieldMustRsvp holds the string denoting the must_rsvp field in the database.
 	FieldMustRsvp = "must_rsvp"
-	// FieldAvailabilityStatusID holds the string denoting the availability_status_id field in the database.
-	FieldAvailabilityStatusID = "availability_status_id"
 	// EdgeWorkEffort holds the string denoting the work_effort edge name in mutations.
 	EdgeWorkEffort = "work_effort"
 	// EdgeParty holds the string denoting the party edge name in mutations.
 	EdgeParty = "party"
 	// EdgePartyRole holds the string denoting the party_role edge name in mutations.
 	EdgePartyRole = "party_role"
+	// EdgeRoleType holds the string denoting the role_type edge name in mutations.
+	EdgeRoleType = "role_type"
 	// EdgeAssignedByUserLogin holds the string denoting the assigned_by_user_login edge name in mutations.
 	EdgeAssignedByUserLogin = "assigned_by_user_login"
+	// EdgeAssignmentStatusItem holds the string denoting the assignment_status_item edge name in mutations.
+	EdgeAssignmentStatusItem = "assignment_status_item"
+	// EdgeAvailabilityStatusItem holds the string denoting the availability_status_item edge name in mutations.
+	EdgeAvailabilityStatusItem = "availability_status_item"
 	// Table holds the table name of the workeffortpartyassignment in the database.
 	Table = "work_effort_party_assignments"
 	// WorkEffortTable is the table the holds the work_effort relation/edge.
@@ -65,6 +71,13 @@ const (
 	PartyRoleInverseTable = "party_roles"
 	// PartyRoleColumn is the table column denoting the party_role relation/edge.
 	PartyRoleColumn = "party_role_work_effort_party_assignments"
+	// RoleTypeTable is the table the holds the role_type relation/edge.
+	RoleTypeTable = "work_effort_party_assignments"
+	// RoleTypeInverseTable is the table name for the RoleType entity.
+	// It exists in this package in order to avoid circular dependency with the "roletype" package.
+	RoleTypeInverseTable = "role_types"
+	// RoleTypeColumn is the table column denoting the role_type relation/edge.
+	RoleTypeColumn = "role_type_work_effort_party_assignments"
 	// AssignedByUserLoginTable is the table the holds the assigned_by_user_login relation/edge.
 	AssignedByUserLoginTable = "work_effort_party_assignments"
 	// AssignedByUserLoginInverseTable is the table name for the UserLogin entity.
@@ -72,22 +85,36 @@ const (
 	AssignedByUserLoginInverseTable = "user_logins"
 	// AssignedByUserLoginColumn is the table column denoting the assigned_by_user_login relation/edge.
 	AssignedByUserLoginColumn = "user_login_assigned_by_work_effort_party_assignments"
+	// AssignmentStatusItemTable is the table the holds the assignment_status_item relation/edge.
+	AssignmentStatusItemTable = "work_effort_party_assignments"
+	// AssignmentStatusItemInverseTable is the table name for the StatusItem entity.
+	// It exists in this package in order to avoid circular dependency with the "statusitem" package.
+	AssignmentStatusItemInverseTable = "status_items"
+	// AssignmentStatusItemColumn is the table column denoting the assignment_status_item relation/edge.
+	AssignmentStatusItemColumn = "status_item_assignment_work_effort_party_assignments"
+	// AvailabilityStatusItemTable is the table the holds the availability_status_item relation/edge.
+	AvailabilityStatusItemTable = "work_effort_party_assignments"
+	// AvailabilityStatusItemInverseTable is the table name for the StatusItem entity.
+	// It exists in this package in order to avoid circular dependency with the "statusitem" package.
+	AvailabilityStatusItemInverseTable = "status_items"
+	// AvailabilityStatusItemColumn is the table column denoting the availability_status_item relation/edge.
+	AvailabilityStatusItemColumn = "status_item_availability_work_effort_party_assignments"
 )
 
 // Columns holds all SQL columns for workeffortpartyassignment fields.
 var Columns = []string{
 	FieldID,
-	FieldRoleTypeID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldFromDate,
 	FieldThruDate,
-	FieldStatusID,
 	FieldStatusDateTime,
 	FieldExpectationEnumID,
 	FieldDelegateReasonEnumID,
 	FieldFacilityID,
 	FieldComments,
 	FieldMustRsvp,
-	FieldAvailabilityStatusID,
 }
 
 // ForeignKeys holds the SQL foreign-keys that are owned by the "work_effort_party_assignments"
@@ -95,6 +122,9 @@ var Columns = []string{
 var ForeignKeys = []string{
 	"party_work_effort_party_assignments",
 	"party_role_work_effort_party_assignments",
+	"role_type_work_effort_party_assignments",
+	"status_item_assignment_work_effort_party_assignments",
+	"status_item_availability_work_effort_party_assignments",
 	"user_login_assigned_by_work_effort_party_assignments",
 	"work_effort_work_effort_party_assignments",
 }
@@ -115,6 +145,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultFromDate holds the default value on creation for the "from_date" field.
 	DefaultFromDate func() time.Time
 	// DefaultThruDate holds the default value on creation for the "thru_date" field.

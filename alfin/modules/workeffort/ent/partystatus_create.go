@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 )
 
@@ -22,9 +23,45 @@ type PartyStatusCreate struct {
 	hooks    []Hook
 }
 
-// SetStatusID sets the "status_id" field.
-func (psc *PartyStatusCreate) SetStatusID(i int) *PartyStatusCreate {
-	psc.mutation.SetStatusID(i)
+// SetCreateTime sets the "create_time" field.
+func (psc *PartyStatusCreate) SetCreateTime(t time.Time) *PartyStatusCreate {
+	psc.mutation.SetCreateTime(t)
+	return psc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (psc *PartyStatusCreate) SetNillableCreateTime(t *time.Time) *PartyStatusCreate {
+	if t != nil {
+		psc.SetCreateTime(*t)
+	}
+	return psc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (psc *PartyStatusCreate) SetUpdateTime(t time.Time) *PartyStatusCreate {
+	psc.mutation.SetUpdateTime(t)
+	return psc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (psc *PartyStatusCreate) SetNillableUpdateTime(t *time.Time) *PartyStatusCreate {
+	if t != nil {
+		psc.SetUpdateTime(*t)
+	}
+	return psc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (psc *PartyStatusCreate) SetStringRef(s string) *PartyStatusCreate {
+	psc.mutation.SetStringRef(s)
+	return psc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (psc *PartyStatusCreate) SetNillableStringRef(s *string) *PartyStatusCreate {
+	if s != nil {
+		psc.SetStringRef(*s)
+	}
 	return psc
 }
 
@@ -40,6 +77,25 @@ func (psc *PartyStatusCreate) SetNillableStatusDate(t *time.Time) *PartyStatusCr
 		psc.SetStatusDate(*t)
 	}
 	return psc
+}
+
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (psc *PartyStatusCreate) SetStatusItemID(id int) *PartyStatusCreate {
+	psc.mutation.SetStatusItemID(id)
+	return psc
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (psc *PartyStatusCreate) SetNillableStatusItemID(id *int) *PartyStatusCreate {
+	if id != nil {
+		psc = psc.SetStatusItemID(*id)
+	}
+	return psc
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (psc *PartyStatusCreate) SetStatusItem(s *StatusItem) *PartyStatusCreate {
+	return psc.SetStatusItemID(s.ID)
 }
 
 // SetPartyID sets the "party" edge to the Party entity by ID.
@@ -107,7 +163,10 @@ func (psc *PartyStatusCreate) Save(ctx context.Context) (*PartyStatus, error) {
 				return nil, err
 			}
 			psc.mutation = mutation
-			node, err = psc.sqlSave(ctx)
+			if node, err = psc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -132,6 +191,14 @@ func (psc *PartyStatusCreate) SaveX(ctx context.Context) *PartyStatus {
 
 // defaults sets the default values of the builder before save.
 func (psc *PartyStatusCreate) defaults() {
+	if _, ok := psc.mutation.CreateTime(); !ok {
+		v := partystatus.DefaultCreateTime()
+		psc.mutation.SetCreateTime(v)
+	}
+	if _, ok := psc.mutation.UpdateTime(); !ok {
+		v := partystatus.DefaultUpdateTime()
+		psc.mutation.SetUpdateTime(v)
+	}
 	if _, ok := psc.mutation.StatusDate(); !ok {
 		v := partystatus.DefaultStatusDate()
 		psc.mutation.SetStatusDate(v)
@@ -140,8 +207,11 @@ func (psc *PartyStatusCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (psc *PartyStatusCreate) check() error {
-	if _, ok := psc.mutation.StatusID(); !ok {
-		return &ValidationError{Name: "status_id", err: errors.New("ent: missing required field \"status_id\"")}
+	if _, ok := psc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := psc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
 	}
 	if _, ok := psc.mutation.StatusDate(); !ok {
 		return &ValidationError{Name: "status_date", err: errors.New("ent: missing required field \"status_date\"")}
@@ -173,13 +243,29 @@ func (psc *PartyStatusCreate) createSpec() (*PartyStatus, *sqlgraph.CreateSpec) 
 			},
 		}
 	)
-	if value, ok := psc.mutation.StatusID(); ok {
+	if value, ok := psc.mutation.CreateTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: partystatus.FieldStatusID,
+			Column: partystatus.FieldCreateTime,
 		})
-		_node.StatusID = value
+		_node.CreateTime = value
+	}
+	if value, ok := psc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: partystatus.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := psc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: partystatus.FieldStringRef,
+		})
+		_node.StringRef = value
 	}
 	if value, ok := psc.mutation.StatusDate(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -188,6 +274,26 @@ func (psc *PartyStatusCreate) createSpec() (*PartyStatus, *sqlgraph.CreateSpec) 
 			Column: partystatus.FieldStatusDate,
 		})
 		_node.StatusDate = value
+	}
+	if nodes := psc.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partystatus.StatusItemTable,
+			Columns: []string{partystatus.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.status_item_party_statuses = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := psc.mutation.PartyIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -268,10 +374,11 @@ func (pscb *PartyStatusCreateBulk) Save(ctx context.Context) ([]*PartyStatus, er
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

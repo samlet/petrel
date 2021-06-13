@@ -364,12 +364,12 @@ func (ulsgq *UserLoginSecurityGroupQuery) WithSecurityGroupPermissions(opts ...f
 // Example:
 //
 //	var v []struct {
-//		FromDate time.Time `json:"from_date,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.UserLoginSecurityGroup.Query().
-//		GroupBy(userloginsecuritygroup.FieldFromDate).
+//		GroupBy(userloginsecuritygroup.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -391,11 +391,11 @@ func (ulsgq *UserLoginSecurityGroupQuery) GroupBy(field string, fields ...string
 // Example:
 //
 //	var v []struct {
-//		FromDate time.Time `json:"from_date,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.UserLoginSecurityGroup.Query().
-//		Select(userloginsecuritygroup.FieldFromDate).
+//		Select(userloginsecuritygroup.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (ulsgq *UserLoginSecurityGroupQuery) Select(field string, fields ...string) *UserLoginSecurityGroupSelect {
@@ -610,10 +610,14 @@ func (ulsgq *UserLoginSecurityGroupQuery) querySpec() *sqlgraph.QuerySpec {
 func (ulsgq *UserLoginSecurityGroupQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(ulsgq.driver.Dialect())
 	t1 := builder.Table(userloginsecuritygroup.Table)
-	selector := builder.Select(t1.Columns(userloginsecuritygroup.Columns...)...).From(t1)
+	columns := ulsgq.fields
+	if len(columns) == 0 {
+		columns = userloginsecuritygroup.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if ulsgq.sql != nil {
 		selector = ulsgq.sql
-		selector.Select(selector.Columns(userloginsecuritygroup.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range ulsgq.predicates {
 		p(selector)
@@ -881,13 +885,24 @@ func (ulsggb *UserLoginSecurityGroupGroupBy) sqlScan(ctx context.Context, v inte
 }
 
 func (ulsggb *UserLoginSecurityGroupGroupBy) sqlQuery() *sql.Selector {
-	selector := ulsggb.sql
-	columns := make([]string, 0, len(ulsggb.fields)+len(ulsggb.fns))
-	columns = append(columns, ulsggb.fields...)
+	selector := ulsggb.sql.Select()
+	aggregation := make([]string, 0, len(ulsggb.fns))
 	for _, fn := range ulsggb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(ulsggb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(ulsggb.fields)+len(ulsggb.fns))
+		for _, f := range ulsggb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(ulsggb.fields...)...)
 }
 
 // UserLoginSecurityGroupSelect is the builder for selecting fields of UserLoginSecurityGroup entities.
@@ -1103,16 +1118,10 @@ func (ulsgs *UserLoginSecurityGroupSelect) BoolX(ctx context.Context) bool {
 
 func (ulsgs *UserLoginSecurityGroupSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := ulsgs.sqlQuery().Query()
+	query, args := ulsgs.sql.Query()
 	if err := ulsgs.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (ulsgs *UserLoginSecurityGroupSelect) sqlQuery() sql.Querier {
-	selector := ulsgs.sql
-	selector.Select(selector.Columns(ulsgs.fields...)...)
-	return selector
 }

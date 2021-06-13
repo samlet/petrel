@@ -2,11 +2,21 @@
 
 package securitygroup
 
+import (
+	"time"
+)
+
 const (
 	// Label holds the string label denoting the securitygroup type in the database.
 	Label = "security_group"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldGroupName holds the string denoting the group_name field in the database.
 	FieldGroupName = "group_name"
 	// FieldDescription holds the string denoting the description field in the database.
@@ -36,6 +46,9 @@ const (
 // Columns holds all SQL columns for securitygroup fields.
 var Columns = []string{
 	FieldID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldGroupName,
 	FieldDescription,
 }
@@ -49,3 +62,12 @@ func ValidColumn(column string) bool {
 	}
 	return false
 }
+
+var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
+)

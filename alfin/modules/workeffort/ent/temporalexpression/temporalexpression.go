@@ -11,6 +11,12 @@ const (
 	Label = "temporal_expression"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldTempExprTypeID holds the string denoting the temp_expr_type_id field in the database.
 	FieldTempExprTypeID = "temp_expr_type_id"
 	// FieldDescription holds the string denoting the description field in the database.
@@ -61,6 +67,9 @@ const (
 // Columns holds all SQL columns for temporalexpression fields.
 var Columns = []string{
 	FieldID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldTempExprTypeID,
 	FieldDescription,
 	FieldDate1,
@@ -82,6 +91,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultDate1 holds the default value on creation for the "date_1" field.
 	DefaultDate1 func() time.Time
 	// DefaultDate2 holds the default value on creation for the "date_2" field.

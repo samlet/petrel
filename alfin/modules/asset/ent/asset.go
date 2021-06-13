@@ -17,6 +17,12 @@ type Asset struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// Model holds the value of the "model" field.
 	Model string `json:"model,omitempty"`
 	// RegisteredAt holds the value of the "registered_at" field.
@@ -57,9 +63,9 @@ func (*Asset) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case asset.FieldID:
 			values[i] = new(sql.NullInt64)
-		case asset.FieldModel:
+		case asset.FieldStringRef, asset.FieldModel:
 			values[i] = new(sql.NullString)
-		case asset.FieldRegisteredAt:
+		case asset.FieldCreateTime, asset.FieldUpdateTime, asset.FieldRegisteredAt:
 			values[i] = new(sql.NullTime)
 		case asset.ForeignKeys[0]: // workload_pkg_assets
 			values[i] = new(sql.NullInt64)
@@ -84,6 +90,24 @@ func (a *Asset) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			a.ID = int(value.Int64)
+		case asset.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				a.CreateTime = value.Time
+			}
+		case asset.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				a.UpdateTime = value.Time
+			}
+		case asset.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				a.StringRef = value.String
+			}
 		case asset.FieldModel:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field model", values[i])
@@ -136,6 +160,12 @@ func (a *Asset) String() string {
 	var builder strings.Builder
 	builder.WriteString("Asset(")
 	builder.WriteString(fmt.Sprintf("id=%v", a.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(a.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(a.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(a.StringRef)
 	builder.WriteString(", model=")
 	builder.WriteString(a.Model)
 	builder.WriteString(", registered_at=")

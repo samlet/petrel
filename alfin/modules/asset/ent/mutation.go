@@ -34,6 +34,9 @@ type AssetMutation struct {
 	op            Op
 	typ           string
 	id            *int
+	create_time   *time.Time
+	update_time   *time.Time
+	string_ref    *string
 	model         *string
 	registered_at *time.Time
 	clearedFields map[string]struct{}
@@ -114,13 +117,134 @@ func (m AssetMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
-// ID returns the ID value in the mutation. Note that the ID
-// is only available if it was provided to the builder.
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
 func (m *AssetMutation) ID() (id int, exists bool) {
 	if m.id == nil {
 		return
 	}
 	return *m.id, true
+}
+
+// SetCreateTime sets the "create_time" field.
+func (m *AssetMutation) SetCreateTime(t time.Time) {
+	m.create_time = &t
+}
+
+// CreateTime returns the value of the "create_time" field in the mutation.
+func (m *AssetMutation) CreateTime() (r time.Time, exists bool) {
+	v := m.create_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldCreateTime returns the old "create_time" field's value of the Asset entity.
+// If the Asset object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AssetMutation) OldCreateTime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldCreateTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldCreateTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldCreateTime: %w", err)
+	}
+	return oldValue.CreateTime, nil
+}
+
+// ResetCreateTime resets all changes to the "create_time" field.
+func (m *AssetMutation) ResetCreateTime() {
+	m.create_time = nil
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (m *AssetMutation) SetUpdateTime(t time.Time) {
+	m.update_time = &t
+}
+
+// UpdateTime returns the value of the "update_time" field in the mutation.
+func (m *AssetMutation) UpdateTime() (r time.Time, exists bool) {
+	v := m.update_time
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldUpdateTime returns the old "update_time" field's value of the Asset entity.
+// If the Asset object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AssetMutation) OldUpdateTime(ctx context.Context) (v time.Time, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldUpdateTime is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldUpdateTime requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldUpdateTime: %w", err)
+	}
+	return oldValue.UpdateTime, nil
+}
+
+// ResetUpdateTime resets all changes to the "update_time" field.
+func (m *AssetMutation) ResetUpdateTime() {
+	m.update_time = nil
+}
+
+// SetStringRef sets the "string_ref" field.
+func (m *AssetMutation) SetStringRef(s string) {
+	m.string_ref = &s
+}
+
+// StringRef returns the value of the "string_ref" field in the mutation.
+func (m *AssetMutation) StringRef() (r string, exists bool) {
+	v := m.string_ref
+	if v == nil {
+		return
+	}
+	return *v, true
+}
+
+// OldStringRef returns the old "string_ref" field's value of the Asset entity.
+// If the Asset object wasn't provided to the builder, the object is fetched from the database.
+// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
+func (m *AssetMutation) OldStringRef(ctx context.Context) (v string, err error) {
+	if !m.op.Is(OpUpdateOne) {
+		return v, fmt.Errorf("OldStringRef is only allowed on UpdateOne operations")
+	}
+	if m.id == nil || m.oldValue == nil {
+		return v, fmt.Errorf("OldStringRef requires an ID field in the mutation")
+	}
+	oldValue, err := m.oldValue(ctx)
+	if err != nil {
+		return v, fmt.Errorf("querying old value for OldStringRef: %w", err)
+	}
+	return oldValue.StringRef, nil
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (m *AssetMutation) ClearStringRef() {
+	m.string_ref = nil
+	m.clearedFields[asset.FieldStringRef] = struct{}{}
+}
+
+// StringRefCleared returns if the "string_ref" field was cleared in this mutation.
+func (m *AssetMutation) StringRefCleared() bool {
+	_, ok := m.clearedFields[asset.FieldStringRef]
+	return ok
+}
+
+// ResetStringRef resets all changes to the "string_ref" field.
+func (m *AssetMutation) ResetStringRef() {
+	m.string_ref = nil
+	delete(m.clearedFields, asset.FieldStringRef)
 }
 
 // SetModel sets the "model" field.
@@ -248,7 +372,16 @@ func (m *AssetMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *AssetMutation) Fields() []string {
-	fields := make([]string, 0, 2)
+	fields := make([]string, 0, 5)
+	if m.create_time != nil {
+		fields = append(fields, asset.FieldCreateTime)
+	}
+	if m.update_time != nil {
+		fields = append(fields, asset.FieldUpdateTime)
+	}
+	if m.string_ref != nil {
+		fields = append(fields, asset.FieldStringRef)
+	}
 	if m.model != nil {
 		fields = append(fields, asset.FieldModel)
 	}
@@ -263,6 +396,12 @@ func (m *AssetMutation) Fields() []string {
 // schema.
 func (m *AssetMutation) Field(name string) (ent.Value, bool) {
 	switch name {
+	case asset.FieldCreateTime:
+		return m.CreateTime()
+	case asset.FieldUpdateTime:
+		return m.UpdateTime()
+	case asset.FieldStringRef:
+		return m.StringRef()
 	case asset.FieldModel:
 		return m.Model()
 	case asset.FieldRegisteredAt:
@@ -276,6 +415,12 @@ func (m *AssetMutation) Field(name string) (ent.Value, bool) {
 // database failed.
 func (m *AssetMutation) OldField(ctx context.Context, name string) (ent.Value, error) {
 	switch name {
+	case asset.FieldCreateTime:
+		return m.OldCreateTime(ctx)
+	case asset.FieldUpdateTime:
+		return m.OldUpdateTime(ctx)
+	case asset.FieldStringRef:
+		return m.OldStringRef(ctx)
 	case asset.FieldModel:
 		return m.OldModel(ctx)
 	case asset.FieldRegisteredAt:
@@ -289,6 +434,27 @@ func (m *AssetMutation) OldField(ctx context.Context, name string) (ent.Value, e
 // type.
 func (m *AssetMutation) SetField(name string, value ent.Value) error {
 	switch name {
+	case asset.FieldCreateTime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetCreateTime(v)
+		return nil
+	case asset.FieldUpdateTime:
+		v, ok := value.(time.Time)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetUpdateTime(v)
+		return nil
+	case asset.FieldStringRef:
+		v, ok := value.(string)
+		if !ok {
+			return fmt.Errorf("unexpected type %T for field %s", value, name)
+		}
+		m.SetStringRef(v)
+		return nil
 	case asset.FieldModel:
 		v, ok := value.(string)
 		if !ok {
@@ -332,7 +498,11 @@ func (m *AssetMutation) AddField(name string, value ent.Value) error {
 // ClearedFields returns all nullable fields that were cleared during this
 // mutation.
 func (m *AssetMutation) ClearedFields() []string {
-	return nil
+	var fields []string
+	if m.FieldCleared(asset.FieldStringRef) {
+		fields = append(fields, asset.FieldStringRef)
+	}
+	return fields
 }
 
 // FieldCleared returns a boolean indicating if a field with the given name was
@@ -345,6 +515,11 @@ func (m *AssetMutation) FieldCleared(name string) bool {
 // ClearField clears the value of the field with the given name. It returns an
 // error if the field is not defined in the schema.
 func (m *AssetMutation) ClearField(name string) error {
+	switch name {
+	case asset.FieldStringRef:
+		m.ClearStringRef()
+		return nil
+	}
 	return fmt.Errorf("unknown Asset nullable field %s", name)
 }
 
@@ -352,6 +527,15 @@ func (m *AssetMutation) ClearField(name string) error {
 // It returns an error if the field is not defined in the schema.
 func (m *AssetMutation) ResetField(name string) error {
 	switch name {
+	case asset.FieldCreateTime:
+		m.ResetCreateTime()
+		return nil
+	case asset.FieldUpdateTime:
+		m.ResetUpdateTime()
+		return nil
+	case asset.FieldStringRef:
+		m.ResetStringRef()
+		return nil
 	case asset.FieldModel:
 		m.ResetModel()
 		return nil
@@ -524,8 +708,8 @@ func (m WorkloadPkgMutation) Tx() (*Tx, error) {
 	return tx, nil
 }
 
-// ID returns the ID value in the mutation. Note that the ID
-// is only available if it was provided to the builder.
+// ID returns the ID value in the mutation. Note that the ID is only available
+// if it was provided to the builder or after it was returned from the database.
 func (m *WorkloadPkgMutation) ID() (id int, exists bool) {
 	if m.id == nil {
 		return

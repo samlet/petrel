@@ -12,6 +12,12 @@ const (
 	Label = "user_login"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldCurrentPassword holds the string denoting the current_password field in the database.
 	FieldCurrentPassword = "current_password"
 	// FieldPasswordHint holds the string denoting the password_hint field in the database.
@@ -110,6 +116,9 @@ const (
 // Columns holds all SQL columns for userlogin fields.
 var Columns = []string{
 	FieldID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldCurrentPassword,
 	FieldPasswordHint,
 	FieldIsSystem,
@@ -149,6 +158,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// LastLocaleValidator is a validator for the "last_locale" field. It is called by the builders before save.
 	LastLocaleValidator func(string) error
 	// LastTimeZoneValidator is a validator for the "last_time_zone" field. It is called by the builders before save.

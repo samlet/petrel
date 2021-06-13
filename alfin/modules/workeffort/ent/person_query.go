@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
@@ -28,9 +29,10 @@ type PersonQuery struct {
 	fields     []string
 	predicates []predicate.Person
 	// eager-loading edges.
-	withParty      *PartyQuery
-	withUserLogins *UserLoginQuery
-	withFKs        bool
+	withParty              *PartyQuery
+	withPartyContactMeches *PartyContactMechQuery
+	withUserLogins         *UserLoginQuery
+	withFKs                bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -82,6 +84,28 @@ func (pq *PersonQuery) QueryParty() *PartyQuery {
 			sqlgraph.From(person.Table, person.FieldID, selector),
 			sqlgraph.To(party.Table, party.FieldID),
 			sqlgraph.Edge(sqlgraph.O2O, true, person.PartyTable, person.PartyColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryPartyContactMeches chains the current query on the "party_contact_meches" edge.
+func (pq *PersonQuery) QueryPartyContactMeches() *PartyContactMechQuery {
+	query := &PartyContactMechQuery{config: pq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(person.Table, person.FieldID, selector),
+			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, person.PartyContactMechesTable, person.PartyContactMechesColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
 		return fromU, nil
@@ -287,13 +311,14 @@ func (pq *PersonQuery) Clone() *PersonQuery {
 		return nil
 	}
 	return &PersonQuery{
-		config:         pq.config,
-		limit:          pq.limit,
-		offset:         pq.offset,
-		order:          append([]OrderFunc{}, pq.order...),
-		predicates:     append([]predicate.Person{}, pq.predicates...),
-		withParty:      pq.withParty.Clone(),
-		withUserLogins: pq.withUserLogins.Clone(),
+		config:                 pq.config,
+		limit:                  pq.limit,
+		offset:                 pq.offset,
+		order:                  append([]OrderFunc{}, pq.order...),
+		predicates:             append([]predicate.Person{}, pq.predicates...),
+		withParty:              pq.withParty.Clone(),
+		withPartyContactMeches: pq.withPartyContactMeches.Clone(),
+		withUserLogins:         pq.withUserLogins.Clone(),
 		// clone intermediate query.
 		sql:  pq.sql.Clone(),
 		path: pq.path,
@@ -308,6 +333,17 @@ func (pq *PersonQuery) WithParty(opts ...func(*PartyQuery)) *PersonQuery {
 		opt(query)
 	}
 	pq.withParty = query
+	return pq
+}
+
+// WithPartyContactMeches tells the query-builder to eager-load the nodes that are connected to
+// the "party_contact_meches" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PersonQuery) WithPartyContactMeches(opts ...func(*PartyContactMechQuery)) *PersonQuery {
+	query := &PartyContactMechQuery{config: pq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withPartyContactMeches = query
 	return pq
 }
 
@@ -328,12 +364,12 @@ func (pq *PersonQuery) WithUserLogins(opts ...func(*UserLoginQuery)) *PersonQuer
 // Example:
 //
 //	var v []struct {
-//		Salutation string `json:"salutation,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Person.Query().
-//		GroupBy(person.FieldSalutation).
+//		GroupBy(person.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -355,11 +391,11 @@ func (pq *PersonQuery) GroupBy(field string, fields ...string) *PersonGroupBy {
 // Example:
 //
 //	var v []struct {
-//		Salutation string `json:"salutation,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.Person.Query().
-//		Select(person.FieldSalutation).
+//		Select(person.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (pq *PersonQuery) Select(field string, fields ...string) *PersonSelect {
@@ -388,8 +424,9 @@ func (pq *PersonQuery) sqlAll(ctx context.Context) ([]*Person, error) {
 		nodes       = []*Person{}
 		withFKs     = pq.withFKs
 		_spec       = pq.querySpec()
-		loadedTypes = [2]bool{
+		loadedTypes = [3]bool{
 			pq.withParty != nil,
+			pq.withPartyContactMeches != nil,
 			pq.withUserLogins != nil,
 		}
 	)
@@ -445,6 +482,35 @@ func (pq *PersonQuery) sqlAll(ctx context.Context) ([]*Person, error) {
 			for i := range nodes {
 				nodes[i].Edges.Party = n
 			}
+		}
+	}
+
+	if query := pq.withPartyContactMeches; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int]*Person)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.PartyContactMeches = []*PartyContactMech{}
+		}
+		query.withFKs = true
+		query.Where(predicate.PartyContactMech(func(s *sql.Selector) {
+			s.Where(sql.InValues(person.PartyContactMechesColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.person_party_contact_meches
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "person_party_contact_meches" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "person_party_contact_meches" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.PartyContactMeches = append(node.Edges.PartyContactMeches, n)
 		}
 	}
 
@@ -544,10 +610,14 @@ func (pq *PersonQuery) querySpec() *sqlgraph.QuerySpec {
 func (pq *PersonQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(pq.driver.Dialect())
 	t1 := builder.Table(person.Table)
-	selector := builder.Select(t1.Columns(person.Columns...)...).From(t1)
+	columns := pq.fields
+	if len(columns) == 0 {
+		columns = person.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if pq.sql != nil {
 		selector = pq.sql
-		selector.Select(selector.Columns(person.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range pq.predicates {
 		p(selector)
@@ -815,13 +885,24 @@ func (pgb *PersonGroupBy) sqlScan(ctx context.Context, v interface{}) error {
 }
 
 func (pgb *PersonGroupBy) sqlQuery() *sql.Selector {
-	selector := pgb.sql
-	columns := make([]string, 0, len(pgb.fields)+len(pgb.fns))
-	columns = append(columns, pgb.fields...)
+	selector := pgb.sql.Select()
+	aggregation := make([]string, 0, len(pgb.fns))
 	for _, fn := range pgb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(pgb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(pgb.fields)+len(pgb.fns))
+		for _, f := range pgb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(pgb.fields...)...)
 }
 
 // PersonSelect is the builder for selecting fields of Person entities.
@@ -1037,16 +1118,10 @@ func (ps *PersonSelect) BoolX(ctx context.Context) bool {
 
 func (ps *PersonSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := ps.sqlQuery().Query()
+	query, args := ps.sql.Query()
 	if err := ps.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (ps *PersonSelect) sqlQuery() sql.Querier {
-	selector := ps.sql
-	selector.Select(selector.Columns(ps.fields...)...)
-	return selector
 }

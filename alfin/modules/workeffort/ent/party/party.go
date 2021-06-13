@@ -12,6 +12,12 @@ const (
 	Label = "party"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldPartyTypeID holds the string denoting the party_type_id field in the database.
 	FieldPartyTypeID = "party_type_id"
 	// FieldExternalID holds the string denoting the external_id field in the database.
@@ -20,8 +26,6 @@ const (
 	FieldPreferredCurrencyUomID = "preferred_currency_uom_id"
 	// FieldDescription holds the string denoting the description field in the database.
 	FieldDescription = "description"
-	// FieldStatusID holds the string denoting the status_id field in the database.
-	FieldStatusID = "status_id"
 	// FieldCreatedDate holds the string denoting the created_date field in the database.
 	FieldCreatedDate = "created_date"
 	// FieldLastModifiedDate holds the string denoting the last_modified_date field in the database.
@@ -34,8 +38,12 @@ const (
 	EdgeCreatedByUserLogin = "created_by_user_login"
 	// EdgeLastModifiedByUserLogin holds the string denoting the last_modified_by_user_login edge name in mutations.
 	EdgeLastModifiedByUserLogin = "last_modified_by_user_login"
+	// EdgeStatusItem holds the string denoting the status_item edge name in mutations.
+	EdgeStatusItem = "status_item"
 	// EdgeFixedAssets holds the string denoting the fixed_assets edge name in mutations.
 	EdgeFixedAssets = "fixed_assets"
+	// EdgePartyContactMeches holds the string denoting the party_contact_meches edge name in mutations.
+	EdgePartyContactMeches = "party_contact_meches"
 	// EdgePartyRoles holds the string denoting the party_roles edge name in mutations.
 	EdgePartyRoles = "party_roles"
 	// EdgePartyStatuses holds the string denoting the party_statuses edge name in mutations.
@@ -62,6 +70,13 @@ const (
 	LastModifiedByUserLoginInverseTable = "user_logins"
 	// LastModifiedByUserLoginColumn is the table column denoting the last_modified_by_user_login relation/edge.
 	LastModifiedByUserLoginColumn = "user_login_last_modified_by_parties"
+	// StatusItemTable is the table the holds the status_item relation/edge.
+	StatusItemTable = "parties"
+	// StatusItemInverseTable is the table name for the StatusItem entity.
+	// It exists in this package in order to avoid circular dependency with the "statusitem" package.
+	StatusItemInverseTable = "status_items"
+	// StatusItemColumn is the table column denoting the status_item relation/edge.
+	StatusItemColumn = "status_item_parties"
 	// FixedAssetsTable is the table the holds the fixed_assets relation/edge.
 	FixedAssetsTable = "fixed_assets"
 	// FixedAssetsInverseTable is the table name for the FixedAsset entity.
@@ -69,6 +84,13 @@ const (
 	FixedAssetsInverseTable = "fixed_assets"
 	// FixedAssetsColumn is the table column denoting the fixed_assets relation/edge.
 	FixedAssetsColumn = "party_fixed_assets"
+	// PartyContactMechesTable is the table the holds the party_contact_meches relation/edge.
+	PartyContactMechesTable = "party_contact_meches"
+	// PartyContactMechesInverseTable is the table name for the PartyContactMech entity.
+	// It exists in this package in order to avoid circular dependency with the "partycontactmech" package.
+	PartyContactMechesInverseTable = "party_contact_meches"
+	// PartyContactMechesColumn is the table column denoting the party_contact_meches relation/edge.
+	PartyContactMechesColumn = "party_party_contact_meches"
 	// PartyRolesTable is the table the holds the party_roles relation/edge.
 	PartyRolesTable = "party_roles"
 	// PartyRolesInverseTable is the table name for the PartyRole entity.
@@ -109,11 +131,13 @@ const (
 // Columns holds all SQL columns for party fields.
 var Columns = []string{
 	FieldID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldPartyTypeID,
 	FieldExternalID,
 	FieldPreferredCurrencyUomID,
 	FieldDescription,
-	FieldStatusID,
 	FieldCreatedDate,
 	FieldLastModifiedDate,
 	FieldDataSourceID,
@@ -123,6 +147,7 @@ var Columns = []string{
 // ForeignKeys holds the SQL foreign-keys that are owned by the "parties"
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
+	"status_item_parties",
 	"user_login_created_by_parties",
 	"user_login_last_modified_by_parties",
 }
@@ -143,6 +168,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultCreatedDate holds the default value on creation for the "created_date" field.
 	DefaultCreatedDate func() time.Time
 	// DefaultLastModifiedDate holds the default value on creation for the "last_modified_date" field.

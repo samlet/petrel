@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 )
@@ -21,6 +23,48 @@ type FixedAssetCreate struct {
 	config
 	mutation *FixedAssetMutation
 	hooks    []Hook
+}
+
+// SetCreateTime sets the "create_time" field.
+func (fac *FixedAssetCreate) SetCreateTime(t time.Time) *FixedAssetCreate {
+	fac.mutation.SetCreateTime(t)
+	return fac
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (fac *FixedAssetCreate) SetNillableCreateTime(t *time.Time) *FixedAssetCreate {
+	if t != nil {
+		fac.SetCreateTime(*t)
+	}
+	return fac
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (fac *FixedAssetCreate) SetUpdateTime(t time.Time) *FixedAssetCreate {
+	fac.mutation.SetUpdateTime(t)
+	return fac
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (fac *FixedAssetCreate) SetNillableUpdateTime(t *time.Time) *FixedAssetCreate {
+	if t != nil {
+		fac.SetUpdateTime(*t)
+	}
+	return fac
+}
+
+// SetStringRef sets the "string_ref" field.
+func (fac *FixedAssetCreate) SetStringRef(s string) *FixedAssetCreate {
+	fac.mutation.SetStringRef(s)
+	return fac
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (fac *FixedAssetCreate) SetNillableStringRef(s *string) *FixedAssetCreate {
+	if s != nil {
+		fac.SetStringRef(*s)
+	}
+	return fac
 }
 
 // SetFixedAssetTypeID sets the "fixed_asset_type_id" field.
@@ -61,20 +105,6 @@ func (fac *FixedAssetCreate) SetClassEnumID(i int) *FixedAssetCreate {
 func (fac *FixedAssetCreate) SetNillableClassEnumID(i *int) *FixedAssetCreate {
 	if i != nil {
 		fac.SetClassEnumID(*i)
-	}
-	return fac
-}
-
-// SetRoleTypeID sets the "role_type_id" field.
-func (fac *FixedAssetCreate) SetRoleTypeID(i int) *FixedAssetCreate {
-	fac.mutation.SetRoleTypeID(i)
-	return fac
-}
-
-// SetNillableRoleTypeID sets the "role_type_id" field if the given value is not nil.
-func (fac *FixedAssetCreate) SetNillableRoleTypeID(i *int) *FixedAssetCreate {
-	if i != nil {
-		fac.SetRoleTypeID(*i)
 	}
 	return fac
 }
@@ -384,6 +414,25 @@ func (fac *FixedAssetCreate) SetParty(p *Party) *FixedAssetCreate {
 	return fac.SetPartyID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (fac *FixedAssetCreate) SetRoleTypeID(id int) *FixedAssetCreate {
+	fac.mutation.SetRoleTypeID(id)
+	return fac
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (fac *FixedAssetCreate) SetNillableRoleTypeID(id *int) *FixedAssetCreate {
+	if id != nil {
+		fac = fac.SetRoleTypeID(*id)
+	}
+	return fac
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (fac *FixedAssetCreate) SetRoleType(r *RoleType) *FixedAssetCreate {
+	return fac.SetRoleTypeID(r.ID)
+}
+
 // SetPartyRoleID sets the "party_role" edge to the PartyRole entity by ID.
 func (fac *FixedAssetCreate) SetPartyRoleID(id int) *FixedAssetCreate {
 	fac.mutation.SetPartyRoleID(id)
@@ -475,7 +524,10 @@ func (fac *FixedAssetCreate) Save(ctx context.Context) (*FixedAsset, error) {
 				return nil, err
 			}
 			fac.mutation = mutation
-			node, err = fac.sqlSave(ctx)
+			if node, err = fac.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -500,6 +552,14 @@ func (fac *FixedAssetCreate) SaveX(ctx context.Context) *FixedAsset {
 
 // defaults sets the default values of the builder before save.
 func (fac *FixedAssetCreate) defaults() {
+	if _, ok := fac.mutation.CreateTime(); !ok {
+		v := fixedasset.DefaultCreateTime()
+		fac.mutation.SetCreateTime(v)
+	}
+	if _, ok := fac.mutation.UpdateTime(); !ok {
+		v := fixedasset.DefaultUpdateTime()
+		fac.mutation.SetUpdateTime(v)
+	}
 	if _, ok := fac.mutation.DateAcquired(); !ok {
 		v := fixedasset.DefaultDateAcquired()
 		fac.mutation.SetDateAcquired(v)
@@ -524,6 +584,12 @@ func (fac *FixedAssetCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (fac *FixedAssetCreate) check() error {
+	if _, ok := fac.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := fac.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	return nil
 }
 
@@ -551,6 +617,30 @@ func (fac *FixedAssetCreate) createSpec() (*FixedAsset, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := fac.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: fixedasset.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := fac.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: fixedasset.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := fac.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: fixedasset.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := fac.mutation.FixedAssetTypeID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -574,14 +664,6 @@ func (fac *FixedAssetCreate) createSpec() (*FixedAsset, *sqlgraph.CreateSpec) {
 			Column: fixedasset.FieldClassEnumID,
 		})
 		_node.ClassEnumID = value
-	}
-	if value, ok := fac.mutation.RoleTypeID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldRoleTypeID,
-		})
-		_node.RoleTypeID = value
 	}
 	if value, ok := fac.mutation.FixedAssetName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -786,6 +868,26 @@ func (fac *FixedAssetCreate) createSpec() (*FixedAsset, *sqlgraph.CreateSpec) {
 		_node.party_fixed_assets = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := fac.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.RoleTypeTable,
+			Columns: []string{fixedasset.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.role_type_fixed_assets = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	if nodes := fac.mutation.PartyRoleIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -902,10 +1004,11 @@ func (facb *FixedAssetCreateBulk) Save(ctx context.Context) ([]*FixedAsset, erro
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

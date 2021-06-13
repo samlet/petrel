@@ -327,12 +327,12 @@ func (sgq *SecurityGroupQuery) WithUserLoginSecurityGroups(opts ...func(*UserLog
 // Example:
 //
 //	var v []struct {
-//		GroupName string `json:"group_name,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SecurityGroup.Query().
-//		GroupBy(securitygroup.FieldGroupName).
+//		GroupBy(securitygroup.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -354,11 +354,11 @@ func (sgq *SecurityGroupQuery) GroupBy(field string, fields ...string) *Security
 // Example:
 //
 //	var v []struct {
-//		GroupName string `json:"group_name,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.SecurityGroup.Query().
-//		Select(securitygroup.FieldGroupName).
+//		Select(securitygroup.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (sgq *SecurityGroupQuery) Select(field string, fields ...string) *SecurityGroupSelect {
@@ -536,10 +536,14 @@ func (sgq *SecurityGroupQuery) querySpec() *sqlgraph.QuerySpec {
 func (sgq *SecurityGroupQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(sgq.driver.Dialect())
 	t1 := builder.Table(securitygroup.Table)
-	selector := builder.Select(t1.Columns(securitygroup.Columns...)...).From(t1)
+	columns := sgq.fields
+	if len(columns) == 0 {
+		columns = securitygroup.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if sgq.sql != nil {
 		selector = sgq.sql
-		selector.Select(selector.Columns(securitygroup.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range sgq.predicates {
 		p(selector)
@@ -807,13 +811,24 @@ func (sggb *SecurityGroupGroupBy) sqlScan(ctx context.Context, v interface{}) er
 }
 
 func (sggb *SecurityGroupGroupBy) sqlQuery() *sql.Selector {
-	selector := sggb.sql
-	columns := make([]string, 0, len(sggb.fields)+len(sggb.fns))
-	columns = append(columns, sggb.fields...)
+	selector := sggb.sql.Select()
+	aggregation := make([]string, 0, len(sggb.fns))
 	for _, fn := range sggb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(sggb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(sggb.fields)+len(sggb.fns))
+		for _, f := range sggb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(sggb.fields...)...)
 }
 
 // SecurityGroupSelect is the builder for selecting fields of SecurityGroup entities.
@@ -1029,16 +1044,10 @@ func (sgs *SecurityGroupSelect) BoolX(ctx context.Context) bool {
 
 func (sgs *SecurityGroupSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := sgs.sqlQuery().Query()
+	query, args := sgs.sql.Query()
 	if err := sgs.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (sgs *SecurityGroupSelect) sqlQuery() sql.Querier {
-	selector := sgs.sql
-	selector.Select(selector.Columns(sgs.fields...)...)
-	return selector
 }

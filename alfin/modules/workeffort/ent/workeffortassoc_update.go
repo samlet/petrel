@@ -28,6 +28,26 @@ func (weau *WorkEffortAssocUpdate) Where(ps ...predicate.WorkEffortAssoc) *WorkE
 	return weau
 }
 
+// SetStringRef sets the "string_ref" field.
+func (weau *WorkEffortAssocUpdate) SetStringRef(s string) *WorkEffortAssocUpdate {
+	weau.mutation.SetStringRef(s)
+	return weau
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (weau *WorkEffortAssocUpdate) SetNillableStringRef(s *string) *WorkEffortAssocUpdate {
+	if s != nil {
+		weau.SetStringRef(*s)
+	}
+	return weau
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (weau *WorkEffortAssocUpdate) ClearStringRef() *WorkEffortAssocUpdate {
+	weau.mutation.ClearStringRef()
+	return weau
+}
+
 // SetWorkEffortAssocTypeID sets the "work_effort_assoc_type_id" field.
 func (weau *WorkEffortAssocUpdate) SetWorkEffortAssocTypeID(i int) *WorkEffortAssocUpdate {
 	weau.mutation.ResetWorkEffortAssocTypeID()
@@ -163,6 +183,7 @@ func (weau *WorkEffortAssocUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	weau.defaults()
 	if len(weau.hooks) == 0 {
 		affected, err = weau.sqlSave(ctx)
 	} else {
@@ -208,6 +229,14 @@ func (weau *WorkEffortAssocUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (weau *WorkEffortAssocUpdate) defaults() {
+	if _, ok := weau.mutation.UpdateTime(); !ok {
+		v := workeffortassoc.UpdateDefaultUpdateTime()
+		weau.mutation.SetUpdateTime(v)
+	}
+}
+
 func (weau *WorkEffortAssocUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -225,6 +254,26 @@ func (weau *WorkEffortAssocUpdate) sqlSave(ctx context.Context) (n int, err erro
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := weau.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: workeffortassoc.FieldUpdateTime,
+		})
+	}
+	if value, ok := weau.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: workeffortassoc.FieldStringRef,
+		})
+	}
+	if weau.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: workeffortassoc.FieldStringRef,
+		})
 	}
 	if value, ok := weau.mutation.WorkEffortAssocTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -369,6 +418,26 @@ type WorkEffortAssocUpdateOne struct {
 	mutation *WorkEffortAssocMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (weauo *WorkEffortAssocUpdateOne) SetStringRef(s string) *WorkEffortAssocUpdateOne {
+	weauo.mutation.SetStringRef(s)
+	return weauo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (weauo *WorkEffortAssocUpdateOne) SetNillableStringRef(s *string) *WorkEffortAssocUpdateOne {
+	if s != nil {
+		weauo.SetStringRef(*s)
+	}
+	return weauo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (weauo *WorkEffortAssocUpdateOne) ClearStringRef() *WorkEffortAssocUpdateOne {
+	weauo.mutation.ClearStringRef()
+	return weauo
+}
+
 // SetWorkEffortAssocTypeID sets the "work_effort_assoc_type_id" field.
 func (weauo *WorkEffortAssocUpdateOne) SetWorkEffortAssocTypeID(i int) *WorkEffortAssocUpdateOne {
 	weauo.mutation.ResetWorkEffortAssocTypeID()
@@ -511,6 +580,7 @@ func (weauo *WorkEffortAssocUpdateOne) Save(ctx context.Context) (*WorkEffortAss
 		err  error
 		node *WorkEffortAssoc
 	)
+	weauo.defaults()
 	if len(weauo.hooks) == 0 {
 		node, err = weauo.sqlSave(ctx)
 	} else {
@@ -556,6 +626,14 @@ func (weauo *WorkEffortAssocUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (weauo *WorkEffortAssocUpdateOne) defaults() {
+	if _, ok := weauo.mutation.UpdateTime(); !ok {
+		v := workeffortassoc.UpdateDefaultUpdateTime()
+		weauo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (weauo *WorkEffortAssocUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffortAssoc, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -590,6 +668,26 @@ func (weauo *WorkEffortAssocUpdateOne) sqlSave(ctx context.Context) (_node *Work
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := weauo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: workeffortassoc.FieldUpdateTime,
+		})
+	}
+	if value, ok := weauo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: workeffortassoc.FieldStringRef,
+		})
+	}
+	if weauo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: workeffortassoc.FieldStringRef,
+		})
 	}
 	if value, ok := weauo.mutation.WorkEffortAssocTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

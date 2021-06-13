@@ -27,6 +27,26 @@ func (teau *TemporalExpressionAssocUpdate) Where(ps ...predicate.TemporalExpress
 	return teau
 }
 
+// SetStringRef sets the "string_ref" field.
+func (teau *TemporalExpressionAssocUpdate) SetStringRef(s string) *TemporalExpressionAssocUpdate {
+	teau.mutation.SetStringRef(s)
+	return teau
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (teau *TemporalExpressionAssocUpdate) SetNillableStringRef(s *string) *TemporalExpressionAssocUpdate {
+	if s != nil {
+		teau.SetStringRef(*s)
+	}
+	return teau
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (teau *TemporalExpressionAssocUpdate) ClearStringRef() *TemporalExpressionAssocUpdate {
+	teau.mutation.ClearStringRef()
+	return teau
+}
+
 // SetExprAssocType sets the "expr_assoc_type" field.
 func (teau *TemporalExpressionAssocUpdate) SetExprAssocType(i int) *TemporalExpressionAssocUpdate {
 	teau.mutation.ResetExprAssocType()
@@ -115,6 +135,7 @@ func (teau *TemporalExpressionAssocUpdate) Save(ctx context.Context) (int, error
 		err      error
 		affected int
 	)
+	teau.defaults()
 	if len(teau.hooks) == 0 {
 		affected, err = teau.sqlSave(ctx)
 	} else {
@@ -160,6 +181,14 @@ func (teau *TemporalExpressionAssocUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (teau *TemporalExpressionAssocUpdate) defaults() {
+	if _, ok := teau.mutation.UpdateTime(); !ok {
+		v := temporalexpressionassoc.UpdateDefaultUpdateTime()
+		teau.mutation.SetUpdateTime(v)
+	}
+}
+
 func (teau *TemporalExpressionAssocUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -177,6 +206,26 @@ func (teau *TemporalExpressionAssocUpdate) sqlSave(ctx context.Context) (n int, 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := teau.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpressionassoc.FieldUpdateTime,
+		})
+	}
+	if value, ok := teau.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: temporalexpressionassoc.FieldStringRef,
+		})
+	}
+	if teau.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: temporalexpressionassoc.FieldStringRef,
+		})
 	}
 	if value, ok := teau.mutation.ExprAssocType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -287,6 +336,26 @@ type TemporalExpressionAssocUpdateOne struct {
 	mutation *TemporalExpressionAssocMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (teauo *TemporalExpressionAssocUpdateOne) SetStringRef(s string) *TemporalExpressionAssocUpdateOne {
+	teauo.mutation.SetStringRef(s)
+	return teauo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (teauo *TemporalExpressionAssocUpdateOne) SetNillableStringRef(s *string) *TemporalExpressionAssocUpdateOne {
+	if s != nil {
+		teauo.SetStringRef(*s)
+	}
+	return teauo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (teauo *TemporalExpressionAssocUpdateOne) ClearStringRef() *TemporalExpressionAssocUpdateOne {
+	teauo.mutation.ClearStringRef()
+	return teauo
+}
+
 // SetExprAssocType sets the "expr_assoc_type" field.
 func (teauo *TemporalExpressionAssocUpdateOne) SetExprAssocType(i int) *TemporalExpressionAssocUpdateOne {
 	teauo.mutation.ResetExprAssocType()
@@ -382,6 +451,7 @@ func (teauo *TemporalExpressionAssocUpdateOne) Save(ctx context.Context) (*Tempo
 		err  error
 		node *TemporalExpressionAssoc
 	)
+	teauo.defaults()
 	if len(teauo.hooks) == 0 {
 		node, err = teauo.sqlSave(ctx)
 	} else {
@@ -427,6 +497,14 @@ func (teauo *TemporalExpressionAssocUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (teauo *TemporalExpressionAssocUpdateOne) defaults() {
+	if _, ok := teauo.mutation.UpdateTime(); !ok {
+		v := temporalexpressionassoc.UpdateDefaultUpdateTime()
+		teauo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (teauo *TemporalExpressionAssocUpdateOne) sqlSave(ctx context.Context) (_node *TemporalExpressionAssoc, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -461,6 +539,26 @@ func (teauo *TemporalExpressionAssocUpdateOne) sqlSave(ctx context.Context) (_no
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := teauo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpressionassoc.FieldUpdateTime,
+		})
+	}
+	if value, ok := teauo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: temporalexpressionassoc.FieldStringRef,
+		})
+	}
+	if teauo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: temporalexpressionassoc.FieldStringRef,
+		})
 	}
 	if value, ok := teauo.mutation.ExprAssocType(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

@@ -28,6 +28,26 @@ func (sgpu *SecurityGroupPermissionUpdate) Where(ps ...predicate.SecurityGroupPe
 	return sgpu
 }
 
+// SetStringRef sets the "string_ref" field.
+func (sgpu *SecurityGroupPermissionUpdate) SetStringRef(s string) *SecurityGroupPermissionUpdate {
+	sgpu.mutation.SetStringRef(s)
+	return sgpu
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (sgpu *SecurityGroupPermissionUpdate) SetNillableStringRef(s *string) *SecurityGroupPermissionUpdate {
+	if s != nil {
+		sgpu.SetStringRef(*s)
+	}
+	return sgpu
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (sgpu *SecurityGroupPermissionUpdate) ClearStringRef() *SecurityGroupPermissionUpdate {
+	sgpu.mutation.ClearStringRef()
+	return sgpu
+}
+
 // SetPermissionID sets the "permission_id" field.
 func (sgpu *SecurityGroupPermissionUpdate) SetPermissionID(s string) *SecurityGroupPermissionUpdate {
 	sgpu.mutation.SetPermissionID(s)
@@ -104,6 +124,7 @@ func (sgpu *SecurityGroupPermissionUpdate) Save(ctx context.Context) (int, error
 		err      error
 		affected int
 	)
+	sgpu.defaults()
 	if len(sgpu.hooks) == 0 {
 		if err = sgpu.check(); err != nil {
 			return 0, err
@@ -155,6 +176,14 @@ func (sgpu *SecurityGroupPermissionUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (sgpu *SecurityGroupPermissionUpdate) defaults() {
+	if _, ok := sgpu.mutation.UpdateTime(); !ok {
+		v := securitygrouppermission.UpdateDefaultUpdateTime()
+		sgpu.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (sgpu *SecurityGroupPermissionUpdate) check() error {
 	if v, ok := sgpu.mutation.PermissionID(); ok {
@@ -182,6 +211,26 @@ func (sgpu *SecurityGroupPermissionUpdate) sqlSave(ctx context.Context) (n int, 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sgpu.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygrouppermission.FieldUpdateTime,
+		})
+	}
+	if value, ok := sgpu.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: securitygrouppermission.FieldStringRef,
+		})
+	}
+	if sgpu.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: securitygrouppermission.FieldStringRef,
+		})
 	}
 	if value, ok := sgpu.mutation.PermissionID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -262,6 +311,26 @@ type SecurityGroupPermissionUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *SecurityGroupPermissionMutation
+}
+
+// SetStringRef sets the "string_ref" field.
+func (sgpuo *SecurityGroupPermissionUpdateOne) SetStringRef(s string) *SecurityGroupPermissionUpdateOne {
+	sgpuo.mutation.SetStringRef(s)
+	return sgpuo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (sgpuo *SecurityGroupPermissionUpdateOne) SetNillableStringRef(s *string) *SecurityGroupPermissionUpdateOne {
+	if s != nil {
+		sgpuo.SetStringRef(*s)
+	}
+	return sgpuo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (sgpuo *SecurityGroupPermissionUpdateOne) ClearStringRef() *SecurityGroupPermissionUpdateOne {
+	sgpuo.mutation.ClearStringRef()
+	return sgpuo
 }
 
 // SetPermissionID sets the "permission_id" field.
@@ -347,6 +416,7 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) Save(ctx context.Context) (*Secur
 		err  error
 		node *SecurityGroupPermission
 	)
+	sgpuo.defaults()
 	if len(sgpuo.hooks) == 0 {
 		if err = sgpuo.check(); err != nil {
 			return nil, err
@@ -398,6 +468,14 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (sgpuo *SecurityGroupPermissionUpdateOne) defaults() {
+	if _, ok := sgpuo.mutation.UpdateTime(); !ok {
+		v := securitygrouppermission.UpdateDefaultUpdateTime()
+		sgpuo.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (sgpuo *SecurityGroupPermissionUpdateOne) check() error {
 	if v, ok := sgpuo.mutation.PermissionID(); ok {
@@ -442,6 +520,26 @@ func (sgpuo *SecurityGroupPermissionUpdateOne) sqlSave(ctx context.Context) (_no
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sgpuo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygrouppermission.FieldUpdateTime,
+		})
+	}
+	if value, ok := sgpuo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: securitygrouppermission.FieldStringRef,
+		})
+	}
+	if sgpuo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: securitygrouppermission.FieldStringRef,
+		})
 	}
 	if value, ok := sgpuo.mutation.PermissionID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

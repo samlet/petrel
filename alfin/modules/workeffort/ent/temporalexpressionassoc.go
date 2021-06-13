@@ -5,6 +5,7 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
@@ -16,6 +17,12 @@ type TemporalExpressionAssoc struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// ExprAssocType holds the value of the "expr_assoc_type" field.
 	ExprAssocType int `json:"expr_assoc_type,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
@@ -71,6 +78,10 @@ func (*TemporalExpressionAssoc) scanValues(columns []string) ([]interface{}, err
 		switch columns[i] {
 		case temporalexpressionassoc.FieldID, temporalexpressionassoc.FieldExprAssocType:
 			values[i] = new(sql.NullInt64)
+		case temporalexpressionassoc.FieldStringRef:
+			values[i] = new(sql.NullString)
+		case temporalexpressionassoc.FieldCreateTime, temporalexpressionassoc.FieldUpdateTime:
+			values[i] = new(sql.NullTime)
 		case temporalexpressionassoc.ForeignKeys[0]: // temporal_expression_from_temporal_expression_assocs
 			values[i] = new(sql.NullInt64)
 		case temporalexpressionassoc.ForeignKeys[1]: // temporal_expression_to_temporal_expression_assocs
@@ -96,6 +107,24 @@ func (tea *TemporalExpressionAssoc) assignValues(columns []string, values []inte
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			tea.ID = int(value.Int64)
+		case temporalexpressionassoc.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				tea.CreateTime = value.Time
+			}
+		case temporalexpressionassoc.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				tea.UpdateTime = value.Time
+			}
+		case temporalexpressionassoc.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				tea.StringRef = value.String
+			}
 		case temporalexpressionassoc.FieldExprAssocType:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field expr_assoc_type", values[i])
@@ -154,6 +183,12 @@ func (tea *TemporalExpressionAssoc) String() string {
 	var builder strings.Builder
 	builder.WriteString("TemporalExpressionAssoc(")
 	builder.WriteString(fmt.Sprintf("id=%v", tea.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(tea.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(tea.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(tea.StringRef)
 	builder.WriteString(", expr_assoc_type=")
 	builder.WriteString(fmt.Sprintf("%v", tea.ExprAssocType))
 	builder.WriteByte(')')

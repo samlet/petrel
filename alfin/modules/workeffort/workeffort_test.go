@@ -27,7 +27,8 @@ func TestWorkEffort(t *testing.T) {
 }
 
 func Do(ctx context.Context, client *ent.Client) error {
-	workeff, err := client.WorkEffort.Create().SetDescription("first task").Save(ctx)
+	workeff, err := client.WorkEffort.Create().
+		SetDescription("first task").Save(ctx)
 	if err != nil {
 		return err
 	}

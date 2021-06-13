@@ -11,16 +11,29 @@ const (
 	Label = "party_status"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldStatusID holds the string denoting the status_id field in the database.
-	FieldStatusID = "status_id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldStatusDate holds the string denoting the status_date field in the database.
 	FieldStatusDate = "status_date"
+	// EdgeStatusItem holds the string denoting the status_item edge name in mutations.
+	EdgeStatusItem = "status_item"
 	// EdgeParty holds the string denoting the party edge name in mutations.
 	EdgeParty = "party"
 	// EdgeChangeByUserLogin holds the string denoting the change_by_user_login edge name in mutations.
 	EdgeChangeByUserLogin = "change_by_user_login"
 	// Table holds the table name of the partystatus in the database.
 	Table = "party_status"
+	// StatusItemTable is the table the holds the status_item relation/edge.
+	StatusItemTable = "party_status"
+	// StatusItemInverseTable is the table name for the StatusItem entity.
+	// It exists in this package in order to avoid circular dependency with the "statusitem" package.
+	StatusItemInverseTable = "status_items"
+	// StatusItemColumn is the table column denoting the status_item relation/edge.
+	StatusItemColumn = "status_item_party_statuses"
 	// PartyTable is the table the holds the party relation/edge.
 	PartyTable = "party_status"
 	// PartyInverseTable is the table name for the Party entity.
@@ -40,7 +53,9 @@ const (
 // Columns holds all SQL columns for partystatus fields.
 var Columns = []string{
 	FieldID,
-	FieldStatusID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldStatusDate,
 }
 
@@ -48,6 +63,7 @@ var Columns = []string{
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
 	"party_party_statuses",
+	"status_item_party_statuses",
 	"user_login_change_by_party_statuses",
 }
 
@@ -67,6 +83,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultStatusDate holds the default value on creation for the "status_date" field.
 	DefaultStatusDate func() time.Time
 )

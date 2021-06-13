@@ -17,6 +17,12 @@ type Person struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// Salutation holds the value of the "salutation" field.
 	Salutation string `json:"salutation,omitempty"`
 	// FirstName holds the value of the "first_name" field.
@@ -91,11 +97,13 @@ type Person struct {
 type PersonEdges struct {
 	// Party holds the value of the party edge.
 	Party *Party `json:"party,omitempty"`
+	// PartyContactMeches holds the value of the party_contact_meches edge.
+	PartyContactMeches []*PartyContactMech `json:"party_contact_meches,omitempty"`
 	// UserLogins holds the value of the user_logins edge.
 	UserLogins []*UserLogin `json:"user_logins,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
+	loadedTypes [3]bool
 }
 
 // PartyOrErr returns the Party value or an error if the edge
@@ -112,10 +120,19 @@ func (e PersonEdges) PartyOrErr() (*Party, error) {
 	return nil, &NotLoadedError{edge: "party"}
 }
 
+// PartyContactMechesOrErr returns the PartyContactMeches value or an error if the edge
+// was not loaded in eager-loading.
+func (e PersonEdges) PartyContactMechesOrErr() ([]*PartyContactMech, error) {
+	if e.loadedTypes[1] {
+		return e.PartyContactMeches, nil
+	}
+	return nil, &NotLoadedError{edge: "party_contact_meches"}
+}
+
 // UserLoginsOrErr returns the UserLogins value or an error if the edge
 // was not loaded in eager-loading.
 func (e PersonEdges) UserLoginsOrErr() ([]*UserLogin, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[2] {
 		return e.UserLogins, nil
 	}
 	return nil, &NotLoadedError{edge: "user_logins"}
@@ -130,9 +147,9 @@ func (*Person) scanValues(columns []string) ([]interface{}, error) {
 			values[i] = new(sql.NullFloat64)
 		case person.FieldID, person.FieldMemberID, person.FieldMaritalStatusEnumID, person.FieldEmploymentStatusEnumID, person.FieldResidenceStatusEnumID, person.FieldYearsWithEmployer, person.FieldMonthsWithEmployer:
 			values[i] = new(sql.NullInt64)
-		case person.FieldSalutation, person.FieldFirstName, person.FieldMiddleName, person.FieldLastName, person.FieldPersonalTitle, person.FieldSuffix, person.FieldNickname, person.FieldFirstNameLocal, person.FieldMiddleNameLocal, person.FieldLastNameLocal, person.FieldOtherLocal, person.FieldGender, person.FieldMothersMaidenName, person.FieldOldMaritalStatus, person.FieldSocialSecurityNumber, person.FieldPassportNumber, person.FieldComments, person.FieldOccupation, person.FieldExistingCustomer, person.FieldCardID:
+		case person.FieldStringRef, person.FieldSalutation, person.FieldFirstName, person.FieldMiddleName, person.FieldLastName, person.FieldPersonalTitle, person.FieldSuffix, person.FieldNickname, person.FieldFirstNameLocal, person.FieldMiddleNameLocal, person.FieldLastNameLocal, person.FieldOtherLocal, person.FieldGender, person.FieldMothersMaidenName, person.FieldOldMaritalStatus, person.FieldSocialSecurityNumber, person.FieldPassportNumber, person.FieldComments, person.FieldOccupation, person.FieldExistingCustomer, person.FieldCardID:
 			values[i] = new(sql.NullString)
-		case person.FieldBirthDate, person.FieldDeceasedDate, person.FieldPassportExpireDate:
+		case person.FieldCreateTime, person.FieldUpdateTime, person.FieldBirthDate, person.FieldDeceasedDate, person.FieldPassportExpireDate:
 			values[i] = new(sql.NullTime)
 		case person.ForeignKeys[0]: // party_person
 			values[i] = new(sql.NullInt64)
@@ -157,6 +174,24 @@ func (pe *Person) assignValues(columns []string, values []interface{}) error {
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			pe.ID = int(value.Int64)
+		case person.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				pe.CreateTime = value.Time
+			}
+		case person.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				pe.UpdateTime = value.Time
+			}
+		case person.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				pe.StringRef = value.String
+			}
 		case person.FieldSalutation:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field salutation", values[i])
@@ -366,6 +401,11 @@ func (pe *Person) QueryParty() *PartyQuery {
 	return (&PersonClient{config: pe.config}).QueryParty(pe)
 }
 
+// QueryPartyContactMeches queries the "party_contact_meches" edge of the Person entity.
+func (pe *Person) QueryPartyContactMeches() *PartyContactMechQuery {
+	return (&PersonClient{config: pe.config}).QueryPartyContactMeches(pe)
+}
+
 // QueryUserLogins queries the "user_logins" edge of the Person entity.
 func (pe *Person) QueryUserLogins() *UserLoginQuery {
 	return (&PersonClient{config: pe.config}).QueryUserLogins(pe)
@@ -394,6 +434,12 @@ func (pe *Person) String() string {
 	var builder strings.Builder
 	builder.WriteString("Person(")
 	builder.WriteString(fmt.Sprintf("id=%v", pe.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(pe.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(pe.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(pe.StringRef)
 	builder.WriteString(", salutation=")
 	builder.WriteString(pe.Salutation)
 	builder.WriteString(", first_name=")

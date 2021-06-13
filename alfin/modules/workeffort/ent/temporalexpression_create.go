@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -19,6 +20,48 @@ type TemporalExpressionCreate struct {
 	config
 	mutation *TemporalExpressionMutation
 	hooks    []Hook
+}
+
+// SetCreateTime sets the "create_time" field.
+func (tec *TemporalExpressionCreate) SetCreateTime(t time.Time) *TemporalExpressionCreate {
+	tec.mutation.SetCreateTime(t)
+	return tec
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (tec *TemporalExpressionCreate) SetNillableCreateTime(t *time.Time) *TemporalExpressionCreate {
+	if t != nil {
+		tec.SetCreateTime(*t)
+	}
+	return tec
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (tec *TemporalExpressionCreate) SetUpdateTime(t time.Time) *TemporalExpressionCreate {
+	tec.mutation.SetUpdateTime(t)
+	return tec
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (tec *TemporalExpressionCreate) SetNillableUpdateTime(t *time.Time) *TemporalExpressionCreate {
+	if t != nil {
+		tec.SetUpdateTime(*t)
+	}
+	return tec
+}
+
+// SetStringRef sets the "string_ref" field.
+func (tec *TemporalExpressionCreate) SetStringRef(s string) *TemporalExpressionCreate {
+	tec.mutation.SetStringRef(s)
+	return tec
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (tec *TemporalExpressionCreate) SetNillableStringRef(s *string) *TemporalExpressionCreate {
+	if s != nil {
+		tec.SetStringRef(*s)
+	}
+	return tec
 }
 
 // SetTempExprTypeID sets the "temp_expr_type_id" field.
@@ -205,7 +248,10 @@ func (tec *TemporalExpressionCreate) Save(ctx context.Context) (*TemporalExpress
 				return nil, err
 			}
 			tec.mutation = mutation
-			node, err = tec.sqlSave(ctx)
+			if node, err = tec.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -230,6 +276,14 @@ func (tec *TemporalExpressionCreate) SaveX(ctx context.Context) *TemporalExpress
 
 // defaults sets the default values of the builder before save.
 func (tec *TemporalExpressionCreate) defaults() {
+	if _, ok := tec.mutation.CreateTime(); !ok {
+		v := temporalexpression.DefaultCreateTime()
+		tec.mutation.SetCreateTime(v)
+	}
+	if _, ok := tec.mutation.UpdateTime(); !ok {
+		v := temporalexpression.DefaultUpdateTime()
+		tec.mutation.SetUpdateTime(v)
+	}
 	if _, ok := tec.mutation.Date1(); !ok {
 		v := temporalexpression.DefaultDate1()
 		tec.mutation.SetDate1(v)
@@ -242,6 +296,12 @@ func (tec *TemporalExpressionCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (tec *TemporalExpressionCreate) check() error {
+	if _, ok := tec.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := tec.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	return nil
 }
 
@@ -269,6 +329,30 @@ func (tec *TemporalExpressionCreate) createSpec() (*TemporalExpression, *sqlgrap
 			},
 		}
 	)
+	if value, ok := tec.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpression.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := tec.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpression.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := tec.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: temporalexpression.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := tec.mutation.TempExprTypeID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -429,10 +513,11 @@ func (tecb *TemporalExpressionCreateBulk) Save(ctx context.Context) ([]*Temporal
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

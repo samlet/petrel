@@ -23,6 +23,48 @@ type UserLoginSecurityGroupCreate struct {
 	hooks    []Hook
 }
 
+// SetCreateTime sets the "create_time" field.
+func (ulsgc *UserLoginSecurityGroupCreate) SetCreateTime(t time.Time) *UserLoginSecurityGroupCreate {
+	ulsgc.mutation.SetCreateTime(t)
+	return ulsgc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (ulsgc *UserLoginSecurityGroupCreate) SetNillableCreateTime(t *time.Time) *UserLoginSecurityGroupCreate {
+	if t != nil {
+		ulsgc.SetCreateTime(*t)
+	}
+	return ulsgc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (ulsgc *UserLoginSecurityGroupCreate) SetUpdateTime(t time.Time) *UserLoginSecurityGroupCreate {
+	ulsgc.mutation.SetUpdateTime(t)
+	return ulsgc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (ulsgc *UserLoginSecurityGroupCreate) SetNillableUpdateTime(t *time.Time) *UserLoginSecurityGroupCreate {
+	if t != nil {
+		ulsgc.SetUpdateTime(*t)
+	}
+	return ulsgc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (ulsgc *UserLoginSecurityGroupCreate) SetStringRef(s string) *UserLoginSecurityGroupCreate {
+	ulsgc.mutation.SetStringRef(s)
+	return ulsgc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (ulsgc *UserLoginSecurityGroupCreate) SetNillableStringRef(s *string) *UserLoginSecurityGroupCreate {
+	if s != nil {
+		ulsgc.SetStringRef(*s)
+	}
+	return ulsgc
+}
+
 // SetFromDate sets the "from_date" field.
 func (ulsgc *UserLoginSecurityGroupCreate) SetFromDate(t time.Time) *UserLoginSecurityGroupCreate {
 	ulsgc.mutation.SetFromDate(t)
@@ -131,7 +173,10 @@ func (ulsgc *UserLoginSecurityGroupCreate) Save(ctx context.Context) (*UserLogin
 				return nil, err
 			}
 			ulsgc.mutation = mutation
-			node, err = ulsgc.sqlSave(ctx)
+			if node, err = ulsgc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -156,6 +201,14 @@ func (ulsgc *UserLoginSecurityGroupCreate) SaveX(ctx context.Context) *UserLogin
 
 // defaults sets the default values of the builder before save.
 func (ulsgc *UserLoginSecurityGroupCreate) defaults() {
+	if _, ok := ulsgc.mutation.CreateTime(); !ok {
+		v := userloginsecuritygroup.DefaultCreateTime()
+		ulsgc.mutation.SetCreateTime(v)
+	}
+	if _, ok := ulsgc.mutation.UpdateTime(); !ok {
+		v := userloginsecuritygroup.DefaultUpdateTime()
+		ulsgc.mutation.SetUpdateTime(v)
+	}
 	if _, ok := ulsgc.mutation.FromDate(); !ok {
 		v := userloginsecuritygroup.DefaultFromDate()
 		ulsgc.mutation.SetFromDate(v)
@@ -168,6 +221,12 @@ func (ulsgc *UserLoginSecurityGroupCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (ulsgc *UserLoginSecurityGroupCreate) check() error {
+	if _, ok := ulsgc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := ulsgc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if _, ok := ulsgc.mutation.FromDate(); !ok {
 		return &ValidationError{Name: "from_date", err: errors.New("ent: missing required field \"from_date\"")}
 	}
@@ -198,6 +257,30 @@ func (ulsgc *UserLoginSecurityGroupCreate) createSpec() (*UserLoginSecurityGroup
 			},
 		}
 	)
+	if value, ok := ulsgc.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userloginsecuritygroup.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := ulsgc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userloginsecuritygroup.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := ulsgc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: userloginsecuritygroup.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := ulsgc.mutation.FromDate(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -312,10 +395,11 @@ func (ulsgcb *UserLoginSecurityGroupCreateBulk) Save(ctx context.Context) ([]*Us
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

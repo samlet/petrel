@@ -4,7 +4,9 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -18,6 +20,48 @@ type SecurityGroupCreate struct {
 	config
 	mutation *SecurityGroupMutation
 	hooks    []Hook
+}
+
+// SetCreateTime sets the "create_time" field.
+func (sgc *SecurityGroupCreate) SetCreateTime(t time.Time) *SecurityGroupCreate {
+	sgc.mutation.SetCreateTime(t)
+	return sgc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (sgc *SecurityGroupCreate) SetNillableCreateTime(t *time.Time) *SecurityGroupCreate {
+	if t != nil {
+		sgc.SetCreateTime(*t)
+	}
+	return sgc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (sgc *SecurityGroupCreate) SetUpdateTime(t time.Time) *SecurityGroupCreate {
+	sgc.mutation.SetUpdateTime(t)
+	return sgc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (sgc *SecurityGroupCreate) SetNillableUpdateTime(t *time.Time) *SecurityGroupCreate {
+	if t != nil {
+		sgc.SetUpdateTime(*t)
+	}
+	return sgc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (sgc *SecurityGroupCreate) SetStringRef(s string) *SecurityGroupCreate {
+	sgc.mutation.SetStringRef(s)
+	return sgc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (sgc *SecurityGroupCreate) SetNillableStringRef(s *string) *SecurityGroupCreate {
+	if s != nil {
+		sgc.SetStringRef(*s)
+	}
+	return sgc
 }
 
 // SetGroupName sets the "group_name" field.
@@ -89,6 +133,7 @@ func (sgc *SecurityGroupCreate) Save(ctx context.Context) (*SecurityGroup, error
 		err  error
 		node *SecurityGroup
 	)
+	sgc.defaults()
 	if len(sgc.hooks) == 0 {
 		if err = sgc.check(); err != nil {
 			return nil, err
@@ -104,7 +149,10 @@ func (sgc *SecurityGroupCreate) Save(ctx context.Context) (*SecurityGroup, error
 				return nil, err
 			}
 			sgc.mutation = mutation
-			node, err = sgc.sqlSave(ctx)
+			if node, err = sgc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -127,8 +175,26 @@ func (sgc *SecurityGroupCreate) SaveX(ctx context.Context) *SecurityGroup {
 	return v
 }
 
+// defaults sets the default values of the builder before save.
+func (sgc *SecurityGroupCreate) defaults() {
+	if _, ok := sgc.mutation.CreateTime(); !ok {
+		v := securitygroup.DefaultCreateTime()
+		sgc.mutation.SetCreateTime(v)
+	}
+	if _, ok := sgc.mutation.UpdateTime(); !ok {
+		v := securitygroup.DefaultUpdateTime()
+		sgc.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (sgc *SecurityGroupCreate) check() error {
+	if _, ok := sgc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := sgc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	return nil
 }
 
@@ -156,6 +222,30 @@ func (sgc *SecurityGroupCreate) createSpec() (*SecurityGroup, *sqlgraph.CreateSp
 			},
 		}
 	)
+	if value, ok := sgc.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygroup.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := sgc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygroup.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := sgc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: securitygroup.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := sgc.mutation.GroupName(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -227,6 +317,7 @@ func (sgcb *SecurityGroupCreateBulk) Save(ctx context.Context) ([]*SecurityGroup
 	for i := range sgcb.builders {
 		func(i int, root context.Context) {
 			builder := sgcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*SecurityGroupMutation)
 				if !ok {
@@ -248,10 +339,11 @@ func (sgcb *SecurityGroupCreateBulk) Save(ctx context.Context) ([]*SecurityGroup
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

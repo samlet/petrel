@@ -3,58 +3,41 @@ import (
     "entgo.io/ent"
     // "entgo.io/ent/schema/index"
 	"entgo.io/ent/schema"
-    // "entgo.io/ent/schema/mixin"
+    "entgo.io/ent/schema/mixin"
     "entgo.io/ent/schema/edge"
     "entgo.io/ent/schema/field"
 	"entgo.io/contrib/entproto"
+	"github.com/samlet/petrel/alfin/schemamixins"
     "time"
 )
 
 
-type WorkEffortPartyAssignment struct {
+type SecurityGroup struct {
     ent.Schema
 }
 
-// Fields of the WorkEffortPartyAssignment.
-func (WorkEffortPartyAssignment) Fields() []ent.Field {
+// Fields of the SecurityGroup.
+// Unique-Indexes: groupId
+func (SecurityGroup) Fields() []ent.Field {
     return []ent.Field{
-        field.Int("role_type_id").Annotations(entproto.Field(2)),
-        field.Time("from_date").
-            Default(time.Now).Annotations(entproto.Field(3)),
-        field.Time("thru_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(4)),
-        field.Int("status_id").Optional().Annotations(entproto.Field(5)),
-        field.Time("status_date_time").
-            Default(time.Now).Optional().Annotations(entproto.Field(6)),
-        field.Int("expectation_enum_id").Optional().Annotations(entproto.Field(7)),
-        field.Int("delegate_reason_enum_id").Optional().Annotations(entproto.Field(8)),
-        field.Int("facility_id").Optional().Annotations(entproto.Field(9)),
-        field.String("comments").Optional().Annotations(entproto.Field(10)),
-        field.Enum("must_rsvp").
-            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(11)),
-        field.Int("availability_status_id").Optional().Annotations(entproto.Field(12)),
+        field.String("group_name").Optional().Annotations(entproto.Field(2)),
+        field.String("description").Optional().Annotations(entproto.Field(3)),
     }
 }
 
-/* entproto annotations ??
-func (WorkEffortPartyAssignment) Mixin() []ent.Mixin {
+//* entproto annotations ??
+func (SecurityGroup) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
-func (WorkEffortPartyAssignment) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("work_effort_id", "party_id", "role_type_id", "from_date").
-            Unique(),
-    }
-}
-
 */
 
-func (WorkEffortPartyAssignment) Annotations() []schema.Annotation {
+func (SecurityGroup) Annotations() []schema.Annotation {
     return []schema.Annotation{
         entproto.Message(),
         entproto.Service(), // also generate a gRPC service definition
@@ -62,40 +45,185 @@ func (WorkEffortPartyAssignment) Annotations() []schema.Annotation {
 }
 
 
-// Edges of the WorkEffortPartyAssignment.
-//  one: WorkEffort
-//  one-nofk: Party
-//  one: PartyRole
-//  one-nofk: RoleType
-//  one: AssignedByUserLogin
-//  one: AssignmentStatusItem
-//  one: ExpectationEnumeration
-//  one: DelegateReasonEnumeration
-//  one: Facility
-//  one: AvailabilityStatusItem
-//  many: ApplicationSandbox
-func (WorkEffortPartyAssignment) Edges() []ent.Edge {
+// Edges of the SecurityGroup.
+//  many: PartyRelationship
+//  many: PortalPage
+//  many: ProtectedView
+//  many: SecurityGroupPermission
+//  many: UserLoginSecurityGroup
+func (SecurityGroup) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
-                edge.From("work_effort", WorkEffort.Type).Ref("work_effort_party_assignments").
-                    // Bind the "workEffortId" field to this edge.
-                    // Field("work_effort_id").
-                    Unique().Annotations(entproto.Field(13)),
-                // m2o
-                edge.From("party", Party.Type).Ref("work_effort_party_assignments").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(14)),
-                // m2o
-                edge.From("party_role", PartyRole.Type).Ref("work_effort_party_assignments").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(15)),
-                // m2o
-                edge.From("assigned_by_user_login", UserLogin.Type).Ref("assigned_by_work_effort_party_assignments").
-                    // Bind the "assignedByUserLoginId" field to this edge.
-                    // Field("assigned_by_user_login_id").
-                    Unique().Annotations(entproto.Field(17)),
+                    // m2o
+                    edge.To("security_group_permissions", SecurityGroupPermission.Type).
+                        Annotations(entproto.Field(7)),
+                    // m2o
+                    edge.To("user_login_security_groups", UserLoginSecurityGroup.Type).
+                        Annotations(entproto.Field(8)),
+    }
+}
+
+
+type StatusItem struct {
+    ent.Schema
+}
+
+// Fields of the StatusItem.
+// Unique-Indexes: statusId
+func (StatusItem) Fields() []ent.Field {
+    return []ent.Field{
+        field.String("status_code").Optional().Annotations(entproto.Field(2)),
+        field.Int("sequence_id").Optional().Annotations(entproto.Field(3)),
+        field.String("description").Optional().Annotations(entproto.Field(4)),
+    }
+}
+
+//* entproto annotations ??
+func (StatusItem) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+*/
+
+func (StatusItem) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the StatusItem.
+//  one: StatusType
+//  many: AcctgTrans
+//  many: AcctgTransEntry
+//  many: Status IdAllocationPlanHeader
+//  many: Plan Item Status IdAllocationPlanItem
+//  many: BudgetStatus
+//  many: CommunicationEvent
+//  many: CommunicationEventRole
+//  many: ContactListCommStatus
+//  many: ContactListParty
+//  many: Content
+//  many: ApprovalContentApproval
+//  many: ContentPurposeOperation
+//  many: CustRequest
+//  many: CustRequestItem
+//  many: CustRequestStatus
+//  many: DataResource
+//  many: EmplLeave
+//  many: EmplPosition
+//  many: EmploymentApp
+//  many: Example
+//  many: ExampleStatus
+//  many: FinAccountStatus
+//  many: FinAccountTrans
+//  many: FixedAssetMaint
+//  many: GlReconciliation
+//  many: InventoryItem
+//  many: InventoryItemStatus
+//  many: InventoryTransfer
+//  many: Invoice
+//  many: InvoiceStatus
+//  many: JobSandbox
+//  many: MarketingCampaign
+//  many: OldPicklistStatusHistory
+//  many: ToOldPicklistStatusHistory
+//  many: OrderDeliverySchedule
+//  many: OrderHeader
+//  many: SyncOrderHeader
+//  many: OrderItem
+//  many: SyncOrderItem
+//  many: OrderPaymentPreference
+//  many: OrderStatus
+//  many: Party
+//  many: PartyFixedAssetAssignment
+//  many: PartyInvitation
+//  many: PartyQual
+//  many: VerificationPartyQual
+//  many: PartyRelationship
+//  many: PartyStatus
+//  many: Payment
+//  many: Picklist
+//  many: PicklistItem
+//  many: PicklistStatus
+//  many: ToPicklistStatus
+//  many: PosTerminalLog
+//  many: ProductGroupOrder
+//  many: ProductKeyword
+//  many: ProductReview
+//  many: HeaderApprovedProductStore
+//  many: ItemApprovedProductStore
+//  many: DigitalItemApprovedProductStore
+//  many: HeaderDeclinedProductStore
+//  many: ItemDeclinedProductStore
+//  many: HeaderCancelProductStore
+//  many: ItemCancelProductStore
+//  many: Quote
+//  many: Requirement
+//  many: RequirementStatus
+//  many: ReturnHeader
+//  many: ReturnItem
+//  many: InventoryReturnItem
+//  many: ReturnStatus
+//  many: Shipment
+//  many: CarrierServiceShipmentRouteSegment
+//  many: ShipmentStatus
+//  many: MainStatusValidChange
+//  many: ToStatusValidChange
+//  many: SurveyResponse
+//  many: TestingStatus
+//  many: Timesheet
+//  many: UnemploymentClaim
+//  many: CurrentWorkEffort
+//  many: WorkEffortFixedAssetAssign
+//  many: AvailabilityWorkEffortFixedAssetAssign
+//  many: WorkEffortGoodStandard
+//  many: WorkEffortInventoryAssign
+//  many: AssignmentWorkEffortPartyAssignment
+//  many: AvailabilityWorkEffortPartyAssignment
+//  many: WorkEffortReview
+//  many: WorkEffortStatus
+//  many: Workload
+//  many: WorkloadStatus
+func (StatusItem) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("status_type", StatusType.Type).Ref("status_items").
+                        // Bind the "statusTypeId" field to this edge.
+                        // Field("status_type_id").
+                        Unique().Annotations(entproto.Field(5)),
+                    // m2o
+                    edge.To("parties", Party.Type).
+                        Annotations(entproto.Field(47)),
+                    // m2o
+                    edge.To("party_statuses", PartyStatus.Type).
+                        Annotations(entproto.Field(53)),
+                    // m2o
+                    edge.To("main_status_valid_changes", StatusValidChange.Type).
+                        Annotations(entproto.Field(80)),
+                    // m2o
+                    edge.To("to_status_valid_changes", StatusValidChange.Type).
+                        Annotations(entproto.Field(81)),
+                    // m2o
+                    edge.To("current_work_efforts", WorkEffort.Type).
+                        Annotations(entproto.Field(86)),
+                    // m2o
+                    edge.To("work_effort_fixed_asset_assigns", WorkEffortFixedAssetAssign.Type).
+                        Annotations(entproto.Field(87)),
+                    // m2o
+                    edge.To("availability_work_effort_fixed_asset_assigns", WorkEffortFixedAssetAssign.Type).
+                        Annotations(entproto.Field(88)),
+                    // m2o
+                    edge.To("assignment_work_effort_party_assignments", WorkEffortPartyAssignment.Type).
+                        Annotations(entproto.Field(91)),
+                    // m2o
+                    edge.To("availability_work_effort_party_assignments", WorkEffortPartyAssignment.Type).
+                        Annotations(entproto.Field(92)),
     }
 }
 
@@ -105,45 +233,46 @@ type FixedAsset struct {
 }
 
 // Fields of the FixedAsset.
+// Unique-Indexes: fixedAssetId
 func (FixedAsset) Fields() []ent.Field {
     return []ent.Field{
         field.Int("fixed_asset_type_id").Optional().Annotations(entproto.Field(2)),
         field.Int("instance_of_product_id").Optional().Annotations(entproto.Field(3)),
         field.Int("class_enum_id").Optional().Annotations(entproto.Field(4)),
-        field.Int("role_type_id").Optional().Annotations(entproto.Field(5)),
-        field.String("fixed_asset_name").Optional().Annotations(entproto.Field(6)),
-        field.Int("acquire_order_id").Optional().Annotations(entproto.Field(7)),
-        field.Int("acquire_order_item_seq_id").Optional().Annotations(entproto.Field(8)),
+        field.String("fixed_asset_name").Optional().Annotations(entproto.Field(5)),
+        field.Int("acquire_order_id").Optional().Annotations(entproto.Field(6)),
+        field.Int("acquire_order_item_seq_id").Optional().Annotations(entproto.Field(7)),
         field.Time("date_acquired").
-            Default(time.Now).Optional().Annotations(entproto.Field(9)),
+            Default(time.Now).Optional().Annotations(entproto.Field(8)),
         field.Time("date_last_serviced").
-            Default(time.Now).Optional().Annotations(entproto.Field(10)),
+            Default(time.Now).Optional().Annotations(entproto.Field(9)),
         field.Time("date_next_service").
-            Default(time.Now).Optional().Annotations(entproto.Field(11)),
+            Default(time.Now).Optional().Annotations(entproto.Field(10)),
         field.Time("expected_end_of_life").
-            Default(time.Now).Optional().Annotations(entproto.Field(12)),
+            Default(time.Now).Optional().Annotations(entproto.Field(11)),
         field.Time("actual_end_of_life").
-            Default(time.Now).Optional().Annotations(entproto.Field(13)),
-        field.Float("production_capacity").Optional().Annotations(entproto.Field(14)),
-        field.Int("uom_id").Optional().Annotations(entproto.Field(15)),
-        field.Int("calendar_id").Optional().Annotations(entproto.Field(16)),
-        field.String("serial_number").Optional().Annotations(entproto.Field(17)),
-        field.Int("located_at_facility_id").Optional().Annotations(entproto.Field(18)),
-        field.Int("located_at_location_seq_id").Optional().Annotations(entproto.Field(19)),
-        field.Float("salvage_value").Optional().Annotations(entproto.Field(20)),
-        field.Float("depreciation").Optional().Annotations(entproto.Field(21)),
-        field.Float("purchase_cost").Optional().Annotations(entproto.Field(22)),
-        field.Int("purchase_cost_uom_id").Optional().Annotations(entproto.Field(23)),
+            Default(time.Now).Optional().Annotations(entproto.Field(12)),
+        field.Float("production_capacity").Optional().Annotations(entproto.Field(13)),
+        field.Int("uom_id").Optional().Annotations(entproto.Field(14)),
+        field.Int("calendar_id").Optional().Annotations(entproto.Field(15)),
+        field.String("serial_number").Optional().Annotations(entproto.Field(16)),
+        field.Int("located_at_facility_id").Optional().Annotations(entproto.Field(17)),
+        field.Int("located_at_location_seq_id").Optional().Annotations(entproto.Field(18)),
+        field.Float("salvage_value").Optional().Annotations(entproto.Field(19)),
+        field.Float("depreciation").Optional().Annotations(entproto.Field(20)),
+        field.Float("purchase_cost").Optional().Annotations(entproto.Field(21)),
+        field.Int("purchase_cost_uom_id").Optional().Annotations(entproto.Field(22)),
     }
 }
 
-/* entproto annotations ??
+//* entproto annotations ??
 func (FixedAsset) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 */
@@ -198,29 +327,303 @@ func (FixedAsset) Edges() []ent.Edge {
                     From("parent").
                     // Bind the "parentFixedAssetId" field to this edge.
                     // Field("parent_fixed_asset_id").
-                    Unique().Annotations(entproto.Field(26)),
-                // m2o
-                edge.From("party", Party.Type).Ref("fixed_assets").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(29)),
-                // m2o
-                edge.From("party_role", PartyRole.Type).Ref("fixed_assets").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(31)),
-                // m2o
-                edge.To("child_fixed_assets", FixedAsset.Type).
-                    Annotations(entproto.Field(43)),
-                // o2o
-                // m2o
-                edge.To("work_efforts", WorkEffort.Type).
-                    Annotations(entproto.Field(57)),
-                // o2o
-                // m2o
-                edge.To("work_effort_fixed_asset_assigns", WorkEffortFixedAssetAssign.Type).
-                    Annotations(entproto.Field(58)),
-                // o2o
+                    Unique().Annotations(entproto.Field(25)),
+                    // o2m
+                    edge.From("party", Party.Type).Ref("fixed_assets").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(28)),
+                    // o2m
+                    edge.From("role_type", RoleType.Type).Ref("fixed_assets").
+                        // Bind the "roleTypeId" field to this edge.
+                        // Field("role_type_id").
+                        Unique().Annotations(entproto.Field(29)),
+                    // o2m
+                    edge.From("party_role", PartyRole.Type).Ref("fixed_assets").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(30)),
+                    // m2o
+                    edge.To("child_fixed_assets", FixedAsset.Type).
+                        Annotations(entproto.Field(42)),
+                    // m2o
+                    edge.To("work_efforts", WorkEffort.Type).
+                        Annotations(entproto.Field(56)),
+                    // m2o
+                    edge.To("work_effort_fixed_asset_assigns", WorkEffortFixedAssetAssign.Type).
+                        Annotations(entproto.Field(57)),
+    }
+}
+
+
+type WorkEffortFixedAssetAssign struct {
+    ent.Schema
+}
+
+// Fields of the WorkEffortFixedAssetAssign.
+// Unique-Indexes: workEffortId, fixedAssetId, fromDate
+func (WorkEffortFixedAssetAssign) Fields() []ent.Field {
+    return []ent.Field{
+        field.Time("from_date").
+            Default(time.Now).Annotations(entproto.Field(2)),
+        field.Time("thru_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(3)),
+        field.Float("allocated_cost").Optional().Annotations(entproto.Field(4)),
+        field.String("comments").Optional().Annotations(entproto.Field(5)),
+    }
+}
+
+//* entproto annotations ??
+func (WorkEffortFixedAssetAssign) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+func (WorkEffortFixedAssetAssign) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("work_effort_id", "fixed_asset_id", "from_date").
+            Unique(),
+    }
+}
+
+*/
+
+func (WorkEffortFixedAssetAssign) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the WorkEffortFixedAssetAssign.
+//  one: WorkEffort
+//  one: FixedAsset
+//  one: StatusItem
+//  one: AvailabilityStatusItem
+func (WorkEffortFixedAssetAssign) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("work_effort", WorkEffort.Type).Ref("work_effort_fixed_asset_assigns").
+                        // Bind the "workEffortId" field to this edge.
+                        // Field("work_effort_id").
+                        Unique().Annotations(entproto.Field(6)),
+                    // o2m
+                    edge.From("fixed_asset", FixedAsset.Type).Ref("work_effort_fixed_asset_assigns").
+                        // Bind the "fixedAssetId" field to this edge.
+                        // Field("fixed_asset_id").
+                        Unique().Annotations(entproto.Field(7)),
+                    // o2m
+                    edge.From("status_item", StatusItem.Type).Ref("work_effort_fixed_asset_assigns").
+                        // Bind the "statusId" field to this edge.
+                        // Field("status_id").
+                        Unique().Annotations(entproto.Field(8)),
+                    // o2m
+                    edge.From("availability_status_item", StatusItem.Type).Ref("availability_work_effort_fixed_asset_assigns").
+                        // Bind the "availabilityStatusId" field to this edge.
+                        // Field("availability_status_id").
+                        Unique().Annotations(entproto.Field(9)),
+    }
+}
+
+
+type WorkEffort struct {
+    ent.Schema
+}
+
+// Fields of the WorkEffort.
+// Unique-Indexes: workEffortId
+func (WorkEffort) Fields() []ent.Field {
+    return []ent.Field{
+        field.Time("last_status_update").
+            Default(time.Now).Optional().Annotations(entproto.Field(2)),
+        field.Int("work_effort_purpose_type_id").Optional().Annotations(entproto.Field(3)),
+        field.Int("scope_enum_id").Optional().Annotations(entproto.Field(4)),
+        field.Int("priority").Optional().Annotations(entproto.Field(5)),
+        field.Int("percent_complete").Optional().Annotations(entproto.Field(6)),
+        field.String("work_effort_name").Optional().Annotations(entproto.Field(7)),
+        field.Int("show_as_enum_id").Optional().Annotations(entproto.Field(8)),
+        field.Enum("send_notification_email").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(9)),
+        field.String("description").Optional().Annotations(entproto.Field(10)),
+        field.String("location_desc").Optional().Annotations(entproto.Field(11)),
+        field.Time("estimated_start_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(12)),
+        field.Time("estimated_completion_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(13)),
+        field.Time("actual_start_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(14)),
+        field.Time("actual_completion_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(15)),
+        field.Float("estimated_milli_seconds").Optional().Annotations(entproto.Field(16)),
+        field.Float("estimated_setup_millis").Optional().Annotations(entproto.Field(17)),
+        field.Int("estimate_calc_method").Optional().Annotations(entproto.Field(18)),
+        field.Float("actual_milli_seconds").Optional().Annotations(entproto.Field(19)),
+        field.Float("actual_setup_millis").Optional().Annotations(entproto.Field(20)),
+        field.Float("total_milli_seconds_allowed").Optional().Annotations(entproto.Field(21)),
+        field.Float("total_money_allowed").Optional().Annotations(entproto.Field(22)),
+        field.Int("money_uom_id").Optional().Annotations(entproto.Field(23)),
+        field.String("special_terms").Optional().Annotations(entproto.Field(24)),
+        field.Int("time_transparency").Optional().Annotations(entproto.Field(25)),
+        field.String("universal_id").Optional().Annotations(entproto.Field(26)),
+        field.String("source_reference_id").MaxLen(32).Optional().Annotations(entproto.Field(27)),
+        field.Int("facility_id").Optional().Annotations(entproto.Field(28)),
+        field.String("info_url").Optional().Annotations(entproto.Field(29)),
+        field.Int("recurrence_info_id").Optional().Annotations(entproto.Field(30)),
+        field.Int("runtime_data_id").Optional().Annotations(entproto.Field(31)),
+        field.Int("note_id").Optional().Annotations(entproto.Field(32)),
+        field.String("service_loader_name").Optional().Annotations(entproto.Field(33)),
+        field.Float("quantity_to_produce").Optional().Annotations(entproto.Field(34)),
+        field.Float("quantity_produced").Optional().Annotations(entproto.Field(35)),
+        field.Float("quantity_rejected").Optional().Annotations(entproto.Field(36)),
+        field.Float("reserv_persons").Optional().Annotations(entproto.Field(37)),
+        field.Float("reserv_2_nd_pp_perc").Optional().Annotations(entproto.Field(38)),
+        field.Float("reserv_nth_pp_perc").Optional().Annotations(entproto.Field(39)),
+        field.Int("accommodation_map_id").Optional().Annotations(entproto.Field(40)),
+        field.Int("accommodation_spot_id").Optional().Annotations(entproto.Field(41)),
+        field.Int("revision_number").Optional().Annotations(entproto.Field(42)),
+        field.Time("created_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(43)),
+        field.String("created_by_user_login").Optional().Annotations(entproto.Field(44)),
+        field.Time("last_modified_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(45)),
+        field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(46)),
+        field.Int("sequence_num").Optional().Annotations(entproto.Field(47)),
+    }
+}
+
+//* entproto annotations ??
+func (WorkEffort) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+*/
+
+func (WorkEffort) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the WorkEffort.
+//  one: WorkEffortType
+//  one: WorkEffortPurposeType
+//  one: ParentWorkEffort
+//  many: WorkEffortTypeAttr
+//  one: CurrentStatusItem
+//  one: ScopeEnumeration
+//  one: FixedAsset
+//  one: Facility
+//  one: MoneyUom
+//  one: RecurrenceInfo
+//  one: TemporalExpression
+//  one: RuntimeData
+//  one: NoteData
+//  one: CustomMethod
+//  one: AccommodationMap
+//  one: AccommodationSpot
+//  many: AcctgTrans
+//  many: AgreementWorkEffortApplic
+//  many: CommunicationEventWorkEff
+//  many: CostComponent
+//  many: CustRequestItemWorkEffort
+//  many: CustRequestWorkEffort
+//  many: ScheduleFixedAssetMaint
+//  many: InventoryItemDetail
+//  many: OrderHeaderWorkEffort
+//  many: PersonTraining
+//  many: RoutingProductAssoc
+//  many: MaintTemplateProductMaint
+//  many: QuoteItem
+//  many: QuoteWorkEffort
+//  many: RateAmount
+//  many: SalesOpportunityWorkEffort
+//  many: EstimatedShipShipment
+//  many: EstimatedArrivalShipment
+//  many: ShoppingListWorkEffort
+//  many: TimeEntry
+//  many: ChildWorkEffort
+//  many: FromWorkEffortAssoc
+//  many: ToWorkEffortAssoc
+//  many: WorkEffortAttribute
+//  many: WorkEffortBilling
+//  many: WorkEffortContactMech
+//  many: WorkEffortContent
+//  many: WorkEffortCostCalc
+//  many: WorkEffortDeliverableProd
+//  many: WorkEffortEventReminder
+//  many: WorkEffortFixedAssetAssign
+//  many: WorkEffortFixedAssetStd
+//  many: WorkEffortGoodStandard
+//  one-nofk: WorkEffortIcalData
+//  many: WorkEffortInventoryAssign
+//  many: WorkEffortInventoryProduced
+//  many: WorkEffortKeyword
+//  many: WorkEffortNote
+//  many: WorkEffortPartyAssignment
+//  many: WorkEffortReview
+//  many: WorkEffortSkillStandard
+//  many: WorkEffortStatus
+//  many: WorkEffortSurveyAppl
+//  many: WorkEffortTransBox
+//  many: WorkOrderItemFulfillment
+//  many: WorkRequirementFulfillment
+func (WorkEffort) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("work_effort_type", WorkEffortType.Type).Ref("work_efforts").
+                        // Bind the "workEffortTypeId" field to this edge.
+                        // Field("work_effort_type_id").
+                        Unique().Annotations(entproto.Field(48)),
+                edge.To("children", WorkEffort.Type).
+                    From("parent").
+                    // Bind the "workEffortParentId" field to this edge.
+                    // Field("work_effort_parent_id").
+                    Unique().Annotations(entproto.Field(50)),
+                    // o2m
+                    edge.From("current_status_item", StatusItem.Type).Ref("current_work_efforts").
+                        // Bind the "currentStatusId" field to this edge.
+                        // Field("current_status_id").
+                        Unique().Annotations(entproto.Field(52)),
+                    // o2m
+                    edge.From("fixed_asset", FixedAsset.Type).Ref("work_efforts").
+                        // Bind the "fixedAssetId" field to this edge.
+                        // Field("fixed_asset_id").
+                        Unique().Annotations(entproto.Field(54)),
+                    // o2m
+                    edge.From("temporal_expression", TemporalExpression.Type).Ref("work_efforts").
+                        // Bind the "tempExprId" field to this edge.
+                        // Field("temp_expr_id").
+                        Unique().Annotations(entproto.Field(58)),
+                    // m2o
+                    edge.To("child_work_efforts", WorkEffort.Type).
+                        Annotations(entproto.Field(84)),
+                    // m2o
+                    edge.To("from_work_effort_assocs", WorkEffortAssoc.Type).
+                        Annotations(entproto.Field(85)),
+                    // m2o
+                    edge.To("to_work_effort_assocs", WorkEffortAssoc.Type).
+                        Annotations(entproto.Field(86)),
+                    // m2o
+                    edge.To("work_effort_fixed_asset_assigns", WorkEffortFixedAssetAssign.Type).
+                        Annotations(entproto.Field(94)),
+                    // m2o
+                    edge.To("work_effort_party_assignments", WorkEffortPartyAssignment.Type).
+                        Annotations(entproto.Field(102)),
+                    // m2o
+                    edge.To("work_effort_skill_standards", WorkEffortSkillStandard.Type).
+                        Annotations(entproto.Field(104)),
     }
 }
 
@@ -230,6 +633,7 @@ type Person struct {
 }
 
 // Fields of the Person.
+// Unique-Indexes: partyId
 func (Person) Fields() []ent.Field {
     return []ent.Field{
         field.String("salutation").Optional().Annotations(entproto.Field(2)),
@@ -273,13 +677,14 @@ func (Person) Fields() []ent.Field {
     }
 }
 
-/* entproto annotations ??
+//* entproto annotations ??
 func (Person) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 */
@@ -309,17 +714,79 @@ func (Person) Annotations() []schema.Annotation {
 //  many: WebSiteRole
 func (Person) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
+                    // o2o (nofk)
                     edge.From("party", Party.Type).
                         Ref("person").
                         // Bind the "partyId" field to this edge.
                         // Field("party_id").
                         Unique().Annotations(entproto.Field(34)),
-                // o2m
-                // m2o
-                edge.To("user_logins", UserLogin.Type).
-                    Annotations(entproto.Field(46)),
-                // o2o
+                    // m2o
+                    edge.To("party_contact_meches", PartyContactMech.Type).
+                        Annotations(entproto.Field(38)),
+                    // m2o
+                    edge.To("user_logins", UserLogin.Type).
+                        Annotations(entproto.Field(46)),
+    }
+}
+
+
+type TemporalExpression struct {
+    ent.Schema
+}
+
+// Fields of the TemporalExpression.
+// Unique-Indexes: tempExprId
+func (TemporalExpression) Fields() []ent.Field {
+    return []ent.Field{
+        field.Int("temp_expr_type_id").Optional().Annotations(entproto.Field(2)),
+        field.String("description").Optional().Annotations(entproto.Field(3)),
+        field.Time("date_1").
+            Default(time.Now).Optional().Annotations(entproto.Field(4)),
+        field.Time("date_2").
+            Default(time.Now).Optional().Annotations(entproto.Field(5)),
+        field.Int("integer_1").Optional().Annotations(entproto.Field(6)),
+        field.Int("integer_2").Optional().Annotations(entproto.Field(7)),
+        field.Int("string_1").Optional().Annotations(entproto.Field(8)),
+        field.Int("string_2").Optional().Annotations(entproto.Field(9)),
+    }
+}
+
+//* entproto annotations ??
+func (TemporalExpression) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+*/
+
+func (TemporalExpression) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the TemporalExpression.
+//  many: JobSandbox
+//  many: FromTemporalExpressionAssoc
+//  many: ToTemporalExpressionAssoc
+//  many: WorkEffort
+func (TemporalExpression) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // m2o
+                    edge.To("from_temporal_expression_assocs", TemporalExpressionAssoc.Type).
+                        Annotations(entproto.Field(11)),
+                    // m2o
+                    edge.To("to_temporal_expression_assocs", TemporalExpressionAssoc.Type).
+                        Annotations(entproto.Field(12)),
+                    // m2o
+                    edge.To("work_efforts", WorkEffort.Type).
+                        Annotations(entproto.Field(13)),
     }
 }
 
@@ -329,19 +796,20 @@ type PartyRole struct {
 }
 
 // Fields of the PartyRole.
+// Unique-Indexes: partyId, roleTypeId
 func (PartyRole) Fields() []ent.Field {
     return []ent.Field{
-        field.Int("role_type_id").Annotations(entproto.Field(2)),
     }
 }
 
-/* entproto annotations ??
+//* entproto annotations ??
 func (PartyRole) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 func (PartyRole) Indexes() []ent.Index {
@@ -428,64 +896,62 @@ func (PartyRole) Annotations() []schema.Annotation {
 //  many: WorkEffortPartyAssignment
 func (PartyRole) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
-                edge.From("party", Party.Type).Ref("party_roles").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(3)),
-                // m2o
-                edge.To("fixed_assets", FixedAsset.Type).
-                    Annotations(entproto.Field(26)),
-                // o2o
-                // m2o
-                edge.To("work_effort_party_assignments", WorkEffortPartyAssignment.Type).
-                    Annotations(entproto.Field(66)),
-                // o2o
+                    // o2m
+                    edge.From("party", Party.Type).Ref("party_roles").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(0)),
+                    // o2m
+                    edge.From("role_type", RoleType.Type).Ref("party_roles").
+                        // Bind the "roleTypeId" field to this edge.
+                        // Field("role_type_id").
+                        Unique().Annotations(entproto.Field(1)),
+                    // m2o
+                    edge.To("fixed_assets", FixedAsset.Type).
+                        Annotations(entproto.Field(23)),
+                    // m2o
+                    edge.To("party_contact_meches", PartyContactMech.Type).
+                        Annotations(entproto.Field(35)),
+                    // m2o
+                    edge.To("work_effort_party_assignments", WorkEffortPartyAssignment.Type).
+                        Annotations(entproto.Field(63)),
     }
 }
 
 
-type UserLogin struct {
+type StatusValidChange struct {
     ent.Schema
 }
 
-// Fields of the UserLogin.
-func (UserLogin) Fields() []ent.Field {
+// Fields of the StatusValidChange.
+// Unique-Indexes: statusId, statusIdTo
+func (StatusValidChange) Fields() []ent.Field {
     return []ent.Field{
-        field.String("current_password").Optional().Annotations(entproto.Field(2)),
-        field.String("password_hint").Optional().Annotations(entproto.Field(3)),
-        field.Enum("is_system").
-            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(4)),
-        field.Enum("enabled").
-            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(5)),
-        field.Enum("has_logged_out").
-            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(6)),
-        field.Enum("require_password_change").
-            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(7)),
-        field.Int("last_currency_uom").Optional().Annotations(entproto.Field(8)),
-        field.String("last_locale").MaxLen(10).Optional().Annotations(entproto.Field(9)),
-        field.String("last_time_zone").MaxLen(32).Optional().Annotations(entproto.Field(10)),
-        field.Time("disabled_date_time").
-            Default(time.Now).Optional().Annotations(entproto.Field(11)),
-        field.Int("successive_failed_logins").Optional().Annotations(entproto.Field(12)),
-        field.String("external_auth_id").Optional().Annotations(entproto.Field(13)),
-        field.String("user_ldap_dn").Optional().Annotations(entproto.Field(14)),
-        field.String("disabled_by").Optional().Annotations(entproto.Field(15)),
+        field.String("condition_expression").Optional().Annotations(entproto.Field(2)),
+        field.String("transition_name").Optional().Annotations(entproto.Field(3)),
     }
 }
 
-/* entproto annotations ??
-func (UserLogin) Mixin() []ent.Mixin {
+//* entproto annotations ??
+func (StatusValidChange) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
+func (StatusValidChange) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("status_id", "status_id_to").
+            Unique(),
+    }
+}
+
 */
 
-func (UserLogin) Annotations() []schema.Annotation {
+func (StatusValidChange) Annotations() []schema.Annotation {
     return []schema.Annotation{
         entproto.Message(),
         entproto.Service(), // also generate a gRPC service definition
@@ -493,198 +959,53 @@ func (UserLogin) Annotations() []schema.Annotation {
 }
 
 
-// Edges of the UserLogin.
-//  one: Party
-//  one-nofk: Person
-//  one-nofk: PartyGroup
-//  many: Created ByAllocationPlanHeader
-//  many: Last Modified ByAllocationPlanHeader
-//  many: Created By User LoginAllocationPlanItem
-//  many: Last Modified By User LoginAllocationPlanItem
-//  many: ChangeByBudgetStatus
-//  many: CreatedByContactList
-//  many: LastModifiedByContactList
-//  many: ChangeByContactListCommStatus
-//  many: CreatedByContent
-//  many: LastModifiedByContent
-//  many: CreatedByContentAssoc
-//  many: LastModifiedByContentAssoc
-//  many: ChangeByCustRequestStatus
-//  many: CreatedByDataResource
-//  many: LastModifiedByDataResource
-//  many: ExampleStatus
-//  many: UserLoginExcelImportHistory
-//  many: FinAccountStatus
-//  many: InventoryItemStatus
-//  many: ChangeByInvoiceStatus
-//  many: IssuedByItemIssuance
-//  many: AuthJobSandbox
-//  many: RunAsJobSandbox
-//  many: ChangeOldPicklistStatusHistory
-//  many: OrderAdjustment
-//  many: CreatedByOrderHeader
-//  many: DontCancelSetOrderItem
-//  many: ChangeByOrderItem
-//  many: OrderItemChange
-//  many: OrderPaymentPreference
-//  many: OrderStatus
-//  many: CreatedByParty
-//  many: LastModifiedByParty
-//  many: ChangeByPartyStatus
-//  many: CreatedByPicklistRole
-//  many: LastModifiedByPicklistRole
-//  many: ChangePicklistStatus
-//  many: CreatedByProduct
-//  many: LastModifiedByProduct
-//  many: CreatedByProductFeaturePrice
-//  many: LastModifiedByProductFeaturePrice
-//  many: CreatedByProductPrice
-//  many: LastModifiedByProductPrice
-//  many: ChangedByProductPriceChange
-//  many: CreatedByProductPromo
-//  many: LastModifiedByProductPromo
-//  many: CreatedByProductPromoCode
-//  many: LastModifiedByProductPromoCode
-//  many: ProductReview
-//  many: QuoteAdjustment
-//  many: ChangeByRequirementStatus
-//  many: ReturnAdjustment
-//  many: ReturnHeader
-//  many: ChangeByReturnStatus
-//  many: CreatedBySalesForecast
-//  many: ModifiedBySalesForecast
-//  many: ModifiedBySalesForecastHistory
-//  many: SalesOpportunity
-//  many: SalesOpportunityHistory
-//  many: ShipmentReceipt
-//  many: ChangeByShipmentStatus
-//  many: ChangeByTestingStatus
-//  many: ApprovedByTimesheet
-//  many: UserLoginHistory
-//  many: OriginUserLoginHistory
-//  many: UserLoginPasswordHistory
-//  many: UserLoginSecurityGroup
-//  one-nofk: UserLoginSession
-//  many: UserPreference
-//  many: WebUserPreference
-//  many: AssignedByWorkEffortPartyAssignment
-//  many: WorkEffortReview
-//  many: SetByWorkEffortStatus
-//  many: WorkloadStatus
-func (UserLogin) Edges() []ent.Edge {
+// Edges of the StatusValidChange.
+//  one: MainStatusItem
+//  one: ToStatusItem
+//  many: OldPicklistStatusHistory
+func (StatusValidChange) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
-                edge.From("party", Party.Type).Ref("user_logins").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(16)),
-                // m2o
-                edge.From("person", Person.Type).Ref("user_logins").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(17)),
-                // m2o
-                edge.To("created_by_parties", Party.Type).
-                    Annotations(entproto.Field(50)),
-                // o2o
-                // m2o
-                edge.To("last_modified_by_parties", Party.Type).
-                    Annotations(entproto.Field(51)),
-                // o2o
-                // m2o
-                edge.To("change_by_party_statuses", PartyStatus.Type).
-                    Annotations(entproto.Field(52)),
-                // o2o
-                // m2o
-                edge.To("user_login_security_groups", UserLoginSecurityGroup.Type).
-                    Annotations(entproto.Field(85)),
-                // o2o
-                // m2o
-                edge.To("assigned_by_work_effort_party_assignments", WorkEffortPartyAssignment.Type).
-                    Annotations(entproto.Field(89)),
-                // o2o
+                    // o2m
+                    edge.From("main_status_item", StatusItem.Type).Ref("main_status_valid_changes").
+                        // Bind the "statusId" field to this edge.
+                        // Field("status_id").
+                        Unique().Annotations(entproto.Field(4)),
+                    // o2m
+                    edge.From("to_status_item", StatusItem.Type).Ref("to_status_valid_changes").
+                        // Bind the "statusIdTo" field to this edge.
+                        // Field("status_id_to").
+                        Unique().Annotations(entproto.Field(5)),
     }
 }
 
 
-type WorkEffort struct {
+type RoleType struct {
     ent.Schema
 }
 
-// Fields of the WorkEffort.
-func (WorkEffort) Fields() []ent.Field {
+// Fields of the RoleType.
+// Unique-Indexes: roleTypeId
+func (RoleType) Fields() []ent.Field {
     return []ent.Field{
-        field.Int("work_effort_type_id").Optional().Annotations(entproto.Field(2)),
-        field.Int("current_status_id").Optional().Annotations(entproto.Field(3)),
-        field.Time("last_status_update").
-            Default(time.Now).Optional().Annotations(entproto.Field(4)),
-        field.Int("work_effort_purpose_type_id").Optional().Annotations(entproto.Field(5)),
-        field.Int("scope_enum_id").Optional().Annotations(entproto.Field(6)),
-        field.Int("priority").Optional().Annotations(entproto.Field(7)),
-        field.Int("percent_complete").Optional().Annotations(entproto.Field(8)),
-        field.String("work_effort_name").Optional().Annotations(entproto.Field(9)),
-        field.Int("show_as_enum_id").Optional().Annotations(entproto.Field(10)),
-        field.Enum("send_notification_email").
-            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(11)),
-        field.String("description").Optional().Annotations(entproto.Field(12)),
-        field.String("location_desc").Optional().Annotations(entproto.Field(13)),
-        field.Time("estimated_start_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(14)),
-        field.Time("estimated_completion_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(15)),
-        field.Time("actual_start_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(16)),
-        field.Time("actual_completion_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(17)),
-        field.Float("estimated_milli_seconds").Optional().Annotations(entproto.Field(18)),
-        field.Float("estimated_setup_millis").Optional().Annotations(entproto.Field(19)),
-        field.Int("estimate_calc_method").Optional().Annotations(entproto.Field(20)),
-        field.Float("actual_milli_seconds").Optional().Annotations(entproto.Field(21)),
-        field.Float("actual_setup_millis").Optional().Annotations(entproto.Field(22)),
-        field.Float("total_milli_seconds_allowed").Optional().Annotations(entproto.Field(23)),
-        field.Float("total_money_allowed").Optional().Annotations(entproto.Field(24)),
-        field.Int("money_uom_id").Optional().Annotations(entproto.Field(25)),
-        field.String("special_terms").Optional().Annotations(entproto.Field(26)),
-        field.Int("time_transparency").Optional().Annotations(entproto.Field(27)),
-        field.String("universal_id").Optional().Annotations(entproto.Field(28)),
-        field.String("source_reference_id").MaxLen(32).Optional().Annotations(entproto.Field(29)),
-        field.Int("facility_id").Optional().Annotations(entproto.Field(30)),
-        field.String("info_url").Optional().Annotations(entproto.Field(31)),
-        field.Int("recurrence_info_id").Optional().Annotations(entproto.Field(32)),
-        field.Int("runtime_data_id").Optional().Annotations(entproto.Field(33)),
-        field.Int("note_id").Optional().Annotations(entproto.Field(34)),
-        field.String("service_loader_name").Optional().Annotations(entproto.Field(35)),
-        field.Float("quantity_to_produce").Optional().Annotations(entproto.Field(36)),
-        field.Float("quantity_produced").Optional().Annotations(entproto.Field(37)),
-        field.Float("quantity_rejected").Optional().Annotations(entproto.Field(38)),
-        field.Float("reserv_persons").Optional().Annotations(entproto.Field(39)),
-        field.Float("reserv_2_nd_pp_perc").Optional().Annotations(entproto.Field(40)),
-        field.Float("reserv_nth_pp_perc").Optional().Annotations(entproto.Field(41)),
-        field.Int("accommodation_map_id").Optional().Annotations(entproto.Field(42)),
-        field.Int("accommodation_spot_id").Optional().Annotations(entproto.Field(43)),
-        field.Int("revision_number").Optional().Annotations(entproto.Field(44)),
-        field.Time("created_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(45)),
-        field.String("created_by_user_login").Optional().Annotations(entproto.Field(46)),
-        field.Time("last_modified_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(47)),
-        field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(48)),
-        field.Int("sequence_num").Optional().Annotations(entproto.Field(49)),
+        field.Enum("has_table").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+        field.String("description").Optional().Annotations(entproto.Field(3)),
     }
 }
 
-/* entproto annotations ??
-func (WorkEffort) Mixin() []ent.Mixin {
+//* entproto annotations ??
+func (RoleType) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 */
 
-func (WorkEffort) Annotations() []schema.Annotation {
+func (RoleType) Annotations() []schema.Annotation {
     return []schema.Annotation{
         entproto.Message(),
         entproto.Service(), // also generate a gRPC service definition
@@ -692,282 +1013,144 @@ func (WorkEffort) Annotations() []schema.Annotation {
 }
 
 
-// Edges of the WorkEffort.
-//  one: WorkEffortType
-//  one: WorkEffortPurposeType
-//  one: ParentWorkEffort
-//  many: WorkEffortTypeAttr
-//  one: CurrentStatusItem
-//  one: ScopeEnumeration
-//  one: FixedAsset
-//  one: Facility
-//  one: MoneyUom
-//  one: RecurrenceInfo
-//  one: TemporalExpression
-//  one: RuntimeData
-//  one: NoteData
-//  one: CustomMethod
-//  one: AccommodationMap
-//  one: AccommodationSpot
+// Edges of the RoleType.
+//  one: ParentRoleType
 //  many: AcctgTrans
-//  many: AgreementWorkEffortApplic
-//  many: CommunicationEventWorkEff
-//  many: CostComponent
-//  many: CustRequestItemWorkEffort
-//  many: CustRequestWorkEffort
-//  many: ScheduleFixedAssetMaint
-//  many: InventoryItemDetail
-//  many: OrderHeaderWorkEffort
-//  many: PersonTraining
-//  many: RoutingProductAssoc
-//  many: MaintTemplateProductMaint
-//  many: QuoteItem
-//  many: QuoteWorkEffort
-//  many: RateAmount
-//  many: SalesOpportunityWorkEffort
-//  many: EstimatedShipShipment
-//  many: EstimatedArrivalShipment
-//  many: ShoppingListWorkEffort
-//  many: TimeEntry
-//  many: ChildWorkEffort
-//  many: FromWorkEffortAssoc
-//  many: ToWorkEffortAssoc
-//  many: WorkEffortAttribute
-//  many: WorkEffortBilling
-//  many: WorkEffortContactMech
-//  many: WorkEffortContent
-//  many: WorkEffortCostCalc
-//  many: WorkEffortDeliverableProd
-//  many: WorkEffortEventReminder
-//  many: WorkEffortFixedAssetAssign
-//  many: WorkEffortFixedAssetStd
-//  many: WorkEffortGoodStandard
-//  one-nofk: WorkEffortIcalData
-//  many: WorkEffortInventoryAssign
-//  many: WorkEffortInventoryProduced
-//  many: WorkEffortKeyword
-//  many: WorkEffortNote
+//  many: AcctgTransEntry
+//  many: FromAgreement
+//  many: ToAgreement
+//  many: AgreementRole
+//  many: BillingAccountRole
+//  many: ToCommunicationEvent
+//  many: FromCommunicationEvent
+//  many: CommunicationEventRole
+//  many: ContentApproval
+//  many: ContentPurposeOperation
+//  many: CustRequestParty
+//  many: FacilityGroupRole
+//  many: FacilityParty
+//  many: FinAccountRole
+//  many: FixedAsset
+//  many: GlAccountOrganization
+//  many: GlAccountRole
+//  many: Invoice
+//  many: InvoiceRole
+//  many: MarketingCampaignRole
+//  many: OrderItemRole
+//  many: OrderRole
+//  many: PartyContactMech
+//  many: PartyFixedAssetAssignment
+//  many: PartyGlAccount
+//  many: PartyInvitationRoleAssoc
+//  many: PartyNeed
+//  many: FromPartyRelationship
+//  many: ToPartyRelationship
+//  many: ValidFromPartyRelationshipType
+//  many: ValidToPartyRelationshipType
+//  many: PartyRole
+//  many: ToPayment
+//  many: PicklistRole
+//  many: ProdCatalogRole
+//  many: ProductCategoryRole
+//  many: UseProductContent
+//  many: ProductRole
+//  many: ProductStoreGroupRole
+//  many: ProductStoreRole
+//  many: UseProductSubscriptionResource
+//  many: QuoteRole
+//  many: ChildRoleType
+//  many: RoleTypeAttr
+//  many: SalesOpportunityRole
+//  many: SegmentGroupRole
+//  many: ShipmentCostEstimate
+//  many: Subscription
+//  many: OriginatedFromSubscription
+//  many: TimesheetRole
+//  many: ValidContactMechRole
+//  many: WebSiteRole
 //  many: WorkEffortPartyAssignment
-//  many: WorkEffortReview
-//  many: WorkEffortSkillStandard
-//  many: WorkEffortStatus
-//  many: WorkEffortSurveyAppl
-//  many: WorkEffortTransBox
-//  many: WorkOrderItemFulfillment
-//  many: WorkRequirementFulfillment
-func (WorkEffort) Edges() []ent.Edge {
+func (RoleType) Edges() []ent.Edge {
     return []ent.Edge{
-                edge.To("children", WorkEffort.Type).
+                edge.To("children", RoleType.Type).
                     From("parent").
-                    // Bind the "workEffortParentId" field to this edge.
-                    // Field("work_effort_parent_id").
-                    Unique().Annotations(entproto.Field(52)),
-                // m2o
-                edge.From("fixed_asset", FixedAsset.Type).Ref("work_efforts").
-                    // Bind the "fixedAssetId" field to this edge.
-                    // Field("fixed_asset_id").
-                    Unique().Annotations(entproto.Field(56)),
-                // m2o
-                edge.From("temporal_expression", TemporalExpression.Type).Ref("work_efforts").
-                    // Bind the "tempExprId" field to this edge.
-                    // Field("temp_expr_id").
-                    Unique().Annotations(entproto.Field(60)),
-                // m2o
-                edge.To("child_work_efforts", WorkEffort.Type).
-                    Annotations(entproto.Field(86)),
-                // o2o
-                // m2o
-                edge.To("from_work_effort_assocs", WorkEffortAssoc.Type).
-                    Annotations(entproto.Field(87)),
-                // o2o
-                // m2o
-                edge.To("to_work_effort_assocs", WorkEffortAssoc.Type).
-                    Annotations(entproto.Field(88)),
-                // o2o
-                // m2o
-                edge.To("work_effort_fixed_asset_assigns", WorkEffortFixedAssetAssign.Type).
-                    Annotations(entproto.Field(96)),
-                // o2o
-                // m2o
-                edge.To("work_effort_party_assignments", WorkEffortPartyAssignment.Type).
-                    Annotations(entproto.Field(104)),
-                // o2o
-    }
-}
-
-
-type WorkEffortFixedAssetAssign struct {
-    ent.Schema
-}
-
-// Fields of the WorkEffortFixedAssetAssign.
-func (WorkEffortFixedAssetAssign) Fields() []ent.Field {
-    return []ent.Field{
-        field.Int("status_id").Optional().Annotations(entproto.Field(2)),
-        field.Time("from_date").
-            Default(time.Now).Annotations(entproto.Field(3)),
-        field.Time("thru_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(4)),
-        field.Int("availability_status_id").Optional().Annotations(entproto.Field(5)),
-        field.Float("allocated_cost").Optional().Annotations(entproto.Field(6)),
-        field.String("comments").Optional().Annotations(entproto.Field(7)),
-    }
-}
-
-/* entproto annotations ??
-func (WorkEffortFixedAssetAssign) Mixin() []ent.Mixin {
-    return []ent.Mixin{
-        mixin.Time{},
-    }
-}
-*/
-
-/*
-func (WorkEffortFixedAssetAssign) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("work_effort_id", "fixed_asset_id", "from_date").
-            Unique(),
-    }
-}
-
-*/
-
-func (WorkEffortFixedAssetAssign) Annotations() []schema.Annotation {
-    return []schema.Annotation{
-        entproto.Message(),
-        entproto.Service(), // also generate a gRPC service definition
-    }
-}
-
-
-// Edges of the WorkEffortFixedAssetAssign.
-//  one: WorkEffort
-//  one: FixedAsset
-//  one: StatusItem
-//  one: AvailabilityStatusItem
-func (WorkEffortFixedAssetAssign) Edges() []ent.Edge {
-    return []ent.Edge{
-                // m2o
-                edge.From("work_effort", WorkEffort.Type).Ref("work_effort_fixed_asset_assigns").
-                    // Bind the "workEffortId" field to this edge.
-                    // Field("work_effort_id").
-                    Unique().Annotations(entproto.Field(8)),
-                // m2o
-                edge.From("fixed_asset", FixedAsset.Type).Ref("work_effort_fixed_asset_assigns").
-                    // Bind the "fixedAssetId" field to this edge.
-                    // Field("fixed_asset_id").
-                    Unique().Annotations(entproto.Field(9)),
-    }
-}
-
-
-type SecurityGroupPermission struct {
-    ent.Schema
-}
-
-// Fields of the SecurityGroupPermission.
-func (SecurityGroupPermission) Fields() []ent.Field {
-    return []ent.Field{
-        field.String("permission_id").MaxLen(32).Annotations(entproto.Field(2)),
-        field.Time("from_date").
-            Default(time.Now).Annotations(entproto.Field(3)),
-        field.Time("thru_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(4)),
-    }
-}
-
-/* entproto annotations ??
-func (SecurityGroupPermission) Mixin() []ent.Mixin {
-    return []ent.Mixin{
-        mixin.Time{},
-    }
-}
-*/
-
-/*
-func (SecurityGroupPermission) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("group_id", "permission_id", "from_date").
-            Unique(),
-    }
-}
-
-*/
-
-func (SecurityGroupPermission) Annotations() []schema.Annotation {
-    return []schema.Annotation{
-        entproto.Message(),
-        entproto.Service(), // also generate a gRPC service definition
-    }
-}
-
-
-// Edges of the SecurityGroupPermission.
-//  one: SecurityGroup
-//  one-nofk: SecurityPermission
-func (SecurityGroupPermission) Edges() []ent.Edge {
-    return []ent.Edge{
-                // m2o
-                edge.From("security_group", SecurityGroup.Type).Ref("security_group_permissions").
-                    // Bind the "groupId" field to this edge.
-                    // Field("group_id").
-                    Unique().Annotations(entproto.Field(5)),
-    }
-}
-
-
-type TemporalExpressionAssoc struct {
-    ent.Schema
-}
-
-// Fields of the TemporalExpressionAssoc.
-func (TemporalExpressionAssoc) Fields() []ent.Field {
-    return []ent.Field{
-        field.Int("expr_assoc_type").Optional().Annotations(entproto.Field(2)),
-    }
-}
-
-/* entproto annotations ??
-func (TemporalExpressionAssoc) Mixin() []ent.Mixin {
-    return []ent.Mixin{
-        mixin.Time{},
-    }
-}
-*/
-
-/*
-func (TemporalExpressionAssoc) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("from_temp_expr_id", "to_temp_expr_id").
-            Unique(),
-    }
-}
-
-*/
-
-func (TemporalExpressionAssoc) Annotations() []schema.Annotation {
-    return []schema.Annotation{
-        entproto.Message(),
-        entproto.Service(), // also generate a gRPC service definition
-    }
-}
-
-
-// Edges of the TemporalExpressionAssoc.
-//  one: FromTemporalExpression
-//  one: ToTemporalExpression
-func (TemporalExpressionAssoc) Edges() []ent.Edge {
-    return []ent.Edge{
-                // m2o
-                edge.From("from_temporal_expression", TemporalExpression.Type).Ref("from_temporal_expression_assocs").
-                    // Bind the "fromTempExprId" field to this edge.
-                    // Field("from_temp_expr_id").
-                    Unique().Annotations(entproto.Field(3)),
-                // m2o
-                edge.From("to_temporal_expression", TemporalExpression.Type).Ref("to_temporal_expression_assocs").
-                    // Bind the "toTempExprId" field to this edge.
-                    // Field("to_temp_expr_id").
+                    // Bind the "parentTypeId" field to this edge.
+                    // Field("parent_type_id").
                     Unique().Annotations(entproto.Field(4)),
+                    // m2o
+                    edge.To("fixed_assets", FixedAsset.Type).
+                        Annotations(entproto.Field(20)),
+                    // m2o
+                    edge.To("party_contact_meches", PartyContactMech.Type).
+                        Annotations(entproto.Field(28)),
+                    // m2o
+                    edge.To("party_roles", PartyRole.Type).
+                        Annotations(entproto.Field(37)),
+                    // m2o
+                    edge.To("child_role_types", RoleType.Type).
+                        Annotations(entproto.Field(48)),
+                    // m2o
+                    edge.To("work_effort_party_assignments", WorkEffortPartyAssignment.Type).
+                        Annotations(entproto.Field(58)),
+    }
+}
+
+
+type WorkEffortSkillStandard struct {
+    ent.Schema
+}
+
+// Fields of the WorkEffortSkillStandard.
+// Unique-Indexes: workEffortId, skillTypeId
+func (WorkEffortSkillStandard) Fields() []ent.Field {
+    return []ent.Field{
+        field.Float("estimated_num_people").Optional().Annotations(entproto.Field(2)),
+        field.Float("estimated_duration").Optional().Annotations(entproto.Field(3)),
+        field.Float("estimated_cost").Optional().Annotations(entproto.Field(4)),
+    }
+}
+
+//* entproto annotations ??
+func (WorkEffortSkillStandard) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+func (WorkEffortSkillStandard) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("work_effort_id", "skill_type_id").
+            Unique(),
+    }
+}
+
+*/
+
+func (WorkEffortSkillStandard) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the WorkEffortSkillStandard.
+//  one: WorkEffort
+//  one: SkillType
+func (WorkEffortSkillStandard) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("work_effort", WorkEffort.Type).Ref("work_effort_skill_standards").
+                        // Bind the "workEffortId" field to this edge.
+                        // Field("work_effort_id").
+                        Unique().Annotations(entproto.Field(5)),
+                    // o2m
+                    edge.From("skill_type", SkillType.Type).Ref("work_effort_skill_standards").
+                        // Bind the "skillTypeId" field to this edge.
+                        // Field("skill_type_id").
+                        Unique().Annotations(entproto.Field(6)),
     }
 }
 
@@ -977,6 +1160,7 @@ type UserLoginSecurityGroup struct {
 }
 
 // Fields of the UserLoginSecurityGroup.
+// Unique-Indexes: userLoginId, groupId, fromDate
 func (UserLoginSecurityGroup) Fields() []ent.Field {
     return []ent.Field{
         field.Time("from_date").
@@ -986,13 +1170,14 @@ func (UserLoginSecurityGroup) Fields() []ent.Field {
     }
 }
 
-/* entproto annotations ??
+//* entproto annotations ??
 func (UserLoginSecurityGroup) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 func (UserLoginSecurityGroup) Indexes() []ent.Index {
@@ -1018,48 +1203,67 @@ func (UserLoginSecurityGroup) Annotations() []schema.Annotation {
 //  many: SecurityGroupPermission
 func (UserLoginSecurityGroup) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
-                edge.From("user_login", UserLogin.Type).Ref("user_login_security_groups").
-                    // Bind the "userLoginId" field to this edge.
-                    // Field("user_login_id").
-                    Unique().Annotations(entproto.Field(4)),
-                // m2o
-                edge.From("security_group", SecurityGroup.Type).Ref("user_login_security_groups").
-                    // Bind the "groupId" field to this edge.
-                    // Field("group_id").
-                    Unique().Annotations(entproto.Field(5)),
-                // m2o
-                edge.To("security_group_permissions", SecurityGroupPermission.Type).
-                    Annotations(entproto.Field(6)),
-                // o2o
+                    // o2m
+                    edge.From("user_login", UserLogin.Type).Ref("user_login_security_groups").
+                        // Bind the "userLoginId" field to this edge.
+                        // Field("user_login_id").
+                        Unique().Annotations(entproto.Field(4)),
+                    // o2m
+                    edge.From("security_group", SecurityGroup.Type).Ref("user_login_security_groups").
+                        // Bind the "groupId" field to this edge.
+                        // Field("group_id").
+                        Unique().Annotations(entproto.Field(5)),
+                    // m2o
+                    edge.To("security_group_permissions", SecurityGroupPermission.Type).
+                        Annotations(entproto.Field(6)),
     }
 }
 
 
-type SecurityGroup struct {
+type PartyContactMech struct {
     ent.Schema
 }
 
-// Fields of the SecurityGroup.
-func (SecurityGroup) Fields() []ent.Field {
+// Fields of the PartyContactMech.
+// Unique-Indexes: partyId, contactMechId, fromDate
+func (PartyContactMech) Fields() []ent.Field {
     return []ent.Field{
-        field.String("group_name").Optional().Annotations(entproto.Field(2)),
-        field.String("description").Optional().Annotations(entproto.Field(3)),
+        field.Int("contact_mech_id").Annotations(entproto.Field(2)),
+        field.Time("from_date").
+            Default(time.Now).Annotations(entproto.Field(3)),
+        field.Time("thru_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(4)),
+        field.Enum("allow_solicitation").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(5)),
+        field.String("extension").Optional().Annotations(entproto.Field(6)),
+        field.Enum("verified").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(7)),
+        field.String("comments").Optional().Annotations(entproto.Field(8)),
+        field.Int("years_with_contact_mech").Optional().Annotations(entproto.Field(9)),
+        field.Int("months_with_contact_mech").Optional().Annotations(entproto.Field(10)),
     }
 }
 
-/* entproto annotations ??
-func (SecurityGroup) Mixin() []ent.Mixin {
+//* entproto annotations ??
+func (PartyContactMech) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
+func (PartyContactMech) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("party_id", "contact_mech_id", "from_date").
+            Unique(),
+    }
+}
+
 */
 
-func (SecurityGroup) Annotations() []schema.Annotation {
+func (PartyContactMech) Annotations() []schema.Annotation {
     return []schema.Annotation{
         entproto.Message(),
         entproto.Service(), // also generate a gRPC service definition
@@ -1067,22 +1271,379 @@ func (SecurityGroup) Annotations() []schema.Annotation {
 }
 
 
-// Edges of the SecurityGroup.
-//  many: PartyRelationship
-//  many: PortalPage
-//  many: ProtectedView
-//  many: SecurityGroupPermission
-//  many: UserLoginSecurityGroup
-func (SecurityGroup) Edges() []ent.Edge {
+// Edges of the PartyContactMech.
+//  one: Party
+//  one-nofk: Person
+//  one-nofk: PartyGroup
+//  one: PartyRole
+//  one: RoleType
+//  one: ContactMech
+//  one-nofk: TelecomNumber
+//  one-nofk: PostalAddress
+//  many: PartyContactMechPurpose
+func (PartyContactMech) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
-                edge.To("security_group_permissions", SecurityGroupPermission.Type).
-                    Annotations(entproto.Field(7)),
-                // o2o
-                // m2o
-                edge.To("user_login_security_groups", UserLoginSecurityGroup.Type).
-                    Annotations(entproto.Field(8)),
-                // o2o
+                    // o2m
+                    edge.From("party", Party.Type).Ref("party_contact_meches").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(11)),
+                    // o2m
+                    edge.From("person", Person.Type).Ref("party_contact_meches").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(12)),
+                    // o2m
+                    edge.From("party_role", PartyRole.Type).Ref("party_contact_meches").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(14)),
+                    // o2m
+                    edge.From("role_type", RoleType.Type).Ref("party_contact_meches").
+                        // Bind the "roleTypeId" field to this edge.
+                        // Field("role_type_id").
+                        Unique().Annotations(entproto.Field(15)),
+    }
+}
+
+
+type SecurityGroupPermission struct {
+    ent.Schema
+}
+
+// Fields of the SecurityGroupPermission.
+// Unique-Indexes: groupId, permissionId, fromDate
+func (SecurityGroupPermission) Fields() []ent.Field {
+    return []ent.Field{
+        field.String("permission_id").MaxLen(32).Annotations(entproto.Field(2)),
+        field.Time("from_date").
+            Default(time.Now).Annotations(entproto.Field(3)),
+        field.Time("thru_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(4)),
+    }
+}
+
+//* entproto annotations ??
+func (SecurityGroupPermission) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+func (SecurityGroupPermission) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("group_id", "permission_id", "from_date").
+            Unique(),
+    }
+}
+
+*/
+
+func (SecurityGroupPermission) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the SecurityGroupPermission.
+//  one: SecurityGroup
+//  one-nofk: SecurityPermission
+func (SecurityGroupPermission) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("security_group", SecurityGroup.Type).Ref("security_group_permissions").
+                        // Bind the "groupId" field to this edge.
+                        // Field("group_id").
+                        Unique().Annotations(entproto.Field(5)),
+    }
+}
+
+
+type PartyStatus struct {
+    ent.Schema
+}
+
+// Fields of the PartyStatus.
+// Unique-Indexes: statusId, partyId, statusDate
+func (PartyStatus) Fields() []ent.Field {
+    return []ent.Field{
+        field.Time("status_date").
+            Default(time.Now).Annotations(entproto.Field(2)),
+    }
+}
+
+//* entproto annotations ??
+func (PartyStatus) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+func (PartyStatus) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("status_id", "party_id", "status_date").
+            Unique(),
+    }
+}
+
+*/
+
+func (PartyStatus) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the PartyStatus.
+//  one: StatusItem
+//  one: Party
+//  one: ChangeByUserLogin
+func (PartyStatus) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("status_item", StatusItem.Type).Ref("party_statuses").
+                        // Bind the "statusId" field to this edge.
+                        // Field("status_id").
+                        Unique().Annotations(entproto.Field(3)),
+                    // o2m
+                    edge.From("party", Party.Type).Ref("party_statuses").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(4)),
+                    // o2m
+                    edge.From("change_by_user_login", UserLogin.Type).Ref("change_by_party_statuses").
+                        // Bind the "changeByUserLoginId" field to this edge.
+                        // Field("change_by_user_login_id").
+                        Unique().Annotations(entproto.Field(5)),
+    }
+}
+
+
+type WorkEffortPartyAssignment struct {
+    ent.Schema
+}
+
+// Fields of the WorkEffortPartyAssignment.
+// Unique-Indexes: workEffortId, partyId, roleTypeId, fromDate
+func (WorkEffortPartyAssignment) Fields() []ent.Field {
+    return []ent.Field{
+        field.Time("from_date").
+            Default(time.Now).Annotations(entproto.Field(2)),
+        field.Time("thru_date").
+            Default(time.Now).Optional().Annotations(entproto.Field(3)),
+        field.Time("status_date_time").
+            Default(time.Now).Optional().Annotations(entproto.Field(4)),
+        field.Int("expectation_enum_id").Optional().Annotations(entproto.Field(5)),
+        field.Int("delegate_reason_enum_id").Optional().Annotations(entproto.Field(6)),
+        field.Int("facility_id").Optional().Annotations(entproto.Field(7)),
+        field.String("comments").Optional().Annotations(entproto.Field(8)),
+        field.Enum("must_rsvp").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(9)),
+    }
+}
+
+//* entproto annotations ??
+func (WorkEffortPartyAssignment) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+func (WorkEffortPartyAssignment) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("work_effort_id", "party_id", "role_type_id", "from_date").
+            Unique(),
+    }
+}
+
+*/
+
+func (WorkEffortPartyAssignment) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the WorkEffortPartyAssignment.
+//  one: WorkEffort
+//  one-nofk: Party
+//  one: PartyRole
+//  one-nofk: RoleType
+//  one: AssignedByUserLogin
+//  one: AssignmentStatusItem
+//  one: ExpectationEnumeration
+//  one: DelegateReasonEnumeration
+//  one: Facility
+//  one: AvailabilityStatusItem
+//  many: ApplicationSandbox
+func (WorkEffortPartyAssignment) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("work_effort", WorkEffort.Type).Ref("work_effort_party_assignments").
+                        // Bind the "workEffortId" field to this edge.
+                        // Field("work_effort_id").
+                        Unique().Annotations(entproto.Field(10)),
+                    // o2m
+                    edge.From("party", Party.Type).Ref("work_effort_party_assignments").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(11)),
+                    // o2m
+                    edge.From("party_role", PartyRole.Type).Ref("work_effort_party_assignments").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(12)),
+                    // o2m
+                    edge.From("role_type", RoleType.Type).Ref("work_effort_party_assignments").
+                        // Bind the "roleTypeId" field to this edge.
+                        // Field("role_type_id").
+                        Unique().Annotations(entproto.Field(13)),
+                    // o2m
+                    edge.From("assigned_by_user_login", UserLogin.Type).Ref("assigned_by_work_effort_party_assignments").
+                        // Bind the "assignedByUserLoginId" field to this edge.
+                        // Field("assigned_by_user_login_id").
+                        Unique().Annotations(entproto.Field(14)),
+                    // o2m
+                    edge.From("assignment_status_item", StatusItem.Type).Ref("assignment_work_effort_party_assignments").
+                        // Bind the "statusId" field to this edge.
+                        // Field("status_id").
+                        Unique().Annotations(entproto.Field(15)),
+                    // o2m
+                    edge.From("availability_status_item", StatusItem.Type).Ref("availability_work_effort_party_assignments").
+                        // Bind the "availabilityStatusId" field to this edge.
+                        // Field("availability_status_id").
+                        Unique().Annotations(entproto.Field(19)),
+    }
+}
+
+
+type SkillType struct {
+    ent.Schema
+}
+
+// Fields of the SkillType.
+// Unique-Indexes: skillTypeId
+func (SkillType) Fields() []ent.Field {
+    return []ent.Field{
+        field.Enum("has_table").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+        field.String("description").Optional().Annotations(entproto.Field(3)),
+    }
+}
+
+//* entproto annotations ??
+func (SkillType) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+*/
+
+func (SkillType) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the SkillType.
+//  one: ParentSkillType
+//  many: JobRequisition
+//  many: PartySkill
+//  many: QuoteItem
+//  many: ChildSkillType
+//  many: WorkEffortSkillStandard
+func (SkillType) Edges() []ent.Edge {
+    return []ent.Edge{
+                edge.To("children", SkillType.Type).
+                    From("parent").
+                    // Bind the "parentTypeId" field to this edge.
+                    // Field("parent_type_id").
+                    Unique().Annotations(entproto.Field(4)),
+                    // m2o
+                    edge.To("child_skill_types", SkillType.Type).
+                        Annotations(entproto.Field(8)),
+                    // m2o
+                    edge.To("work_effort_skill_standards", WorkEffortSkillStandard.Type).
+                        Annotations(entproto.Field(9)),
+    }
+}
+
+
+type TemporalExpressionAssoc struct {
+    ent.Schema
+}
+
+// Fields of the TemporalExpressionAssoc.
+// Unique-Indexes: fromTempExprId, toTempExprId
+func (TemporalExpressionAssoc) Fields() []ent.Field {
+    return []ent.Field{
+        field.Int("expr_assoc_type").Optional().Annotations(entproto.Field(2)),
+    }
+}
+
+//* entproto annotations ??
+func (TemporalExpressionAssoc) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+func (TemporalExpressionAssoc) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("from_temp_expr_id", "to_temp_expr_id").
+            Unique(),
+    }
+}
+
+*/
+
+func (TemporalExpressionAssoc) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the TemporalExpressionAssoc.
+//  one: FromTemporalExpression
+//  one: ToTemporalExpression
+func (TemporalExpressionAssoc) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("from_temporal_expression", TemporalExpression.Type).Ref("from_temporal_expression_assocs").
+                        // Bind the "fromTempExprId" field to this edge.
+                        // Field("from_temp_expr_id").
+                        Unique().Annotations(entproto.Field(3)),
+                    // o2m
+                    edge.From("to_temporal_expression", TemporalExpression.Type).Ref("to_temporal_expression_assocs").
+                        // Bind the "toTempExprId" field to this edge.
+                        // Field("to_temp_expr_id").
+                        Unique().Annotations(entproto.Field(4)),
     }
 }
 
@@ -1092,6 +1653,7 @@ type WorkEffortAssoc struct {
 }
 
 // Fields of the WorkEffortAssoc.
+// Unique-Indexes: workEffortIdFrom, workEffortIdTo, workEffortAssocTypeId, fromDate
 func (WorkEffortAssoc) Fields() []ent.Field {
     return []ent.Field{
         field.Int("work_effort_assoc_type_id").Annotations(entproto.Field(2)),
@@ -1103,13 +1665,14 @@ func (WorkEffortAssoc) Fields() []ent.Field {
     }
 }
 
-/* entproto annotations ??
+//* entproto annotations ??
 func (WorkEffortAssoc) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 func (WorkEffortAssoc) Indexes() []ent.Index {
@@ -1137,137 +1700,16 @@ func (WorkEffortAssoc) Annotations() []schema.Annotation {
 //  many: WorkEffortAssocAttribute
 func (WorkEffortAssoc) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
-                edge.From("from_work_effort", WorkEffort.Type).Ref("from_work_effort_assocs").
-                    // Bind the "workEffortIdFrom" field to this edge.
-                    // Field("work_effort_id_from").
-                    Unique().Annotations(entproto.Field(8)),
-                // m2o
-                edge.From("to_work_effort", WorkEffort.Type).Ref("to_work_effort_assocs").
-                    // Bind the "workEffortIdTo" field to this edge.
-                    // Field("work_effort_id_to").
-                    Unique().Annotations(entproto.Field(9)),
-    }
-}
-
-
-type TemporalExpression struct {
-    ent.Schema
-}
-
-// Fields of the TemporalExpression.
-func (TemporalExpression) Fields() []ent.Field {
-    return []ent.Field{
-        field.Int("temp_expr_type_id").Optional().Annotations(entproto.Field(2)),
-        field.String("description").Optional().Annotations(entproto.Field(3)),
-        field.Time("date_1").
-            Default(time.Now).Optional().Annotations(entproto.Field(4)),
-        field.Time("date_2").
-            Default(time.Now).Optional().Annotations(entproto.Field(5)),
-        field.Int("integer_1").Optional().Annotations(entproto.Field(6)),
-        field.Int("integer_2").Optional().Annotations(entproto.Field(7)),
-        field.Int("string_1").Optional().Annotations(entproto.Field(8)),
-        field.Int("string_2").Optional().Annotations(entproto.Field(9)),
-    }
-}
-
-/* entproto annotations ??
-func (TemporalExpression) Mixin() []ent.Mixin {
-    return []ent.Mixin{
-        mixin.Time{},
-    }
-}
-*/
-
-/*
-*/
-
-func (TemporalExpression) Annotations() []schema.Annotation {
-    return []schema.Annotation{
-        entproto.Message(),
-        entproto.Service(), // also generate a gRPC service definition
-    }
-}
-
-
-// Edges of the TemporalExpression.
-//  many: JobSandbox
-//  many: FromTemporalExpressionAssoc
-//  many: ToTemporalExpressionAssoc
-//  many: WorkEffort
-func (TemporalExpression) Edges() []ent.Edge {
-    return []ent.Edge{
-                // m2o
-                edge.To("from_temporal_expression_assocs", TemporalExpressionAssoc.Type).
-                    Annotations(entproto.Field(11)),
-                // o2o
-                // m2o
-                edge.To("to_temporal_expression_assocs", TemporalExpressionAssoc.Type).
-                    Annotations(entproto.Field(12)),
-                // o2o
-                // m2o
-                edge.To("work_efforts", WorkEffort.Type).
-                    Annotations(entproto.Field(13)),
-                // o2o
-    }
-}
-
-
-type PartyStatus struct {
-    ent.Schema
-}
-
-// Fields of the PartyStatus.
-func (PartyStatus) Fields() []ent.Field {
-    return []ent.Field{
-        field.Int("status_id").Annotations(entproto.Field(2)),
-        field.Time("status_date").
-            Default(time.Now).Annotations(entproto.Field(3)),
-    }
-}
-
-/* entproto annotations ??
-func (PartyStatus) Mixin() []ent.Mixin {
-    return []ent.Mixin{
-        mixin.Time{},
-    }
-}
-*/
-
-/*
-func (PartyStatus) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("status_id", "party_id", "status_date").
-            Unique(),
-    }
-}
-
-*/
-
-func (PartyStatus) Annotations() []schema.Annotation {
-    return []schema.Annotation{
-        entproto.Message(),
-        entproto.Service(), // also generate a gRPC service definition
-    }
-}
-
-
-// Edges of the PartyStatus.
-//  one: StatusItem
-//  one: Party
-//  one: ChangeByUserLogin
-func (PartyStatus) Edges() []ent.Edge {
-    return []ent.Edge{
-                // m2o
-                edge.From("party", Party.Type).Ref("party_statuses").
-                    // Bind the "partyId" field to this edge.
-                    // Field("party_id").
-                    Unique().Annotations(entproto.Field(5)),
-                // m2o
-                edge.From("change_by_user_login", UserLogin.Type).Ref("change_by_party_statuses").
-                    // Bind the "changeByUserLoginId" field to this edge.
-                    // Field("change_by_user_login_id").
-                    Unique().Annotations(entproto.Field(6)),
+                    // o2m
+                    edge.From("from_work_effort", WorkEffort.Type).Ref("from_work_effort_assocs").
+                        // Bind the "workEffortIdFrom" field to this edge.
+                        // Field("work_effort_id_from").
+                        Unique().Annotations(entproto.Field(8)),
+                    // o2m
+                    edge.From("to_work_effort", WorkEffort.Type).Ref("to_work_effort_assocs").
+                        // Bind the "workEffortIdTo" field to this edge.
+                        // Field("work_effort_id_to").
+                        Unique().Annotations(entproto.Field(9)),
     }
 }
 
@@ -1277,30 +1719,31 @@ type Party struct {
 }
 
 // Fields of the Party.
+// Unique-Indexes: partyId
 func (Party) Fields() []ent.Field {
     return []ent.Field{
         field.Int("party_type_id").Optional().Annotations(entproto.Field(2)),
         field.Int("external_id").Optional().Annotations(entproto.Field(3)),
         field.Int("preferred_currency_uom_id").Optional().Annotations(entproto.Field(4)),
         field.String("description").Optional().Annotations(entproto.Field(5)),
-        field.Int("status_id").Optional().Annotations(entproto.Field(6)),
         field.Time("created_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(7)),
+            Default(time.Now).Optional().Annotations(entproto.Field(6)),
         field.Time("last_modified_date").
-            Default(time.Now).Optional().Annotations(entproto.Field(8)),
-        field.Int("data_source_id").Optional().Annotations(entproto.Field(9)),
+            Default(time.Now).Optional().Annotations(entproto.Field(7)),
+        field.Int("data_source_id").Optional().Annotations(entproto.Field(8)),
         field.Enum("is_unread").
-            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(10)),
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(9)),
     }
 }
 
-/* entproto annotations ??
+//* entproto annotations ??
 func (Party) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 */
@@ -1503,40 +1946,313 @@ func (Party) Annotations() []schema.Annotation {
 //  many: WorkEffortPartyAssignment
 func (Party) Edges() []ent.Edge {
     return []ent.Edge{
-                // m2o
-                edge.From("created_by_user_login", UserLogin.Type).Ref("created_by_parties").
-                    // Bind the "createdByUserLogin" field to this edge.
-                    // Field("created_by_user_login").
-                    Unique().Annotations(entproto.Field(12)),
-                // m2o
-                edge.From("last_modified_by_user_login", UserLogin.Type).Ref("last_modified_by_parties").
-                    // Bind the "lastModifiedByUserLogin" field to this edge.
-                    // Field("last_modified_by_user_login").
-                    Unique().Annotations(entproto.Field(13)),
-                // m2o
-                edge.To("fixed_assets", FixedAsset.Type).
-                    Annotations(entproto.Field(65)),
-                // o2o
-                // m2o
-                edge.To("party_roles", PartyRole.Type).
-                    Annotations(entproto.Field(125)),
-                // o2o
-                // m2o
-                edge.To("party_statuses", PartyStatus.Type).
-                    Annotations(entproto.Field(127)),
-                // o2o
-                // m2o
+                    // o2m
+                    edge.From("created_by_user_login", UserLogin.Type).Ref("created_by_parties").
+                        // Bind the "createdByUserLogin" field to this edge.
+                        // Field("created_by_user_login").
+                        Unique().Annotations(entproto.Field(11)),
+                    // o2m
+                    edge.From("last_modified_by_user_login", UserLogin.Type).Ref("last_modified_by_parties").
+                        // Bind the "lastModifiedByUserLogin" field to this edge.
+                        // Field("last_modified_by_user_login").
+                        Unique().Annotations(entproto.Field(12)),
+                    // o2m
+                    edge.From("status_item", StatusItem.Type).Ref("parties").
+                        // Bind the "statusId" field to this edge.
+                        // Field("status_id").
+                        Unique().Annotations(entproto.Field(14)),
+                    // m2o
+                    edge.To("fixed_assets", FixedAsset.Type).
+                        Annotations(entproto.Field(64)),
+                    // m2o
+                    edge.To("party_contact_meches", PartyContactMech.Type).
+                        Annotations(entproto.Field(101)),
+                    // m2o
+                    edge.To("party_roles", PartyRole.Type).
+                        Annotations(entproto.Field(124)),
+                    // m2o
+                    edge.To("party_statuses", PartyStatus.Type).
+                        Annotations(entproto.Field(126)),
+                    // o2o
                     edge.To("person", Person.Type).
                         // Bind the "partyId" field to this edge.
                         // Field("party_id").
-                        Unique().Annotations(entproto.Field(139)),
-                // m2o
-                edge.To("user_logins", UserLogin.Type).
-                    Annotations(entproto.Field(189)),
-                // o2o
-                // m2o
-                edge.To("work_effort_party_assignments", WorkEffortPartyAssignment.Type).
-                    Annotations(entproto.Field(197)),
-                // o2o
+                        Unique().Annotations(entproto.Field(138)),
+                    // m2o
+                    edge.To("user_logins", UserLogin.Type).
+                        Annotations(entproto.Field(188)),
+                    // m2o
+                    edge.To("work_effort_party_assignments", WorkEffortPartyAssignment.Type).
+                        Annotations(entproto.Field(196)),
+    }
+}
+
+
+type StatusType struct {
+    ent.Schema
+}
+
+// Fields of the StatusType.
+// Unique-Indexes: statusTypeId
+func (StatusType) Fields() []ent.Field {
+    return []ent.Field{
+        field.Enum("has_table").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+        field.String("description").Optional().Annotations(entproto.Field(3)),
+    }
+}
+
+//* entproto annotations ??
+func (StatusType) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+*/
+
+func (StatusType) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the StatusType.
+//  one: ParentStatusType
+//  many: StatusItem
+//  many: ChildStatusType
+func (StatusType) Edges() []ent.Edge {
+    return []ent.Edge{
+                edge.To("children", StatusType.Type).
+                    From("parent").
+                    // Bind the "parentTypeId" field to this edge.
+                    // Field("parent_type_id").
+                    Unique().Annotations(entproto.Field(4)),
+                    // m2o
+                    edge.To("status_items", StatusItem.Type).
+                        Annotations(entproto.Field(5)),
+                    // m2o
+                    edge.To("child_status_types", StatusType.Type).
+                        Annotations(entproto.Field(6)),
+    }
+}
+
+
+type UserLogin struct {
+    ent.Schema
+}
+
+// Fields of the UserLogin.
+// Unique-Indexes: userLoginId
+func (UserLogin) Fields() []ent.Field {
+    return []ent.Field{
+        field.String("current_password").Optional().Annotations(entproto.Field(2)),
+        field.String("password_hint").Optional().Annotations(entproto.Field(3)),
+        field.Enum("is_system").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(4)),
+        field.Enum("enabled").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(5)),
+        field.Enum("has_logged_out").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(6)),
+        field.Enum("require_password_change").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(7)),
+        field.Int("last_currency_uom").Optional().Annotations(entproto.Field(8)),
+        field.String("last_locale").MaxLen(10).Optional().Annotations(entproto.Field(9)),
+        field.String("last_time_zone").MaxLen(32).Optional().Annotations(entproto.Field(10)),
+        field.Time("disabled_date_time").
+            Default(time.Now).Optional().Annotations(entproto.Field(11)),
+        field.Int("successive_failed_logins").Optional().Annotations(entproto.Field(12)),
+        field.String("external_auth_id").Optional().Annotations(entproto.Field(13)),
+        field.String("user_ldap_dn").Optional().Annotations(entproto.Field(14)),
+        field.String("disabled_by").Optional().Annotations(entproto.Field(15)),
+    }
+}
+
+//* entproto annotations ??
+func (UserLogin) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+*/
+
+func (UserLogin) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the UserLogin.
+//  one: Party
+//  one-nofk: Person
+//  one-nofk: PartyGroup
+//  many: Created ByAllocationPlanHeader
+//  many: Last Modified ByAllocationPlanHeader
+//  many: Created By User LoginAllocationPlanItem
+//  many: Last Modified By User LoginAllocationPlanItem
+//  many: ChangeByBudgetStatus
+//  many: CreatedByContactList
+//  many: LastModifiedByContactList
+//  many: ChangeByContactListCommStatus
+//  many: CreatedByContent
+//  many: LastModifiedByContent
+//  many: CreatedByContentAssoc
+//  many: LastModifiedByContentAssoc
+//  many: ChangeByCustRequestStatus
+//  many: CreatedByDataResource
+//  many: LastModifiedByDataResource
+//  many: ExampleStatus
+//  many: UserLoginExcelImportHistory
+//  many: FinAccountStatus
+//  many: InventoryItemStatus
+//  many: ChangeByInvoiceStatus
+//  many: IssuedByItemIssuance
+//  many: AuthJobSandbox
+//  many: RunAsJobSandbox
+//  many: ChangeOldPicklistStatusHistory
+//  many: OrderAdjustment
+//  many: CreatedByOrderHeader
+//  many: DontCancelSetOrderItem
+//  many: ChangeByOrderItem
+//  many: OrderItemChange
+//  many: OrderPaymentPreference
+//  many: OrderStatus
+//  many: CreatedByParty
+//  many: LastModifiedByParty
+//  many: ChangeByPartyStatus
+//  many: CreatedByPicklistRole
+//  many: LastModifiedByPicklistRole
+//  many: ChangePicklistStatus
+//  many: CreatedByProduct
+//  many: LastModifiedByProduct
+//  many: CreatedByProductFeaturePrice
+//  many: LastModifiedByProductFeaturePrice
+//  many: CreatedByProductPrice
+//  many: LastModifiedByProductPrice
+//  many: ChangedByProductPriceChange
+//  many: CreatedByProductPromo
+//  many: LastModifiedByProductPromo
+//  many: CreatedByProductPromoCode
+//  many: LastModifiedByProductPromoCode
+//  many: ProductReview
+//  many: QuoteAdjustment
+//  many: ChangeByRequirementStatus
+//  many: ReturnAdjustment
+//  many: ReturnHeader
+//  many: ChangeByReturnStatus
+//  many: CreatedBySalesForecast
+//  many: ModifiedBySalesForecast
+//  many: ModifiedBySalesForecastHistory
+//  many: SalesOpportunity
+//  many: SalesOpportunityHistory
+//  many: ShipmentReceipt
+//  many: ChangeByShipmentStatus
+//  many: ChangeByTestingStatus
+//  many: ApprovedByTimesheet
+//  many: UserLoginHistory
+//  many: OriginUserLoginHistory
+//  many: UserLoginPasswordHistory
+//  many: UserLoginSecurityGroup
+//  one-nofk: UserLoginSession
+//  many: UserPreference
+//  many: WebUserPreference
+//  many: AssignedByWorkEffortPartyAssignment
+//  many: WorkEffortReview
+//  many: SetByWorkEffortStatus
+//  many: WorkloadStatus
+func (UserLogin) Edges() []ent.Edge {
+    return []ent.Edge{
+                    // o2m
+                    edge.From("party", Party.Type).Ref("user_logins").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(16)),
+                    // o2m
+                    edge.From("person", Person.Type).Ref("user_logins").
+                        // Bind the "partyId" field to this edge.
+                        // Field("party_id").
+                        Unique().Annotations(entproto.Field(17)),
+                    // m2o
+                    edge.To("created_by_parties", Party.Type).
+                        Annotations(entproto.Field(50)),
+                    // m2o
+                    edge.To("last_modified_by_parties", Party.Type).
+                        Annotations(entproto.Field(51)),
+                    // m2o
+                    edge.To("change_by_party_statuses", PartyStatus.Type).
+                        Annotations(entproto.Field(52)),
+                    // m2o
+                    edge.To("user_login_security_groups", UserLoginSecurityGroup.Type).
+                        Annotations(entproto.Field(85)),
+                    // m2o
+                    edge.To("assigned_by_work_effort_party_assignments", WorkEffortPartyAssignment.Type).
+                        Annotations(entproto.Field(89)),
+    }
+}
+
+
+type WorkEffortType struct {
+    ent.Schema
+}
+
+// Fields of the WorkEffortType.
+// Unique-Indexes: workEffortTypeId
+func (WorkEffortType) Fields() []ent.Field {
+    return []ent.Field{
+        field.Enum("has_table").
+            Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+        field.String("description").Optional().Annotations(entproto.Field(3)),
+    }
+}
+
+//* entproto annotations ??
+func (WorkEffortType) Mixin() []ent.Mixin {
+    return []ent.Mixin{
+        mixin.Time{},
+        schemamixins.StringRefMixin{},
+    }
+}
+//*/
+
+/*
+*/
+
+func (WorkEffortType) Annotations() []schema.Annotation {
+    return []schema.Annotation{
+        entproto.Message(),
+        entproto.Service(), // also generate a gRPC service definition
+    }
+}
+
+
+// Edges of the WorkEffortType.
+//  one: ParentWorkEffortType
+//  many: WorkEffort
+//  many: ChildWorkEffortType
+//  many: WorkEffortTypeAttr
+func (WorkEffortType) Edges() []ent.Edge {
+    return []ent.Edge{
+                edge.To("children", WorkEffortType.Type).
+                    From("parent").
+                    // Bind the "parentTypeId" field to this edge.
+                    // Field("parent_type_id").
+                    Unique().Annotations(entproto.Field(4)),
+                    // m2o
+                    edge.To("work_efforts", WorkEffort.Type).
+                        Annotations(entproto.Field(5)),
+                    // m2o
+                    edge.To("child_work_effort_types", WorkEffortType.Type).
+                        Annotations(entproto.Field(6)),
     }
 }

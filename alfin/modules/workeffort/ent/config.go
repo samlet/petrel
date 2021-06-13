@@ -26,11 +26,17 @@ type config struct {
 type hooks struct {
 	FixedAsset                 []ent.Hook
 	Party                      []ent.Hook
+	PartyContactMech           []ent.Hook
 	PartyRole                  []ent.Hook
 	PartyStatus                []ent.Hook
 	Person                     []ent.Hook
+	RoleType                   []ent.Hook
 	SecurityGroup              []ent.Hook
 	SecurityGroupPermission    []ent.Hook
+	SkillType                  []ent.Hook
+	StatusItem                 []ent.Hook
+	StatusType                 []ent.Hook
+	StatusValidChange          []ent.Hook
 	TemporalExpression         []ent.Hook
 	TemporalExpressionAssoc    []ent.Hook
 	UserLogin                  []ent.Hook
@@ -39,6 +45,8 @@ type hooks struct {
 	WorkEffortAssoc            []ent.Hook
 	WorkEffortFixedAssetAssign []ent.Hook
 	WorkEffortPartyAssignment  []ent.Hook
+	WorkEffortSkillStandard    []ent.Hook
+	WorkEffortType             []ent.Hook
 }
 
 // Options applies the options on the config object.

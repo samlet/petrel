@@ -16,16 +16,28 @@ type Tx struct {
 	FixedAsset *FixedAssetClient
 	// Party is the client for interacting with the Party builders.
 	Party *PartyClient
+	// PartyContactMech is the client for interacting with the PartyContactMech builders.
+	PartyContactMech *PartyContactMechClient
 	// PartyRole is the client for interacting with the PartyRole builders.
 	PartyRole *PartyRoleClient
 	// PartyStatus is the client for interacting with the PartyStatus builders.
 	PartyStatus *PartyStatusClient
 	// Person is the client for interacting with the Person builders.
 	Person *PersonClient
+	// RoleType is the client for interacting with the RoleType builders.
+	RoleType *RoleTypeClient
 	// SecurityGroup is the client for interacting with the SecurityGroup builders.
 	SecurityGroup *SecurityGroupClient
 	// SecurityGroupPermission is the client for interacting with the SecurityGroupPermission builders.
 	SecurityGroupPermission *SecurityGroupPermissionClient
+	// SkillType is the client for interacting with the SkillType builders.
+	SkillType *SkillTypeClient
+	// StatusItem is the client for interacting with the StatusItem builders.
+	StatusItem *StatusItemClient
+	// StatusType is the client for interacting with the StatusType builders.
+	StatusType *StatusTypeClient
+	// StatusValidChange is the client for interacting with the StatusValidChange builders.
+	StatusValidChange *StatusValidChangeClient
 	// TemporalExpression is the client for interacting with the TemporalExpression builders.
 	TemporalExpression *TemporalExpressionClient
 	// TemporalExpressionAssoc is the client for interacting with the TemporalExpressionAssoc builders.
@@ -42,6 +54,10 @@ type Tx struct {
 	WorkEffortFixedAssetAssign *WorkEffortFixedAssetAssignClient
 	// WorkEffortPartyAssignment is the client for interacting with the WorkEffortPartyAssignment builders.
 	WorkEffortPartyAssignment *WorkEffortPartyAssignmentClient
+	// WorkEffortSkillStandard is the client for interacting with the WorkEffortSkillStandard builders.
+	WorkEffortSkillStandard *WorkEffortSkillStandardClient
+	// WorkEffortType is the client for interacting with the WorkEffortType builders.
+	WorkEffortType *WorkEffortTypeClient
 
 	// lazily loaded.
 	client     *Client
@@ -179,11 +195,17 @@ func (tx *Tx) Client() *Client {
 func (tx *Tx) init() {
 	tx.FixedAsset = NewFixedAssetClient(tx.config)
 	tx.Party = NewPartyClient(tx.config)
+	tx.PartyContactMech = NewPartyContactMechClient(tx.config)
 	tx.PartyRole = NewPartyRoleClient(tx.config)
 	tx.PartyStatus = NewPartyStatusClient(tx.config)
 	tx.Person = NewPersonClient(tx.config)
+	tx.RoleType = NewRoleTypeClient(tx.config)
 	tx.SecurityGroup = NewSecurityGroupClient(tx.config)
 	tx.SecurityGroupPermission = NewSecurityGroupPermissionClient(tx.config)
+	tx.SkillType = NewSkillTypeClient(tx.config)
+	tx.StatusItem = NewStatusItemClient(tx.config)
+	tx.StatusType = NewStatusTypeClient(tx.config)
+	tx.StatusValidChange = NewStatusValidChangeClient(tx.config)
 	tx.TemporalExpression = NewTemporalExpressionClient(tx.config)
 	tx.TemporalExpressionAssoc = NewTemporalExpressionAssocClient(tx.config)
 	tx.UserLogin = NewUserLoginClient(tx.config)
@@ -192,6 +214,8 @@ func (tx *Tx) init() {
 	tx.WorkEffortAssoc = NewWorkEffortAssocClient(tx.config)
 	tx.WorkEffortFixedAssetAssign = NewWorkEffortFixedAssetAssignClient(tx.config)
 	tx.WorkEffortPartyAssignment = NewWorkEffortPartyAssignmentClient(tx.config)
+	tx.WorkEffortSkillStandard = NewWorkEffortSkillStandardClient(tx.config)
+	tx.WorkEffortType = NewWorkEffortTypeClient(tx.config)
 }
 
 // txDriver wraps the given dialect.Tx with a nop dialect.Driver implementation.

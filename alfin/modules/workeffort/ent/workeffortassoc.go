@@ -17,6 +17,12 @@ type WorkEffortAssoc struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// WorkEffortAssocTypeID holds the value of the "work_effort_assoc_type_id" field.
 	WorkEffortAssocTypeID int `json:"work_effort_assoc_type_id,omitempty"`
 	// SequenceNum holds the value of the "sequence_num" field.
@@ -78,7 +84,9 @@ func (*WorkEffortAssoc) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case workeffortassoc.FieldID, workeffortassoc.FieldWorkEffortAssocTypeID, workeffortassoc.FieldSequenceNum:
 			values[i] = new(sql.NullInt64)
-		case workeffortassoc.FieldFromDate, workeffortassoc.FieldThruDate:
+		case workeffortassoc.FieldStringRef:
+			values[i] = new(sql.NullString)
+		case workeffortassoc.FieldCreateTime, workeffortassoc.FieldUpdateTime, workeffortassoc.FieldFromDate, workeffortassoc.FieldThruDate:
 			values[i] = new(sql.NullTime)
 		case workeffortassoc.ForeignKeys[0]: // work_effort_from_work_effort_assocs
 			values[i] = new(sql.NullInt64)
@@ -105,6 +113,24 @@ func (wea *WorkEffortAssoc) assignValues(columns []string, values []interface{})
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			wea.ID = int(value.Int64)
+		case workeffortassoc.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				wea.CreateTime = value.Time
+			}
+		case workeffortassoc.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				wea.UpdateTime = value.Time
+			}
+		case workeffortassoc.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				wea.StringRef = value.String
+			}
 		case workeffortassoc.FieldWorkEffortAssocTypeID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field work_effort_assoc_type_id", values[i])
@@ -181,6 +207,12 @@ func (wea *WorkEffortAssoc) String() string {
 	var builder strings.Builder
 	builder.WriteString("WorkEffortAssoc(")
 	builder.WriteString(fmt.Sprintf("id=%v", wea.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(wea.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(wea.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(wea.StringRef)
 	builder.WriteString(", work_effort_assoc_type_id=")
 	builder.WriteString(fmt.Sprintf("%v", wea.WorkEffortAssocTypeID))
 	builder.WriteString(", sequence_num=")

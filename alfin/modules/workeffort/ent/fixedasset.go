@@ -11,6 +11,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 )
 
 // FixedAsset is the model entity for the FixedAsset schema.
@@ -18,14 +19,18 @@ type FixedAsset struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// FixedAssetTypeID holds the value of the "fixed_asset_type_id" field.
 	FixedAssetTypeID int `json:"fixed_asset_type_id,omitempty"`
 	// InstanceOfProductID holds the value of the "instance_of_product_id" field.
 	InstanceOfProductID int `json:"instance_of_product_id,omitempty"`
 	// ClassEnumID holds the value of the "class_enum_id" field.
 	ClassEnumID int `json:"class_enum_id,omitempty"`
-	// RoleTypeID holds the value of the "role_type_id" field.
-	RoleTypeID int `json:"role_type_id,omitempty"`
 	// FixedAssetName holds the value of the "fixed_asset_name" field.
 	FixedAssetName string `json:"fixed_asset_name,omitempty"`
 	// AcquireOrderID holds the value of the "acquire_order_id" field.
@@ -68,6 +73,7 @@ type FixedAsset struct {
 	fixed_asset_children    *int
 	party_fixed_assets      *int
 	party_role_fixed_assets *int
+	role_type_fixed_assets  *int
 }
 
 // FixedAssetEdges holds the relations/edges for other nodes in the graph.
@@ -78,6 +84,8 @@ type FixedAssetEdges struct {
 	Children []*FixedAsset `json:"children,omitempty"`
 	// Party holds the value of the party edge.
 	Party *Party `json:"party,omitempty"`
+	// RoleType holds the value of the role_type edge.
+	RoleType *RoleType `json:"role_type,omitempty"`
 	// PartyRole holds the value of the party_role edge.
 	PartyRole *PartyRole `json:"party_role,omitempty"`
 	// ChildFixedAssets holds the value of the child_fixed_assets edge.
@@ -88,7 +96,7 @@ type FixedAssetEdges struct {
 	WorkEffortFixedAssetAssigns []*WorkEffortFixedAssetAssign `json:"work_effort_fixed_asset_assigns,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [7]bool
+	loadedTypes [8]bool
 }
 
 // ParentOrErr returns the Parent value or an error if the edge
@@ -128,10 +136,24 @@ func (e FixedAssetEdges) PartyOrErr() (*Party, error) {
 	return nil, &NotLoadedError{edge: "party"}
 }
 
+// RoleTypeOrErr returns the RoleType value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e FixedAssetEdges) RoleTypeOrErr() (*RoleType, error) {
+	if e.loadedTypes[3] {
+		if e.RoleType == nil {
+			// The edge role_type was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: roletype.Label}
+		}
+		return e.RoleType, nil
+	}
+	return nil, &NotLoadedError{edge: "role_type"}
+}
+
 // PartyRoleOrErr returns the PartyRole value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e FixedAssetEdges) PartyRoleOrErr() (*PartyRole, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[4] {
 		if e.PartyRole == nil {
 			// The edge party_role was loaded in eager-loading,
 			// but was not found.
@@ -145,7 +167,7 @@ func (e FixedAssetEdges) PartyRoleOrErr() (*PartyRole, error) {
 // ChildFixedAssetsOrErr returns the ChildFixedAssets value or an error if the edge
 // was not loaded in eager-loading.
 func (e FixedAssetEdges) ChildFixedAssetsOrErr() ([]*FixedAsset, error) {
-	if e.loadedTypes[4] {
+	if e.loadedTypes[5] {
 		return e.ChildFixedAssets, nil
 	}
 	return nil, &NotLoadedError{edge: "child_fixed_assets"}
@@ -154,7 +176,7 @@ func (e FixedAssetEdges) ChildFixedAssetsOrErr() ([]*FixedAsset, error) {
 // WorkEffortsOrErr returns the WorkEfforts value or an error if the edge
 // was not loaded in eager-loading.
 func (e FixedAssetEdges) WorkEffortsOrErr() ([]*WorkEffort, error) {
-	if e.loadedTypes[5] {
+	if e.loadedTypes[6] {
 		return e.WorkEfforts, nil
 	}
 	return nil, &NotLoadedError{edge: "work_efforts"}
@@ -163,7 +185,7 @@ func (e FixedAssetEdges) WorkEffortsOrErr() ([]*WorkEffort, error) {
 // WorkEffortFixedAssetAssignsOrErr returns the WorkEffortFixedAssetAssigns value or an error if the edge
 // was not loaded in eager-loading.
 func (e FixedAssetEdges) WorkEffortFixedAssetAssignsOrErr() ([]*WorkEffortFixedAssetAssign, error) {
-	if e.loadedTypes[6] {
+	if e.loadedTypes[7] {
 		return e.WorkEffortFixedAssetAssigns, nil
 	}
 	return nil, &NotLoadedError{edge: "work_effort_fixed_asset_assigns"}
@@ -176,17 +198,19 @@ func (*FixedAsset) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case fixedasset.FieldProductionCapacity, fixedasset.FieldSalvageValue, fixedasset.FieldDepreciation, fixedasset.FieldPurchaseCost:
 			values[i] = new(sql.NullFloat64)
-		case fixedasset.FieldID, fixedasset.FieldFixedAssetTypeID, fixedasset.FieldInstanceOfProductID, fixedasset.FieldClassEnumID, fixedasset.FieldRoleTypeID, fixedasset.FieldAcquireOrderID, fixedasset.FieldAcquireOrderItemSeqID, fixedasset.FieldUomID, fixedasset.FieldCalendarID, fixedasset.FieldLocatedAtFacilityID, fixedasset.FieldLocatedAtLocationSeqID, fixedasset.FieldPurchaseCostUomID:
+		case fixedasset.FieldID, fixedasset.FieldFixedAssetTypeID, fixedasset.FieldInstanceOfProductID, fixedasset.FieldClassEnumID, fixedasset.FieldAcquireOrderID, fixedasset.FieldAcquireOrderItemSeqID, fixedasset.FieldUomID, fixedasset.FieldCalendarID, fixedasset.FieldLocatedAtFacilityID, fixedasset.FieldLocatedAtLocationSeqID, fixedasset.FieldPurchaseCostUomID:
 			values[i] = new(sql.NullInt64)
-		case fixedasset.FieldFixedAssetName, fixedasset.FieldSerialNumber:
+		case fixedasset.FieldStringRef, fixedasset.FieldFixedAssetName, fixedasset.FieldSerialNumber:
 			values[i] = new(sql.NullString)
-		case fixedasset.FieldDateAcquired, fixedasset.FieldDateLastServiced, fixedasset.FieldDateNextService, fixedasset.FieldExpectedEndOfLife, fixedasset.FieldActualEndOfLife:
+		case fixedasset.FieldCreateTime, fixedasset.FieldUpdateTime, fixedasset.FieldDateAcquired, fixedasset.FieldDateLastServiced, fixedasset.FieldDateNextService, fixedasset.FieldExpectedEndOfLife, fixedasset.FieldActualEndOfLife:
 			values[i] = new(sql.NullTime)
 		case fixedasset.ForeignKeys[0]: // fixed_asset_children
 			values[i] = new(sql.NullInt64)
 		case fixedasset.ForeignKeys[1]: // party_fixed_assets
 			values[i] = new(sql.NullInt64)
 		case fixedasset.ForeignKeys[2]: // party_role_fixed_assets
+			values[i] = new(sql.NullInt64)
+		case fixedasset.ForeignKeys[3]: // role_type_fixed_assets
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type FixedAsset", columns[i])
@@ -209,6 +233,24 @@ func (fa *FixedAsset) assignValues(columns []string, values []interface{}) error
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			fa.ID = int(value.Int64)
+		case fixedasset.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				fa.CreateTime = value.Time
+			}
+		case fixedasset.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				fa.UpdateTime = value.Time
+			}
+		case fixedasset.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				fa.StringRef = value.String
+			}
 		case fixedasset.FieldFixedAssetTypeID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field fixed_asset_type_id", values[i])
@@ -226,12 +268,6 @@ func (fa *FixedAsset) assignValues(columns []string, values []interface{}) error
 				return fmt.Errorf("unexpected type %T for field class_enum_id", values[i])
 			} else if value.Valid {
 				fa.ClassEnumID = int(value.Int64)
-			}
-		case fixedasset.FieldRoleTypeID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field role_type_id", values[i])
-			} else if value.Valid {
-				fa.RoleTypeID = int(value.Int64)
 			}
 		case fixedasset.FieldFixedAssetName:
 			if value, ok := values[i].(*sql.NullString); !ok {
@@ -362,6 +398,13 @@ func (fa *FixedAsset) assignValues(columns []string, values []interface{}) error
 				fa.party_role_fixed_assets = new(int)
 				*fa.party_role_fixed_assets = int(value.Int64)
 			}
+		case fixedasset.ForeignKeys[3]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field role_type_fixed_assets", value)
+			} else if value.Valid {
+				fa.role_type_fixed_assets = new(int)
+				*fa.role_type_fixed_assets = int(value.Int64)
+			}
 		}
 	}
 	return nil
@@ -380,6 +423,11 @@ func (fa *FixedAsset) QueryChildren() *FixedAssetQuery {
 // QueryParty queries the "party" edge of the FixedAsset entity.
 func (fa *FixedAsset) QueryParty() *PartyQuery {
 	return (&FixedAssetClient{config: fa.config}).QueryParty(fa)
+}
+
+// QueryRoleType queries the "role_type" edge of the FixedAsset entity.
+func (fa *FixedAsset) QueryRoleType() *RoleTypeQuery {
+	return (&FixedAssetClient{config: fa.config}).QueryRoleType(fa)
 }
 
 // QueryPartyRole queries the "party_role" edge of the FixedAsset entity.
@@ -425,14 +473,18 @@ func (fa *FixedAsset) String() string {
 	var builder strings.Builder
 	builder.WriteString("FixedAsset(")
 	builder.WriteString(fmt.Sprintf("id=%v", fa.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(fa.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(fa.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(fa.StringRef)
 	builder.WriteString(", fixed_asset_type_id=")
 	builder.WriteString(fmt.Sprintf("%v", fa.FixedAssetTypeID))
 	builder.WriteString(", instance_of_product_id=")
 	builder.WriteString(fmt.Sprintf("%v", fa.InstanceOfProductID))
 	builder.WriteString(", class_enum_id=")
 	builder.WriteString(fmt.Sprintf("%v", fa.ClassEnumID))
-	builder.WriteString(", role_type_id=")
-	builder.WriteString(fmt.Sprintf("%v", fa.RoleTypeID))
 	builder.WriteString(", fixed_asset_name=")
 	builder.WriteString(fa.FixedAssetName)
 	builder.WriteString(", acquire_order_id=")

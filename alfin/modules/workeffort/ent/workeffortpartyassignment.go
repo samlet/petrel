@@ -10,6 +10,8 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
@@ -20,14 +22,16 @@ type WorkEffortPartyAssignment struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// RoleTypeID holds the value of the "role_type_id" field.
-	RoleTypeID int `json:"role_type_id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// FromDate holds the value of the "from_date" field.
 	FromDate time.Time `json:"from_date,omitempty"`
 	// ThruDate holds the value of the "thru_date" field.
 	ThruDate time.Time `json:"thru_date,omitempty"`
-	// StatusID holds the value of the "status_id" field.
-	StatusID int `json:"status_id,omitempty"`
 	// StatusDateTime holds the value of the "status_date_time" field.
 	StatusDateTime time.Time `json:"status_date_time,omitempty"`
 	// ExpectationEnumID holds the value of the "expectation_enum_id" field.
@@ -40,15 +44,16 @@ type WorkEffortPartyAssignment struct {
 	Comments string `json:"comments,omitempty"`
 	// MustRsvp holds the value of the "must_rsvp" field.
 	MustRsvp workeffortpartyassignment.MustRsvp `json:"must_rsvp,omitempty"`
-	// AvailabilityStatusID holds the value of the "availability_status_id" field.
-	AvailabilityStatusID int `json:"availability_status_id,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the WorkEffortPartyAssignmentQuery when eager-loading is set.
-	Edges                                                WorkEffortPartyAssignmentEdges `json:"edges"`
-	party_work_effort_party_assignments                  *int
-	party_role_work_effort_party_assignments             *int
-	user_login_assigned_by_work_effort_party_assignments *int
-	work_effort_work_effort_party_assignments            *int
+	Edges                                                  WorkEffortPartyAssignmentEdges `json:"edges"`
+	party_work_effort_party_assignments                    *int
+	party_role_work_effort_party_assignments               *int
+	role_type_work_effort_party_assignments                *int
+	status_item_assignment_work_effort_party_assignments   *int
+	status_item_availability_work_effort_party_assignments *int
+	user_login_assigned_by_work_effort_party_assignments   *int
+	work_effort_work_effort_party_assignments              *int
 }
 
 // WorkEffortPartyAssignmentEdges holds the relations/edges for other nodes in the graph.
@@ -59,11 +64,17 @@ type WorkEffortPartyAssignmentEdges struct {
 	Party *Party `json:"party,omitempty"`
 	// PartyRole holds the value of the party_role edge.
 	PartyRole *PartyRole `json:"party_role,omitempty"`
+	// RoleType holds the value of the role_type edge.
+	RoleType *RoleType `json:"role_type,omitempty"`
 	// AssignedByUserLogin holds the value of the assigned_by_user_login edge.
 	AssignedByUserLogin *UserLogin `json:"assigned_by_user_login,omitempty"`
+	// AssignmentStatusItem holds the value of the assignment_status_item edge.
+	AssignmentStatusItem *StatusItem `json:"assignment_status_item,omitempty"`
+	// AvailabilityStatusItem holds the value of the availability_status_item edge.
+	AvailabilityStatusItem *StatusItem `json:"availability_status_item,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [4]bool
+	loadedTypes [7]bool
 }
 
 // WorkEffortOrErr returns the WorkEffort value or an error if the edge
@@ -108,10 +119,24 @@ func (e WorkEffortPartyAssignmentEdges) PartyRoleOrErr() (*PartyRole, error) {
 	return nil, &NotLoadedError{edge: "party_role"}
 }
 
+// RoleTypeOrErr returns the RoleType value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortPartyAssignmentEdges) RoleTypeOrErr() (*RoleType, error) {
+	if e.loadedTypes[3] {
+		if e.RoleType == nil {
+			// The edge role_type was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: roletype.Label}
+		}
+		return e.RoleType, nil
+	}
+	return nil, &NotLoadedError{edge: "role_type"}
+}
+
 // AssignedByUserLoginOrErr returns the AssignedByUserLogin value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e WorkEffortPartyAssignmentEdges) AssignedByUserLoginOrErr() (*UserLogin, error) {
-	if e.loadedTypes[3] {
+	if e.loadedTypes[4] {
 		if e.AssignedByUserLogin == nil {
 			// The edge assigned_by_user_login was loaded in eager-loading,
 			// but was not found.
@@ -122,24 +147,58 @@ func (e WorkEffortPartyAssignmentEdges) AssignedByUserLoginOrErr() (*UserLogin, 
 	return nil, &NotLoadedError{edge: "assigned_by_user_login"}
 }
 
+// AssignmentStatusItemOrErr returns the AssignmentStatusItem value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortPartyAssignmentEdges) AssignmentStatusItemOrErr() (*StatusItem, error) {
+	if e.loadedTypes[5] {
+		if e.AssignmentStatusItem == nil {
+			// The edge assignment_status_item was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: statusitem.Label}
+		}
+		return e.AssignmentStatusItem, nil
+	}
+	return nil, &NotLoadedError{edge: "assignment_status_item"}
+}
+
+// AvailabilityStatusItemOrErr returns the AvailabilityStatusItem value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortPartyAssignmentEdges) AvailabilityStatusItemOrErr() (*StatusItem, error) {
+	if e.loadedTypes[6] {
+		if e.AvailabilityStatusItem == nil {
+			// The edge availability_status_item was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: statusitem.Label}
+		}
+		return e.AvailabilityStatusItem, nil
+	}
+	return nil, &NotLoadedError{edge: "availability_status_item"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*WorkEffortPartyAssignment) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case workeffortpartyassignment.FieldID, workeffortpartyassignment.FieldRoleTypeID, workeffortpartyassignment.FieldStatusID, workeffortpartyassignment.FieldExpectationEnumID, workeffortpartyassignment.FieldDelegateReasonEnumID, workeffortpartyassignment.FieldFacilityID, workeffortpartyassignment.FieldAvailabilityStatusID:
+		case workeffortpartyassignment.FieldID, workeffortpartyassignment.FieldExpectationEnumID, workeffortpartyassignment.FieldDelegateReasonEnumID, workeffortpartyassignment.FieldFacilityID:
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.FieldComments, workeffortpartyassignment.FieldMustRsvp:
+		case workeffortpartyassignment.FieldStringRef, workeffortpartyassignment.FieldComments, workeffortpartyassignment.FieldMustRsvp:
 			values[i] = new(sql.NullString)
-		case workeffortpartyassignment.FieldFromDate, workeffortpartyassignment.FieldThruDate, workeffortpartyassignment.FieldStatusDateTime:
+		case workeffortpartyassignment.FieldCreateTime, workeffortpartyassignment.FieldUpdateTime, workeffortpartyassignment.FieldFromDate, workeffortpartyassignment.FieldThruDate, workeffortpartyassignment.FieldStatusDateTime:
 			values[i] = new(sql.NullTime)
 		case workeffortpartyassignment.ForeignKeys[0]: // party_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
 		case workeffortpartyassignment.ForeignKeys[1]: // party_role_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[2]: // user_login_assigned_by_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[2]: // role_type_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
-		case workeffortpartyassignment.ForeignKeys[3]: // work_effort_work_effort_party_assignments
+		case workeffortpartyassignment.ForeignKeys[3]: // status_item_assignment_work_effort_party_assignments
+			values[i] = new(sql.NullInt64)
+		case workeffortpartyassignment.ForeignKeys[4]: // status_item_availability_work_effort_party_assignments
+			values[i] = new(sql.NullInt64)
+		case workeffortpartyassignment.ForeignKeys[5]: // user_login_assigned_by_work_effort_party_assignments
+			values[i] = new(sql.NullInt64)
+		case workeffortpartyassignment.ForeignKeys[6]: // work_effort_work_effort_party_assignments
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type WorkEffortPartyAssignment", columns[i])
@@ -162,11 +221,23 @@ func (wepa *WorkEffortPartyAssignment) assignValues(columns []string, values []i
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			wepa.ID = int(value.Int64)
-		case workeffortpartyassignment.FieldRoleTypeID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field role_type_id", values[i])
+		case workeffortpartyassignment.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
 			} else if value.Valid {
-				wepa.RoleTypeID = int(value.Int64)
+				wepa.CreateTime = value.Time
+			}
+		case workeffortpartyassignment.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				wepa.UpdateTime = value.Time
+			}
+		case workeffortpartyassignment.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				wepa.StringRef = value.String
 			}
 		case workeffortpartyassignment.FieldFromDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -179,12 +250,6 @@ func (wepa *WorkEffortPartyAssignment) assignValues(columns []string, values []i
 				return fmt.Errorf("unexpected type %T for field thru_date", values[i])
 			} else if value.Valid {
 				wepa.ThruDate = value.Time
-			}
-		case workeffortpartyassignment.FieldStatusID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status_id", values[i])
-			} else if value.Valid {
-				wepa.StatusID = int(value.Int64)
 			}
 		case workeffortpartyassignment.FieldStatusDateTime:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -222,12 +287,6 @@ func (wepa *WorkEffortPartyAssignment) assignValues(columns []string, values []i
 			} else if value.Valid {
 				wepa.MustRsvp = workeffortpartyassignment.MustRsvp(value.String)
 			}
-		case workeffortpartyassignment.FieldAvailabilityStatusID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field availability_status_id", values[i])
-			} else if value.Valid {
-				wepa.AvailabilityStatusID = int(value.Int64)
-			}
 		case workeffortpartyassignment.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field party_work_effort_party_assignments", value)
@@ -244,12 +303,33 @@ func (wepa *WorkEffortPartyAssignment) assignValues(columns []string, values []i
 			}
 		case workeffortpartyassignment.ForeignKeys[2]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field role_type_work_effort_party_assignments", value)
+			} else if value.Valid {
+				wepa.role_type_work_effort_party_assignments = new(int)
+				*wepa.role_type_work_effort_party_assignments = int(value.Int64)
+			}
+		case workeffortpartyassignment.ForeignKeys[3]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field status_item_assignment_work_effort_party_assignments", value)
+			} else if value.Valid {
+				wepa.status_item_assignment_work_effort_party_assignments = new(int)
+				*wepa.status_item_assignment_work_effort_party_assignments = int(value.Int64)
+			}
+		case workeffortpartyassignment.ForeignKeys[4]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field status_item_availability_work_effort_party_assignments", value)
+			} else if value.Valid {
+				wepa.status_item_availability_work_effort_party_assignments = new(int)
+				*wepa.status_item_availability_work_effort_party_assignments = int(value.Int64)
+			}
+		case workeffortpartyassignment.ForeignKeys[5]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field user_login_assigned_by_work_effort_party_assignments", value)
 			} else if value.Valid {
 				wepa.user_login_assigned_by_work_effort_party_assignments = new(int)
 				*wepa.user_login_assigned_by_work_effort_party_assignments = int(value.Int64)
 			}
-		case workeffortpartyassignment.ForeignKeys[3]:
+		case workeffortpartyassignment.ForeignKeys[6]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field work_effort_work_effort_party_assignments", value)
 			} else if value.Valid {
@@ -276,9 +356,24 @@ func (wepa *WorkEffortPartyAssignment) QueryPartyRole() *PartyRoleQuery {
 	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryPartyRole(wepa)
 }
 
+// QueryRoleType queries the "role_type" edge of the WorkEffortPartyAssignment entity.
+func (wepa *WorkEffortPartyAssignment) QueryRoleType() *RoleTypeQuery {
+	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryRoleType(wepa)
+}
+
 // QueryAssignedByUserLogin queries the "assigned_by_user_login" edge of the WorkEffortPartyAssignment entity.
 func (wepa *WorkEffortPartyAssignment) QueryAssignedByUserLogin() *UserLoginQuery {
 	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryAssignedByUserLogin(wepa)
+}
+
+// QueryAssignmentStatusItem queries the "assignment_status_item" edge of the WorkEffortPartyAssignment entity.
+func (wepa *WorkEffortPartyAssignment) QueryAssignmentStatusItem() *StatusItemQuery {
+	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryAssignmentStatusItem(wepa)
+}
+
+// QueryAvailabilityStatusItem queries the "availability_status_item" edge of the WorkEffortPartyAssignment entity.
+func (wepa *WorkEffortPartyAssignment) QueryAvailabilityStatusItem() *StatusItemQuery {
+	return (&WorkEffortPartyAssignmentClient{config: wepa.config}).QueryAvailabilityStatusItem(wepa)
 }
 
 // Update returns a builder for updating this WorkEffortPartyAssignment.
@@ -304,14 +399,16 @@ func (wepa *WorkEffortPartyAssignment) String() string {
 	var builder strings.Builder
 	builder.WriteString("WorkEffortPartyAssignment(")
 	builder.WriteString(fmt.Sprintf("id=%v", wepa.ID))
-	builder.WriteString(", role_type_id=")
-	builder.WriteString(fmt.Sprintf("%v", wepa.RoleTypeID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(wepa.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(wepa.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(wepa.StringRef)
 	builder.WriteString(", from_date=")
 	builder.WriteString(wepa.FromDate.Format(time.ANSIC))
 	builder.WriteString(", thru_date=")
 	builder.WriteString(wepa.ThruDate.Format(time.ANSIC))
-	builder.WriteString(", status_id=")
-	builder.WriteString(fmt.Sprintf("%v", wepa.StatusID))
 	builder.WriteString(", status_date_time=")
 	builder.WriteString(wepa.StatusDateTime.Format(time.ANSIC))
 	builder.WriteString(", expectation_enum_id=")
@@ -324,8 +421,6 @@ func (wepa *WorkEffortPartyAssignment) String() string {
 	builder.WriteString(wepa.Comments)
 	builder.WriteString(", must_rsvp=")
 	builder.WriteString(fmt.Sprintf("%v", wepa.MustRsvp))
-	builder.WriteString(", availability_status_id=")
-	builder.WriteString(fmt.Sprintf("%v", wepa.AvailabilityStatusID))
 	builder.WriteByte(')')
 	return builder.String()
 }

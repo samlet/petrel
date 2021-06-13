@@ -7,63 +7,164 @@ import (
 
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/schema"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/skilltype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statustype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusvalidchange"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpressionassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userloginsecuritygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortskillstandard"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workefforttype"
 )
 
 // The init function reads all schema descriptors with runtime code
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	fixedassetMixin := schema.FixedAsset{}.Mixin()
+	fixedassetMixinFields0 := fixedassetMixin[0].Fields()
+	_ = fixedassetMixinFields0
 	fixedassetFields := schema.FixedAsset{}.Fields()
 	_ = fixedassetFields
+	// fixedassetDescCreateTime is the schema descriptor for create_time field.
+	fixedassetDescCreateTime := fixedassetMixinFields0[0].Descriptor()
+	// fixedasset.DefaultCreateTime holds the default value on creation for the create_time field.
+	fixedasset.DefaultCreateTime = fixedassetDescCreateTime.Default.(func() time.Time)
+	// fixedassetDescUpdateTime is the schema descriptor for update_time field.
+	fixedassetDescUpdateTime := fixedassetMixinFields0[1].Descriptor()
+	// fixedasset.DefaultUpdateTime holds the default value on creation for the update_time field.
+	fixedasset.DefaultUpdateTime = fixedassetDescUpdateTime.Default.(func() time.Time)
+	// fixedasset.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	fixedasset.UpdateDefaultUpdateTime = fixedassetDescUpdateTime.UpdateDefault.(func() time.Time)
 	// fixedassetDescDateAcquired is the schema descriptor for date_acquired field.
-	fixedassetDescDateAcquired := fixedassetFields[7].Descriptor()
+	fixedassetDescDateAcquired := fixedassetFields[6].Descriptor()
 	// fixedasset.DefaultDateAcquired holds the default value on creation for the date_acquired field.
 	fixedasset.DefaultDateAcquired = fixedassetDescDateAcquired.Default.(func() time.Time)
 	// fixedassetDescDateLastServiced is the schema descriptor for date_last_serviced field.
-	fixedassetDescDateLastServiced := fixedassetFields[8].Descriptor()
+	fixedassetDescDateLastServiced := fixedassetFields[7].Descriptor()
 	// fixedasset.DefaultDateLastServiced holds the default value on creation for the date_last_serviced field.
 	fixedasset.DefaultDateLastServiced = fixedassetDescDateLastServiced.Default.(func() time.Time)
 	// fixedassetDescDateNextService is the schema descriptor for date_next_service field.
-	fixedassetDescDateNextService := fixedassetFields[9].Descriptor()
+	fixedassetDescDateNextService := fixedassetFields[8].Descriptor()
 	// fixedasset.DefaultDateNextService holds the default value on creation for the date_next_service field.
 	fixedasset.DefaultDateNextService = fixedassetDescDateNextService.Default.(func() time.Time)
 	// fixedassetDescExpectedEndOfLife is the schema descriptor for expected_end_of_life field.
-	fixedassetDescExpectedEndOfLife := fixedassetFields[10].Descriptor()
+	fixedassetDescExpectedEndOfLife := fixedassetFields[9].Descriptor()
 	// fixedasset.DefaultExpectedEndOfLife holds the default value on creation for the expected_end_of_life field.
 	fixedasset.DefaultExpectedEndOfLife = fixedassetDescExpectedEndOfLife.Default.(func() time.Time)
 	// fixedassetDescActualEndOfLife is the schema descriptor for actual_end_of_life field.
-	fixedassetDescActualEndOfLife := fixedassetFields[11].Descriptor()
+	fixedassetDescActualEndOfLife := fixedassetFields[10].Descriptor()
 	// fixedasset.DefaultActualEndOfLife holds the default value on creation for the actual_end_of_life field.
 	fixedasset.DefaultActualEndOfLife = fixedassetDescActualEndOfLife.Default.(func() time.Time)
+	partyMixin := schema.Party{}.Mixin()
+	partyMixinFields0 := partyMixin[0].Fields()
+	_ = partyMixinFields0
 	partyFields := schema.Party{}.Fields()
 	_ = partyFields
+	// partyDescCreateTime is the schema descriptor for create_time field.
+	partyDescCreateTime := partyMixinFields0[0].Descriptor()
+	// party.DefaultCreateTime holds the default value on creation for the create_time field.
+	party.DefaultCreateTime = partyDescCreateTime.Default.(func() time.Time)
+	// partyDescUpdateTime is the schema descriptor for update_time field.
+	partyDescUpdateTime := partyMixinFields0[1].Descriptor()
+	// party.DefaultUpdateTime holds the default value on creation for the update_time field.
+	party.DefaultUpdateTime = partyDescUpdateTime.Default.(func() time.Time)
+	// party.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	party.UpdateDefaultUpdateTime = partyDescUpdateTime.UpdateDefault.(func() time.Time)
 	// partyDescCreatedDate is the schema descriptor for created_date field.
-	partyDescCreatedDate := partyFields[5].Descriptor()
+	partyDescCreatedDate := partyFields[4].Descriptor()
 	// party.DefaultCreatedDate holds the default value on creation for the created_date field.
 	party.DefaultCreatedDate = partyDescCreatedDate.Default.(func() time.Time)
 	// partyDescLastModifiedDate is the schema descriptor for last_modified_date field.
-	partyDescLastModifiedDate := partyFields[6].Descriptor()
+	partyDescLastModifiedDate := partyFields[5].Descriptor()
 	// party.DefaultLastModifiedDate holds the default value on creation for the last_modified_date field.
 	party.DefaultLastModifiedDate = partyDescLastModifiedDate.Default.(func() time.Time)
+	partycontactmechMixin := schema.PartyContactMech{}.Mixin()
+	partycontactmechMixinFields0 := partycontactmechMixin[0].Fields()
+	_ = partycontactmechMixinFields0
+	partycontactmechFields := schema.PartyContactMech{}.Fields()
+	_ = partycontactmechFields
+	// partycontactmechDescCreateTime is the schema descriptor for create_time field.
+	partycontactmechDescCreateTime := partycontactmechMixinFields0[0].Descriptor()
+	// partycontactmech.DefaultCreateTime holds the default value on creation for the create_time field.
+	partycontactmech.DefaultCreateTime = partycontactmechDescCreateTime.Default.(func() time.Time)
+	// partycontactmechDescUpdateTime is the schema descriptor for update_time field.
+	partycontactmechDescUpdateTime := partycontactmechMixinFields0[1].Descriptor()
+	// partycontactmech.DefaultUpdateTime holds the default value on creation for the update_time field.
+	partycontactmech.DefaultUpdateTime = partycontactmechDescUpdateTime.Default.(func() time.Time)
+	// partycontactmech.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	partycontactmech.UpdateDefaultUpdateTime = partycontactmechDescUpdateTime.UpdateDefault.(func() time.Time)
+	// partycontactmechDescFromDate is the schema descriptor for from_date field.
+	partycontactmechDescFromDate := partycontactmechFields[1].Descriptor()
+	// partycontactmech.DefaultFromDate holds the default value on creation for the from_date field.
+	partycontactmech.DefaultFromDate = partycontactmechDescFromDate.Default.(func() time.Time)
+	// partycontactmechDescThruDate is the schema descriptor for thru_date field.
+	partycontactmechDescThruDate := partycontactmechFields[2].Descriptor()
+	// partycontactmech.DefaultThruDate holds the default value on creation for the thru_date field.
+	partycontactmech.DefaultThruDate = partycontactmechDescThruDate.Default.(func() time.Time)
+	partyroleMixin := schema.PartyRole{}.Mixin()
+	partyroleMixinFields0 := partyroleMixin[0].Fields()
+	_ = partyroleMixinFields0
+	partyroleFields := schema.PartyRole{}.Fields()
+	_ = partyroleFields
+	// partyroleDescCreateTime is the schema descriptor for create_time field.
+	partyroleDescCreateTime := partyroleMixinFields0[0].Descriptor()
+	// partyrole.DefaultCreateTime holds the default value on creation for the create_time field.
+	partyrole.DefaultCreateTime = partyroleDescCreateTime.Default.(func() time.Time)
+	// partyroleDescUpdateTime is the schema descriptor for update_time field.
+	partyroleDescUpdateTime := partyroleMixinFields0[1].Descriptor()
+	// partyrole.DefaultUpdateTime holds the default value on creation for the update_time field.
+	partyrole.DefaultUpdateTime = partyroleDescUpdateTime.Default.(func() time.Time)
+	// partyrole.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	partyrole.UpdateDefaultUpdateTime = partyroleDescUpdateTime.UpdateDefault.(func() time.Time)
+	partystatusMixin := schema.PartyStatus{}.Mixin()
+	partystatusMixinFields0 := partystatusMixin[0].Fields()
+	_ = partystatusMixinFields0
 	partystatusFields := schema.PartyStatus{}.Fields()
 	_ = partystatusFields
+	// partystatusDescCreateTime is the schema descriptor for create_time field.
+	partystatusDescCreateTime := partystatusMixinFields0[0].Descriptor()
+	// partystatus.DefaultCreateTime holds the default value on creation for the create_time field.
+	partystatus.DefaultCreateTime = partystatusDescCreateTime.Default.(func() time.Time)
+	// partystatusDescUpdateTime is the schema descriptor for update_time field.
+	partystatusDescUpdateTime := partystatusMixinFields0[1].Descriptor()
+	// partystatus.DefaultUpdateTime holds the default value on creation for the update_time field.
+	partystatus.DefaultUpdateTime = partystatusDescUpdateTime.Default.(func() time.Time)
+	// partystatus.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	partystatus.UpdateDefaultUpdateTime = partystatusDescUpdateTime.UpdateDefault.(func() time.Time)
 	// partystatusDescStatusDate is the schema descriptor for status_date field.
-	partystatusDescStatusDate := partystatusFields[1].Descriptor()
+	partystatusDescStatusDate := partystatusFields[0].Descriptor()
 	// partystatus.DefaultStatusDate holds the default value on creation for the status_date field.
 	partystatus.DefaultStatusDate = partystatusDescStatusDate.Default.(func() time.Time)
+	personMixin := schema.Person{}.Mixin()
+	personMixinFields0 := personMixin[0].Fields()
+	_ = personMixinFields0
 	personFields := schema.Person{}.Fields()
 	_ = personFields
+	// personDescCreateTime is the schema descriptor for create_time field.
+	personDescCreateTime := personMixinFields0[0].Descriptor()
+	// person.DefaultCreateTime holds the default value on creation for the create_time field.
+	person.DefaultCreateTime = personDescCreateTime.Default.(func() time.Time)
+	// personDescUpdateTime is the schema descriptor for update_time field.
+	personDescUpdateTime := personMixinFields0[1].Descriptor()
+	// person.DefaultUpdateTime holds the default value on creation for the update_time field.
+	person.DefaultUpdateTime = personDescUpdateTime.Default.(func() time.Time)
+	// person.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	person.UpdateDefaultUpdateTime = personDescUpdateTime.UpdateDefault.(func() time.Time)
 	// personDescBirthDate is the schema descriptor for birth_date field.
 	personDescBirthDate := personFields[13].Descriptor()
 	// person.DefaultBirthDate holds the default value on creation for the birth_date field.
@@ -80,8 +181,51 @@ func init() {
 	personDescCardID := personFields[31].Descriptor()
 	// person.CardIDValidator is a validator for the "card_id" field. It is called by the builders before save.
 	person.CardIDValidator = personDescCardID.Validators[0].(func(string) error)
+	roletypeMixin := schema.RoleType{}.Mixin()
+	roletypeMixinFields0 := roletypeMixin[0].Fields()
+	_ = roletypeMixinFields0
+	roletypeFields := schema.RoleType{}.Fields()
+	_ = roletypeFields
+	// roletypeDescCreateTime is the schema descriptor for create_time field.
+	roletypeDescCreateTime := roletypeMixinFields0[0].Descriptor()
+	// roletype.DefaultCreateTime holds the default value on creation for the create_time field.
+	roletype.DefaultCreateTime = roletypeDescCreateTime.Default.(func() time.Time)
+	// roletypeDescUpdateTime is the schema descriptor for update_time field.
+	roletypeDescUpdateTime := roletypeMixinFields0[1].Descriptor()
+	// roletype.DefaultUpdateTime holds the default value on creation for the update_time field.
+	roletype.DefaultUpdateTime = roletypeDescUpdateTime.Default.(func() time.Time)
+	// roletype.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	roletype.UpdateDefaultUpdateTime = roletypeDescUpdateTime.UpdateDefault.(func() time.Time)
+	securitygroupMixin := schema.SecurityGroup{}.Mixin()
+	securitygroupMixinFields0 := securitygroupMixin[0].Fields()
+	_ = securitygroupMixinFields0
+	securitygroupFields := schema.SecurityGroup{}.Fields()
+	_ = securitygroupFields
+	// securitygroupDescCreateTime is the schema descriptor for create_time field.
+	securitygroupDescCreateTime := securitygroupMixinFields0[0].Descriptor()
+	// securitygroup.DefaultCreateTime holds the default value on creation for the create_time field.
+	securitygroup.DefaultCreateTime = securitygroupDescCreateTime.Default.(func() time.Time)
+	// securitygroupDescUpdateTime is the schema descriptor for update_time field.
+	securitygroupDescUpdateTime := securitygroupMixinFields0[1].Descriptor()
+	// securitygroup.DefaultUpdateTime holds the default value on creation for the update_time field.
+	securitygroup.DefaultUpdateTime = securitygroupDescUpdateTime.Default.(func() time.Time)
+	// securitygroup.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	securitygroup.UpdateDefaultUpdateTime = securitygroupDescUpdateTime.UpdateDefault.(func() time.Time)
+	securitygrouppermissionMixin := schema.SecurityGroupPermission{}.Mixin()
+	securitygrouppermissionMixinFields0 := securitygrouppermissionMixin[0].Fields()
+	_ = securitygrouppermissionMixinFields0
 	securitygrouppermissionFields := schema.SecurityGroupPermission{}.Fields()
 	_ = securitygrouppermissionFields
+	// securitygrouppermissionDescCreateTime is the schema descriptor for create_time field.
+	securitygrouppermissionDescCreateTime := securitygrouppermissionMixinFields0[0].Descriptor()
+	// securitygrouppermission.DefaultCreateTime holds the default value on creation for the create_time field.
+	securitygrouppermission.DefaultCreateTime = securitygrouppermissionDescCreateTime.Default.(func() time.Time)
+	// securitygrouppermissionDescUpdateTime is the schema descriptor for update_time field.
+	securitygrouppermissionDescUpdateTime := securitygrouppermissionMixinFields0[1].Descriptor()
+	// securitygrouppermission.DefaultUpdateTime holds the default value on creation for the update_time field.
+	securitygrouppermission.DefaultUpdateTime = securitygrouppermissionDescUpdateTime.Default.(func() time.Time)
+	// securitygrouppermission.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	securitygrouppermission.UpdateDefaultUpdateTime = securitygrouppermissionDescUpdateTime.UpdateDefault.(func() time.Time)
 	// securitygrouppermissionDescPermissionID is the schema descriptor for permission_id field.
 	securitygrouppermissionDescPermissionID := securitygrouppermissionFields[0].Descriptor()
 	// securitygrouppermission.PermissionIDValidator is a validator for the "permission_id" field. It is called by the builders before save.
@@ -94,8 +238,81 @@ func init() {
 	securitygrouppermissionDescThruDate := securitygrouppermissionFields[2].Descriptor()
 	// securitygrouppermission.DefaultThruDate holds the default value on creation for the thru_date field.
 	securitygrouppermission.DefaultThruDate = securitygrouppermissionDescThruDate.Default.(func() time.Time)
+	skilltypeMixin := schema.SkillType{}.Mixin()
+	skilltypeMixinFields0 := skilltypeMixin[0].Fields()
+	_ = skilltypeMixinFields0
+	skilltypeFields := schema.SkillType{}.Fields()
+	_ = skilltypeFields
+	// skilltypeDescCreateTime is the schema descriptor for create_time field.
+	skilltypeDescCreateTime := skilltypeMixinFields0[0].Descriptor()
+	// skilltype.DefaultCreateTime holds the default value on creation for the create_time field.
+	skilltype.DefaultCreateTime = skilltypeDescCreateTime.Default.(func() time.Time)
+	// skilltypeDescUpdateTime is the schema descriptor for update_time field.
+	skilltypeDescUpdateTime := skilltypeMixinFields0[1].Descriptor()
+	// skilltype.DefaultUpdateTime holds the default value on creation for the update_time field.
+	skilltype.DefaultUpdateTime = skilltypeDescUpdateTime.Default.(func() time.Time)
+	// skilltype.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	skilltype.UpdateDefaultUpdateTime = skilltypeDescUpdateTime.UpdateDefault.(func() time.Time)
+	statusitemMixin := schema.StatusItem{}.Mixin()
+	statusitemMixinFields0 := statusitemMixin[0].Fields()
+	_ = statusitemMixinFields0
+	statusitemFields := schema.StatusItem{}.Fields()
+	_ = statusitemFields
+	// statusitemDescCreateTime is the schema descriptor for create_time field.
+	statusitemDescCreateTime := statusitemMixinFields0[0].Descriptor()
+	// statusitem.DefaultCreateTime holds the default value on creation for the create_time field.
+	statusitem.DefaultCreateTime = statusitemDescCreateTime.Default.(func() time.Time)
+	// statusitemDescUpdateTime is the schema descriptor for update_time field.
+	statusitemDescUpdateTime := statusitemMixinFields0[1].Descriptor()
+	// statusitem.DefaultUpdateTime holds the default value on creation for the update_time field.
+	statusitem.DefaultUpdateTime = statusitemDescUpdateTime.Default.(func() time.Time)
+	// statusitem.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	statusitem.UpdateDefaultUpdateTime = statusitemDescUpdateTime.UpdateDefault.(func() time.Time)
+	statustypeMixin := schema.StatusType{}.Mixin()
+	statustypeMixinFields0 := statustypeMixin[0].Fields()
+	_ = statustypeMixinFields0
+	statustypeFields := schema.StatusType{}.Fields()
+	_ = statustypeFields
+	// statustypeDescCreateTime is the schema descriptor for create_time field.
+	statustypeDescCreateTime := statustypeMixinFields0[0].Descriptor()
+	// statustype.DefaultCreateTime holds the default value on creation for the create_time field.
+	statustype.DefaultCreateTime = statustypeDescCreateTime.Default.(func() time.Time)
+	// statustypeDescUpdateTime is the schema descriptor for update_time field.
+	statustypeDescUpdateTime := statustypeMixinFields0[1].Descriptor()
+	// statustype.DefaultUpdateTime holds the default value on creation for the update_time field.
+	statustype.DefaultUpdateTime = statustypeDescUpdateTime.Default.(func() time.Time)
+	// statustype.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	statustype.UpdateDefaultUpdateTime = statustypeDescUpdateTime.UpdateDefault.(func() time.Time)
+	statusvalidchangeMixin := schema.StatusValidChange{}.Mixin()
+	statusvalidchangeMixinFields0 := statusvalidchangeMixin[0].Fields()
+	_ = statusvalidchangeMixinFields0
+	statusvalidchangeFields := schema.StatusValidChange{}.Fields()
+	_ = statusvalidchangeFields
+	// statusvalidchangeDescCreateTime is the schema descriptor for create_time field.
+	statusvalidchangeDescCreateTime := statusvalidchangeMixinFields0[0].Descriptor()
+	// statusvalidchange.DefaultCreateTime holds the default value on creation for the create_time field.
+	statusvalidchange.DefaultCreateTime = statusvalidchangeDescCreateTime.Default.(func() time.Time)
+	// statusvalidchangeDescUpdateTime is the schema descriptor for update_time field.
+	statusvalidchangeDescUpdateTime := statusvalidchangeMixinFields0[1].Descriptor()
+	// statusvalidchange.DefaultUpdateTime holds the default value on creation for the update_time field.
+	statusvalidchange.DefaultUpdateTime = statusvalidchangeDescUpdateTime.Default.(func() time.Time)
+	// statusvalidchange.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	statusvalidchange.UpdateDefaultUpdateTime = statusvalidchangeDescUpdateTime.UpdateDefault.(func() time.Time)
+	temporalexpressionMixin := schema.TemporalExpression{}.Mixin()
+	temporalexpressionMixinFields0 := temporalexpressionMixin[0].Fields()
+	_ = temporalexpressionMixinFields0
 	temporalexpressionFields := schema.TemporalExpression{}.Fields()
 	_ = temporalexpressionFields
+	// temporalexpressionDescCreateTime is the schema descriptor for create_time field.
+	temporalexpressionDescCreateTime := temporalexpressionMixinFields0[0].Descriptor()
+	// temporalexpression.DefaultCreateTime holds the default value on creation for the create_time field.
+	temporalexpression.DefaultCreateTime = temporalexpressionDescCreateTime.Default.(func() time.Time)
+	// temporalexpressionDescUpdateTime is the schema descriptor for update_time field.
+	temporalexpressionDescUpdateTime := temporalexpressionMixinFields0[1].Descriptor()
+	// temporalexpression.DefaultUpdateTime holds the default value on creation for the update_time field.
+	temporalexpression.DefaultUpdateTime = temporalexpressionDescUpdateTime.Default.(func() time.Time)
+	// temporalexpression.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	temporalexpression.UpdateDefaultUpdateTime = temporalexpressionDescUpdateTime.UpdateDefault.(func() time.Time)
 	// temporalexpressionDescDate1 is the schema descriptor for date_1 field.
 	temporalexpressionDescDate1 := temporalexpressionFields[2].Descriptor()
 	// temporalexpression.DefaultDate1 holds the default value on creation for the date_1 field.
@@ -104,8 +321,36 @@ func init() {
 	temporalexpressionDescDate2 := temporalexpressionFields[3].Descriptor()
 	// temporalexpression.DefaultDate2 holds the default value on creation for the date_2 field.
 	temporalexpression.DefaultDate2 = temporalexpressionDescDate2.Default.(func() time.Time)
+	temporalexpressionassocMixin := schema.TemporalExpressionAssoc{}.Mixin()
+	temporalexpressionassocMixinFields0 := temporalexpressionassocMixin[0].Fields()
+	_ = temporalexpressionassocMixinFields0
+	temporalexpressionassocFields := schema.TemporalExpressionAssoc{}.Fields()
+	_ = temporalexpressionassocFields
+	// temporalexpressionassocDescCreateTime is the schema descriptor for create_time field.
+	temporalexpressionassocDescCreateTime := temporalexpressionassocMixinFields0[0].Descriptor()
+	// temporalexpressionassoc.DefaultCreateTime holds the default value on creation for the create_time field.
+	temporalexpressionassoc.DefaultCreateTime = temporalexpressionassocDescCreateTime.Default.(func() time.Time)
+	// temporalexpressionassocDescUpdateTime is the schema descriptor for update_time field.
+	temporalexpressionassocDescUpdateTime := temporalexpressionassocMixinFields0[1].Descriptor()
+	// temporalexpressionassoc.DefaultUpdateTime holds the default value on creation for the update_time field.
+	temporalexpressionassoc.DefaultUpdateTime = temporalexpressionassocDescUpdateTime.Default.(func() time.Time)
+	// temporalexpressionassoc.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	temporalexpressionassoc.UpdateDefaultUpdateTime = temporalexpressionassocDescUpdateTime.UpdateDefault.(func() time.Time)
+	userloginMixin := schema.UserLogin{}.Mixin()
+	userloginMixinFields0 := userloginMixin[0].Fields()
+	_ = userloginMixinFields0
 	userloginFields := schema.UserLogin{}.Fields()
 	_ = userloginFields
+	// userloginDescCreateTime is the schema descriptor for create_time field.
+	userloginDescCreateTime := userloginMixinFields0[0].Descriptor()
+	// userlogin.DefaultCreateTime holds the default value on creation for the create_time field.
+	userlogin.DefaultCreateTime = userloginDescCreateTime.Default.(func() time.Time)
+	// userloginDescUpdateTime is the schema descriptor for update_time field.
+	userloginDescUpdateTime := userloginMixinFields0[1].Descriptor()
+	// userlogin.DefaultUpdateTime holds the default value on creation for the update_time field.
+	userlogin.DefaultUpdateTime = userloginDescUpdateTime.Default.(func() time.Time)
+	// userlogin.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	userlogin.UpdateDefaultUpdateTime = userloginDescUpdateTime.UpdateDefault.(func() time.Time)
 	// userloginDescLastLocale is the schema descriptor for last_locale field.
 	userloginDescLastLocale := userloginFields[7].Descriptor()
 	// userlogin.LastLocaleValidator is a validator for the "last_locale" field. It is called by the builders before save.
@@ -118,8 +363,21 @@ func init() {
 	userloginDescDisabledDateTime := userloginFields[9].Descriptor()
 	// userlogin.DefaultDisabledDateTime holds the default value on creation for the disabled_date_time field.
 	userlogin.DefaultDisabledDateTime = userloginDescDisabledDateTime.Default.(func() time.Time)
+	userloginsecuritygroupMixin := schema.UserLoginSecurityGroup{}.Mixin()
+	userloginsecuritygroupMixinFields0 := userloginsecuritygroupMixin[0].Fields()
+	_ = userloginsecuritygroupMixinFields0
 	userloginsecuritygroupFields := schema.UserLoginSecurityGroup{}.Fields()
 	_ = userloginsecuritygroupFields
+	// userloginsecuritygroupDescCreateTime is the schema descriptor for create_time field.
+	userloginsecuritygroupDescCreateTime := userloginsecuritygroupMixinFields0[0].Descriptor()
+	// userloginsecuritygroup.DefaultCreateTime holds the default value on creation for the create_time field.
+	userloginsecuritygroup.DefaultCreateTime = userloginsecuritygroupDescCreateTime.Default.(func() time.Time)
+	// userloginsecuritygroupDescUpdateTime is the schema descriptor for update_time field.
+	userloginsecuritygroupDescUpdateTime := userloginsecuritygroupMixinFields0[1].Descriptor()
+	// userloginsecuritygroup.DefaultUpdateTime holds the default value on creation for the update_time field.
+	userloginsecuritygroup.DefaultUpdateTime = userloginsecuritygroupDescUpdateTime.Default.(func() time.Time)
+	// userloginsecuritygroup.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	userloginsecuritygroup.UpdateDefaultUpdateTime = userloginsecuritygroupDescUpdateTime.UpdateDefault.(func() time.Time)
 	// userloginsecuritygroupDescFromDate is the schema descriptor for from_date field.
 	userloginsecuritygroupDescFromDate := userloginsecuritygroupFields[0].Descriptor()
 	// userloginsecuritygroup.DefaultFromDate holds the default value on creation for the from_date field.
@@ -128,42 +386,68 @@ func init() {
 	userloginsecuritygroupDescThruDate := userloginsecuritygroupFields[1].Descriptor()
 	// userloginsecuritygroup.DefaultThruDate holds the default value on creation for the thru_date field.
 	userloginsecuritygroup.DefaultThruDate = userloginsecuritygroupDescThruDate.Default.(func() time.Time)
+	workeffortMixin := schema.WorkEffort{}.Mixin()
+	workeffortMixinFields0 := workeffortMixin[0].Fields()
+	_ = workeffortMixinFields0
 	workeffortFields := schema.WorkEffort{}.Fields()
 	_ = workeffortFields
+	// workeffortDescCreateTime is the schema descriptor for create_time field.
+	workeffortDescCreateTime := workeffortMixinFields0[0].Descriptor()
+	// workeffort.DefaultCreateTime holds the default value on creation for the create_time field.
+	workeffort.DefaultCreateTime = workeffortDescCreateTime.Default.(func() time.Time)
+	// workeffortDescUpdateTime is the schema descriptor for update_time field.
+	workeffortDescUpdateTime := workeffortMixinFields0[1].Descriptor()
+	// workeffort.DefaultUpdateTime holds the default value on creation for the update_time field.
+	workeffort.DefaultUpdateTime = workeffortDescUpdateTime.Default.(func() time.Time)
+	// workeffort.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	workeffort.UpdateDefaultUpdateTime = workeffortDescUpdateTime.UpdateDefault.(func() time.Time)
 	// workeffortDescLastStatusUpdate is the schema descriptor for last_status_update field.
-	workeffortDescLastStatusUpdate := workeffortFields[2].Descriptor()
+	workeffortDescLastStatusUpdate := workeffortFields[0].Descriptor()
 	// workeffort.DefaultLastStatusUpdate holds the default value on creation for the last_status_update field.
 	workeffort.DefaultLastStatusUpdate = workeffortDescLastStatusUpdate.Default.(func() time.Time)
 	// workeffortDescEstimatedStartDate is the schema descriptor for estimated_start_date field.
-	workeffortDescEstimatedStartDate := workeffortFields[12].Descriptor()
+	workeffortDescEstimatedStartDate := workeffortFields[10].Descriptor()
 	// workeffort.DefaultEstimatedStartDate holds the default value on creation for the estimated_start_date field.
 	workeffort.DefaultEstimatedStartDate = workeffortDescEstimatedStartDate.Default.(func() time.Time)
 	// workeffortDescEstimatedCompletionDate is the schema descriptor for estimated_completion_date field.
-	workeffortDescEstimatedCompletionDate := workeffortFields[13].Descriptor()
+	workeffortDescEstimatedCompletionDate := workeffortFields[11].Descriptor()
 	// workeffort.DefaultEstimatedCompletionDate holds the default value on creation for the estimated_completion_date field.
 	workeffort.DefaultEstimatedCompletionDate = workeffortDescEstimatedCompletionDate.Default.(func() time.Time)
 	// workeffortDescActualStartDate is the schema descriptor for actual_start_date field.
-	workeffortDescActualStartDate := workeffortFields[14].Descriptor()
+	workeffortDescActualStartDate := workeffortFields[12].Descriptor()
 	// workeffort.DefaultActualStartDate holds the default value on creation for the actual_start_date field.
 	workeffort.DefaultActualStartDate = workeffortDescActualStartDate.Default.(func() time.Time)
 	// workeffortDescActualCompletionDate is the schema descriptor for actual_completion_date field.
-	workeffortDescActualCompletionDate := workeffortFields[15].Descriptor()
+	workeffortDescActualCompletionDate := workeffortFields[13].Descriptor()
 	// workeffort.DefaultActualCompletionDate holds the default value on creation for the actual_completion_date field.
 	workeffort.DefaultActualCompletionDate = workeffortDescActualCompletionDate.Default.(func() time.Time)
 	// workeffortDescSourceReferenceID is the schema descriptor for source_reference_id field.
-	workeffortDescSourceReferenceID := workeffortFields[27].Descriptor()
+	workeffortDescSourceReferenceID := workeffortFields[25].Descriptor()
 	// workeffort.SourceReferenceIDValidator is a validator for the "source_reference_id" field. It is called by the builders before save.
 	workeffort.SourceReferenceIDValidator = workeffortDescSourceReferenceID.Validators[0].(func(string) error)
 	// workeffortDescCreatedDate is the schema descriptor for created_date field.
-	workeffortDescCreatedDate := workeffortFields[43].Descriptor()
+	workeffortDescCreatedDate := workeffortFields[41].Descriptor()
 	// workeffort.DefaultCreatedDate holds the default value on creation for the created_date field.
 	workeffort.DefaultCreatedDate = workeffortDescCreatedDate.Default.(func() time.Time)
 	// workeffortDescLastModifiedDate is the schema descriptor for last_modified_date field.
-	workeffortDescLastModifiedDate := workeffortFields[45].Descriptor()
+	workeffortDescLastModifiedDate := workeffortFields[43].Descriptor()
 	// workeffort.DefaultLastModifiedDate holds the default value on creation for the last_modified_date field.
 	workeffort.DefaultLastModifiedDate = workeffortDescLastModifiedDate.Default.(func() time.Time)
+	workeffortassocMixin := schema.WorkEffortAssoc{}.Mixin()
+	workeffortassocMixinFields0 := workeffortassocMixin[0].Fields()
+	_ = workeffortassocMixinFields0
 	workeffortassocFields := schema.WorkEffortAssoc{}.Fields()
 	_ = workeffortassocFields
+	// workeffortassocDescCreateTime is the schema descriptor for create_time field.
+	workeffortassocDescCreateTime := workeffortassocMixinFields0[0].Descriptor()
+	// workeffortassoc.DefaultCreateTime holds the default value on creation for the create_time field.
+	workeffortassoc.DefaultCreateTime = workeffortassocDescCreateTime.Default.(func() time.Time)
+	// workeffortassocDescUpdateTime is the schema descriptor for update_time field.
+	workeffortassocDescUpdateTime := workeffortassocMixinFields0[1].Descriptor()
+	// workeffortassoc.DefaultUpdateTime holds the default value on creation for the update_time field.
+	workeffortassoc.DefaultUpdateTime = workeffortassocDescUpdateTime.Default.(func() time.Time)
+	// workeffortassoc.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	workeffortassoc.UpdateDefaultUpdateTime = workeffortassocDescUpdateTime.UpdateDefault.(func() time.Time)
 	// workeffortassocDescFromDate is the schema descriptor for from_date field.
 	workeffortassocDescFromDate := workeffortassocFields[2].Descriptor()
 	// workeffortassoc.DefaultFromDate holds the default value on creation for the from_date field.
@@ -172,28 +456,84 @@ func init() {
 	workeffortassocDescThruDate := workeffortassocFields[3].Descriptor()
 	// workeffortassoc.DefaultThruDate holds the default value on creation for the thru_date field.
 	workeffortassoc.DefaultThruDate = workeffortassocDescThruDate.Default.(func() time.Time)
+	workeffortfixedassetassignMixin := schema.WorkEffortFixedAssetAssign{}.Mixin()
+	workeffortfixedassetassignMixinFields0 := workeffortfixedassetassignMixin[0].Fields()
+	_ = workeffortfixedassetassignMixinFields0
 	workeffortfixedassetassignFields := schema.WorkEffortFixedAssetAssign{}.Fields()
 	_ = workeffortfixedassetassignFields
+	// workeffortfixedassetassignDescCreateTime is the schema descriptor for create_time field.
+	workeffortfixedassetassignDescCreateTime := workeffortfixedassetassignMixinFields0[0].Descriptor()
+	// workeffortfixedassetassign.DefaultCreateTime holds the default value on creation for the create_time field.
+	workeffortfixedassetassign.DefaultCreateTime = workeffortfixedassetassignDescCreateTime.Default.(func() time.Time)
+	// workeffortfixedassetassignDescUpdateTime is the schema descriptor for update_time field.
+	workeffortfixedassetassignDescUpdateTime := workeffortfixedassetassignMixinFields0[1].Descriptor()
+	// workeffortfixedassetassign.DefaultUpdateTime holds the default value on creation for the update_time field.
+	workeffortfixedassetassign.DefaultUpdateTime = workeffortfixedassetassignDescUpdateTime.Default.(func() time.Time)
+	// workeffortfixedassetassign.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	workeffortfixedassetassign.UpdateDefaultUpdateTime = workeffortfixedassetassignDescUpdateTime.UpdateDefault.(func() time.Time)
 	// workeffortfixedassetassignDescFromDate is the schema descriptor for from_date field.
-	workeffortfixedassetassignDescFromDate := workeffortfixedassetassignFields[1].Descriptor()
+	workeffortfixedassetassignDescFromDate := workeffortfixedassetassignFields[0].Descriptor()
 	// workeffortfixedassetassign.DefaultFromDate holds the default value on creation for the from_date field.
 	workeffortfixedassetassign.DefaultFromDate = workeffortfixedassetassignDescFromDate.Default.(func() time.Time)
 	// workeffortfixedassetassignDescThruDate is the schema descriptor for thru_date field.
-	workeffortfixedassetassignDescThruDate := workeffortfixedassetassignFields[2].Descriptor()
+	workeffortfixedassetassignDescThruDate := workeffortfixedassetassignFields[1].Descriptor()
 	// workeffortfixedassetassign.DefaultThruDate holds the default value on creation for the thru_date field.
 	workeffortfixedassetassign.DefaultThruDate = workeffortfixedassetassignDescThruDate.Default.(func() time.Time)
+	workeffortpartyassignmentMixin := schema.WorkEffortPartyAssignment{}.Mixin()
+	workeffortpartyassignmentMixinFields0 := workeffortpartyassignmentMixin[0].Fields()
+	_ = workeffortpartyassignmentMixinFields0
 	workeffortpartyassignmentFields := schema.WorkEffortPartyAssignment{}.Fields()
 	_ = workeffortpartyassignmentFields
+	// workeffortpartyassignmentDescCreateTime is the schema descriptor for create_time field.
+	workeffortpartyassignmentDescCreateTime := workeffortpartyassignmentMixinFields0[0].Descriptor()
+	// workeffortpartyassignment.DefaultCreateTime holds the default value on creation for the create_time field.
+	workeffortpartyassignment.DefaultCreateTime = workeffortpartyassignmentDescCreateTime.Default.(func() time.Time)
+	// workeffortpartyassignmentDescUpdateTime is the schema descriptor for update_time field.
+	workeffortpartyassignmentDescUpdateTime := workeffortpartyassignmentMixinFields0[1].Descriptor()
+	// workeffortpartyassignment.DefaultUpdateTime holds the default value on creation for the update_time field.
+	workeffortpartyassignment.DefaultUpdateTime = workeffortpartyassignmentDescUpdateTime.Default.(func() time.Time)
+	// workeffortpartyassignment.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	workeffortpartyassignment.UpdateDefaultUpdateTime = workeffortpartyassignmentDescUpdateTime.UpdateDefault.(func() time.Time)
 	// workeffortpartyassignmentDescFromDate is the schema descriptor for from_date field.
-	workeffortpartyassignmentDescFromDate := workeffortpartyassignmentFields[1].Descriptor()
+	workeffortpartyassignmentDescFromDate := workeffortpartyassignmentFields[0].Descriptor()
 	// workeffortpartyassignment.DefaultFromDate holds the default value on creation for the from_date field.
 	workeffortpartyassignment.DefaultFromDate = workeffortpartyassignmentDescFromDate.Default.(func() time.Time)
 	// workeffortpartyassignmentDescThruDate is the schema descriptor for thru_date field.
-	workeffortpartyassignmentDescThruDate := workeffortpartyassignmentFields[2].Descriptor()
+	workeffortpartyassignmentDescThruDate := workeffortpartyassignmentFields[1].Descriptor()
 	// workeffortpartyassignment.DefaultThruDate holds the default value on creation for the thru_date field.
 	workeffortpartyassignment.DefaultThruDate = workeffortpartyassignmentDescThruDate.Default.(func() time.Time)
 	// workeffortpartyassignmentDescStatusDateTime is the schema descriptor for status_date_time field.
-	workeffortpartyassignmentDescStatusDateTime := workeffortpartyassignmentFields[4].Descriptor()
+	workeffortpartyassignmentDescStatusDateTime := workeffortpartyassignmentFields[2].Descriptor()
 	// workeffortpartyassignment.DefaultStatusDateTime holds the default value on creation for the status_date_time field.
 	workeffortpartyassignment.DefaultStatusDateTime = workeffortpartyassignmentDescStatusDateTime.Default.(func() time.Time)
+	workeffortskillstandardMixin := schema.WorkEffortSkillStandard{}.Mixin()
+	workeffortskillstandardMixinFields0 := workeffortskillstandardMixin[0].Fields()
+	_ = workeffortskillstandardMixinFields0
+	workeffortskillstandardFields := schema.WorkEffortSkillStandard{}.Fields()
+	_ = workeffortskillstandardFields
+	// workeffortskillstandardDescCreateTime is the schema descriptor for create_time field.
+	workeffortskillstandardDescCreateTime := workeffortskillstandardMixinFields0[0].Descriptor()
+	// workeffortskillstandard.DefaultCreateTime holds the default value on creation for the create_time field.
+	workeffortskillstandard.DefaultCreateTime = workeffortskillstandardDescCreateTime.Default.(func() time.Time)
+	// workeffortskillstandardDescUpdateTime is the schema descriptor for update_time field.
+	workeffortskillstandardDescUpdateTime := workeffortskillstandardMixinFields0[1].Descriptor()
+	// workeffortskillstandard.DefaultUpdateTime holds the default value on creation for the update_time field.
+	workeffortskillstandard.DefaultUpdateTime = workeffortskillstandardDescUpdateTime.Default.(func() time.Time)
+	// workeffortskillstandard.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	workeffortskillstandard.UpdateDefaultUpdateTime = workeffortskillstandardDescUpdateTime.UpdateDefault.(func() time.Time)
+	workefforttypeMixin := schema.WorkEffortType{}.Mixin()
+	workefforttypeMixinFields0 := workefforttypeMixin[0].Fields()
+	_ = workefforttypeMixinFields0
+	workefforttypeFields := schema.WorkEffortType{}.Fields()
+	_ = workefforttypeFields
+	// workefforttypeDescCreateTime is the schema descriptor for create_time field.
+	workefforttypeDescCreateTime := workefforttypeMixinFields0[0].Descriptor()
+	// workefforttype.DefaultCreateTime holds the default value on creation for the create_time field.
+	workefforttype.DefaultCreateTime = workefforttypeDescCreateTime.Default.(func() time.Time)
+	// workefforttypeDescUpdateTime is the schema descriptor for update_time field.
+	workefforttypeDescUpdateTime := workefforttypeMixinFields0[1].Descriptor()
+	// workefforttype.DefaultUpdateTime holds the default value on creation for the update_time field.
+	workefforttype.DefaultUpdateTime = workefforttypeDescUpdateTime.Default.(func() time.Time)
+	// workefforttype.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	workefforttype.UpdateDefaultUpdateTime = workefforttypeDescUpdateTime.UpdateDefault.(func() time.Time)
 }

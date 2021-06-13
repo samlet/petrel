@@ -11,8 +11,10 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
 
@@ -29,16 +31,23 @@ func (pru *PartyRoleUpdate) Where(ps ...predicate.PartyRole) *PartyRoleUpdate {
 	return pru
 }
 
-// SetRoleTypeID sets the "role_type_id" field.
-func (pru *PartyRoleUpdate) SetRoleTypeID(i int) *PartyRoleUpdate {
-	pru.mutation.ResetRoleTypeID()
-	pru.mutation.SetRoleTypeID(i)
+// SetStringRef sets the "string_ref" field.
+func (pru *PartyRoleUpdate) SetStringRef(s string) *PartyRoleUpdate {
+	pru.mutation.SetStringRef(s)
 	return pru
 }
 
-// AddRoleTypeID adds i to the "role_type_id" field.
-func (pru *PartyRoleUpdate) AddRoleTypeID(i int) *PartyRoleUpdate {
-	pru.mutation.AddRoleTypeID(i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (pru *PartyRoleUpdate) SetNillableStringRef(s *string) *PartyRoleUpdate {
+	if s != nil {
+		pru.SetStringRef(*s)
+	}
+	return pru
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (pru *PartyRoleUpdate) ClearStringRef() *PartyRoleUpdate {
+	pru.mutation.ClearStringRef()
 	return pru
 }
 
@@ -61,6 +70,25 @@ func (pru *PartyRoleUpdate) SetParty(p *Party) *PartyRoleUpdate {
 	return pru.SetPartyID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (pru *PartyRoleUpdate) SetRoleTypeID(id int) *PartyRoleUpdate {
+	pru.mutation.SetRoleTypeID(id)
+	return pru
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (pru *PartyRoleUpdate) SetNillableRoleTypeID(id *int) *PartyRoleUpdate {
+	if id != nil {
+		pru = pru.SetRoleTypeID(*id)
+	}
+	return pru
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (pru *PartyRoleUpdate) SetRoleType(r *RoleType) *PartyRoleUpdate {
+	return pru.SetRoleTypeID(r.ID)
+}
+
 // AddFixedAssetIDs adds the "fixed_assets" edge to the FixedAsset entity by IDs.
 func (pru *PartyRoleUpdate) AddFixedAssetIDs(ids ...int) *PartyRoleUpdate {
 	pru.mutation.AddFixedAssetIDs(ids...)
@@ -74,6 +102,21 @@ func (pru *PartyRoleUpdate) AddFixedAssets(f ...*FixedAsset) *PartyRoleUpdate {
 		ids[i] = f[i].ID
 	}
 	return pru.AddFixedAssetIDs(ids...)
+}
+
+// AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
+func (pru *PartyRoleUpdate) AddPartyContactMechIDs(ids ...int) *PartyRoleUpdate {
+	pru.mutation.AddPartyContactMechIDs(ids...)
+	return pru
+}
+
+// AddPartyContactMeches adds the "party_contact_meches" edges to the PartyContactMech entity.
+func (pru *PartyRoleUpdate) AddPartyContactMeches(p ...*PartyContactMech) *PartyRoleUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pru.AddPartyContactMechIDs(ids...)
 }
 
 // AddWorkEffortPartyAssignmentIDs adds the "work_effort_party_assignments" edge to the WorkEffortPartyAssignment entity by IDs.
@@ -102,6 +145,12 @@ func (pru *PartyRoleUpdate) ClearParty() *PartyRoleUpdate {
 	return pru
 }
 
+// ClearRoleType clears the "role_type" edge to the RoleType entity.
+func (pru *PartyRoleUpdate) ClearRoleType() *PartyRoleUpdate {
+	pru.mutation.ClearRoleType()
+	return pru
+}
+
 // ClearFixedAssets clears all "fixed_assets" edges to the FixedAsset entity.
 func (pru *PartyRoleUpdate) ClearFixedAssets() *PartyRoleUpdate {
 	pru.mutation.ClearFixedAssets()
@@ -121,6 +170,27 @@ func (pru *PartyRoleUpdate) RemoveFixedAssets(f ...*FixedAsset) *PartyRoleUpdate
 		ids[i] = f[i].ID
 	}
 	return pru.RemoveFixedAssetIDs(ids...)
+}
+
+// ClearPartyContactMeches clears all "party_contact_meches" edges to the PartyContactMech entity.
+func (pru *PartyRoleUpdate) ClearPartyContactMeches() *PartyRoleUpdate {
+	pru.mutation.ClearPartyContactMeches()
+	return pru
+}
+
+// RemovePartyContactMechIDs removes the "party_contact_meches" edge to PartyContactMech entities by IDs.
+func (pru *PartyRoleUpdate) RemovePartyContactMechIDs(ids ...int) *PartyRoleUpdate {
+	pru.mutation.RemovePartyContactMechIDs(ids...)
+	return pru
+}
+
+// RemovePartyContactMeches removes "party_contact_meches" edges to PartyContactMech entities.
+func (pru *PartyRoleUpdate) RemovePartyContactMeches(p ...*PartyContactMech) *PartyRoleUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pru.RemovePartyContactMechIDs(ids...)
 }
 
 // ClearWorkEffortPartyAssignments clears all "work_effort_party_assignments" edges to the WorkEffortPartyAssignment entity.
@@ -150,6 +220,7 @@ func (pru *PartyRoleUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	pru.defaults()
 	if len(pru.hooks) == 0 {
 		affected, err = pru.sqlSave(ctx)
 	} else {
@@ -195,6 +266,14 @@ func (pru *PartyRoleUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (pru *PartyRoleUpdate) defaults() {
+	if _, ok := pru.mutation.UpdateTime(); !ok {
+		v := partyrole.UpdateDefaultUpdateTime()
+		pru.mutation.SetUpdateTime(v)
+	}
+}
+
 func (pru *PartyRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -213,18 +292,24 @@ func (pru *PartyRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := pru.mutation.RoleTypeID(); ok {
+	if value, ok := pru.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: partyrole.FieldRoleTypeID,
+			Column: partyrole.FieldUpdateTime,
 		})
 	}
-	if value, ok := pru.mutation.AddedRoleTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := pru.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: partyrole.FieldRoleTypeID,
+			Column: partyrole.FieldStringRef,
+		})
+	}
+	if pru.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: partyrole.FieldStringRef,
 		})
 	}
 	if pru.mutation.PartyCleared() {
@@ -254,6 +339,41 @@ func (pru *PartyRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: party.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pru.mutation.RoleTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partyrole.RoleTypeTable,
+			Columns: []string{partyrole.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pru.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partyrole.RoleTypeTable,
+			Columns: []string{partyrole.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
 				},
 			},
 		}
@@ -308,6 +428,60 @@ func (pru *PartyRoleUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pru.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   partyrole.PartyContactMechesTable,
+			Columns: []string{partyrole.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pru.mutation.RemovedPartyContactMechesIDs(); len(nodes) > 0 && !pru.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   partyrole.PartyContactMechesTable,
+			Columns: []string{partyrole.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pru.mutation.PartyContactMechesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   partyrole.PartyContactMechesTable,
+			Columns: []string{partyrole.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
 				},
 			},
 		}
@@ -389,16 +563,23 @@ type PartyRoleUpdateOne struct {
 	mutation *PartyRoleMutation
 }
 
-// SetRoleTypeID sets the "role_type_id" field.
-func (pruo *PartyRoleUpdateOne) SetRoleTypeID(i int) *PartyRoleUpdateOne {
-	pruo.mutation.ResetRoleTypeID()
-	pruo.mutation.SetRoleTypeID(i)
+// SetStringRef sets the "string_ref" field.
+func (pruo *PartyRoleUpdateOne) SetStringRef(s string) *PartyRoleUpdateOne {
+	pruo.mutation.SetStringRef(s)
 	return pruo
 }
 
-// AddRoleTypeID adds i to the "role_type_id" field.
-func (pruo *PartyRoleUpdateOne) AddRoleTypeID(i int) *PartyRoleUpdateOne {
-	pruo.mutation.AddRoleTypeID(i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (pruo *PartyRoleUpdateOne) SetNillableStringRef(s *string) *PartyRoleUpdateOne {
+	if s != nil {
+		pruo.SetStringRef(*s)
+	}
+	return pruo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (pruo *PartyRoleUpdateOne) ClearStringRef() *PartyRoleUpdateOne {
+	pruo.mutation.ClearStringRef()
 	return pruo
 }
 
@@ -421,6 +602,25 @@ func (pruo *PartyRoleUpdateOne) SetParty(p *Party) *PartyRoleUpdateOne {
 	return pruo.SetPartyID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (pruo *PartyRoleUpdateOne) SetRoleTypeID(id int) *PartyRoleUpdateOne {
+	pruo.mutation.SetRoleTypeID(id)
+	return pruo
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (pruo *PartyRoleUpdateOne) SetNillableRoleTypeID(id *int) *PartyRoleUpdateOne {
+	if id != nil {
+		pruo = pruo.SetRoleTypeID(*id)
+	}
+	return pruo
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (pruo *PartyRoleUpdateOne) SetRoleType(r *RoleType) *PartyRoleUpdateOne {
+	return pruo.SetRoleTypeID(r.ID)
+}
+
 // AddFixedAssetIDs adds the "fixed_assets" edge to the FixedAsset entity by IDs.
 func (pruo *PartyRoleUpdateOne) AddFixedAssetIDs(ids ...int) *PartyRoleUpdateOne {
 	pruo.mutation.AddFixedAssetIDs(ids...)
@@ -434,6 +634,21 @@ func (pruo *PartyRoleUpdateOne) AddFixedAssets(f ...*FixedAsset) *PartyRoleUpdat
 		ids[i] = f[i].ID
 	}
 	return pruo.AddFixedAssetIDs(ids...)
+}
+
+// AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
+func (pruo *PartyRoleUpdateOne) AddPartyContactMechIDs(ids ...int) *PartyRoleUpdateOne {
+	pruo.mutation.AddPartyContactMechIDs(ids...)
+	return pruo
+}
+
+// AddPartyContactMeches adds the "party_contact_meches" edges to the PartyContactMech entity.
+func (pruo *PartyRoleUpdateOne) AddPartyContactMeches(p ...*PartyContactMech) *PartyRoleUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pruo.AddPartyContactMechIDs(ids...)
 }
 
 // AddWorkEffortPartyAssignmentIDs adds the "work_effort_party_assignments" edge to the WorkEffortPartyAssignment entity by IDs.
@@ -462,6 +677,12 @@ func (pruo *PartyRoleUpdateOne) ClearParty() *PartyRoleUpdateOne {
 	return pruo
 }
 
+// ClearRoleType clears the "role_type" edge to the RoleType entity.
+func (pruo *PartyRoleUpdateOne) ClearRoleType() *PartyRoleUpdateOne {
+	pruo.mutation.ClearRoleType()
+	return pruo
+}
+
 // ClearFixedAssets clears all "fixed_assets" edges to the FixedAsset entity.
 func (pruo *PartyRoleUpdateOne) ClearFixedAssets() *PartyRoleUpdateOne {
 	pruo.mutation.ClearFixedAssets()
@@ -481,6 +702,27 @@ func (pruo *PartyRoleUpdateOne) RemoveFixedAssets(f ...*FixedAsset) *PartyRoleUp
 		ids[i] = f[i].ID
 	}
 	return pruo.RemoveFixedAssetIDs(ids...)
+}
+
+// ClearPartyContactMeches clears all "party_contact_meches" edges to the PartyContactMech entity.
+func (pruo *PartyRoleUpdateOne) ClearPartyContactMeches() *PartyRoleUpdateOne {
+	pruo.mutation.ClearPartyContactMeches()
+	return pruo
+}
+
+// RemovePartyContactMechIDs removes the "party_contact_meches" edge to PartyContactMech entities by IDs.
+func (pruo *PartyRoleUpdateOne) RemovePartyContactMechIDs(ids ...int) *PartyRoleUpdateOne {
+	pruo.mutation.RemovePartyContactMechIDs(ids...)
+	return pruo
+}
+
+// RemovePartyContactMeches removes "party_contact_meches" edges to PartyContactMech entities.
+func (pruo *PartyRoleUpdateOne) RemovePartyContactMeches(p ...*PartyContactMech) *PartyRoleUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pruo.RemovePartyContactMechIDs(ids...)
 }
 
 // ClearWorkEffortPartyAssignments clears all "work_effort_party_assignments" edges to the WorkEffortPartyAssignment entity.
@@ -517,6 +759,7 @@ func (pruo *PartyRoleUpdateOne) Save(ctx context.Context) (*PartyRole, error) {
 		err  error
 		node *PartyRole
 	)
+	pruo.defaults()
 	if len(pruo.hooks) == 0 {
 		node, err = pruo.sqlSave(ctx)
 	} else {
@@ -562,6 +805,14 @@ func (pruo *PartyRoleUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (pruo *PartyRoleUpdateOne) defaults() {
+	if _, ok := pruo.mutation.UpdateTime(); !ok {
+		v := partyrole.UpdateDefaultUpdateTime()
+		pruo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (pruo *PartyRoleUpdateOne) sqlSave(ctx context.Context) (_node *PartyRole, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -597,18 +848,24 @@ func (pruo *PartyRoleUpdateOne) sqlSave(ctx context.Context) (_node *PartyRole, 
 			}
 		}
 	}
-	if value, ok := pruo.mutation.RoleTypeID(); ok {
+	if value, ok := pruo.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: partyrole.FieldRoleTypeID,
+			Column: partyrole.FieldUpdateTime,
 		})
 	}
-	if value, ok := pruo.mutation.AddedRoleTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := pruo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: partyrole.FieldRoleTypeID,
+			Column: partyrole.FieldStringRef,
+		})
+	}
+	if pruo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: partyrole.FieldStringRef,
 		})
 	}
 	if pruo.mutation.PartyCleared() {
@@ -638,6 +895,41 @@ func (pruo *PartyRoleUpdateOne) sqlSave(ctx context.Context) (_node *PartyRole, 
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: party.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pruo.mutation.RoleTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partyrole.RoleTypeTable,
+			Columns: []string{partyrole.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pruo.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partyrole.RoleTypeTable,
+			Columns: []string{partyrole.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
 				},
 			},
 		}
@@ -692,6 +984,60 @@ func (pruo *PartyRoleUpdateOne) sqlSave(ctx context.Context) (_node *PartyRole, 
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pruo.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   partyrole.PartyContactMechesTable,
+			Columns: []string{partyrole.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pruo.mutation.RemovedPartyContactMechesIDs(); len(nodes) > 0 && !pruo.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   partyrole.PartyContactMechesTable,
+			Columns: []string{partyrole.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pruo.mutation.PartyContactMechesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   partyrole.PartyContactMechesTable,
+			Columns: []string{partyrole.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
 				},
 			},
 		}

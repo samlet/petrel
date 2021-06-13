@@ -93,6 +93,27 @@ func IDLTE(id int) predicate.Party {
 	})
 }
 
+// CreateTime applies equality check predicate on the "create_time" field. It's identical to CreateTimeEQ.
+func CreateTime(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// UpdateTime applies equality check predicate on the "update_time" field. It's identical to UpdateTimeEQ.
+func UpdateTime(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// StringRef applies equality check predicate on the "string_ref" field. It's identical to StringRefEQ.
+func StringRef(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStringRef), v))
+	})
+}
+
 // PartyTypeID applies equality check predicate on the "party_type_id" field. It's identical to PartyTypeIDEQ.
 func PartyTypeID(v int) predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
@@ -121,13 +142,6 @@ func Description(v string) predicate.Party {
 	})
 }
 
-// StatusID applies equality check predicate on the "status_id" field. It's identical to StatusIDEQ.
-func StatusID(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldStatusID), v))
-	})
-}
-
 // CreatedDate applies equality check predicate on the "created_date" field. It's identical to CreatedDateEQ.
 func CreatedDate(v time.Time) predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
@@ -146,6 +160,283 @@ func LastModifiedDate(v time.Time) predicate.Party {
 func DataSourceID(v int) predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldDataSourceID), v))
+	})
+}
+
+// CreateTimeEQ applies the EQ predicate on the "create_time" field.
+func CreateTimeEQ(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeNEQ applies the NEQ predicate on the "create_time" field.
+func CreateTimeNEQ(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeIn applies the In predicate on the "create_time" field.
+func CreateTimeIn(vs ...time.Time) predicate.Party {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Party(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldCreateTime), v...))
+	})
+}
+
+// CreateTimeNotIn applies the NotIn predicate on the "create_time" field.
+func CreateTimeNotIn(vs ...time.Time) predicate.Party {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Party(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldCreateTime), v...))
+	})
+}
+
+// CreateTimeGT applies the GT predicate on the "create_time" field.
+func CreateTimeGT(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeGTE applies the GTE predicate on the "create_time" field.
+func CreateTimeGTE(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeLT applies the LT predicate on the "create_time" field.
+func CreateTimeLT(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeLTE applies the LTE predicate on the "create_time" field.
+func CreateTimeLTE(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCreateTime), v))
+	})
+}
+
+// UpdateTimeEQ applies the EQ predicate on the "update_time" field.
+func UpdateTimeEQ(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeNEQ applies the NEQ predicate on the "update_time" field.
+func UpdateTimeNEQ(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeIn applies the In predicate on the "update_time" field.
+func UpdateTimeIn(vs ...time.Time) predicate.Party {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Party(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUpdateTime), v...))
+	})
+}
+
+// UpdateTimeNotIn applies the NotIn predicate on the "update_time" field.
+func UpdateTimeNotIn(vs ...time.Time) predicate.Party {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Party(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUpdateTime), v...))
+	})
+}
+
+// UpdateTimeGT applies the GT predicate on the "update_time" field.
+func UpdateTimeGT(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeGTE applies the GTE predicate on the "update_time" field.
+func UpdateTimeGTE(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeLT applies the LT predicate on the "update_time" field.
+func UpdateTimeLT(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeLTE applies the LTE predicate on the "update_time" field.
+func UpdateTimeLTE(v time.Time) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldUpdateTime), v))
+	})
+}
+
+// StringRefEQ applies the EQ predicate on the "string_ref" field.
+func StringRefEQ(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefNEQ applies the NEQ predicate on the "string_ref" field.
+func StringRefNEQ(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefIn applies the In predicate on the "string_ref" field.
+func StringRefIn(vs ...string) predicate.Party {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Party(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldStringRef), v...))
+	})
+}
+
+// StringRefNotIn applies the NotIn predicate on the "string_ref" field.
+func StringRefNotIn(vs ...string) predicate.Party {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.Party(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldStringRef), v...))
+	})
+}
+
+// StringRefGT applies the GT predicate on the "string_ref" field.
+func StringRefGT(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefGTE applies the GTE predicate on the "string_ref" field.
+func StringRefGTE(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefLT applies the LT predicate on the "string_ref" field.
+func StringRefLT(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefLTE applies the LTE predicate on the "string_ref" field.
+func StringRefLTE(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefContains applies the Contains predicate on the "string_ref" field.
+func StringRefContains(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefHasPrefix applies the HasPrefix predicate on the "string_ref" field.
+func StringRefHasPrefix(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefHasSuffix applies the HasSuffix predicate on the "string_ref" field.
+func StringRefHasSuffix(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefIsNil applies the IsNil predicate on the "string_ref" field.
+func StringRefIsNil() predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldStringRef)))
+	})
+}
+
+// StringRefNotNil applies the NotNil predicate on the "string_ref" field.
+func StringRefNotNil() predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldStringRef)))
+	})
+}
+
+// StringRefEqualFold applies the EqualFold predicate on the "string_ref" field.
+func StringRefEqualFold(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefContainsFold applies the ContainsFold predicate on the "string_ref" field.
+func StringRefContainsFold(v string) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldStringRef), v))
 	})
 }
 
@@ -544,96 +835,6 @@ func DescriptionContainsFold(v string) predicate.Party {
 	})
 }
 
-// StatusIDEQ applies the EQ predicate on the "status_id" field.
-func StatusIDEQ(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldStatusID), v))
-	})
-}
-
-// StatusIDNEQ applies the NEQ predicate on the "status_id" field.
-func StatusIDNEQ(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldStatusID), v))
-	})
-}
-
-// StatusIDIn applies the In predicate on the "status_id" field.
-func StatusIDIn(vs ...int) predicate.Party {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Party(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldStatusID), v...))
-	})
-}
-
-// StatusIDNotIn applies the NotIn predicate on the "status_id" field.
-func StatusIDNotIn(vs ...int) predicate.Party {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.Party(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldStatusID), v...))
-	})
-}
-
-// StatusIDGT applies the GT predicate on the "status_id" field.
-func StatusIDGT(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldStatusID), v))
-	})
-}
-
-// StatusIDGTE applies the GTE predicate on the "status_id" field.
-func StatusIDGTE(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldStatusID), v))
-	})
-}
-
-// StatusIDLT applies the LT predicate on the "status_id" field.
-func StatusIDLT(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldStatusID), v))
-	})
-}
-
-// StatusIDLTE applies the LTE predicate on the "status_id" field.
-func StatusIDLTE(v int) predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldStatusID), v))
-	})
-}
-
-// StatusIDIsNil applies the IsNil predicate on the "status_id" field.
-func StatusIDIsNil() predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldStatusID)))
-	})
-}
-
-// StatusIDNotNil applies the NotNil predicate on the "status_id" field.
-func StatusIDNotNil() predicate.Party {
-	return predicate.Party(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldStatusID)))
-	})
-}
-
 // CreatedDateEQ applies the EQ predicate on the "created_date" field.
 func CreatedDateEQ(v time.Time) predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
@@ -1022,6 +1223,34 @@ func HasLastModifiedByUserLoginWith(preds ...predicate.UserLogin) predicate.Part
 	})
 }
 
+// HasStatusItem applies the HasEdge predicate on the "status_item" edge.
+func HasStatusItem() predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StatusItemTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, StatusItemTable, StatusItemColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasStatusItemWith applies the HasEdge predicate on the "status_item" edge with a given conditions (other predicates).
+func HasStatusItemWith(preds ...predicate.StatusItem) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(StatusItemInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, StatusItemTable, StatusItemColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // HasFixedAssets applies the HasEdge predicate on the "fixed_assets" edge.
 func HasFixedAssets() predicate.Party {
 	return predicate.Party(func(s *sql.Selector) {
@@ -1041,6 +1270,34 @@ func HasFixedAssetsWith(preds ...predicate.FixedAsset) predicate.Party {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(FixedAssetsInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, FixedAssetsTable, FixedAssetsColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasPartyContactMeches applies the HasEdge predicate on the "party_contact_meches" edge.
+func HasPartyContactMeches() predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(PartyContactMechesTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, PartyContactMechesTable, PartyContactMechesColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasPartyContactMechesWith applies the HasEdge predicate on the "party_contact_meches" edge with a given conditions (other predicates).
+func HasPartyContactMechesWith(preds ...predicate.PartyContactMech) predicate.Party {
+	return predicate.Party(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(PartyContactMechesInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, PartyContactMechesTable, PartyContactMechesColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

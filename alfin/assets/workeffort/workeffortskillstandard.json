@@ -1,0 +1,129 @@
+{
+  "name": "WorkEffortSkillStandard",
+  "fields": [
+    {
+      "name": "workEffortId",
+      "type": "id",
+      "col": "WORK_EFFORT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "skillTypeId",
+      "type": "id",
+      "col": "SKILL_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedNumPeople",
+      "type": "floating-point",
+      "col": "ESTIMATED_NUM_PEOPLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedDuration",
+      "type": "floating-point",
+      "col": "ESTIMATED_DURATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedCost",
+      "type": "currency-amount",
+      "col": "ESTIMATED_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "WorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "WKEFF_SKLSTD_WEFF",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SkillType",
+      "type": "one",
+      "relEntityName": "SkillType",
+      "fkName": "WKEFF_SKLSTD_SKTP",
+      "keymaps": [
+        {
+          "fieldName": "skillTypeId",
+          "relFieldName": "skillTypeId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "workEffortId",
+    "skillTypeId"
+  ],
+  "isView": false
+}

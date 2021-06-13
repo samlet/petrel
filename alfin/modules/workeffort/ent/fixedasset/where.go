@@ -93,6 +93,27 @@ func IDLTE(id int) predicate.FixedAsset {
 	})
 }
 
+// CreateTime applies equality check predicate on the "create_time" field. It's identical to CreateTimeEQ.
+func CreateTime(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// UpdateTime applies equality check predicate on the "update_time" field. It's identical to UpdateTimeEQ.
+func UpdateTime(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// StringRef applies equality check predicate on the "string_ref" field. It's identical to StringRefEQ.
+func StringRef(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStringRef), v))
+	})
+}
+
 // FixedAssetTypeID applies equality check predicate on the "fixed_asset_type_id" field. It's identical to FixedAssetTypeIDEQ.
 func FixedAssetTypeID(v int) predicate.FixedAsset {
 	return predicate.FixedAsset(func(s *sql.Selector) {
@@ -111,13 +132,6 @@ func InstanceOfProductID(v int) predicate.FixedAsset {
 func ClassEnumID(v int) predicate.FixedAsset {
 	return predicate.FixedAsset(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldClassEnumID), v))
-	})
-}
-
-// RoleTypeID applies equality check predicate on the "role_type_id" field. It's identical to RoleTypeIDEQ.
-func RoleTypeID(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldRoleTypeID), v))
 	})
 }
 
@@ -244,6 +258,283 @@ func PurchaseCost(v float64) predicate.FixedAsset {
 func PurchaseCostUomID(v int) predicate.FixedAsset {
 	return predicate.FixedAsset(func(s *sql.Selector) {
 		s.Where(sql.EQ(s.C(FieldPurchaseCostUomID), v))
+	})
+}
+
+// CreateTimeEQ applies the EQ predicate on the "create_time" field.
+func CreateTimeEQ(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeNEQ applies the NEQ predicate on the "create_time" field.
+func CreateTimeNEQ(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeIn applies the In predicate on the "create_time" field.
+func CreateTimeIn(vs ...time.Time) predicate.FixedAsset {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldCreateTime), v...))
+	})
+}
+
+// CreateTimeNotIn applies the NotIn predicate on the "create_time" field.
+func CreateTimeNotIn(vs ...time.Time) predicate.FixedAsset {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldCreateTime), v...))
+	})
+}
+
+// CreateTimeGT applies the GT predicate on the "create_time" field.
+func CreateTimeGT(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeGTE applies the GTE predicate on the "create_time" field.
+func CreateTimeGTE(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeLT applies the LT predicate on the "create_time" field.
+func CreateTimeLT(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldCreateTime), v))
+	})
+}
+
+// CreateTimeLTE applies the LTE predicate on the "create_time" field.
+func CreateTimeLTE(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldCreateTime), v))
+	})
+}
+
+// UpdateTimeEQ applies the EQ predicate on the "update_time" field.
+func UpdateTimeEQ(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeNEQ applies the NEQ predicate on the "update_time" field.
+func UpdateTimeNEQ(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeIn applies the In predicate on the "update_time" field.
+func UpdateTimeIn(vs ...time.Time) predicate.FixedAsset {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldUpdateTime), v...))
+	})
+}
+
+// UpdateTimeNotIn applies the NotIn predicate on the "update_time" field.
+func UpdateTimeNotIn(vs ...time.Time) predicate.FixedAsset {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldUpdateTime), v...))
+	})
+}
+
+// UpdateTimeGT applies the GT predicate on the "update_time" field.
+func UpdateTimeGT(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeGTE applies the GTE predicate on the "update_time" field.
+func UpdateTimeGTE(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeLT applies the LT predicate on the "update_time" field.
+func UpdateTimeLT(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldUpdateTime), v))
+	})
+}
+
+// UpdateTimeLTE applies the LTE predicate on the "update_time" field.
+func UpdateTimeLTE(v time.Time) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldUpdateTime), v))
+	})
+}
+
+// StringRefEQ applies the EQ predicate on the "string_ref" field.
+func StringRefEQ(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefNEQ applies the NEQ predicate on the "string_ref" field.
+func StringRefNEQ(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.NEQ(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefIn applies the In predicate on the "string_ref" field.
+func StringRefIn(vs ...string) predicate.FixedAsset {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldStringRef), v...))
+	})
+}
+
+// StringRefNotIn applies the NotIn predicate on the "string_ref" field.
+func StringRefNotIn(vs ...string) predicate.FixedAsset {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldStringRef), v...))
+	})
+}
+
+// StringRefGT applies the GT predicate on the "string_ref" field.
+func StringRefGT(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefGTE applies the GTE predicate on the "string_ref" field.
+func StringRefGTE(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefLT applies the LT predicate on the "string_ref" field.
+func StringRefLT(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefLTE applies the LTE predicate on the "string_ref" field.
+func StringRefLTE(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefContains applies the Contains predicate on the "string_ref" field.
+func StringRefContains(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefHasPrefix applies the HasPrefix predicate on the "string_ref" field.
+func StringRefHasPrefix(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefHasSuffix applies the HasSuffix predicate on the "string_ref" field.
+func StringRefHasSuffix(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefIsNil applies the IsNil predicate on the "string_ref" field.
+func StringRefIsNil() predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldStringRef)))
+	})
+}
+
+// StringRefNotNil applies the NotNil predicate on the "string_ref" field.
+func StringRefNotNil() predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldStringRef)))
+	})
+}
+
+// StringRefEqualFold applies the EqualFold predicate on the "string_ref" field.
+func StringRefEqualFold(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefContainsFold applies the ContainsFold predicate on the "string_ref" field.
+func StringRefContainsFold(v string) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldStringRef), v))
 	})
 }
 
@@ -514,96 +805,6 @@ func ClassEnumIDIsNil() predicate.FixedAsset {
 func ClassEnumIDNotNil() predicate.FixedAsset {
 	return predicate.FixedAsset(func(s *sql.Selector) {
 		s.Where(sql.NotNull(s.C(FieldClassEnumID)))
-	})
-}
-
-// RoleTypeIDEQ applies the EQ predicate on the "role_type_id" field.
-func RoleTypeIDEQ(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldRoleTypeID), v))
-	})
-}
-
-// RoleTypeIDNEQ applies the NEQ predicate on the "role_type_id" field.
-func RoleTypeIDNEQ(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldRoleTypeID), v))
-	})
-}
-
-// RoleTypeIDIn applies the In predicate on the "role_type_id" field.
-func RoleTypeIDIn(vs ...int) predicate.FixedAsset {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldRoleTypeID), v...))
-	})
-}
-
-// RoleTypeIDNotIn applies the NotIn predicate on the "role_type_id" field.
-func RoleTypeIDNotIn(vs ...int) predicate.FixedAsset {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldRoleTypeID), v...))
-	})
-}
-
-// RoleTypeIDGT applies the GT predicate on the "role_type_id" field.
-func RoleTypeIDGT(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldRoleTypeID), v))
-	})
-}
-
-// RoleTypeIDGTE applies the GTE predicate on the "role_type_id" field.
-func RoleTypeIDGTE(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldRoleTypeID), v))
-	})
-}
-
-// RoleTypeIDLT applies the LT predicate on the "role_type_id" field.
-func RoleTypeIDLT(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldRoleTypeID), v))
-	})
-}
-
-// RoleTypeIDLTE applies the LTE predicate on the "role_type_id" field.
-func RoleTypeIDLTE(v int) predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldRoleTypeID), v))
-	})
-}
-
-// RoleTypeIDIsNil applies the IsNil predicate on the "role_type_id" field.
-func RoleTypeIDIsNil() predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldRoleTypeID)))
-	})
-}
-
-// RoleTypeIDNotNil applies the NotNil predicate on the "role_type_id" field.
-func RoleTypeIDNotNil() predicate.FixedAsset {
-	return predicate.FixedAsset(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldRoleTypeID)))
 	})
 }
 
@@ -2372,6 +2573,34 @@ func HasPartyWith(preds ...predicate.Party) predicate.FixedAsset {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(PartyInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, PartyTable, PartyColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasRoleType applies the HasEdge predicate on the "role_type" edge.
+func HasRoleType() predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(RoleTypeTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, RoleTypeTable, RoleTypeColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasRoleTypeWith applies the HasEdge predicate on the "role_type" edge with a given conditions (other predicates).
+func HasRoleTypeWith(preds ...predicate.RoleType) predicate.FixedAsset {
+	return predicate.FixedAsset(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(RoleTypeInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, RoleTypeTable, RoleTypeColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

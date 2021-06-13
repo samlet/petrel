@@ -291,12 +291,12 @@ func (sgpq *SecurityGroupPermissionQuery) WithSecurityGroup(opts ...func(*Securi
 // Example:
 //
 //	var v []struct {
-//		PermissionID string `json:"permission_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.SecurityGroupPermission.Query().
-//		GroupBy(securitygrouppermission.FieldPermissionID).
+//		GroupBy(securitygrouppermission.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -318,11 +318,11 @@ func (sgpq *SecurityGroupPermissionQuery) GroupBy(field string, fields ...string
 // Example:
 //
 //	var v []struct {
-//		PermissionID string `json:"permission_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.SecurityGroupPermission.Query().
-//		Select(securitygrouppermission.FieldPermissionID).
+//		Select(securitygrouppermission.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (sgpq *SecurityGroupPermissionQuery) Select(field string, fields ...string) *SecurityGroupPermissionSelect {
@@ -477,10 +477,14 @@ func (sgpq *SecurityGroupPermissionQuery) querySpec() *sqlgraph.QuerySpec {
 func (sgpq *SecurityGroupPermissionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(sgpq.driver.Dialect())
 	t1 := builder.Table(securitygrouppermission.Table)
-	selector := builder.Select(t1.Columns(securitygrouppermission.Columns...)...).From(t1)
+	columns := sgpq.fields
+	if len(columns) == 0 {
+		columns = securitygrouppermission.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if sgpq.sql != nil {
 		selector = sgpq.sql
-		selector.Select(selector.Columns(securitygrouppermission.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range sgpq.predicates {
 		p(selector)
@@ -748,13 +752,24 @@ func (sgpgb *SecurityGroupPermissionGroupBy) sqlScan(ctx context.Context, v inte
 }
 
 func (sgpgb *SecurityGroupPermissionGroupBy) sqlQuery() *sql.Selector {
-	selector := sgpgb.sql
-	columns := make([]string, 0, len(sgpgb.fields)+len(sgpgb.fns))
-	columns = append(columns, sgpgb.fields...)
+	selector := sgpgb.sql.Select()
+	aggregation := make([]string, 0, len(sgpgb.fns))
 	for _, fn := range sgpgb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(sgpgb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(sgpgb.fields)+len(sgpgb.fns))
+		for _, f := range sgpgb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(sgpgb.fields...)...)
 }
 
 // SecurityGroupPermissionSelect is the builder for selecting fields of SecurityGroupPermission entities.
@@ -970,16 +985,10 @@ func (sgps *SecurityGroupPermissionSelect) BoolX(ctx context.Context) bool {
 
 func (sgps *SecurityGroupPermissionSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := sgps.sqlQuery().Query()
+	query, args := sgps.sql.Query()
 	if err := sgps.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (sgps *SecurityGroupPermissionSelect) sqlQuery() sql.Querier {
-	selector := sgps.sql
-	selector.Select(selector.Columns(sgps.fields...)...)
-	return selector
 }

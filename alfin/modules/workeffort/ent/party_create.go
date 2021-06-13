@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -11,9 +12,11 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
@@ -23,6 +26,48 @@ type PartyCreate struct {
 	config
 	mutation *PartyMutation
 	hooks    []Hook
+}
+
+// SetCreateTime sets the "create_time" field.
+func (pc *PartyCreate) SetCreateTime(t time.Time) *PartyCreate {
+	pc.mutation.SetCreateTime(t)
+	return pc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (pc *PartyCreate) SetNillableCreateTime(t *time.Time) *PartyCreate {
+	if t != nil {
+		pc.SetCreateTime(*t)
+	}
+	return pc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (pc *PartyCreate) SetUpdateTime(t time.Time) *PartyCreate {
+	pc.mutation.SetUpdateTime(t)
+	return pc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (pc *PartyCreate) SetNillableUpdateTime(t *time.Time) *PartyCreate {
+	if t != nil {
+		pc.SetUpdateTime(*t)
+	}
+	return pc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (pc *PartyCreate) SetStringRef(s string) *PartyCreate {
+	pc.mutation.SetStringRef(s)
+	return pc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (pc *PartyCreate) SetNillableStringRef(s *string) *PartyCreate {
+	if s != nil {
+		pc.SetStringRef(*s)
+	}
+	return pc
 }
 
 // SetPartyTypeID sets the "party_type_id" field.
@@ -77,20 +122,6 @@ func (pc *PartyCreate) SetDescription(s string) *PartyCreate {
 func (pc *PartyCreate) SetNillableDescription(s *string) *PartyCreate {
 	if s != nil {
 		pc.SetDescription(*s)
-	}
-	return pc
-}
-
-// SetStatusID sets the "status_id" field.
-func (pc *PartyCreate) SetStatusID(i int) *PartyCreate {
-	pc.mutation.SetStatusID(i)
-	return pc
-}
-
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (pc *PartyCreate) SetNillableStatusID(i *int) *PartyCreate {
-	if i != nil {
-		pc.SetStatusID(*i)
 	}
 	return pc
 }
@@ -189,6 +220,25 @@ func (pc *PartyCreate) SetLastModifiedByUserLogin(u *UserLogin) *PartyCreate {
 	return pc.SetLastModifiedByUserLoginID(u.ID)
 }
 
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (pc *PartyCreate) SetStatusItemID(id int) *PartyCreate {
+	pc.mutation.SetStatusItemID(id)
+	return pc
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (pc *PartyCreate) SetNillableStatusItemID(id *int) *PartyCreate {
+	if id != nil {
+		pc = pc.SetStatusItemID(*id)
+	}
+	return pc
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (pc *PartyCreate) SetStatusItem(s *StatusItem) *PartyCreate {
+	return pc.SetStatusItemID(s.ID)
+}
+
 // AddFixedAssetIDs adds the "fixed_assets" edge to the FixedAsset entity by IDs.
 func (pc *PartyCreate) AddFixedAssetIDs(ids ...int) *PartyCreate {
 	pc.mutation.AddFixedAssetIDs(ids...)
@@ -202,6 +252,21 @@ func (pc *PartyCreate) AddFixedAssets(f ...*FixedAsset) *PartyCreate {
 		ids[i] = f[i].ID
 	}
 	return pc.AddFixedAssetIDs(ids...)
+}
+
+// AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
+func (pc *PartyCreate) AddPartyContactMechIDs(ids ...int) *PartyCreate {
+	pc.mutation.AddPartyContactMechIDs(ids...)
+	return pc
+}
+
+// AddPartyContactMeches adds the "party_contact_meches" edges to the PartyContactMech entity.
+func (pc *PartyCreate) AddPartyContactMeches(p ...*PartyContactMech) *PartyCreate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pc.AddPartyContactMechIDs(ids...)
 }
 
 // AddPartyRoleIDs adds the "party_roles" edge to the PartyRole entity by IDs.
@@ -310,7 +375,10 @@ func (pc *PartyCreate) Save(ctx context.Context) (*Party, error) {
 				return nil, err
 			}
 			pc.mutation = mutation
-			node, err = pc.sqlSave(ctx)
+			if node, err = pc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -335,6 +403,14 @@ func (pc *PartyCreate) SaveX(ctx context.Context) *Party {
 
 // defaults sets the default values of the builder before save.
 func (pc *PartyCreate) defaults() {
+	if _, ok := pc.mutation.CreateTime(); !ok {
+		v := party.DefaultCreateTime()
+		pc.mutation.SetCreateTime(v)
+	}
+	if _, ok := pc.mutation.UpdateTime(); !ok {
+		v := party.DefaultUpdateTime()
+		pc.mutation.SetUpdateTime(v)
+	}
 	if _, ok := pc.mutation.CreatedDate(); !ok {
 		v := party.DefaultCreatedDate()
 		pc.mutation.SetCreatedDate(v)
@@ -347,6 +423,12 @@ func (pc *PartyCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (pc *PartyCreate) check() error {
+	if _, ok := pc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := pc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if v, ok := pc.mutation.IsUnread(); ok {
 		if err := party.IsUnreadValidator(v); err != nil {
 			return &ValidationError{Name: "is_unread", err: fmt.Errorf("ent: validator failed for field \"is_unread\": %w", err)}
@@ -379,6 +461,30 @@ func (pc *PartyCreate) createSpec() (*Party, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := pc.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: party.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := pc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: party.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := pc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: party.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := pc.mutation.PartyTypeID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -410,14 +516,6 @@ func (pc *PartyCreate) createSpec() (*Party, *sqlgraph.CreateSpec) {
 			Column: party.FieldDescription,
 		})
 		_node.Description = value
-	}
-	if value, ok := pc.mutation.StatusID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldStatusID,
-		})
-		_node.StatusID = value
 	}
 	if value, ok := pc.mutation.CreatedDate(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -491,6 +589,26 @@ func (pc *PartyCreate) createSpec() (*Party, *sqlgraph.CreateSpec) {
 		_node.user_login_last_modified_by_parties = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := pc.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.StatusItemTable,
+			Columns: []string{party.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.status_item_parties = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	if nodes := pc.mutation.FixedAssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -502,6 +620,25 @@ func (pc *PartyCreate) createSpec() (*Party, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := pc.mutation.PartyContactMechesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   party.PartyContactMechesTable,
+			Columns: []string{party.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
 				},
 			},
 		}
@@ -644,10 +781,11 @@ func (pcb *PartyCreateBulk) Save(ctx context.Context) ([]*Party, error) {
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

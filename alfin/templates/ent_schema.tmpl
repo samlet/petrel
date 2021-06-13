@@ -5,6 +5,7 @@ type {{.Name}} struct {
 }
 
 // Fields of the {{.Name}}.
+// Unique-Indexes: {{.PksString}}
 func ({{.Name}}) Fields() []ent.Field {
     return []ent.Field{
     {{- range $fld := $.NormalFields }}
@@ -15,13 +16,14 @@ func ({{.Name}}) Fields() []ent.Field {
     }
 }
 
-/* entproto annotations ??
+//* entproto annotations ??
 func ({{$.Name}}) Mixin() []ent.Mixin {
     return []ent.Mixin{
         mixin.Time{},
+        schemamixins.StringRefMixin{},
     }
 }
-*/
+//*/
 
 /*
 {{- if $.HasCombineIndex}}

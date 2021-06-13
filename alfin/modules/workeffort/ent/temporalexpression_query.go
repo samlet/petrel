@@ -362,12 +362,12 @@ func (teq *TemporalExpressionQuery) WithWorkEfforts(opts ...func(*WorkEffortQuer
 // Example:
 //
 //	var v []struct {
-//		TempExprTypeID int `json:"temp_expr_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.TemporalExpression.Query().
-//		GroupBy(temporalexpression.FieldTempExprTypeID).
+//		GroupBy(temporalexpression.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -389,11 +389,11 @@ func (teq *TemporalExpressionQuery) GroupBy(field string, fields ...string) *Tem
 // Example:
 //
 //	var v []struct {
-//		TempExprTypeID int `json:"temp_expr_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.TemporalExpression.Query().
-//		Select(temporalexpression.FieldTempExprTypeID).
+//		Select(temporalexpression.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (teq *TemporalExpressionQuery) Select(field string, fields ...string) *TemporalExpressionSelect {
@@ -601,10 +601,14 @@ func (teq *TemporalExpressionQuery) querySpec() *sqlgraph.QuerySpec {
 func (teq *TemporalExpressionQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(teq.driver.Dialect())
 	t1 := builder.Table(temporalexpression.Table)
-	selector := builder.Select(t1.Columns(temporalexpression.Columns...)...).From(t1)
+	columns := teq.fields
+	if len(columns) == 0 {
+		columns = temporalexpression.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if teq.sql != nil {
 		selector = teq.sql
-		selector.Select(selector.Columns(temporalexpression.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range teq.predicates {
 		p(selector)
@@ -872,13 +876,24 @@ func (tegb *TemporalExpressionGroupBy) sqlScan(ctx context.Context, v interface{
 }
 
 func (tegb *TemporalExpressionGroupBy) sqlQuery() *sql.Selector {
-	selector := tegb.sql
-	columns := make([]string, 0, len(tegb.fields)+len(tegb.fns))
-	columns = append(columns, tegb.fields...)
+	selector := tegb.sql.Select()
+	aggregation := make([]string, 0, len(tegb.fns))
 	for _, fn := range tegb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(tegb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(tegb.fields)+len(tegb.fns))
+		for _, f := range tegb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(tegb.fields...)...)
 }
 
 // TemporalExpressionSelect is the builder for selecting fields of TemporalExpression entities.
@@ -1094,16 +1109,10 @@ func (tes *TemporalExpressionSelect) BoolX(ctx context.Context) bool {
 
 func (tes *TemporalExpressionSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := tes.sqlQuery().Query()
+	query, args := tes.sql.Query()
 	if err := tes.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (tes *TemporalExpressionSelect) sqlQuery() sql.Querier {
-	selector := tes.sql
-	selector.Select(selector.Columns(tes.fields...)...)
-	return selector
 }

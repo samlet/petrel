@@ -35,6 +35,19 @@ func (f PartyFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error
 	return f(ctx, mv)
 }
 
+// The PartyContactMechFunc type is an adapter to allow the use of ordinary
+// function as PartyContactMech mutator.
+type PartyContactMechFunc func(context.Context, *ent.PartyContactMechMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f PartyContactMechFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.PartyContactMechMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.PartyContactMechMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The PartyRoleFunc type is an adapter to allow the use of ordinary
 // function as PartyRole mutator.
 type PartyRoleFunc func(context.Context, *ent.PartyRoleMutation) (ent.Value, error)
@@ -74,6 +87,19 @@ func (f PersonFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, erro
 	return f(ctx, mv)
 }
 
+// The RoleTypeFunc type is an adapter to allow the use of ordinary
+// function as RoleType mutator.
+type RoleTypeFunc func(context.Context, *ent.RoleTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f RoleTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.RoleTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.RoleTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
 // The SecurityGroupFunc type is an adapter to allow the use of ordinary
 // function as SecurityGroup mutator.
 type SecurityGroupFunc func(context.Context, *ent.SecurityGroupMutation) (ent.Value, error)
@@ -96,6 +122,58 @@ func (f SecurityGroupPermissionFunc) Mutate(ctx context.Context, m ent.Mutation)
 	mv, ok := m.(*ent.SecurityGroupPermissionMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SecurityGroupPermissionMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The SkillTypeFunc type is an adapter to allow the use of ordinary
+// function as SkillType mutator.
+type SkillTypeFunc func(context.Context, *ent.SkillTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f SkillTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.SkillTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.SkillTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The StatusItemFunc type is an adapter to allow the use of ordinary
+// function as StatusItem mutator.
+type StatusItemFunc func(context.Context, *ent.StatusItemMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f StatusItemFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.StatusItemMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.StatusItemMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The StatusTypeFunc type is an adapter to allow the use of ordinary
+// function as StatusType mutator.
+type StatusTypeFunc func(context.Context, *ent.StatusTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f StatusTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.StatusTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.StatusTypeMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The StatusValidChangeFunc type is an adapter to allow the use of ordinary
+// function as StatusValidChange mutator.
+type StatusValidChangeFunc func(context.Context, *ent.StatusValidChangeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f StatusValidChangeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.StatusValidChangeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.StatusValidChangeMutation", m)
 	}
 	return f(ctx, mv)
 }
@@ -200,6 +278,32 @@ func (f WorkEffortPartyAssignmentFunc) Mutate(ctx context.Context, m ent.Mutatio
 	mv, ok := m.(*ent.WorkEffortPartyAssignmentMutation)
 	if !ok {
 		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.WorkEffortPartyAssignmentMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The WorkEffortSkillStandardFunc type is an adapter to allow the use of ordinary
+// function as WorkEffortSkillStandard mutator.
+type WorkEffortSkillStandardFunc func(context.Context, *ent.WorkEffortSkillStandardMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f WorkEffortSkillStandardFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.WorkEffortSkillStandardMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.WorkEffortSkillStandardMutation", m)
+	}
+	return f(ctx, mv)
+}
+
+// The WorkEffortTypeFunc type is an adapter to allow the use of ordinary
+// function as WorkEffortType mutator.
+type WorkEffortTypeFunc func(context.Context, *ent.WorkEffortTypeMutation) (ent.Value, error)
+
+// Mutate calls f(ctx, m).
+func (f WorkEffortTypeFunc) Mutate(ctx context.Context, m ent.Mutation) (ent.Value, error) {
+	mv, ok := m.(*ent.WorkEffortTypeMutation)
+	if !ok {
+		return nil, fmt.Errorf("unexpected mutation type %T. expect *ent.WorkEffortTypeMutation", m)
 	}
 	return f(ctx, mv)
 }

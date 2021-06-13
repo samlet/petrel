@@ -14,6 +14,8 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
@@ -29,11 +31,14 @@ type WorkEffortPartyAssignmentQuery struct {
 	fields     []string
 	predicates []predicate.WorkEffortPartyAssignment
 	// eager-loading edges.
-	withWorkEffort          *WorkEffortQuery
-	withParty               *PartyQuery
-	withPartyRole           *PartyRoleQuery
-	withAssignedByUserLogin *UserLoginQuery
-	withFKs                 bool
+	withWorkEffort             *WorkEffortQuery
+	withParty                  *PartyQuery
+	withPartyRole              *PartyRoleQuery
+	withRoleType               *RoleTypeQuery
+	withAssignedByUserLogin    *UserLoginQuery
+	withAssignmentStatusItem   *StatusItemQuery
+	withAvailabilityStatusItem *StatusItemQuery
+	withFKs                    bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -136,6 +141,28 @@ func (wepaq *WorkEffortPartyAssignmentQuery) QueryPartyRole() *PartyRoleQuery {
 	return query
 }
 
+// QueryRoleType chains the current query on the "role_type" edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) QueryRoleType() *RoleTypeQuery {
+	query := &RoleTypeQuery{config: wepaq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := wepaq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := wepaq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, selector),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.RoleTypeTable, workeffortpartyassignment.RoleTypeColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(wepaq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // QueryAssignedByUserLogin chains the current query on the "assigned_by_user_login" edge.
 func (wepaq *WorkEffortPartyAssignmentQuery) QueryAssignedByUserLogin() *UserLoginQuery {
 	query := &UserLoginQuery{config: wepaq.config}
@@ -151,6 +178,50 @@ func (wepaq *WorkEffortPartyAssignmentQuery) QueryAssignedByUserLogin() *UserLog
 			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, selector),
 			sqlgraph.To(userlogin.Table, userlogin.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.AssignedByUserLoginTable, workeffortpartyassignment.AssignedByUserLoginColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(wepaq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryAssignmentStatusItem chains the current query on the "assignment_status_item" edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) QueryAssignmentStatusItem() *StatusItemQuery {
+	query := &StatusItemQuery{config: wepaq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := wepaq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := wepaq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, selector),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.AssignmentStatusItemTable, workeffortpartyassignment.AssignmentStatusItemColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(wepaq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryAvailabilityStatusItem chains the current query on the "availability_status_item" edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) QueryAvailabilityStatusItem() *StatusItemQuery {
+	query := &StatusItemQuery{config: wepaq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := wepaq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := wepaq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID, selector),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortpartyassignment.AvailabilityStatusItemTable, workeffortpartyassignment.AvailabilityStatusItemColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(wepaq.driver.Dialect(), step)
 		return fromU, nil
@@ -334,15 +405,18 @@ func (wepaq *WorkEffortPartyAssignmentQuery) Clone() *WorkEffortPartyAssignmentQ
 		return nil
 	}
 	return &WorkEffortPartyAssignmentQuery{
-		config:                  wepaq.config,
-		limit:                   wepaq.limit,
-		offset:                  wepaq.offset,
-		order:                   append([]OrderFunc{}, wepaq.order...),
-		predicates:              append([]predicate.WorkEffortPartyAssignment{}, wepaq.predicates...),
-		withWorkEffort:          wepaq.withWorkEffort.Clone(),
-		withParty:               wepaq.withParty.Clone(),
-		withPartyRole:           wepaq.withPartyRole.Clone(),
-		withAssignedByUserLogin: wepaq.withAssignedByUserLogin.Clone(),
+		config:                     wepaq.config,
+		limit:                      wepaq.limit,
+		offset:                     wepaq.offset,
+		order:                      append([]OrderFunc{}, wepaq.order...),
+		predicates:                 append([]predicate.WorkEffortPartyAssignment{}, wepaq.predicates...),
+		withWorkEffort:             wepaq.withWorkEffort.Clone(),
+		withParty:                  wepaq.withParty.Clone(),
+		withPartyRole:              wepaq.withPartyRole.Clone(),
+		withRoleType:               wepaq.withRoleType.Clone(),
+		withAssignedByUserLogin:    wepaq.withAssignedByUserLogin.Clone(),
+		withAssignmentStatusItem:   wepaq.withAssignmentStatusItem.Clone(),
+		withAvailabilityStatusItem: wepaq.withAvailabilityStatusItem.Clone(),
 		// clone intermediate query.
 		sql:  wepaq.sql.Clone(),
 		path: wepaq.path,
@@ -382,6 +456,17 @@ func (wepaq *WorkEffortPartyAssignmentQuery) WithPartyRole(opts ...func(*PartyRo
 	return wepaq
 }
 
+// WithRoleType tells the query-builder to eager-load the nodes that are connected to
+// the "role_type" edge. The optional arguments are used to configure the query builder of the edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) WithRoleType(opts ...func(*RoleTypeQuery)) *WorkEffortPartyAssignmentQuery {
+	query := &RoleTypeQuery{config: wepaq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	wepaq.withRoleType = query
+	return wepaq
+}
+
 // WithAssignedByUserLogin tells the query-builder to eager-load the nodes that are connected to
 // the "assigned_by_user_login" edge. The optional arguments are used to configure the query builder of the edge.
 func (wepaq *WorkEffortPartyAssignmentQuery) WithAssignedByUserLogin(opts ...func(*UserLoginQuery)) *WorkEffortPartyAssignmentQuery {
@@ -393,18 +478,40 @@ func (wepaq *WorkEffortPartyAssignmentQuery) WithAssignedByUserLogin(opts ...fun
 	return wepaq
 }
 
+// WithAssignmentStatusItem tells the query-builder to eager-load the nodes that are connected to
+// the "assignment_status_item" edge. The optional arguments are used to configure the query builder of the edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) WithAssignmentStatusItem(opts ...func(*StatusItemQuery)) *WorkEffortPartyAssignmentQuery {
+	query := &StatusItemQuery{config: wepaq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	wepaq.withAssignmentStatusItem = query
+	return wepaq
+}
+
+// WithAvailabilityStatusItem tells the query-builder to eager-load the nodes that are connected to
+// the "availability_status_item" edge. The optional arguments are used to configure the query builder of the edge.
+func (wepaq *WorkEffortPartyAssignmentQuery) WithAvailabilityStatusItem(opts ...func(*StatusItemQuery)) *WorkEffortPartyAssignmentQuery {
+	query := &StatusItemQuery{config: wepaq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	wepaq.withAvailabilityStatusItem = query
+	return wepaq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
 //
 // Example:
 //
 //	var v []struct {
-//		RoleTypeID int `json:"role_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.WorkEffortPartyAssignment.Query().
-//		GroupBy(workeffortpartyassignment.FieldRoleTypeID).
+//		GroupBy(workeffortpartyassignment.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -426,11 +533,11 @@ func (wepaq *WorkEffortPartyAssignmentQuery) GroupBy(field string, fields ...str
 // Example:
 //
 //	var v []struct {
-//		RoleTypeID int `json:"role_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.WorkEffortPartyAssignment.Query().
-//		Select(workeffortpartyassignment.FieldRoleTypeID).
+//		Select(workeffortpartyassignment.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (wepaq *WorkEffortPartyAssignmentQuery) Select(field string, fields ...string) *WorkEffortPartyAssignmentSelect {
@@ -459,14 +566,17 @@ func (wepaq *WorkEffortPartyAssignmentQuery) sqlAll(ctx context.Context) ([]*Wor
 		nodes       = []*WorkEffortPartyAssignment{}
 		withFKs     = wepaq.withFKs
 		_spec       = wepaq.querySpec()
-		loadedTypes = [4]bool{
+		loadedTypes = [7]bool{
 			wepaq.withWorkEffort != nil,
 			wepaq.withParty != nil,
 			wepaq.withPartyRole != nil,
+			wepaq.withRoleType != nil,
 			wepaq.withAssignedByUserLogin != nil,
+			wepaq.withAssignmentStatusItem != nil,
+			wepaq.withAvailabilityStatusItem != nil,
 		}
 	)
-	if wepaq.withWorkEffort != nil || wepaq.withParty != nil || wepaq.withPartyRole != nil || wepaq.withAssignedByUserLogin != nil {
+	if wepaq.withWorkEffort != nil || wepaq.withParty != nil || wepaq.withPartyRole != nil || wepaq.withRoleType != nil || wepaq.withAssignedByUserLogin != nil || wepaq.withAssignmentStatusItem != nil || wepaq.withAvailabilityStatusItem != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -579,6 +689,35 @@ func (wepaq *WorkEffortPartyAssignmentQuery) sqlAll(ctx context.Context) ([]*Wor
 		}
 	}
 
+	if query := wepaq.withRoleType; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffortPartyAssignment)
+		for i := range nodes {
+			if nodes[i].role_type_work_effort_party_assignments == nil {
+				continue
+			}
+			fk := *nodes[i].role_type_work_effort_party_assignments
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(roletype.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "role_type_work_effort_party_assignments" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.RoleType = n
+			}
+		}
+	}
+
 	if query := wepaq.withAssignedByUserLogin; query != nil {
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*WorkEffortPartyAssignment)
@@ -604,6 +743,64 @@ func (wepaq *WorkEffortPartyAssignmentQuery) sqlAll(ctx context.Context) ([]*Wor
 			}
 			for i := range nodes {
 				nodes[i].Edges.AssignedByUserLogin = n
+			}
+		}
+	}
+
+	if query := wepaq.withAssignmentStatusItem; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffortPartyAssignment)
+		for i := range nodes {
+			if nodes[i].status_item_assignment_work_effort_party_assignments == nil {
+				continue
+			}
+			fk := *nodes[i].status_item_assignment_work_effort_party_assignments
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(statusitem.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "status_item_assignment_work_effort_party_assignments" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.AssignmentStatusItem = n
+			}
+		}
+	}
+
+	if query := wepaq.withAvailabilityStatusItem; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffortPartyAssignment)
+		for i := range nodes {
+			if nodes[i].status_item_availability_work_effort_party_assignments == nil {
+				continue
+			}
+			fk := *nodes[i].status_item_availability_work_effort_party_assignments
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(statusitem.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "status_item_availability_work_effort_party_assignments" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.AvailabilityStatusItem = n
 			}
 		}
 	}
@@ -675,10 +872,14 @@ func (wepaq *WorkEffortPartyAssignmentQuery) querySpec() *sqlgraph.QuerySpec {
 func (wepaq *WorkEffortPartyAssignmentQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(wepaq.driver.Dialect())
 	t1 := builder.Table(workeffortpartyassignment.Table)
-	selector := builder.Select(t1.Columns(workeffortpartyassignment.Columns...)...).From(t1)
+	columns := wepaq.fields
+	if len(columns) == 0 {
+		columns = workeffortpartyassignment.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if wepaq.sql != nil {
 		selector = wepaq.sql
-		selector.Select(selector.Columns(workeffortpartyassignment.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range wepaq.predicates {
 		p(selector)
@@ -946,13 +1147,24 @@ func (wepagb *WorkEffortPartyAssignmentGroupBy) sqlScan(ctx context.Context, v i
 }
 
 func (wepagb *WorkEffortPartyAssignmentGroupBy) sqlQuery() *sql.Selector {
-	selector := wepagb.sql
-	columns := make([]string, 0, len(wepagb.fields)+len(wepagb.fns))
-	columns = append(columns, wepagb.fields...)
+	selector := wepagb.sql.Select()
+	aggregation := make([]string, 0, len(wepagb.fns))
 	for _, fn := range wepagb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(wepagb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(wepagb.fields)+len(wepagb.fns))
+		for _, f := range wepagb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(wepagb.fields...)...)
 }
 
 // WorkEffortPartyAssignmentSelect is the builder for selecting fields of WorkEffortPartyAssignment entities.
@@ -1168,16 +1380,10 @@ func (wepas *WorkEffortPartyAssignmentSelect) BoolX(ctx context.Context) bool {
 
 func (wepas *WorkEffortPartyAssignmentSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := wepas.sqlQuery().Query()
+	query, args := wepas.sql.Query()
 	if err := wepas.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (wepas *WorkEffortPartyAssignmentSelect) sqlQuery() sql.Querier {
-	selector := wepas.sql
-	selector.Select(selector.Columns(wepas.fields...)...)
-	return selector
 }

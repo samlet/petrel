@@ -1,0 +1,289 @@
+{
+  "name": "PartyContactMech",
+  "fields": [
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "contactMechId",
+      "type": "id",
+      "col": "CONTACT_MECH_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "allowSolicitation",
+      "type": "indicator",
+      "col": "ALLOW_SOLICITATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "extension",
+      "type": "long-varchar",
+      "col": "EXTENSION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "verified",
+      "type": "indicator",
+      "col": "VERIFIED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "yearsWithContactMech",
+      "type": "numeric",
+      "col": "YEARS_WITH_CONTACT_MECH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "monthsWithContactMech",
+      "type": "numeric",
+      "col": "MONTHS_WITH_CONTACT_MECH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PARTY_CMECH_PARTY",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Person",
+      "type": "one-nofk",
+      "relEntityName": "Person",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyGroup",
+      "type": "one-nofk",
+      "relEntityName": "PartyGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "PARTY_CMECH_PROLE",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "PARTY_CMECH_ROLE",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ContactMech",
+      "type": "one",
+      "relEntityName": "ContactMech",
+      "fkName": "PARTY_CMECH_CMECH",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TelecomNumber",
+      "type": "one-nofk",
+      "relEntityName": "TelecomNumber",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PostalAddress",
+      "type": "one-nofk",
+      "relEntityName": "PostalAddress",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyContactMechPurpose",
+      "type": "many",
+      "relEntityName": "PartyContactMechPurpose",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "contactMechId",
+          "relFieldName": "contactMechId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "partyId",
+    "contactMechId",
+    "fromDate"
+  ],
+  "isView": false
+}

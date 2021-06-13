@@ -16,6 +16,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 )
@@ -33,6 +34,7 @@ type FixedAssetQuery struct {
 	withParent                      *FixedAssetQuery
 	withChildren                    *FixedAssetQuery
 	withParty                       *PartyQuery
+	withRoleType                    *RoleTypeQuery
 	withPartyRole                   *PartyRoleQuery
 	withChildFixedAssets            *FixedAssetQuery
 	withWorkEfforts                 *WorkEffortQuery
@@ -133,6 +135,28 @@ func (faq *FixedAssetQuery) QueryParty() *PartyQuery {
 			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, selector),
 			sqlgraph.To(party.Table, party.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, fixedasset.PartyTable, fixedasset.PartyColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(faq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryRoleType chains the current query on the "role_type" edge.
+func (faq *FixedAssetQuery) QueryRoleType() *RoleTypeQuery {
+	query := &RoleTypeQuery{config: faq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := faq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := faq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(fixedasset.Table, fixedasset.FieldID, selector),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, fixedasset.RoleTypeTable, fixedasset.RoleTypeColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(faq.driver.Dialect(), step)
 		return fromU, nil
@@ -412,6 +436,7 @@ func (faq *FixedAssetQuery) Clone() *FixedAssetQuery {
 		withParent:                      faq.withParent.Clone(),
 		withChildren:                    faq.withChildren.Clone(),
 		withParty:                       faq.withParty.Clone(),
+		withRoleType:                    faq.withRoleType.Clone(),
 		withPartyRole:                   faq.withPartyRole.Clone(),
 		withChildFixedAssets:            faq.withChildFixedAssets.Clone(),
 		withWorkEfforts:                 faq.withWorkEfforts.Clone(),
@@ -452,6 +477,17 @@ func (faq *FixedAssetQuery) WithParty(opts ...func(*PartyQuery)) *FixedAssetQuer
 		opt(query)
 	}
 	faq.withParty = query
+	return faq
+}
+
+// WithRoleType tells the query-builder to eager-load the nodes that are connected to
+// the "role_type" edge. The optional arguments are used to configure the query builder of the edge.
+func (faq *FixedAssetQuery) WithRoleType(opts ...func(*RoleTypeQuery)) *FixedAssetQuery {
+	query := &RoleTypeQuery{config: faq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	faq.withRoleType = query
 	return faq
 }
 
@@ -505,12 +541,12 @@ func (faq *FixedAssetQuery) WithWorkEffortFixedAssetAssigns(opts ...func(*WorkEf
 // Example:
 //
 //	var v []struct {
-//		FixedAssetTypeID int `json:"fixed_asset_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.FixedAsset.Query().
-//		GroupBy(fixedasset.FieldFixedAssetTypeID).
+//		GroupBy(fixedasset.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -532,11 +568,11 @@ func (faq *FixedAssetQuery) GroupBy(field string, fields ...string) *FixedAssetG
 // Example:
 //
 //	var v []struct {
-//		FixedAssetTypeID int `json:"fixed_asset_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.FixedAsset.Query().
-//		Select(fixedasset.FieldFixedAssetTypeID).
+//		Select(fixedasset.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (faq *FixedAssetQuery) Select(field string, fields ...string) *FixedAssetSelect {
@@ -565,17 +601,18 @@ func (faq *FixedAssetQuery) sqlAll(ctx context.Context) ([]*FixedAsset, error) {
 		nodes       = []*FixedAsset{}
 		withFKs     = faq.withFKs
 		_spec       = faq.querySpec()
-		loadedTypes = [7]bool{
+		loadedTypes = [8]bool{
 			faq.withParent != nil,
 			faq.withChildren != nil,
 			faq.withParty != nil,
+			faq.withRoleType != nil,
 			faq.withPartyRole != nil,
 			faq.withChildFixedAssets != nil,
 			faq.withWorkEfforts != nil,
 			faq.withWorkEffortFixedAssetAssigns != nil,
 		}
 	)
-	if faq.withParent != nil || faq.withParty != nil || faq.withPartyRole != nil {
+	if faq.withParent != nil || faq.withParty != nil || faq.withRoleType != nil || faq.withPartyRole != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -688,6 +725,35 @@ func (faq *FixedAssetQuery) sqlAll(ctx context.Context) ([]*FixedAsset, error) {
 		}
 	}
 
+	if query := faq.withRoleType; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*FixedAsset)
+		for i := range nodes {
+			if nodes[i].role_type_fixed_assets == nil {
+				continue
+			}
+			fk := *nodes[i].role_type_fixed_assets
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(roletype.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "role_type_fixed_assets" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.RoleType = n
+			}
+		}
+	}
+
 	if query := faq.withPartyRole; query != nil {
 		ids := make([]int, 0, len(nodes))
 		nodeids := make(map[int][]*FixedAsset)
@@ -739,7 +805,7 @@ func (faq *FixedAssetQuery) sqlAll(ctx context.Context) ([]*FixedAsset, error) {
 				s.Where(sql.InValues(fixedasset.ChildFixedAssetsPrimaryKey[0], fks...))
 			},
 			ScanValues: func() [2]interface{} {
-				return [2]interface{}{&sql.NullInt64{}, &sql.NullInt64{}}
+				return [2]interface{}{new(sql.NullInt64), new(sql.NullInt64)}
 			},
 			Assign: func(out, in interface{}) error {
 				eout, ok := out.(*sql.NullInt64)
@@ -907,10 +973,14 @@ func (faq *FixedAssetQuery) querySpec() *sqlgraph.QuerySpec {
 func (faq *FixedAssetQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(faq.driver.Dialect())
 	t1 := builder.Table(fixedasset.Table)
-	selector := builder.Select(t1.Columns(fixedasset.Columns...)...).From(t1)
+	columns := faq.fields
+	if len(columns) == 0 {
+		columns = fixedasset.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if faq.sql != nil {
 		selector = faq.sql
-		selector.Select(selector.Columns(fixedasset.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range faq.predicates {
 		p(selector)
@@ -1178,13 +1248,24 @@ func (fagb *FixedAssetGroupBy) sqlScan(ctx context.Context, v interface{}) error
 }
 
 func (fagb *FixedAssetGroupBy) sqlQuery() *sql.Selector {
-	selector := fagb.sql
-	columns := make([]string, 0, len(fagb.fields)+len(fagb.fns))
-	columns = append(columns, fagb.fields...)
+	selector := fagb.sql.Select()
+	aggregation := make([]string, 0, len(fagb.fns))
 	for _, fn := range fagb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(fagb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(fagb.fields)+len(fagb.fns))
+		for _, f := range fagb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(fagb.fields...)...)
 }
 
 // FixedAssetSelect is the builder for selecting fields of FixedAsset entities.
@@ -1400,16 +1481,10 @@ func (fas *FixedAssetSelect) BoolX(ctx context.Context) bool {
 
 func (fas *FixedAssetSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := fas.sqlQuery().Query()
+	query, args := fas.sql.Query()
 	if err := fas.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (fas *FixedAssetSelect) sqlQuery() sql.Querier {
-	selector := fas.sql
-	selector.Select(selector.Columns(fas.fields...)...)
-	return selector
 }

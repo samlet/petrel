@@ -12,10 +12,12 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
@@ -30,6 +32,26 @@ type PartyUpdate struct {
 // Where adds a new predicate for the PartyUpdate builder.
 func (pu *PartyUpdate) Where(ps ...predicate.Party) *PartyUpdate {
 	pu.mutation.predicates = append(pu.mutation.predicates, ps...)
+	return pu
+}
+
+// SetStringRef sets the "string_ref" field.
+func (pu *PartyUpdate) SetStringRef(s string) *PartyUpdate {
+	pu.mutation.SetStringRef(s)
+	return pu
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (pu *PartyUpdate) SetNillableStringRef(s *string) *PartyUpdate {
+	if s != nil {
+		pu.SetStringRef(*s)
+	}
+	return pu
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (pu *PartyUpdate) ClearStringRef() *PartyUpdate {
+	pu.mutation.ClearStringRef()
 	return pu
 }
 
@@ -131,33 +153,6 @@ func (pu *PartyUpdate) SetNillableDescription(s *string) *PartyUpdate {
 // ClearDescription clears the value of the "description" field.
 func (pu *PartyUpdate) ClearDescription() *PartyUpdate {
 	pu.mutation.ClearDescription()
-	return pu
-}
-
-// SetStatusID sets the "status_id" field.
-func (pu *PartyUpdate) SetStatusID(i int) *PartyUpdate {
-	pu.mutation.ResetStatusID()
-	pu.mutation.SetStatusID(i)
-	return pu
-}
-
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (pu *PartyUpdate) SetNillableStatusID(i *int) *PartyUpdate {
-	if i != nil {
-		pu.SetStatusID(*i)
-	}
-	return pu
-}
-
-// AddStatusID adds i to the "status_id" field.
-func (pu *PartyUpdate) AddStatusID(i int) *PartyUpdate {
-	pu.mutation.AddStatusID(i)
-	return pu
-}
-
-// ClearStatusID clears the value of the "status_id" field.
-func (pu *PartyUpdate) ClearStatusID() *PartyUpdate {
-	pu.mutation.ClearStatusID()
 	return pu
 }
 
@@ -286,6 +281,25 @@ func (pu *PartyUpdate) SetLastModifiedByUserLogin(u *UserLogin) *PartyUpdate {
 	return pu.SetLastModifiedByUserLoginID(u.ID)
 }
 
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (pu *PartyUpdate) SetStatusItemID(id int) *PartyUpdate {
+	pu.mutation.SetStatusItemID(id)
+	return pu
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (pu *PartyUpdate) SetNillableStatusItemID(id *int) *PartyUpdate {
+	if id != nil {
+		pu = pu.SetStatusItemID(*id)
+	}
+	return pu
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (pu *PartyUpdate) SetStatusItem(s *StatusItem) *PartyUpdate {
+	return pu.SetStatusItemID(s.ID)
+}
+
 // AddFixedAssetIDs adds the "fixed_assets" edge to the FixedAsset entity by IDs.
 func (pu *PartyUpdate) AddFixedAssetIDs(ids ...int) *PartyUpdate {
 	pu.mutation.AddFixedAssetIDs(ids...)
@@ -299,6 +313,21 @@ func (pu *PartyUpdate) AddFixedAssets(f ...*FixedAsset) *PartyUpdate {
 		ids[i] = f[i].ID
 	}
 	return pu.AddFixedAssetIDs(ids...)
+}
+
+// AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
+func (pu *PartyUpdate) AddPartyContactMechIDs(ids ...int) *PartyUpdate {
+	pu.mutation.AddPartyContactMechIDs(ids...)
+	return pu
+}
+
+// AddPartyContactMeches adds the "party_contact_meches" edges to the PartyContactMech entity.
+func (pu *PartyUpdate) AddPartyContactMeches(p ...*PartyContactMech) *PartyUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pu.AddPartyContactMechIDs(ids...)
 }
 
 // AddPartyRoleIDs adds the "party_roles" edge to the PartyRole entity by IDs.
@@ -397,6 +426,12 @@ func (pu *PartyUpdate) ClearLastModifiedByUserLogin() *PartyUpdate {
 	return pu
 }
 
+// ClearStatusItem clears the "status_item" edge to the StatusItem entity.
+func (pu *PartyUpdate) ClearStatusItem() *PartyUpdate {
+	pu.mutation.ClearStatusItem()
+	return pu
+}
+
 // ClearFixedAssets clears all "fixed_assets" edges to the FixedAsset entity.
 func (pu *PartyUpdate) ClearFixedAssets() *PartyUpdate {
 	pu.mutation.ClearFixedAssets()
@@ -416,6 +451,27 @@ func (pu *PartyUpdate) RemoveFixedAssets(f ...*FixedAsset) *PartyUpdate {
 		ids[i] = f[i].ID
 	}
 	return pu.RemoveFixedAssetIDs(ids...)
+}
+
+// ClearPartyContactMeches clears all "party_contact_meches" edges to the PartyContactMech entity.
+func (pu *PartyUpdate) ClearPartyContactMeches() *PartyUpdate {
+	pu.mutation.ClearPartyContactMeches()
+	return pu
+}
+
+// RemovePartyContactMechIDs removes the "party_contact_meches" edge to PartyContactMech entities by IDs.
+func (pu *PartyUpdate) RemovePartyContactMechIDs(ids ...int) *PartyUpdate {
+	pu.mutation.RemovePartyContactMechIDs(ids...)
+	return pu
+}
+
+// RemovePartyContactMeches removes "party_contact_meches" edges to PartyContactMech entities.
+func (pu *PartyUpdate) RemovePartyContactMeches(p ...*PartyContactMech) *PartyUpdate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pu.RemovePartyContactMechIDs(ids...)
 }
 
 // ClearPartyRoles clears all "party_roles" edges to the PartyRole entity.
@@ -514,6 +570,7 @@ func (pu *PartyUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	pu.defaults()
 	if len(pu.hooks) == 0 {
 		if err = pu.check(); err != nil {
 			return 0, err
@@ -565,6 +622,14 @@ func (pu *PartyUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (pu *PartyUpdate) defaults() {
+	if _, ok := pu.mutation.UpdateTime(); !ok {
+		v := party.UpdateDefaultUpdateTime()
+		pu.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (pu *PartyUpdate) check() error {
 	if v, ok := pu.mutation.IsUnread(); ok {
@@ -592,6 +657,26 @@ func (pu *PartyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := pu.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: party.FieldUpdateTime,
+		})
+	}
+	if value, ok := pu.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: party.FieldStringRef,
+		})
+	}
+	if pu.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: party.FieldStringRef,
+		})
 	}
 	if value, ok := pu.mutation.PartyTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -664,26 +749,6 @@ func (pu *PartyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: party.FieldDescription,
-		})
-	}
-	if value, ok := pu.mutation.StatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldStatusID,
-		})
-	}
-	if value, ok := pu.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldStatusID,
-		})
-	}
-	if pu.mutation.StatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: party.FieldStatusID,
 		})
 	}
 	if value, ok := pu.mutation.CreatedDate(); ok {
@@ -815,6 +880,41 @@ func (pu *PartyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if pu.mutation.StatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.StatusItemTable,
+			Columns: []string{party.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.StatusItemTable,
+			Columns: []string{party.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if pu.mutation.FixedAssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -861,6 +961,60 @@ func (pu *PartyUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if pu.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   party.PartyContactMechesTable,
+			Columns: []string{party.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.RemovedPartyContactMechesIDs(); len(nodes) > 0 && !pu.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   party.PartyContactMechesTable,
+			Columns: []string{party.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := pu.mutation.PartyContactMechesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   party.PartyContactMechesTable,
+			Columns: []string{party.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
 				},
 			},
 		}
@@ -1139,6 +1293,26 @@ type PartyUpdateOne struct {
 	mutation *PartyMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (puo *PartyUpdateOne) SetStringRef(s string) *PartyUpdateOne {
+	puo.mutation.SetStringRef(s)
+	return puo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (puo *PartyUpdateOne) SetNillableStringRef(s *string) *PartyUpdateOne {
+	if s != nil {
+		puo.SetStringRef(*s)
+	}
+	return puo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (puo *PartyUpdateOne) ClearStringRef() *PartyUpdateOne {
+	puo.mutation.ClearStringRef()
+	return puo
+}
+
 // SetPartyTypeID sets the "party_type_id" field.
 func (puo *PartyUpdateOne) SetPartyTypeID(i int) *PartyUpdateOne {
 	puo.mutation.ResetPartyTypeID()
@@ -1237,33 +1411,6 @@ func (puo *PartyUpdateOne) SetNillableDescription(s *string) *PartyUpdateOne {
 // ClearDescription clears the value of the "description" field.
 func (puo *PartyUpdateOne) ClearDescription() *PartyUpdateOne {
 	puo.mutation.ClearDescription()
-	return puo
-}
-
-// SetStatusID sets the "status_id" field.
-func (puo *PartyUpdateOne) SetStatusID(i int) *PartyUpdateOne {
-	puo.mutation.ResetStatusID()
-	puo.mutation.SetStatusID(i)
-	return puo
-}
-
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (puo *PartyUpdateOne) SetNillableStatusID(i *int) *PartyUpdateOne {
-	if i != nil {
-		puo.SetStatusID(*i)
-	}
-	return puo
-}
-
-// AddStatusID adds i to the "status_id" field.
-func (puo *PartyUpdateOne) AddStatusID(i int) *PartyUpdateOne {
-	puo.mutation.AddStatusID(i)
-	return puo
-}
-
-// ClearStatusID clears the value of the "status_id" field.
-func (puo *PartyUpdateOne) ClearStatusID() *PartyUpdateOne {
-	puo.mutation.ClearStatusID()
 	return puo
 }
 
@@ -1392,6 +1539,25 @@ func (puo *PartyUpdateOne) SetLastModifiedByUserLogin(u *UserLogin) *PartyUpdate
 	return puo.SetLastModifiedByUserLoginID(u.ID)
 }
 
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (puo *PartyUpdateOne) SetStatusItemID(id int) *PartyUpdateOne {
+	puo.mutation.SetStatusItemID(id)
+	return puo
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (puo *PartyUpdateOne) SetNillableStatusItemID(id *int) *PartyUpdateOne {
+	if id != nil {
+		puo = puo.SetStatusItemID(*id)
+	}
+	return puo
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (puo *PartyUpdateOne) SetStatusItem(s *StatusItem) *PartyUpdateOne {
+	return puo.SetStatusItemID(s.ID)
+}
+
 // AddFixedAssetIDs adds the "fixed_assets" edge to the FixedAsset entity by IDs.
 func (puo *PartyUpdateOne) AddFixedAssetIDs(ids ...int) *PartyUpdateOne {
 	puo.mutation.AddFixedAssetIDs(ids...)
@@ -1405,6 +1571,21 @@ func (puo *PartyUpdateOne) AddFixedAssets(f ...*FixedAsset) *PartyUpdateOne {
 		ids[i] = f[i].ID
 	}
 	return puo.AddFixedAssetIDs(ids...)
+}
+
+// AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
+func (puo *PartyUpdateOne) AddPartyContactMechIDs(ids ...int) *PartyUpdateOne {
+	puo.mutation.AddPartyContactMechIDs(ids...)
+	return puo
+}
+
+// AddPartyContactMeches adds the "party_contact_meches" edges to the PartyContactMech entity.
+func (puo *PartyUpdateOne) AddPartyContactMeches(p ...*PartyContactMech) *PartyUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return puo.AddPartyContactMechIDs(ids...)
 }
 
 // AddPartyRoleIDs adds the "party_roles" edge to the PartyRole entity by IDs.
@@ -1503,6 +1684,12 @@ func (puo *PartyUpdateOne) ClearLastModifiedByUserLogin() *PartyUpdateOne {
 	return puo
 }
 
+// ClearStatusItem clears the "status_item" edge to the StatusItem entity.
+func (puo *PartyUpdateOne) ClearStatusItem() *PartyUpdateOne {
+	puo.mutation.ClearStatusItem()
+	return puo
+}
+
 // ClearFixedAssets clears all "fixed_assets" edges to the FixedAsset entity.
 func (puo *PartyUpdateOne) ClearFixedAssets() *PartyUpdateOne {
 	puo.mutation.ClearFixedAssets()
@@ -1522,6 +1709,27 @@ func (puo *PartyUpdateOne) RemoveFixedAssets(f ...*FixedAsset) *PartyUpdateOne {
 		ids[i] = f[i].ID
 	}
 	return puo.RemoveFixedAssetIDs(ids...)
+}
+
+// ClearPartyContactMeches clears all "party_contact_meches" edges to the PartyContactMech entity.
+func (puo *PartyUpdateOne) ClearPartyContactMeches() *PartyUpdateOne {
+	puo.mutation.ClearPartyContactMeches()
+	return puo
+}
+
+// RemovePartyContactMechIDs removes the "party_contact_meches" edge to PartyContactMech entities by IDs.
+func (puo *PartyUpdateOne) RemovePartyContactMechIDs(ids ...int) *PartyUpdateOne {
+	puo.mutation.RemovePartyContactMechIDs(ids...)
+	return puo
+}
+
+// RemovePartyContactMeches removes "party_contact_meches" edges to PartyContactMech entities.
+func (puo *PartyUpdateOne) RemovePartyContactMeches(p ...*PartyContactMech) *PartyUpdateOne {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return puo.RemovePartyContactMechIDs(ids...)
 }
 
 // ClearPartyRoles clears all "party_roles" edges to the PartyRole entity.
@@ -1627,6 +1835,7 @@ func (puo *PartyUpdateOne) Save(ctx context.Context) (*Party, error) {
 		err  error
 		node *Party
 	)
+	puo.defaults()
 	if len(puo.hooks) == 0 {
 		if err = puo.check(); err != nil {
 			return nil, err
@@ -1678,6 +1887,14 @@ func (puo *PartyUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (puo *PartyUpdateOne) defaults() {
+	if _, ok := puo.mutation.UpdateTime(); !ok {
+		v := party.UpdateDefaultUpdateTime()
+		puo.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (puo *PartyUpdateOne) check() error {
 	if v, ok := puo.mutation.IsUnread(); ok {
@@ -1722,6 +1939,26 @@ func (puo *PartyUpdateOne) sqlSave(ctx context.Context) (_node *Party, err error
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := puo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: party.FieldUpdateTime,
+		})
+	}
+	if value, ok := puo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: party.FieldStringRef,
+		})
+	}
+	if puo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: party.FieldStringRef,
+		})
 	}
 	if value, ok := puo.mutation.PartyTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -1794,26 +2031,6 @@ func (puo *PartyUpdateOne) sqlSave(ctx context.Context) (_node *Party, err error
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: party.FieldDescription,
-		})
-	}
-	if value, ok := puo.mutation.StatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldStatusID,
-		})
-	}
-	if value, ok := puo.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: party.FieldStatusID,
-		})
-	}
-	if puo.mutation.StatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: party.FieldStatusID,
 		})
 	}
 	if value, ok := puo.mutation.CreatedDate(); ok {
@@ -1945,6 +2162,41 @@ func (puo *PartyUpdateOne) sqlSave(ctx context.Context) (_node *Party, err error
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if puo.mutation.StatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.StatusItemTable,
+			Columns: []string{party.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   party.StatusItemTable,
+			Columns: []string{party.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if puo.mutation.FixedAssetsCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -1991,6 +2243,60 @@ func (puo *PartyUpdateOne) sqlSave(ctx context.Context) (_node *Party, err error
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if puo.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   party.PartyContactMechesTable,
+			Columns: []string{party.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.RemovedPartyContactMechesIDs(); len(nodes) > 0 && !puo.mutation.PartyContactMechesCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   party.PartyContactMechesTable,
+			Columns: []string{party.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := puo.mutation.PartyContactMechesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   party.PartyContactMechesTable,
+			Columns: []string{party.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
 				},
 			},
 		}

@@ -506,12 +506,12 @@ func (ulq *UserLoginQuery) WithAssignedByWorkEffortPartyAssignments(opts ...func
 // Example:
 //
 //	var v []struct {
-//		CurrentPassword string `json:"current_password,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.UserLogin.Query().
-//		GroupBy(userlogin.FieldCurrentPassword).
+//		GroupBy(userlogin.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -533,11 +533,11 @@ func (ulq *UserLoginQuery) GroupBy(field string, fields ...string) *UserLoginGro
 // Example:
 //
 //	var v []struct {
-//		CurrentPassword string `json:"current_password,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.UserLogin.Query().
-//		Select(userlogin.FieldCurrentPassword).
+//		Select(userlogin.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (ulq *UserLoginQuery) Select(field string, fields ...string) *UserLoginSelect {
@@ -872,10 +872,14 @@ func (ulq *UserLoginQuery) querySpec() *sqlgraph.QuerySpec {
 func (ulq *UserLoginQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(ulq.driver.Dialect())
 	t1 := builder.Table(userlogin.Table)
-	selector := builder.Select(t1.Columns(userlogin.Columns...)...).From(t1)
+	columns := ulq.fields
+	if len(columns) == 0 {
+		columns = userlogin.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if ulq.sql != nil {
 		selector = ulq.sql
-		selector.Select(selector.Columns(userlogin.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range ulq.predicates {
 		p(selector)
@@ -1143,13 +1147,24 @@ func (ulgb *UserLoginGroupBy) sqlScan(ctx context.Context, v interface{}) error 
 }
 
 func (ulgb *UserLoginGroupBy) sqlQuery() *sql.Selector {
-	selector := ulgb.sql
-	columns := make([]string, 0, len(ulgb.fields)+len(ulgb.fns))
-	columns = append(columns, ulgb.fields...)
+	selector := ulgb.sql.Select()
+	aggregation := make([]string, 0, len(ulgb.fns))
 	for _, fn := range ulgb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(ulgb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(ulgb.fields)+len(ulgb.fns))
+		for _, f := range ulgb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(ulgb.fields...)...)
 }
 
 // UserLoginSelect is the builder for selecting fields of UserLogin entities.
@@ -1365,16 +1380,10 @@ func (uls *UserLoginSelect) BoolX(ctx context.Context) bool {
 
 func (uls *UserLoginSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := uls.sqlQuery().Query()
+	query, args := uls.sql.Query()
 	if err := uls.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (uls *UserLoginSelect) sqlQuery() sql.Querier {
-	selector := uls.sql
-	selector.Select(selector.Columns(uls.fields...)...)
-	return selector
 }

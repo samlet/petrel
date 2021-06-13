@@ -470,10 +470,14 @@ func (wpq *WorkloadPkgQuery) querySpec() *sqlgraph.QuerySpec {
 func (wpq *WorkloadPkgQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(wpq.driver.Dialect())
 	t1 := builder.Table(workloadpkg.Table)
-	selector := builder.Select(t1.Columns(workloadpkg.Columns...)...).From(t1)
+	columns := wpq.fields
+	if len(columns) == 0 {
+		columns = workloadpkg.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if wpq.sql != nil {
 		selector = wpq.sql
-		selector.Select(selector.Columns(workloadpkg.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range wpq.predicates {
 		p(selector)
@@ -741,13 +745,24 @@ func (wpgb *WorkloadPkgGroupBy) sqlScan(ctx context.Context, v interface{}) erro
 }
 
 func (wpgb *WorkloadPkgGroupBy) sqlQuery() *sql.Selector {
-	selector := wpgb.sql
-	columns := make([]string, 0, len(wpgb.fields)+len(wpgb.fns))
-	columns = append(columns, wpgb.fields...)
+	selector := wpgb.sql.Select()
+	aggregation := make([]string, 0, len(wpgb.fns))
 	for _, fn := range wpgb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(wpgb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(wpgb.fields)+len(wpgb.fns))
+		for _, f := range wpgb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(wpgb.fields...)...)
 }
 
 // WorkloadPkgSelect is the builder for selecting fields of WorkloadPkg entities.
@@ -963,16 +978,10 @@ func (wps *WorkloadPkgSelect) BoolX(ctx context.Context) bool {
 
 func (wps *WorkloadPkgSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := wps.sqlQuery().Query()
+	query, args := wps.sql.Query()
 	if err := wps.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (wps *WorkloadPkgSelect) sqlQuery() sql.Querier {
-	selector := wps.sql
-	selector.Select(selector.Columns(wps.fields...)...)
-	return selector
 }

@@ -28,6 +28,26 @@ func (sgu *SecurityGroupUpdate) Where(ps ...predicate.SecurityGroup) *SecurityGr
 	return sgu
 }
 
+// SetStringRef sets the "string_ref" field.
+func (sgu *SecurityGroupUpdate) SetStringRef(s string) *SecurityGroupUpdate {
+	sgu.mutation.SetStringRef(s)
+	return sgu
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (sgu *SecurityGroupUpdate) SetNillableStringRef(s *string) *SecurityGroupUpdate {
+	if s != nil {
+		sgu.SetStringRef(*s)
+	}
+	return sgu
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (sgu *SecurityGroupUpdate) ClearStringRef() *SecurityGroupUpdate {
+	sgu.mutation.ClearStringRef()
+	return sgu
+}
+
 // SetGroupName sets the "group_name" field.
 func (sgu *SecurityGroupUpdate) SetGroupName(s string) *SecurityGroupUpdate {
 	sgu.mutation.SetGroupName(s)
@@ -151,6 +171,7 @@ func (sgu *SecurityGroupUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	sgu.defaults()
 	if len(sgu.hooks) == 0 {
 		affected, err = sgu.sqlSave(ctx)
 	} else {
@@ -196,6 +217,14 @@ func (sgu *SecurityGroupUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (sgu *SecurityGroupUpdate) defaults() {
+	if _, ok := sgu.mutation.UpdateTime(); !ok {
+		v := securitygroup.UpdateDefaultUpdateTime()
+		sgu.mutation.SetUpdateTime(v)
+	}
+}
+
 func (sgu *SecurityGroupUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -213,6 +242,26 @@ func (sgu *SecurityGroupUpdate) sqlSave(ctx context.Context) (n int, err error) 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sgu.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygroup.FieldUpdateTime,
+		})
+	}
+	if value, ok := sgu.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: securitygroup.FieldStringRef,
+		})
+	}
+	if sgu.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: securitygroup.FieldStringRef,
+		})
 	}
 	if value, ok := sgu.mutation.GroupName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -367,6 +416,26 @@ type SecurityGroupUpdateOne struct {
 	mutation *SecurityGroupMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (sguo *SecurityGroupUpdateOne) SetStringRef(s string) *SecurityGroupUpdateOne {
+	sguo.mutation.SetStringRef(s)
+	return sguo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (sguo *SecurityGroupUpdateOne) SetNillableStringRef(s *string) *SecurityGroupUpdateOne {
+	if s != nil {
+		sguo.SetStringRef(*s)
+	}
+	return sguo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (sguo *SecurityGroupUpdateOne) ClearStringRef() *SecurityGroupUpdateOne {
+	sguo.mutation.ClearStringRef()
+	return sguo
+}
+
 // SetGroupName sets the "group_name" field.
 func (sguo *SecurityGroupUpdateOne) SetGroupName(s string) *SecurityGroupUpdateOne {
 	sguo.mutation.SetGroupName(s)
@@ -497,6 +566,7 @@ func (sguo *SecurityGroupUpdateOne) Save(ctx context.Context) (*SecurityGroup, e
 		err  error
 		node *SecurityGroup
 	)
+	sguo.defaults()
 	if len(sguo.hooks) == 0 {
 		node, err = sguo.sqlSave(ctx)
 	} else {
@@ -542,6 +612,14 @@ func (sguo *SecurityGroupUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (sguo *SecurityGroupUpdateOne) defaults() {
+	if _, ok := sguo.mutation.UpdateTime(); !ok {
+		v := securitygroup.UpdateDefaultUpdateTime()
+		sguo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (sguo *SecurityGroupUpdateOne) sqlSave(ctx context.Context) (_node *SecurityGroup, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -576,6 +654,26 @@ func (sguo *SecurityGroupUpdateOne) sqlSave(ctx context.Context) (_node *Securit
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := sguo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: securitygroup.FieldUpdateTime,
+		})
+	}
+	if value, ok := sguo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: securitygroup.FieldStringRef,
+		})
+	}
+	if sguo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: securitygroup.FieldStringRef,
+		})
 	}
 	if value, ok := sguo.mutation.GroupName(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

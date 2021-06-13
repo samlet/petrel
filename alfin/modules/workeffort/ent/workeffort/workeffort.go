@@ -12,10 +12,12 @@ const (
 	Label = "work_effort"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldWorkEffortTypeID holds the string denoting the work_effort_type_id field in the database.
-	FieldWorkEffortTypeID = "work_effort_type_id"
-	// FieldCurrentStatusID holds the string denoting the current_status_id field in the database.
-	FieldCurrentStatusID = "current_status_id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldLastStatusUpdate holds the string denoting the last_status_update field in the database.
 	FieldLastStatusUpdate = "last_status_update"
 	// FieldWorkEffortPurposeTypeID holds the string denoting the work_effort_purpose_type_id field in the database.
@@ -108,10 +110,14 @@ const (
 	FieldLastModifiedByUserLogin = "last_modified_by_user_login"
 	// FieldSequenceNum holds the string denoting the sequence_num field in the database.
 	FieldSequenceNum = "sequence_num"
+	// EdgeWorkEffortType holds the string denoting the work_effort_type edge name in mutations.
+	EdgeWorkEffortType = "work_effort_type"
 	// EdgeParent holds the string denoting the parent edge name in mutations.
 	EdgeParent = "parent"
 	// EdgeChildren holds the string denoting the children edge name in mutations.
 	EdgeChildren = "children"
+	// EdgeCurrentStatusItem holds the string denoting the current_status_item edge name in mutations.
+	EdgeCurrentStatusItem = "current_status_item"
 	// EdgeFixedAsset holds the string denoting the fixed_asset edge name in mutations.
 	EdgeFixedAsset = "fixed_asset"
 	// EdgeTemporalExpression holds the string denoting the temporal_expression edge name in mutations.
@@ -126,8 +132,17 @@ const (
 	EdgeWorkEffortFixedAssetAssigns = "work_effort_fixed_asset_assigns"
 	// EdgeWorkEffortPartyAssignments holds the string denoting the work_effort_party_assignments edge name in mutations.
 	EdgeWorkEffortPartyAssignments = "work_effort_party_assignments"
+	// EdgeWorkEffortSkillStandards holds the string denoting the work_effort_skill_standards edge name in mutations.
+	EdgeWorkEffortSkillStandards = "work_effort_skill_standards"
 	// Table holds the table name of the workeffort in the database.
 	Table = "work_efforts"
+	// WorkEffortTypeTable is the table the holds the work_effort_type relation/edge.
+	WorkEffortTypeTable = "work_efforts"
+	// WorkEffortTypeInverseTable is the table name for the WorkEffortType entity.
+	// It exists in this package in order to avoid circular dependency with the "workefforttype" package.
+	WorkEffortTypeInverseTable = "work_effort_types"
+	// WorkEffortTypeColumn is the table column denoting the work_effort_type relation/edge.
+	WorkEffortTypeColumn = "work_effort_type_work_efforts"
 	// ParentTable is the table the holds the parent relation/edge.
 	ParentTable = "work_efforts"
 	// ParentColumn is the table column denoting the parent relation/edge.
@@ -136,6 +151,13 @@ const (
 	ChildrenTable = "work_efforts"
 	// ChildrenColumn is the table column denoting the children relation/edge.
 	ChildrenColumn = "work_effort_children"
+	// CurrentStatusItemTable is the table the holds the current_status_item relation/edge.
+	CurrentStatusItemTable = "work_efforts"
+	// CurrentStatusItemInverseTable is the table name for the StatusItem entity.
+	// It exists in this package in order to avoid circular dependency with the "statusitem" package.
+	CurrentStatusItemInverseTable = "status_items"
+	// CurrentStatusItemColumn is the table column denoting the current_status_item relation/edge.
+	CurrentStatusItemColumn = "status_item_current_work_efforts"
 	// FixedAssetTable is the table the holds the fixed_asset relation/edge.
 	FixedAssetTable = "work_efforts"
 	// FixedAssetInverseTable is the table name for the FixedAsset entity.
@@ -180,13 +202,21 @@ const (
 	WorkEffortPartyAssignmentsInverseTable = "work_effort_party_assignments"
 	// WorkEffortPartyAssignmentsColumn is the table column denoting the work_effort_party_assignments relation/edge.
 	WorkEffortPartyAssignmentsColumn = "work_effort_work_effort_party_assignments"
+	// WorkEffortSkillStandardsTable is the table the holds the work_effort_skill_standards relation/edge.
+	WorkEffortSkillStandardsTable = "work_effort_skill_standards"
+	// WorkEffortSkillStandardsInverseTable is the table name for the WorkEffortSkillStandard entity.
+	// It exists in this package in order to avoid circular dependency with the "workeffortskillstandard" package.
+	WorkEffortSkillStandardsInverseTable = "work_effort_skill_standards"
+	// WorkEffortSkillStandardsColumn is the table column denoting the work_effort_skill_standards relation/edge.
+	WorkEffortSkillStandardsColumn = "work_effort_work_effort_skill_standards"
 )
 
 // Columns holds all SQL columns for workeffort fields.
 var Columns = []string{
 	FieldID,
-	FieldWorkEffortTypeID,
-	FieldCurrentStatusID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldLastStatusUpdate,
 	FieldWorkEffortPurposeTypeID,
 	FieldScopeEnumID,
@@ -239,8 +269,10 @@ var Columns = []string{
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
 	"fixed_asset_work_efforts",
+	"status_item_current_work_efforts",
 	"temporal_expression_work_efforts",
 	"work_effort_children",
+	"work_effort_type_work_efforts",
 }
 
 var (
@@ -265,6 +297,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultLastStatusUpdate holds the default value on creation for the "last_status_update" field.
 	DefaultLastStatusUpdate func() time.Time
 	// DefaultEstimatedStartDate holds the default value on creation for the "estimated_start_date" field.

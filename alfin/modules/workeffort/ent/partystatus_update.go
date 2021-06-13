@@ -13,6 +13,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 )
 
@@ -29,16 +30,23 @@ func (psu *PartyStatusUpdate) Where(ps ...predicate.PartyStatus) *PartyStatusUpd
 	return psu
 }
 
-// SetStatusID sets the "status_id" field.
-func (psu *PartyStatusUpdate) SetStatusID(i int) *PartyStatusUpdate {
-	psu.mutation.ResetStatusID()
-	psu.mutation.SetStatusID(i)
+// SetStringRef sets the "string_ref" field.
+func (psu *PartyStatusUpdate) SetStringRef(s string) *PartyStatusUpdate {
+	psu.mutation.SetStringRef(s)
 	return psu
 }
 
-// AddStatusID adds i to the "status_id" field.
-func (psu *PartyStatusUpdate) AddStatusID(i int) *PartyStatusUpdate {
-	psu.mutation.AddStatusID(i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (psu *PartyStatusUpdate) SetNillableStringRef(s *string) *PartyStatusUpdate {
+	if s != nil {
+		psu.SetStringRef(*s)
+	}
+	return psu
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (psu *PartyStatusUpdate) ClearStringRef() *PartyStatusUpdate {
+	psu.mutation.ClearStringRef()
 	return psu
 }
 
@@ -54,6 +62,25 @@ func (psu *PartyStatusUpdate) SetNillableStatusDate(t *time.Time) *PartyStatusUp
 		psu.SetStatusDate(*t)
 	}
 	return psu
+}
+
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (psu *PartyStatusUpdate) SetStatusItemID(id int) *PartyStatusUpdate {
+	psu.mutation.SetStatusItemID(id)
+	return psu
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (psu *PartyStatusUpdate) SetNillableStatusItemID(id *int) *PartyStatusUpdate {
+	if id != nil {
+		psu = psu.SetStatusItemID(*id)
+	}
+	return psu
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (psu *PartyStatusUpdate) SetStatusItem(s *StatusItem) *PartyStatusUpdate {
+	return psu.SetStatusItemID(s.ID)
 }
 
 // SetPartyID sets the "party" edge to the Party entity by ID.
@@ -99,6 +126,12 @@ func (psu *PartyStatusUpdate) Mutation() *PartyStatusMutation {
 	return psu.mutation
 }
 
+// ClearStatusItem clears the "status_item" edge to the StatusItem entity.
+func (psu *PartyStatusUpdate) ClearStatusItem() *PartyStatusUpdate {
+	psu.mutation.ClearStatusItem()
+	return psu
+}
+
 // ClearParty clears the "party" edge to the Party entity.
 func (psu *PartyStatusUpdate) ClearParty() *PartyStatusUpdate {
 	psu.mutation.ClearParty()
@@ -117,6 +150,7 @@ func (psu *PartyStatusUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	psu.defaults()
 	if len(psu.hooks) == 0 {
 		affected, err = psu.sqlSave(ctx)
 	} else {
@@ -162,6 +196,14 @@ func (psu *PartyStatusUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (psu *PartyStatusUpdate) defaults() {
+	if _, ok := psu.mutation.UpdateTime(); !ok {
+		v := partystatus.UpdateDefaultUpdateTime()
+		psu.mutation.SetUpdateTime(v)
+	}
+}
+
 func (psu *PartyStatusUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -180,18 +222,24 @@ func (psu *PartyStatusUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := psu.mutation.StatusID(); ok {
+	if value, ok := psu.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: partystatus.FieldStatusID,
+			Column: partystatus.FieldUpdateTime,
 		})
 	}
-	if value, ok := psu.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := psu.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: partystatus.FieldStatusID,
+			Column: partystatus.FieldStringRef,
+		})
+	}
+	if psu.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: partystatus.FieldStringRef,
 		})
 	}
 	if value, ok := psu.mutation.StatusDate(); ok {
@@ -200,6 +248,41 @@ func (psu *PartyStatusUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Value:  value,
 			Column: partystatus.FieldStatusDate,
 		})
+	}
+	if psu.mutation.StatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partystatus.StatusItemTable,
+			Columns: []string{partystatus.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := psu.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partystatus.StatusItemTable,
+			Columns: []string{partystatus.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if psu.mutation.PartyCleared() {
 		edge := &sqlgraph.EdgeSpec{
@@ -290,16 +373,23 @@ type PartyStatusUpdateOne struct {
 	mutation *PartyStatusMutation
 }
 
-// SetStatusID sets the "status_id" field.
-func (psuo *PartyStatusUpdateOne) SetStatusID(i int) *PartyStatusUpdateOne {
-	psuo.mutation.ResetStatusID()
-	psuo.mutation.SetStatusID(i)
+// SetStringRef sets the "string_ref" field.
+func (psuo *PartyStatusUpdateOne) SetStringRef(s string) *PartyStatusUpdateOne {
+	psuo.mutation.SetStringRef(s)
 	return psuo
 }
 
-// AddStatusID adds i to the "status_id" field.
-func (psuo *PartyStatusUpdateOne) AddStatusID(i int) *PartyStatusUpdateOne {
-	psuo.mutation.AddStatusID(i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (psuo *PartyStatusUpdateOne) SetNillableStringRef(s *string) *PartyStatusUpdateOne {
+	if s != nil {
+		psuo.SetStringRef(*s)
+	}
+	return psuo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (psuo *PartyStatusUpdateOne) ClearStringRef() *PartyStatusUpdateOne {
+	psuo.mutation.ClearStringRef()
 	return psuo
 }
 
@@ -315,6 +405,25 @@ func (psuo *PartyStatusUpdateOne) SetNillableStatusDate(t *time.Time) *PartyStat
 		psuo.SetStatusDate(*t)
 	}
 	return psuo
+}
+
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (psuo *PartyStatusUpdateOne) SetStatusItemID(id int) *PartyStatusUpdateOne {
+	psuo.mutation.SetStatusItemID(id)
+	return psuo
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (psuo *PartyStatusUpdateOne) SetNillableStatusItemID(id *int) *PartyStatusUpdateOne {
+	if id != nil {
+		psuo = psuo.SetStatusItemID(*id)
+	}
+	return psuo
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (psuo *PartyStatusUpdateOne) SetStatusItem(s *StatusItem) *PartyStatusUpdateOne {
+	return psuo.SetStatusItemID(s.ID)
 }
 
 // SetPartyID sets the "party" edge to the Party entity by ID.
@@ -360,6 +469,12 @@ func (psuo *PartyStatusUpdateOne) Mutation() *PartyStatusMutation {
 	return psuo.mutation
 }
 
+// ClearStatusItem clears the "status_item" edge to the StatusItem entity.
+func (psuo *PartyStatusUpdateOne) ClearStatusItem() *PartyStatusUpdateOne {
+	psuo.mutation.ClearStatusItem()
+	return psuo
+}
+
 // ClearParty clears the "party" edge to the Party entity.
 func (psuo *PartyStatusUpdateOne) ClearParty() *PartyStatusUpdateOne {
 	psuo.mutation.ClearParty()
@@ -385,6 +500,7 @@ func (psuo *PartyStatusUpdateOne) Save(ctx context.Context) (*PartyStatus, error
 		err  error
 		node *PartyStatus
 	)
+	psuo.defaults()
 	if len(psuo.hooks) == 0 {
 		node, err = psuo.sqlSave(ctx)
 	} else {
@@ -430,6 +546,14 @@ func (psuo *PartyStatusUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (psuo *PartyStatusUpdateOne) defaults() {
+	if _, ok := psuo.mutation.UpdateTime(); !ok {
+		v := partystatus.UpdateDefaultUpdateTime()
+		psuo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (psuo *PartyStatusUpdateOne) sqlSave(ctx context.Context) (_node *PartyStatus, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -465,18 +589,24 @@ func (psuo *PartyStatusUpdateOne) sqlSave(ctx context.Context) (_node *PartyStat
 			}
 		}
 	}
-	if value, ok := psuo.mutation.StatusID(); ok {
+	if value, ok := psuo.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: partystatus.FieldStatusID,
+			Column: partystatus.FieldUpdateTime,
 		})
 	}
-	if value, ok := psuo.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := psuo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: partystatus.FieldStatusID,
+			Column: partystatus.FieldStringRef,
+		})
+	}
+	if psuo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: partystatus.FieldStringRef,
 		})
 	}
 	if value, ok := psuo.mutation.StatusDate(); ok {
@@ -485,6 +615,41 @@ func (psuo *PartyStatusUpdateOne) sqlSave(ctx context.Context) (_node *PartyStat
 			Value:  value,
 			Column: partystatus.FieldStatusDate,
 		})
+	}
+	if psuo.mutation.StatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partystatus.StatusItemTable,
+			Columns: []string{partystatus.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := psuo.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partystatus.StatusItemTable,
+			Columns: []string{partystatus.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
 	if psuo.mutation.PartyCleared() {
 		edge := &sqlgraph.EdgeSpec{

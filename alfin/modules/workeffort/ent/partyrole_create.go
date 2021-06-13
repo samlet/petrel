@@ -6,12 +6,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
 
@@ -22,9 +25,45 @@ type PartyRoleCreate struct {
 	hooks    []Hook
 }
 
-// SetRoleTypeID sets the "role_type_id" field.
-func (prc *PartyRoleCreate) SetRoleTypeID(i int) *PartyRoleCreate {
-	prc.mutation.SetRoleTypeID(i)
+// SetCreateTime sets the "create_time" field.
+func (prc *PartyRoleCreate) SetCreateTime(t time.Time) *PartyRoleCreate {
+	prc.mutation.SetCreateTime(t)
+	return prc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (prc *PartyRoleCreate) SetNillableCreateTime(t *time.Time) *PartyRoleCreate {
+	if t != nil {
+		prc.SetCreateTime(*t)
+	}
+	return prc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (prc *PartyRoleCreate) SetUpdateTime(t time.Time) *PartyRoleCreate {
+	prc.mutation.SetUpdateTime(t)
+	return prc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (prc *PartyRoleCreate) SetNillableUpdateTime(t *time.Time) *PartyRoleCreate {
+	if t != nil {
+		prc.SetUpdateTime(*t)
+	}
+	return prc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (prc *PartyRoleCreate) SetStringRef(s string) *PartyRoleCreate {
+	prc.mutation.SetStringRef(s)
+	return prc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (prc *PartyRoleCreate) SetNillableStringRef(s *string) *PartyRoleCreate {
+	if s != nil {
+		prc.SetStringRef(*s)
+	}
 	return prc
 }
 
@@ -47,6 +86,25 @@ func (prc *PartyRoleCreate) SetParty(p *Party) *PartyRoleCreate {
 	return prc.SetPartyID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (prc *PartyRoleCreate) SetRoleTypeID(id int) *PartyRoleCreate {
+	prc.mutation.SetRoleTypeID(id)
+	return prc
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (prc *PartyRoleCreate) SetNillableRoleTypeID(id *int) *PartyRoleCreate {
+	if id != nil {
+		prc = prc.SetRoleTypeID(*id)
+	}
+	return prc
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (prc *PartyRoleCreate) SetRoleType(r *RoleType) *PartyRoleCreate {
+	return prc.SetRoleTypeID(r.ID)
+}
+
 // AddFixedAssetIDs adds the "fixed_assets" edge to the FixedAsset entity by IDs.
 func (prc *PartyRoleCreate) AddFixedAssetIDs(ids ...int) *PartyRoleCreate {
 	prc.mutation.AddFixedAssetIDs(ids...)
@@ -60,6 +118,21 @@ func (prc *PartyRoleCreate) AddFixedAssets(f ...*FixedAsset) *PartyRoleCreate {
 		ids[i] = f[i].ID
 	}
 	return prc.AddFixedAssetIDs(ids...)
+}
+
+// AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
+func (prc *PartyRoleCreate) AddPartyContactMechIDs(ids ...int) *PartyRoleCreate {
+	prc.mutation.AddPartyContactMechIDs(ids...)
+	return prc
+}
+
+// AddPartyContactMeches adds the "party_contact_meches" edges to the PartyContactMech entity.
+func (prc *PartyRoleCreate) AddPartyContactMeches(p ...*PartyContactMech) *PartyRoleCreate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return prc.AddPartyContactMechIDs(ids...)
 }
 
 // AddWorkEffortPartyAssignmentIDs adds the "work_effort_party_assignments" edge to the WorkEffortPartyAssignment entity by IDs.
@@ -88,6 +161,7 @@ func (prc *PartyRoleCreate) Save(ctx context.Context) (*PartyRole, error) {
 		err  error
 		node *PartyRole
 	)
+	prc.defaults()
 	if len(prc.hooks) == 0 {
 		if err = prc.check(); err != nil {
 			return nil, err
@@ -103,7 +177,10 @@ func (prc *PartyRoleCreate) Save(ctx context.Context) (*PartyRole, error) {
 				return nil, err
 			}
 			prc.mutation = mutation
-			node, err = prc.sqlSave(ctx)
+			if node, err = prc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -126,10 +203,25 @@ func (prc *PartyRoleCreate) SaveX(ctx context.Context) *PartyRole {
 	return v
 }
 
+// defaults sets the default values of the builder before save.
+func (prc *PartyRoleCreate) defaults() {
+	if _, ok := prc.mutation.CreateTime(); !ok {
+		v := partyrole.DefaultCreateTime()
+		prc.mutation.SetCreateTime(v)
+	}
+	if _, ok := prc.mutation.UpdateTime(); !ok {
+		v := partyrole.DefaultUpdateTime()
+		prc.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (prc *PartyRoleCreate) check() error {
-	if _, ok := prc.mutation.RoleTypeID(); !ok {
-		return &ValidationError{Name: "role_type_id", err: errors.New("ent: missing required field \"role_type_id\"")}
+	if _, ok := prc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := prc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
 	}
 	return nil
 }
@@ -158,13 +250,29 @@ func (prc *PartyRoleCreate) createSpec() (*PartyRole, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := prc.mutation.RoleTypeID(); ok {
+	if value, ok := prc.mutation.CreateTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: partyrole.FieldRoleTypeID,
+			Column: partyrole.FieldCreateTime,
 		})
-		_node.RoleTypeID = value
+		_node.CreateTime = value
+	}
+	if value, ok := prc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: partyrole.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := prc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: partyrole.FieldStringRef,
+		})
+		_node.StringRef = value
 	}
 	if nodes := prc.mutation.PartyIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -186,6 +294,26 @@ func (prc *PartyRoleCreate) createSpec() (*PartyRole, *sqlgraph.CreateSpec) {
 		_node.party_party_roles = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := prc.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   partyrole.RoleTypeTable,
+			Columns: []string{partyrole.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.role_type_party_roles = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	if nodes := prc.mutation.FixedAssetsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -197,6 +325,25 @@ func (prc *PartyRoleCreate) createSpec() (*PartyRole, *sqlgraph.CreateSpec) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := prc.mutation.PartyContactMechesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   partyrole.PartyContactMechesTable,
+			Columns: []string{partyrole.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
 				},
 			},
 		}
@@ -241,6 +388,7 @@ func (prcb *PartyRoleCreateBulk) Save(ctx context.Context) ([]*PartyRole, error)
 	for i := range prcb.builders {
 		func(i int, root context.Context) {
 			builder := prcb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*PartyRoleMutation)
 				if !ok {
@@ -262,10 +410,11 @@ func (prcb *PartyRoleCreateBulk) Save(ctx context.Context) ([]*PartyRole, error)
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

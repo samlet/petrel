@@ -17,6 +17,12 @@ type SecurityGroupPermission struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// PermissionID holds the value of the "permission_id" field.
 	PermissionID string `json:"permission_id,omitempty"`
 	// FromDate holds the value of the "from_date" field.
@@ -60,9 +66,9 @@ func (*SecurityGroupPermission) scanValues(columns []string) ([]interface{}, err
 		switch columns[i] {
 		case securitygrouppermission.FieldID:
 			values[i] = new(sql.NullInt64)
-		case securitygrouppermission.FieldPermissionID:
+		case securitygrouppermission.FieldStringRef, securitygrouppermission.FieldPermissionID:
 			values[i] = new(sql.NullString)
-		case securitygrouppermission.FieldFromDate, securitygrouppermission.FieldThruDate:
+		case securitygrouppermission.FieldCreateTime, securitygrouppermission.FieldUpdateTime, securitygrouppermission.FieldFromDate, securitygrouppermission.FieldThruDate:
 			values[i] = new(sql.NullTime)
 		case securitygrouppermission.ForeignKeys[0]: // security_group_security_group_permissions
 			values[i] = new(sql.NullInt64)
@@ -89,6 +95,24 @@ func (sgp *SecurityGroupPermission) assignValues(columns []string, values []inte
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			sgp.ID = int(value.Int64)
+		case securitygrouppermission.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				sgp.CreateTime = value.Time
+			}
+		case securitygrouppermission.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				sgp.UpdateTime = value.Time
+			}
+		case securitygrouppermission.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				sgp.StringRef = value.String
+			}
 		case securitygrouppermission.FieldPermissionID:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field permission_id", values[i])
@@ -154,6 +178,12 @@ func (sgp *SecurityGroupPermission) String() string {
 	var builder strings.Builder
 	builder.WriteString("SecurityGroupPermission(")
 	builder.WriteString(fmt.Sprintf("id=%v", sgp.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(sgp.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(sgp.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(sgp.StringRef)
 	builder.WriteString(", permission_id=")
 	builder.WriteString(sgp.PermissionID)
 	builder.WriteString(", from_date=")

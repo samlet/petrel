@@ -5,10 +5,12 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 )
 
 // PartyRole is the model entity for the PartyRole schema.
@@ -16,25 +18,34 @@ type PartyRole struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// RoleTypeID holds the value of the "role_type_id" field.
-	RoleTypeID int `json:"role_type_id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PartyRoleQuery when eager-loading is set.
-	Edges             PartyRoleEdges `json:"edges"`
-	party_party_roles *int
+	Edges                 PartyRoleEdges `json:"edges"`
+	party_party_roles     *int
+	role_type_party_roles *int
 }
 
 // PartyRoleEdges holds the relations/edges for other nodes in the graph.
 type PartyRoleEdges struct {
 	// Party holds the value of the party edge.
 	Party *Party `json:"party,omitempty"`
+	// RoleType holds the value of the role_type edge.
+	RoleType *RoleType `json:"role_type,omitempty"`
 	// FixedAssets holds the value of the fixed_assets edge.
 	FixedAssets []*FixedAsset `json:"fixed_assets,omitempty"`
+	// PartyContactMeches holds the value of the party_contact_meches edge.
+	PartyContactMeches []*PartyContactMech `json:"party_contact_meches,omitempty"`
 	// WorkEffortPartyAssignments holds the value of the work_effort_party_assignments edge.
 	WorkEffortPartyAssignments []*WorkEffortPartyAssignment `json:"work_effort_party_assignments,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [3]bool
+	loadedTypes [5]bool
 }
 
 // PartyOrErr returns the Party value or an error if the edge
@@ -51,19 +62,42 @@ func (e PartyRoleEdges) PartyOrErr() (*Party, error) {
 	return nil, &NotLoadedError{edge: "party"}
 }
 
+// RoleTypeOrErr returns the RoleType value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e PartyRoleEdges) RoleTypeOrErr() (*RoleType, error) {
+	if e.loadedTypes[1] {
+		if e.RoleType == nil {
+			// The edge role_type was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: roletype.Label}
+		}
+		return e.RoleType, nil
+	}
+	return nil, &NotLoadedError{edge: "role_type"}
+}
+
 // FixedAssetsOrErr returns the FixedAssets value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyRoleEdges) FixedAssetsOrErr() ([]*FixedAsset, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[2] {
 		return e.FixedAssets, nil
 	}
 	return nil, &NotLoadedError{edge: "fixed_assets"}
 }
 
+// PartyContactMechesOrErr returns the PartyContactMeches value or an error if the edge
+// was not loaded in eager-loading.
+func (e PartyRoleEdges) PartyContactMechesOrErr() ([]*PartyContactMech, error) {
+	if e.loadedTypes[3] {
+		return e.PartyContactMeches, nil
+	}
+	return nil, &NotLoadedError{edge: "party_contact_meches"}
+}
+
 // WorkEffortPartyAssignmentsOrErr returns the WorkEffortPartyAssignments value or an error if the edge
 // was not loaded in eager-loading.
 func (e PartyRoleEdges) WorkEffortPartyAssignmentsOrErr() ([]*WorkEffortPartyAssignment, error) {
-	if e.loadedTypes[2] {
+	if e.loadedTypes[4] {
 		return e.WorkEffortPartyAssignments, nil
 	}
 	return nil, &NotLoadedError{edge: "work_effort_party_assignments"}
@@ -74,9 +108,15 @@ func (*PartyRole) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case partyrole.FieldID, partyrole.FieldRoleTypeID:
+		case partyrole.FieldID:
 			values[i] = new(sql.NullInt64)
+		case partyrole.FieldStringRef:
+			values[i] = new(sql.NullString)
+		case partyrole.FieldCreateTime, partyrole.FieldUpdateTime:
+			values[i] = new(sql.NullTime)
 		case partyrole.ForeignKeys[0]: // party_party_roles
+			values[i] = new(sql.NullInt64)
+		case partyrole.ForeignKeys[1]: // role_type_party_roles
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type PartyRole", columns[i])
@@ -99,11 +139,23 @@ func (pr *PartyRole) assignValues(columns []string, values []interface{}) error 
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			pr.ID = int(value.Int64)
-		case partyrole.FieldRoleTypeID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field role_type_id", values[i])
+		case partyrole.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
 			} else if value.Valid {
-				pr.RoleTypeID = int(value.Int64)
+				pr.CreateTime = value.Time
+			}
+		case partyrole.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				pr.UpdateTime = value.Time
+			}
+		case partyrole.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				pr.StringRef = value.String
 			}
 		case partyrole.ForeignKeys[0]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -111,6 +163,13 @@ func (pr *PartyRole) assignValues(columns []string, values []interface{}) error 
 			} else if value.Valid {
 				pr.party_party_roles = new(int)
 				*pr.party_party_roles = int(value.Int64)
+			}
+		case partyrole.ForeignKeys[1]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field role_type_party_roles", value)
+			} else if value.Valid {
+				pr.role_type_party_roles = new(int)
+				*pr.role_type_party_roles = int(value.Int64)
 			}
 		}
 	}
@@ -122,9 +181,19 @@ func (pr *PartyRole) QueryParty() *PartyQuery {
 	return (&PartyRoleClient{config: pr.config}).QueryParty(pr)
 }
 
+// QueryRoleType queries the "role_type" edge of the PartyRole entity.
+func (pr *PartyRole) QueryRoleType() *RoleTypeQuery {
+	return (&PartyRoleClient{config: pr.config}).QueryRoleType(pr)
+}
+
 // QueryFixedAssets queries the "fixed_assets" edge of the PartyRole entity.
 func (pr *PartyRole) QueryFixedAssets() *FixedAssetQuery {
 	return (&PartyRoleClient{config: pr.config}).QueryFixedAssets(pr)
+}
+
+// QueryPartyContactMeches queries the "party_contact_meches" edge of the PartyRole entity.
+func (pr *PartyRole) QueryPartyContactMeches() *PartyContactMechQuery {
+	return (&PartyRoleClient{config: pr.config}).QueryPartyContactMeches(pr)
 }
 
 // QueryWorkEffortPartyAssignments queries the "work_effort_party_assignments" edge of the PartyRole entity.
@@ -155,8 +224,12 @@ func (pr *PartyRole) String() string {
 	var builder strings.Builder
 	builder.WriteString("PartyRole(")
 	builder.WriteString(fmt.Sprintf("id=%v", pr.ID))
-	builder.WriteString(", role_type_id=")
-	builder.WriteString(fmt.Sprintf("%v", pr.RoleTypeID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(pr.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(pr.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(pr.StringRef)
 	builder.WriteByte(')')
 	return builder.String()
 }

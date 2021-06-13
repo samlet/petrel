@@ -21,6 +21,48 @@ type WorkEffortAssocCreate struct {
 	hooks    []Hook
 }
 
+// SetCreateTime sets the "create_time" field.
+func (weac *WorkEffortAssocCreate) SetCreateTime(t time.Time) *WorkEffortAssocCreate {
+	weac.mutation.SetCreateTime(t)
+	return weac
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (weac *WorkEffortAssocCreate) SetNillableCreateTime(t *time.Time) *WorkEffortAssocCreate {
+	if t != nil {
+		weac.SetCreateTime(*t)
+	}
+	return weac
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (weac *WorkEffortAssocCreate) SetUpdateTime(t time.Time) *WorkEffortAssocCreate {
+	weac.mutation.SetUpdateTime(t)
+	return weac
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (weac *WorkEffortAssocCreate) SetNillableUpdateTime(t *time.Time) *WorkEffortAssocCreate {
+	if t != nil {
+		weac.SetUpdateTime(*t)
+	}
+	return weac
+}
+
+// SetStringRef sets the "string_ref" field.
+func (weac *WorkEffortAssocCreate) SetStringRef(s string) *WorkEffortAssocCreate {
+	weac.mutation.SetStringRef(s)
+	return weac
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (weac *WorkEffortAssocCreate) SetNillableStringRef(s *string) *WorkEffortAssocCreate {
+	if s != nil {
+		weac.SetStringRef(*s)
+	}
+	return weac
+}
+
 // SetWorkEffortAssocTypeID sets the "work_effort_assoc_type_id" field.
 func (weac *WorkEffortAssocCreate) SetWorkEffortAssocTypeID(i int) *WorkEffortAssocCreate {
 	weac.mutation.SetWorkEffortAssocTypeID(i)
@@ -134,7 +176,10 @@ func (weac *WorkEffortAssocCreate) Save(ctx context.Context) (*WorkEffortAssoc, 
 				return nil, err
 			}
 			weac.mutation = mutation
-			node, err = weac.sqlSave(ctx)
+			if node, err = weac.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -159,6 +204,14 @@ func (weac *WorkEffortAssocCreate) SaveX(ctx context.Context) *WorkEffortAssoc {
 
 // defaults sets the default values of the builder before save.
 func (weac *WorkEffortAssocCreate) defaults() {
+	if _, ok := weac.mutation.CreateTime(); !ok {
+		v := workeffortassoc.DefaultCreateTime()
+		weac.mutation.SetCreateTime(v)
+	}
+	if _, ok := weac.mutation.UpdateTime(); !ok {
+		v := workeffortassoc.DefaultUpdateTime()
+		weac.mutation.SetUpdateTime(v)
+	}
 	if _, ok := weac.mutation.FromDate(); !ok {
 		v := workeffortassoc.DefaultFromDate()
 		weac.mutation.SetFromDate(v)
@@ -171,6 +224,12 @@ func (weac *WorkEffortAssocCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (weac *WorkEffortAssocCreate) check() error {
+	if _, ok := weac.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := weac.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if _, ok := weac.mutation.WorkEffortAssocTypeID(); !ok {
 		return &ValidationError{Name: "work_effort_assoc_type_id", err: errors.New("ent: missing required field \"work_effort_assoc_type_id\"")}
 	}
@@ -204,6 +263,30 @@ func (weac *WorkEffortAssocCreate) createSpec() (*WorkEffortAssoc, *sqlgraph.Cre
 			},
 		}
 	)
+	if value, ok := weac.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: workeffortassoc.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := weac.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: workeffortassoc.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := weac.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: workeffortassoc.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := weac.mutation.WorkEffortAssocTypeID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -315,10 +398,11 @@ func (weacb *WorkEffortAssocCreateBulk) Save(ctx context.Context) ([]*WorkEffort
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

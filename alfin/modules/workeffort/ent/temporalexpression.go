@@ -16,6 +16,12 @@ type TemporalExpression struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// TempExprTypeID holds the value of the "temp_expr_type_id" field.
 	TempExprTypeID int `json:"temp_expr_type_id,omitempty"`
 	// Description holds the value of the "description" field.
@@ -84,9 +90,9 @@ func (*TemporalExpression) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case temporalexpression.FieldID, temporalexpression.FieldTempExprTypeID, temporalexpression.FieldInteger1, temporalexpression.FieldInteger2, temporalexpression.FieldString1, temporalexpression.FieldString2:
 			values[i] = new(sql.NullInt64)
-		case temporalexpression.FieldDescription:
+		case temporalexpression.FieldStringRef, temporalexpression.FieldDescription:
 			values[i] = new(sql.NullString)
-		case temporalexpression.FieldDate1, temporalexpression.FieldDate2:
+		case temporalexpression.FieldCreateTime, temporalexpression.FieldUpdateTime, temporalexpression.FieldDate1, temporalexpression.FieldDate2:
 			values[i] = new(sql.NullTime)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type TemporalExpression", columns[i])
@@ -109,6 +115,24 @@ func (te *TemporalExpression) assignValues(columns []string, values []interface{
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			te.ID = int(value.Int64)
+		case temporalexpression.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				te.CreateTime = value.Time
+			}
+		case temporalexpression.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				te.UpdateTime = value.Time
+			}
+		case temporalexpression.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				te.StringRef = value.String
+			}
 		case temporalexpression.FieldTempExprTypeID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for field temp_expr_type_id", values[i])
@@ -200,6 +224,12 @@ func (te *TemporalExpression) String() string {
 	var builder strings.Builder
 	builder.WriteString("TemporalExpression(")
 	builder.WriteString(fmt.Sprintf("id=%v", te.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(te.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(te.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(te.StringRef)
 	builder.WriteString(", temp_expr_type_id=")
 	builder.WriteString(fmt.Sprintf("%v", te.TempExprTypeID))
 	builder.WriteString(", description=")

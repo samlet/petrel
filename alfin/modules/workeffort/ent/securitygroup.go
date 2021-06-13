@@ -5,6 +5,7 @@ package ent
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
@@ -15,6 +16,12 @@ type SecurityGroup struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// GroupName holds the value of the "group_name" field.
 	GroupName string `json:"group_name,omitempty"`
 	// Description holds the value of the "description" field.
@@ -60,8 +67,10 @@ func (*SecurityGroup) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case securitygroup.FieldID:
 			values[i] = new(sql.NullInt64)
-		case securitygroup.FieldGroupName, securitygroup.FieldDescription:
+		case securitygroup.FieldStringRef, securitygroup.FieldGroupName, securitygroup.FieldDescription:
 			values[i] = new(sql.NullString)
+		case securitygroup.FieldCreateTime, securitygroup.FieldUpdateTime:
+			values[i] = new(sql.NullTime)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type SecurityGroup", columns[i])
 		}
@@ -83,6 +92,24 @@ func (sg *SecurityGroup) assignValues(columns []string, values []interface{}) er
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			sg.ID = int(value.Int64)
+		case securitygroup.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				sg.CreateTime = value.Time
+			}
+		case securitygroup.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				sg.UpdateTime = value.Time
+			}
+		case securitygroup.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				sg.StringRef = value.String
+			}
 		case securitygroup.FieldGroupName:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field group_name", values[i])
@@ -133,6 +160,12 @@ func (sg *SecurityGroup) String() string {
 	var builder strings.Builder
 	builder.WriteString("SecurityGroup(")
 	builder.WriteString(fmt.Sprintf("id=%v", sg.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(sg.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(sg.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(sg.StringRef)
 	builder.WriteString(", group_name=")
 	builder.WriteString(sg.GroupName)
 	builder.WriteString(", description=")

@@ -12,6 +12,8 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
@@ -24,9 +26,45 @@ type WorkEffortPartyAssignmentCreate struct {
 	hooks    []Hook
 }
 
-// SetRoleTypeID sets the "role_type_id" field.
-func (wepac *WorkEffortPartyAssignmentCreate) SetRoleTypeID(i int) *WorkEffortPartyAssignmentCreate {
-	wepac.mutation.SetRoleTypeID(i)
+// SetCreateTime sets the "create_time" field.
+func (wepac *WorkEffortPartyAssignmentCreate) SetCreateTime(t time.Time) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetCreateTime(t)
+	return wepac
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableCreateTime(t *time.Time) *WorkEffortPartyAssignmentCreate {
+	if t != nil {
+		wepac.SetCreateTime(*t)
+	}
+	return wepac
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (wepac *WorkEffortPartyAssignmentCreate) SetUpdateTime(t time.Time) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetUpdateTime(t)
+	return wepac
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableUpdateTime(t *time.Time) *WorkEffortPartyAssignmentCreate {
+	if t != nil {
+		wepac.SetUpdateTime(*t)
+	}
+	return wepac
+}
+
+// SetStringRef sets the "string_ref" field.
+func (wepac *WorkEffortPartyAssignmentCreate) SetStringRef(s string) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetStringRef(s)
+	return wepac
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableStringRef(s *string) *WorkEffortPartyAssignmentCreate {
+	if s != nil {
+		wepac.SetStringRef(*s)
+	}
 	return wepac
 }
 
@@ -54,20 +92,6 @@ func (wepac *WorkEffortPartyAssignmentCreate) SetThruDate(t time.Time) *WorkEffo
 func (wepac *WorkEffortPartyAssignmentCreate) SetNillableThruDate(t *time.Time) *WorkEffortPartyAssignmentCreate {
 	if t != nil {
 		wepac.SetThruDate(*t)
-	}
-	return wepac
-}
-
-// SetStatusID sets the "status_id" field.
-func (wepac *WorkEffortPartyAssignmentCreate) SetStatusID(i int) *WorkEffortPartyAssignmentCreate {
-	wepac.mutation.SetStatusID(i)
-	return wepac
-}
-
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (wepac *WorkEffortPartyAssignmentCreate) SetNillableStatusID(i *int) *WorkEffortPartyAssignmentCreate {
-	if i != nil {
-		wepac.SetStatusID(*i)
 	}
 	return wepac
 }
@@ -156,20 +180,6 @@ func (wepac *WorkEffortPartyAssignmentCreate) SetNillableMustRsvp(wr *workeffort
 	return wepac
 }
 
-// SetAvailabilityStatusID sets the "availability_status_id" field.
-func (wepac *WorkEffortPartyAssignmentCreate) SetAvailabilityStatusID(i int) *WorkEffortPartyAssignmentCreate {
-	wepac.mutation.SetAvailabilityStatusID(i)
-	return wepac
-}
-
-// SetNillableAvailabilityStatusID sets the "availability_status_id" field if the given value is not nil.
-func (wepac *WorkEffortPartyAssignmentCreate) SetNillableAvailabilityStatusID(i *int) *WorkEffortPartyAssignmentCreate {
-	if i != nil {
-		wepac.SetAvailabilityStatusID(*i)
-	}
-	return wepac
-}
-
 // SetWorkEffortID sets the "work_effort" edge to the WorkEffort entity by ID.
 func (wepac *WorkEffortPartyAssignmentCreate) SetWorkEffortID(id int) *WorkEffortPartyAssignmentCreate {
 	wepac.mutation.SetWorkEffortID(id)
@@ -227,6 +237,25 @@ func (wepac *WorkEffortPartyAssignmentCreate) SetPartyRole(p *PartyRole) *WorkEf
 	return wepac.SetPartyRoleID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (wepac *WorkEffortPartyAssignmentCreate) SetRoleTypeID(id int) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetRoleTypeID(id)
+	return wepac
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableRoleTypeID(id *int) *WorkEffortPartyAssignmentCreate {
+	if id != nil {
+		wepac = wepac.SetRoleTypeID(*id)
+	}
+	return wepac
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (wepac *WorkEffortPartyAssignmentCreate) SetRoleType(r *RoleType) *WorkEffortPartyAssignmentCreate {
+	return wepac.SetRoleTypeID(r.ID)
+}
+
 // SetAssignedByUserLoginID sets the "assigned_by_user_login" edge to the UserLogin entity by ID.
 func (wepac *WorkEffortPartyAssignmentCreate) SetAssignedByUserLoginID(id int) *WorkEffortPartyAssignmentCreate {
 	wepac.mutation.SetAssignedByUserLoginID(id)
@@ -244,6 +273,44 @@ func (wepac *WorkEffortPartyAssignmentCreate) SetNillableAssignedByUserLoginID(i
 // SetAssignedByUserLogin sets the "assigned_by_user_login" edge to the UserLogin entity.
 func (wepac *WorkEffortPartyAssignmentCreate) SetAssignedByUserLogin(u *UserLogin) *WorkEffortPartyAssignmentCreate {
 	return wepac.SetAssignedByUserLoginID(u.ID)
+}
+
+// SetAssignmentStatusItemID sets the "assignment_status_item" edge to the StatusItem entity by ID.
+func (wepac *WorkEffortPartyAssignmentCreate) SetAssignmentStatusItemID(id int) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetAssignmentStatusItemID(id)
+	return wepac
+}
+
+// SetNillableAssignmentStatusItemID sets the "assignment_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableAssignmentStatusItemID(id *int) *WorkEffortPartyAssignmentCreate {
+	if id != nil {
+		wepac = wepac.SetAssignmentStatusItemID(*id)
+	}
+	return wepac
+}
+
+// SetAssignmentStatusItem sets the "assignment_status_item" edge to the StatusItem entity.
+func (wepac *WorkEffortPartyAssignmentCreate) SetAssignmentStatusItem(s *StatusItem) *WorkEffortPartyAssignmentCreate {
+	return wepac.SetAssignmentStatusItemID(s.ID)
+}
+
+// SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
+func (wepac *WorkEffortPartyAssignmentCreate) SetAvailabilityStatusItemID(id int) *WorkEffortPartyAssignmentCreate {
+	wepac.mutation.SetAvailabilityStatusItemID(id)
+	return wepac
+}
+
+// SetNillableAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wepac *WorkEffortPartyAssignmentCreate) SetNillableAvailabilityStatusItemID(id *int) *WorkEffortPartyAssignmentCreate {
+	if id != nil {
+		wepac = wepac.SetAvailabilityStatusItemID(*id)
+	}
+	return wepac
+}
+
+// SetAvailabilityStatusItem sets the "availability_status_item" edge to the StatusItem entity.
+func (wepac *WorkEffortPartyAssignmentCreate) SetAvailabilityStatusItem(s *StatusItem) *WorkEffortPartyAssignmentCreate {
+	return wepac.SetAvailabilityStatusItemID(s.ID)
 }
 
 // Mutation returns the WorkEffortPartyAssignmentMutation object of the builder.
@@ -273,7 +340,10 @@ func (wepac *WorkEffortPartyAssignmentCreate) Save(ctx context.Context) (*WorkEf
 				return nil, err
 			}
 			wepac.mutation = mutation
-			node, err = wepac.sqlSave(ctx)
+			if node, err = wepac.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -298,6 +368,14 @@ func (wepac *WorkEffortPartyAssignmentCreate) SaveX(ctx context.Context) *WorkEf
 
 // defaults sets the default values of the builder before save.
 func (wepac *WorkEffortPartyAssignmentCreate) defaults() {
+	if _, ok := wepac.mutation.CreateTime(); !ok {
+		v := workeffortpartyassignment.DefaultCreateTime()
+		wepac.mutation.SetCreateTime(v)
+	}
+	if _, ok := wepac.mutation.UpdateTime(); !ok {
+		v := workeffortpartyassignment.DefaultUpdateTime()
+		wepac.mutation.SetUpdateTime(v)
+	}
 	if _, ok := wepac.mutation.FromDate(); !ok {
 		v := workeffortpartyassignment.DefaultFromDate()
 		wepac.mutation.SetFromDate(v)
@@ -314,8 +392,11 @@ func (wepac *WorkEffortPartyAssignmentCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (wepac *WorkEffortPartyAssignmentCreate) check() error {
-	if _, ok := wepac.mutation.RoleTypeID(); !ok {
-		return &ValidationError{Name: "role_type_id", err: errors.New("ent: missing required field \"role_type_id\"")}
+	if _, ok := wepac.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := wepac.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
 	}
 	if _, ok := wepac.mutation.FromDate(); !ok {
 		return &ValidationError{Name: "from_date", err: errors.New("ent: missing required field \"from_date\"")}
@@ -352,13 +433,29 @@ func (wepac *WorkEffortPartyAssignmentCreate) createSpec() (*WorkEffortPartyAssi
 			},
 		}
 	)
-	if value, ok := wepac.mutation.RoleTypeID(); ok {
+	if value, ok := wepac.mutation.CreateTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffortpartyassignment.FieldRoleTypeID,
+			Column: workeffortpartyassignment.FieldCreateTime,
 		})
-		_node.RoleTypeID = value
+		_node.CreateTime = value
+	}
+	if value, ok := wepac.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: workeffortpartyassignment.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := wepac.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: workeffortpartyassignment.FieldStringRef,
+		})
+		_node.StringRef = value
 	}
 	if value, ok := wepac.mutation.FromDate(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -375,14 +472,6 @@ func (wepac *WorkEffortPartyAssignmentCreate) createSpec() (*WorkEffortPartyAssi
 			Column: workeffortpartyassignment.FieldThruDate,
 		})
 		_node.ThruDate = value
-	}
-	if value, ok := wepac.mutation.StatusID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldStatusID,
-		})
-		_node.StatusID = value
 	}
 	if value, ok := wepac.mutation.StatusDateTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -431,14 +520,6 @@ func (wepac *WorkEffortPartyAssignmentCreate) createSpec() (*WorkEffortPartyAssi
 			Column: workeffortpartyassignment.FieldMustRsvp,
 		})
 		_node.MustRsvp = value
-	}
-	if value, ok := wepac.mutation.AvailabilityStatusID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldAvailabilityStatusID,
-		})
-		_node.AvailabilityStatusID = value
 	}
 	if nodes := wepac.mutation.WorkEffortIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
@@ -500,6 +581,26 @@ func (wepac *WorkEffortPartyAssignmentCreate) createSpec() (*WorkEffortPartyAssi
 		_node.party_role_work_effort_party_assignments = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := wepac.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.RoleTypeTable,
+			Columns: []string{workeffortpartyassignment.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.role_type_work_effort_party_assignments = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	if nodes := wepac.mutation.AssignedByUserLoginIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -518,6 +619,46 @@ func (wepac *WorkEffortPartyAssignmentCreate) createSpec() (*WorkEffortPartyAssi
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
 		_node.user_login_assigned_by_work_effort_party_assignments = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := wepac.mutation.AssignmentStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AssignmentStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AssignmentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.status_item_assignment_work_effort_party_assignments = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := wepac.mutation.AvailabilityStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AvailabilityStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.status_item_availability_work_effort_party_assignments = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	return _node, _spec
@@ -559,10 +700,11 @@ func (wepacb *WorkEffortPartyAssignmentCreateBulk) Save(ctx context.Context) ([]
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

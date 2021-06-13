@@ -9,6 +9,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 )
@@ -18,23 +19,27 @@ type WorkEffortFixedAssetAssign struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// StatusID holds the value of the "status_id" field.
-	StatusID int `json:"status_id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// FromDate holds the value of the "from_date" field.
 	FromDate time.Time `json:"from_date,omitempty"`
 	// ThruDate holds the value of the "thru_date" field.
 	ThruDate time.Time `json:"thru_date,omitempty"`
-	// AvailabilityStatusID holds the value of the "availability_status_id" field.
-	AvailabilityStatusID int `json:"availability_status_id,omitempty"`
 	// AllocatedCost holds the value of the "allocated_cost" field.
 	AllocatedCost float64 `json:"allocated_cost,omitempty"`
 	// Comments holds the value of the "comments" field.
 	Comments string `json:"comments,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the WorkEffortFixedAssetAssignQuery when eager-loading is set.
-	Edges                                       WorkEffortFixedAssetAssignEdges `json:"edges"`
-	fixed_asset_work_effort_fixed_asset_assigns *int
-	work_effort_work_effort_fixed_asset_assigns *int
+	Edges                                                    WorkEffortFixedAssetAssignEdges `json:"edges"`
+	fixed_asset_work_effort_fixed_asset_assigns              *int
+	status_item_work_effort_fixed_asset_assigns              *int
+	status_item_availability_work_effort_fixed_asset_assigns *int
+	work_effort_work_effort_fixed_asset_assigns              *int
 }
 
 // WorkEffortFixedAssetAssignEdges holds the relations/edges for other nodes in the graph.
@@ -43,9 +48,13 @@ type WorkEffortFixedAssetAssignEdges struct {
 	WorkEffort *WorkEffort `json:"work_effort,omitempty"`
 	// FixedAsset holds the value of the fixed_asset edge.
 	FixedAsset *FixedAsset `json:"fixed_asset,omitempty"`
+	// StatusItem holds the value of the status_item edge.
+	StatusItem *StatusItem `json:"status_item,omitempty"`
+	// AvailabilityStatusItem holds the value of the availability_status_item edge.
+	AvailabilityStatusItem *StatusItem `json:"availability_status_item,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
+	loadedTypes [4]bool
 }
 
 // WorkEffortOrErr returns the WorkEffort value or an error if the edge
@@ -76,6 +85,34 @@ func (e WorkEffortFixedAssetAssignEdges) FixedAssetOrErr() (*FixedAsset, error) 
 	return nil, &NotLoadedError{edge: "fixed_asset"}
 }
 
+// StatusItemOrErr returns the StatusItem value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortFixedAssetAssignEdges) StatusItemOrErr() (*StatusItem, error) {
+	if e.loadedTypes[2] {
+		if e.StatusItem == nil {
+			// The edge status_item was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: statusitem.Label}
+		}
+		return e.StatusItem, nil
+	}
+	return nil, &NotLoadedError{edge: "status_item"}
+}
+
+// AvailabilityStatusItemOrErr returns the AvailabilityStatusItem value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e WorkEffortFixedAssetAssignEdges) AvailabilityStatusItemOrErr() (*StatusItem, error) {
+	if e.loadedTypes[3] {
+		if e.AvailabilityStatusItem == nil {
+			// The edge availability_status_item was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: statusitem.Label}
+		}
+		return e.AvailabilityStatusItem, nil
+	}
+	return nil, &NotLoadedError{edge: "availability_status_item"}
+}
+
 // scanValues returns the types for scanning values from sql.Rows.
 func (*WorkEffortFixedAssetAssign) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
@@ -83,15 +120,19 @@ func (*WorkEffortFixedAssetAssign) scanValues(columns []string) ([]interface{}, 
 		switch columns[i] {
 		case workeffortfixedassetassign.FieldAllocatedCost:
 			values[i] = new(sql.NullFloat64)
-		case workeffortfixedassetassign.FieldID, workeffortfixedassetassign.FieldStatusID, workeffortfixedassetassign.FieldAvailabilityStatusID:
+		case workeffortfixedassetassign.FieldID:
 			values[i] = new(sql.NullInt64)
-		case workeffortfixedassetassign.FieldComments:
+		case workeffortfixedassetassign.FieldStringRef, workeffortfixedassetassign.FieldComments:
 			values[i] = new(sql.NullString)
-		case workeffortfixedassetassign.FieldFromDate, workeffortfixedassetassign.FieldThruDate:
+		case workeffortfixedassetassign.FieldCreateTime, workeffortfixedassetassign.FieldUpdateTime, workeffortfixedassetassign.FieldFromDate, workeffortfixedassetassign.FieldThruDate:
 			values[i] = new(sql.NullTime)
 		case workeffortfixedassetassign.ForeignKeys[0]: // fixed_asset_work_effort_fixed_asset_assigns
 			values[i] = new(sql.NullInt64)
-		case workeffortfixedassetassign.ForeignKeys[1]: // work_effort_work_effort_fixed_asset_assigns
+		case workeffortfixedassetassign.ForeignKeys[1]: // status_item_work_effort_fixed_asset_assigns
+			values[i] = new(sql.NullInt64)
+		case workeffortfixedassetassign.ForeignKeys[2]: // status_item_availability_work_effort_fixed_asset_assigns
+			values[i] = new(sql.NullInt64)
+		case workeffortfixedassetassign.ForeignKeys[3]: // work_effort_work_effort_fixed_asset_assigns
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type WorkEffortFixedAssetAssign", columns[i])
@@ -114,11 +155,23 @@ func (wefaa *WorkEffortFixedAssetAssign) assignValues(columns []string, values [
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			wefaa.ID = int(value.Int64)
-		case workeffortfixedassetassign.FieldStatusID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status_id", values[i])
+		case workeffortfixedassetassign.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
 			} else if value.Valid {
-				wefaa.StatusID = int(value.Int64)
+				wefaa.CreateTime = value.Time
+			}
+		case workeffortfixedassetassign.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				wefaa.UpdateTime = value.Time
+			}
+		case workeffortfixedassetassign.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				wefaa.StringRef = value.String
 			}
 		case workeffortfixedassetassign.FieldFromDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -131,12 +184,6 @@ func (wefaa *WorkEffortFixedAssetAssign) assignValues(columns []string, values [
 				return fmt.Errorf("unexpected type %T for field thru_date", values[i])
 			} else if value.Valid {
 				wefaa.ThruDate = value.Time
-			}
-		case workeffortfixedassetassign.FieldAvailabilityStatusID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field availability_status_id", values[i])
-			} else if value.Valid {
-				wefaa.AvailabilityStatusID = int(value.Int64)
 			}
 		case workeffortfixedassetassign.FieldAllocatedCost:
 			if value, ok := values[i].(*sql.NullFloat64); !ok {
@@ -159,6 +206,20 @@ func (wefaa *WorkEffortFixedAssetAssign) assignValues(columns []string, values [
 			}
 		case workeffortfixedassetassign.ForeignKeys[1]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field status_item_work_effort_fixed_asset_assigns", value)
+			} else if value.Valid {
+				wefaa.status_item_work_effort_fixed_asset_assigns = new(int)
+				*wefaa.status_item_work_effort_fixed_asset_assigns = int(value.Int64)
+			}
+		case workeffortfixedassetassign.ForeignKeys[2]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field status_item_availability_work_effort_fixed_asset_assigns", value)
+			} else if value.Valid {
+				wefaa.status_item_availability_work_effort_fixed_asset_assigns = new(int)
+				*wefaa.status_item_availability_work_effort_fixed_asset_assigns = int(value.Int64)
+			}
+		case workeffortfixedassetassign.ForeignKeys[3]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field work_effort_work_effort_fixed_asset_assigns", value)
 			} else if value.Valid {
 				wefaa.work_effort_work_effort_fixed_asset_assigns = new(int)
@@ -177,6 +238,16 @@ func (wefaa *WorkEffortFixedAssetAssign) QueryWorkEffort() *WorkEffortQuery {
 // QueryFixedAsset queries the "fixed_asset" edge of the WorkEffortFixedAssetAssign entity.
 func (wefaa *WorkEffortFixedAssetAssign) QueryFixedAsset() *FixedAssetQuery {
 	return (&WorkEffortFixedAssetAssignClient{config: wefaa.config}).QueryFixedAsset(wefaa)
+}
+
+// QueryStatusItem queries the "status_item" edge of the WorkEffortFixedAssetAssign entity.
+func (wefaa *WorkEffortFixedAssetAssign) QueryStatusItem() *StatusItemQuery {
+	return (&WorkEffortFixedAssetAssignClient{config: wefaa.config}).QueryStatusItem(wefaa)
+}
+
+// QueryAvailabilityStatusItem queries the "availability_status_item" edge of the WorkEffortFixedAssetAssign entity.
+func (wefaa *WorkEffortFixedAssetAssign) QueryAvailabilityStatusItem() *StatusItemQuery {
+	return (&WorkEffortFixedAssetAssignClient{config: wefaa.config}).QueryAvailabilityStatusItem(wefaa)
 }
 
 // Update returns a builder for updating this WorkEffortFixedAssetAssign.
@@ -202,14 +273,16 @@ func (wefaa *WorkEffortFixedAssetAssign) String() string {
 	var builder strings.Builder
 	builder.WriteString("WorkEffortFixedAssetAssign(")
 	builder.WriteString(fmt.Sprintf("id=%v", wefaa.ID))
-	builder.WriteString(", status_id=")
-	builder.WriteString(fmt.Sprintf("%v", wefaa.StatusID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(wefaa.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(wefaa.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(wefaa.StringRef)
 	builder.WriteString(", from_date=")
 	builder.WriteString(wefaa.FromDate.Format(time.ANSIC))
 	builder.WriteString(", thru_date=")
 	builder.WriteString(wefaa.ThruDate.Format(time.ANSIC))
-	builder.WriteString(", availability_status_id=")
-	builder.WriteString(fmt.Sprintf("%v", wefaa.AvailabilityStatusID))
 	builder.WriteString(", allocated_cost=")
 	builder.WriteString(fmt.Sprintf("%v", wefaa.AllocatedCost))
 	builder.WriteString(", comments=")

@@ -29,6 +29,26 @@ func (teu *TemporalExpressionUpdate) Where(ps ...predicate.TemporalExpression) *
 	return teu
 }
 
+// SetStringRef sets the "string_ref" field.
+func (teu *TemporalExpressionUpdate) SetStringRef(s string) *TemporalExpressionUpdate {
+	teu.mutation.SetStringRef(s)
+	return teu
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (teu *TemporalExpressionUpdate) SetNillableStringRef(s *string) *TemporalExpressionUpdate {
+	if s != nil {
+		teu.SetStringRef(*s)
+	}
+	return teu
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (teu *TemporalExpressionUpdate) ClearStringRef() *TemporalExpressionUpdate {
+	teu.mutation.ClearStringRef()
+	return teu
+}
+
 // SetTempExprTypeID sets the "temp_expr_type_id" field.
 func (teu *TemporalExpressionUpdate) SetTempExprTypeID(i int) *TemporalExpressionUpdate {
 	teu.mutation.ResetTempExprTypeID()
@@ -343,6 +363,7 @@ func (teu *TemporalExpressionUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	teu.defaults()
 	if len(teu.hooks) == 0 {
 		affected, err = teu.sqlSave(ctx)
 	} else {
@@ -388,6 +409,14 @@ func (teu *TemporalExpressionUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (teu *TemporalExpressionUpdate) defaults() {
+	if _, ok := teu.mutation.UpdateTime(); !ok {
+		v := temporalexpression.UpdateDefaultUpdateTime()
+		teu.mutation.SetUpdateTime(v)
+	}
+}
+
 func (teu *TemporalExpressionUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -405,6 +434,26 @@ func (teu *TemporalExpressionUpdate) sqlSave(ctx context.Context) (n int, err er
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := teu.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpression.FieldUpdateTime,
+		})
+	}
+	if value, ok := teu.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: temporalexpression.FieldStringRef,
+		})
+	}
+	if teu.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: temporalexpression.FieldStringRef,
+		})
 	}
 	if value, ok := teu.mutation.TempExprTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -724,6 +773,26 @@ type TemporalExpressionUpdateOne struct {
 	fields   []string
 	hooks    []Hook
 	mutation *TemporalExpressionMutation
+}
+
+// SetStringRef sets the "string_ref" field.
+func (teuo *TemporalExpressionUpdateOne) SetStringRef(s string) *TemporalExpressionUpdateOne {
+	teuo.mutation.SetStringRef(s)
+	return teuo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (teuo *TemporalExpressionUpdateOne) SetNillableStringRef(s *string) *TemporalExpressionUpdateOne {
+	if s != nil {
+		teuo.SetStringRef(*s)
+	}
+	return teuo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (teuo *TemporalExpressionUpdateOne) ClearStringRef() *TemporalExpressionUpdateOne {
+	teuo.mutation.ClearStringRef()
+	return teuo
 }
 
 // SetTempExprTypeID sets the "temp_expr_type_id" field.
@@ -1047,6 +1116,7 @@ func (teuo *TemporalExpressionUpdateOne) Save(ctx context.Context) (*TemporalExp
 		err  error
 		node *TemporalExpression
 	)
+	teuo.defaults()
 	if len(teuo.hooks) == 0 {
 		node, err = teuo.sqlSave(ctx)
 	} else {
@@ -1092,6 +1162,14 @@ func (teuo *TemporalExpressionUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (teuo *TemporalExpressionUpdateOne) defaults() {
+	if _, ok := teuo.mutation.UpdateTime(); !ok {
+		v := temporalexpression.UpdateDefaultUpdateTime()
+		teuo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (teuo *TemporalExpressionUpdateOne) sqlSave(ctx context.Context) (_node *TemporalExpression, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -1126,6 +1204,26 @@ func (teuo *TemporalExpressionUpdateOne) sqlSave(ctx context.Context) (_node *Te
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := teuo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpression.FieldUpdateTime,
+		})
+	}
+	if value, ok := teuo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: temporalexpression.FieldStringRef,
+		})
+	}
+	if teuo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: temporalexpression.FieldStringRef,
+		})
 	}
 	if value, ok := teuo.mutation.TempExprTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

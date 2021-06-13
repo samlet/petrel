@@ -12,11 +12,14 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortskillstandard"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workefforttype"
 )
 
 // WorkEffortUpdate is the builder for updating WorkEffort entities.
@@ -32,57 +35,23 @@ func (weu *WorkEffortUpdate) Where(ps ...predicate.WorkEffort) *WorkEffortUpdate
 	return weu
 }
 
-// SetWorkEffortTypeID sets the "work_effort_type_id" field.
-func (weu *WorkEffortUpdate) SetWorkEffortTypeID(i int) *WorkEffortUpdate {
-	weu.mutation.ResetWorkEffortTypeID()
-	weu.mutation.SetWorkEffortTypeID(i)
+// SetStringRef sets the "string_ref" field.
+func (weu *WorkEffortUpdate) SetStringRef(s string) *WorkEffortUpdate {
+	weu.mutation.SetStringRef(s)
 	return weu
 }
 
-// SetNillableWorkEffortTypeID sets the "work_effort_type_id" field if the given value is not nil.
-func (weu *WorkEffortUpdate) SetNillableWorkEffortTypeID(i *int) *WorkEffortUpdate {
-	if i != nil {
-		weu.SetWorkEffortTypeID(*i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (weu *WorkEffortUpdate) SetNillableStringRef(s *string) *WorkEffortUpdate {
+	if s != nil {
+		weu.SetStringRef(*s)
 	}
 	return weu
 }
 
-// AddWorkEffortTypeID adds i to the "work_effort_type_id" field.
-func (weu *WorkEffortUpdate) AddWorkEffortTypeID(i int) *WorkEffortUpdate {
-	weu.mutation.AddWorkEffortTypeID(i)
-	return weu
-}
-
-// ClearWorkEffortTypeID clears the value of the "work_effort_type_id" field.
-func (weu *WorkEffortUpdate) ClearWorkEffortTypeID() *WorkEffortUpdate {
-	weu.mutation.ClearWorkEffortTypeID()
-	return weu
-}
-
-// SetCurrentStatusID sets the "current_status_id" field.
-func (weu *WorkEffortUpdate) SetCurrentStatusID(i int) *WorkEffortUpdate {
-	weu.mutation.ResetCurrentStatusID()
-	weu.mutation.SetCurrentStatusID(i)
-	return weu
-}
-
-// SetNillableCurrentStatusID sets the "current_status_id" field if the given value is not nil.
-func (weu *WorkEffortUpdate) SetNillableCurrentStatusID(i *int) *WorkEffortUpdate {
-	if i != nil {
-		weu.SetCurrentStatusID(*i)
-	}
-	return weu
-}
-
-// AddCurrentStatusID adds i to the "current_status_id" field.
-func (weu *WorkEffortUpdate) AddCurrentStatusID(i int) *WorkEffortUpdate {
-	weu.mutation.AddCurrentStatusID(i)
-	return weu
-}
-
-// ClearCurrentStatusID clears the value of the "current_status_id" field.
-func (weu *WorkEffortUpdate) ClearCurrentStatusID() *WorkEffortUpdate {
-	weu.mutation.ClearCurrentStatusID()
+// ClearStringRef clears the value of the "string_ref" field.
+func (weu *WorkEffortUpdate) ClearStringRef() *WorkEffortUpdate {
+	weu.mutation.ClearStringRef()
 	return weu
 }
 
@@ -1202,6 +1171,25 @@ func (weu *WorkEffortUpdate) ClearSequenceNum() *WorkEffortUpdate {
 	return weu
 }
 
+// SetWorkEffortTypeID sets the "work_effort_type" edge to the WorkEffortType entity by ID.
+func (weu *WorkEffortUpdate) SetWorkEffortTypeID(id int) *WorkEffortUpdate {
+	weu.mutation.SetWorkEffortTypeID(id)
+	return weu
+}
+
+// SetNillableWorkEffortTypeID sets the "work_effort_type" edge to the WorkEffortType entity by ID if the given value is not nil.
+func (weu *WorkEffortUpdate) SetNillableWorkEffortTypeID(id *int) *WorkEffortUpdate {
+	if id != nil {
+		weu = weu.SetWorkEffortTypeID(*id)
+	}
+	return weu
+}
+
+// SetWorkEffortType sets the "work_effort_type" edge to the WorkEffortType entity.
+func (weu *WorkEffortUpdate) SetWorkEffortType(w *WorkEffortType) *WorkEffortUpdate {
+	return weu.SetWorkEffortTypeID(w.ID)
+}
+
 // SetParentID sets the "parent" edge to the WorkEffort entity by ID.
 func (weu *WorkEffortUpdate) SetParentID(id int) *WorkEffortUpdate {
 	weu.mutation.SetParentID(id)
@@ -1234,6 +1222,25 @@ func (weu *WorkEffortUpdate) AddChildren(w ...*WorkEffort) *WorkEffortUpdate {
 		ids[i] = w[i].ID
 	}
 	return weu.AddChildIDs(ids...)
+}
+
+// SetCurrentStatusItemID sets the "current_status_item" edge to the StatusItem entity by ID.
+func (weu *WorkEffortUpdate) SetCurrentStatusItemID(id int) *WorkEffortUpdate {
+	weu.mutation.SetCurrentStatusItemID(id)
+	return weu
+}
+
+// SetNillableCurrentStatusItemID sets the "current_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (weu *WorkEffortUpdate) SetNillableCurrentStatusItemID(id *int) *WorkEffortUpdate {
+	if id != nil {
+		weu = weu.SetCurrentStatusItemID(*id)
+	}
+	return weu
+}
+
+// SetCurrentStatusItem sets the "current_status_item" edge to the StatusItem entity.
+func (weu *WorkEffortUpdate) SetCurrentStatusItem(s *StatusItem) *WorkEffortUpdate {
+	return weu.SetCurrentStatusItemID(s.ID)
 }
 
 // SetFixedAssetID sets the "fixed_asset" edge to the FixedAsset entity by ID.
@@ -1349,9 +1356,30 @@ func (weu *WorkEffortUpdate) AddWorkEffortPartyAssignments(w ...*WorkEffortParty
 	return weu.AddWorkEffortPartyAssignmentIDs(ids...)
 }
 
+// AddWorkEffortSkillStandardIDs adds the "work_effort_skill_standards" edge to the WorkEffortSkillStandard entity by IDs.
+func (weu *WorkEffortUpdate) AddWorkEffortSkillStandardIDs(ids ...int) *WorkEffortUpdate {
+	weu.mutation.AddWorkEffortSkillStandardIDs(ids...)
+	return weu
+}
+
+// AddWorkEffortSkillStandards adds the "work_effort_skill_standards" edges to the WorkEffortSkillStandard entity.
+func (weu *WorkEffortUpdate) AddWorkEffortSkillStandards(w ...*WorkEffortSkillStandard) *WorkEffortUpdate {
+	ids := make([]int, len(w))
+	for i := range w {
+		ids[i] = w[i].ID
+	}
+	return weu.AddWorkEffortSkillStandardIDs(ids...)
+}
+
 // Mutation returns the WorkEffortMutation object of the builder.
 func (weu *WorkEffortUpdate) Mutation() *WorkEffortMutation {
 	return weu.mutation
+}
+
+// ClearWorkEffortType clears the "work_effort_type" edge to the WorkEffortType entity.
+func (weu *WorkEffortUpdate) ClearWorkEffortType() *WorkEffortUpdate {
+	weu.mutation.ClearWorkEffortType()
+	return weu
 }
 
 // ClearParent clears the "parent" edge to the WorkEffort entity.
@@ -1379,6 +1407,12 @@ func (weu *WorkEffortUpdate) RemoveChildren(w ...*WorkEffort) *WorkEffortUpdate 
 		ids[i] = w[i].ID
 	}
 	return weu.RemoveChildIDs(ids...)
+}
+
+// ClearCurrentStatusItem clears the "current_status_item" edge to the StatusItem entity.
+func (weu *WorkEffortUpdate) ClearCurrentStatusItem() *WorkEffortUpdate {
+	weu.mutation.ClearCurrentStatusItem()
+	return weu
 }
 
 // ClearFixedAsset clears the "fixed_asset" edge to the FixedAsset entity.
@@ -1498,12 +1532,34 @@ func (weu *WorkEffortUpdate) RemoveWorkEffortPartyAssignments(w ...*WorkEffortPa
 	return weu.RemoveWorkEffortPartyAssignmentIDs(ids...)
 }
 
+// ClearWorkEffortSkillStandards clears all "work_effort_skill_standards" edges to the WorkEffortSkillStandard entity.
+func (weu *WorkEffortUpdate) ClearWorkEffortSkillStandards() *WorkEffortUpdate {
+	weu.mutation.ClearWorkEffortSkillStandards()
+	return weu
+}
+
+// RemoveWorkEffortSkillStandardIDs removes the "work_effort_skill_standards" edge to WorkEffortSkillStandard entities by IDs.
+func (weu *WorkEffortUpdate) RemoveWorkEffortSkillStandardIDs(ids ...int) *WorkEffortUpdate {
+	weu.mutation.RemoveWorkEffortSkillStandardIDs(ids...)
+	return weu
+}
+
+// RemoveWorkEffortSkillStandards removes "work_effort_skill_standards" edges to WorkEffortSkillStandard entities.
+func (weu *WorkEffortUpdate) RemoveWorkEffortSkillStandards(w ...*WorkEffortSkillStandard) *WorkEffortUpdate {
+	ids := make([]int, len(w))
+	for i := range w {
+		ids[i] = w[i].ID
+	}
+	return weu.RemoveWorkEffortSkillStandardIDs(ids...)
+}
+
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (weu *WorkEffortUpdate) Save(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
 	)
+	weu.defaults()
 	if len(weu.hooks) == 0 {
 		if err = weu.check(); err != nil {
 			return 0, err
@@ -1555,6 +1611,14 @@ func (weu *WorkEffortUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (weu *WorkEffortUpdate) defaults() {
+	if _, ok := weu.mutation.UpdateTime(); !ok {
+		v := workeffort.UpdateDefaultUpdateTime()
+		weu.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (weu *WorkEffortUpdate) check() error {
 	if v, ok := weu.mutation.SendNotificationEmail(); ok {
@@ -1588,44 +1652,24 @@ func (weu *WorkEffortUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			}
 		}
 	}
-	if value, ok := weu.mutation.WorkEffortTypeID(); ok {
+	if value, ok := weu.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffort.FieldWorkEffortTypeID,
+			Column: workeffort.FieldUpdateTime,
 		})
 	}
-	if value, ok := weu.mutation.AddedWorkEffortTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldWorkEffortTypeID,
-		})
-	}
-	if weu.mutation.WorkEffortTypeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffort.FieldWorkEffortTypeID,
-		})
-	}
-	if value, ok := weu.mutation.CurrentStatusID(); ok {
+	if value, ok := weu.mutation.StringRef(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeString,
 			Value:  value,
-			Column: workeffort.FieldCurrentStatusID,
+			Column: workeffort.FieldStringRef,
 		})
 	}
-	if value, ok := weu.mutation.AddedCurrentStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldCurrentStatusID,
-		})
-	}
-	if weu.mutation.CurrentStatusIDCleared() {
+	if weu.mutation.StringRefCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffort.FieldCurrentStatusID,
+			Type:   field.TypeString,
+			Column: workeffort.FieldStringRef,
 		})
 	}
 	if value, ok := weu.mutation.LastStatusUpdate(); ok {
@@ -2422,6 +2466,41 @@ func (weu *WorkEffortUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: workeffort.FieldSequenceNum,
 		})
 	}
+	if weu.mutation.WorkEffortTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.WorkEffortTypeTable,
+			Columns: []string{workeffort.WorkEffortTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workefforttype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weu.mutation.WorkEffortTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.WorkEffortTypeTable,
+			Columns: []string{workeffort.WorkEffortTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workefforttype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if weu.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -2503,6 +2582,41 @@ func (weu *WorkEffortUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: workeffort.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if weu.mutation.CurrentStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.CurrentStatusItemTable,
+			Columns: []string{workeffort.CurrentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weu.mutation.CurrentStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.CurrentStatusItemTable,
+			Columns: []string{workeffort.CurrentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
 				},
 			},
 		}
@@ -2851,6 +2965,60 @@ func (weu *WorkEffortUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if weu.mutation.WorkEffortSkillStandardsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   workeffort.WorkEffortSkillStandardsTable,
+			Columns: []string{workeffort.WorkEffortSkillStandardsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workeffortskillstandard.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weu.mutation.RemovedWorkEffortSkillStandardsIDs(); len(nodes) > 0 && !weu.mutation.WorkEffortSkillStandardsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   workeffort.WorkEffortSkillStandardsTable,
+			Columns: []string{workeffort.WorkEffortSkillStandardsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workeffortskillstandard.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weu.mutation.WorkEffortSkillStandardsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   workeffort.WorkEffortSkillStandardsTable,
+			Columns: []string{workeffort.WorkEffortSkillStandardsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workeffortskillstandard.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, weu.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{workeffort.Label}
@@ -2870,57 +3038,23 @@ type WorkEffortUpdateOne struct {
 	mutation *WorkEffortMutation
 }
 
-// SetWorkEffortTypeID sets the "work_effort_type_id" field.
-func (weuo *WorkEffortUpdateOne) SetWorkEffortTypeID(i int) *WorkEffortUpdateOne {
-	weuo.mutation.ResetWorkEffortTypeID()
-	weuo.mutation.SetWorkEffortTypeID(i)
+// SetStringRef sets the "string_ref" field.
+func (weuo *WorkEffortUpdateOne) SetStringRef(s string) *WorkEffortUpdateOne {
+	weuo.mutation.SetStringRef(s)
 	return weuo
 }
 
-// SetNillableWorkEffortTypeID sets the "work_effort_type_id" field if the given value is not nil.
-func (weuo *WorkEffortUpdateOne) SetNillableWorkEffortTypeID(i *int) *WorkEffortUpdateOne {
-	if i != nil {
-		weuo.SetWorkEffortTypeID(*i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (weuo *WorkEffortUpdateOne) SetNillableStringRef(s *string) *WorkEffortUpdateOne {
+	if s != nil {
+		weuo.SetStringRef(*s)
 	}
 	return weuo
 }
 
-// AddWorkEffortTypeID adds i to the "work_effort_type_id" field.
-func (weuo *WorkEffortUpdateOne) AddWorkEffortTypeID(i int) *WorkEffortUpdateOne {
-	weuo.mutation.AddWorkEffortTypeID(i)
-	return weuo
-}
-
-// ClearWorkEffortTypeID clears the value of the "work_effort_type_id" field.
-func (weuo *WorkEffortUpdateOne) ClearWorkEffortTypeID() *WorkEffortUpdateOne {
-	weuo.mutation.ClearWorkEffortTypeID()
-	return weuo
-}
-
-// SetCurrentStatusID sets the "current_status_id" field.
-func (weuo *WorkEffortUpdateOne) SetCurrentStatusID(i int) *WorkEffortUpdateOne {
-	weuo.mutation.ResetCurrentStatusID()
-	weuo.mutation.SetCurrentStatusID(i)
-	return weuo
-}
-
-// SetNillableCurrentStatusID sets the "current_status_id" field if the given value is not nil.
-func (weuo *WorkEffortUpdateOne) SetNillableCurrentStatusID(i *int) *WorkEffortUpdateOne {
-	if i != nil {
-		weuo.SetCurrentStatusID(*i)
-	}
-	return weuo
-}
-
-// AddCurrentStatusID adds i to the "current_status_id" field.
-func (weuo *WorkEffortUpdateOne) AddCurrentStatusID(i int) *WorkEffortUpdateOne {
-	weuo.mutation.AddCurrentStatusID(i)
-	return weuo
-}
-
-// ClearCurrentStatusID clears the value of the "current_status_id" field.
-func (weuo *WorkEffortUpdateOne) ClearCurrentStatusID() *WorkEffortUpdateOne {
-	weuo.mutation.ClearCurrentStatusID()
+// ClearStringRef clears the value of the "string_ref" field.
+func (weuo *WorkEffortUpdateOne) ClearStringRef() *WorkEffortUpdateOne {
+	weuo.mutation.ClearStringRef()
 	return weuo
 }
 
@@ -4040,6 +4174,25 @@ func (weuo *WorkEffortUpdateOne) ClearSequenceNum() *WorkEffortUpdateOne {
 	return weuo
 }
 
+// SetWorkEffortTypeID sets the "work_effort_type" edge to the WorkEffortType entity by ID.
+func (weuo *WorkEffortUpdateOne) SetWorkEffortTypeID(id int) *WorkEffortUpdateOne {
+	weuo.mutation.SetWorkEffortTypeID(id)
+	return weuo
+}
+
+// SetNillableWorkEffortTypeID sets the "work_effort_type" edge to the WorkEffortType entity by ID if the given value is not nil.
+func (weuo *WorkEffortUpdateOne) SetNillableWorkEffortTypeID(id *int) *WorkEffortUpdateOne {
+	if id != nil {
+		weuo = weuo.SetWorkEffortTypeID(*id)
+	}
+	return weuo
+}
+
+// SetWorkEffortType sets the "work_effort_type" edge to the WorkEffortType entity.
+func (weuo *WorkEffortUpdateOne) SetWorkEffortType(w *WorkEffortType) *WorkEffortUpdateOne {
+	return weuo.SetWorkEffortTypeID(w.ID)
+}
+
 // SetParentID sets the "parent" edge to the WorkEffort entity by ID.
 func (weuo *WorkEffortUpdateOne) SetParentID(id int) *WorkEffortUpdateOne {
 	weuo.mutation.SetParentID(id)
@@ -4072,6 +4225,25 @@ func (weuo *WorkEffortUpdateOne) AddChildren(w ...*WorkEffort) *WorkEffortUpdate
 		ids[i] = w[i].ID
 	}
 	return weuo.AddChildIDs(ids...)
+}
+
+// SetCurrentStatusItemID sets the "current_status_item" edge to the StatusItem entity by ID.
+func (weuo *WorkEffortUpdateOne) SetCurrentStatusItemID(id int) *WorkEffortUpdateOne {
+	weuo.mutation.SetCurrentStatusItemID(id)
+	return weuo
+}
+
+// SetNillableCurrentStatusItemID sets the "current_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (weuo *WorkEffortUpdateOne) SetNillableCurrentStatusItemID(id *int) *WorkEffortUpdateOne {
+	if id != nil {
+		weuo = weuo.SetCurrentStatusItemID(*id)
+	}
+	return weuo
+}
+
+// SetCurrentStatusItem sets the "current_status_item" edge to the StatusItem entity.
+func (weuo *WorkEffortUpdateOne) SetCurrentStatusItem(s *StatusItem) *WorkEffortUpdateOne {
+	return weuo.SetCurrentStatusItemID(s.ID)
 }
 
 // SetFixedAssetID sets the "fixed_asset" edge to the FixedAsset entity by ID.
@@ -4187,9 +4359,30 @@ func (weuo *WorkEffortUpdateOne) AddWorkEffortPartyAssignments(w ...*WorkEffortP
 	return weuo.AddWorkEffortPartyAssignmentIDs(ids...)
 }
 
+// AddWorkEffortSkillStandardIDs adds the "work_effort_skill_standards" edge to the WorkEffortSkillStandard entity by IDs.
+func (weuo *WorkEffortUpdateOne) AddWorkEffortSkillStandardIDs(ids ...int) *WorkEffortUpdateOne {
+	weuo.mutation.AddWorkEffortSkillStandardIDs(ids...)
+	return weuo
+}
+
+// AddWorkEffortSkillStandards adds the "work_effort_skill_standards" edges to the WorkEffortSkillStandard entity.
+func (weuo *WorkEffortUpdateOne) AddWorkEffortSkillStandards(w ...*WorkEffortSkillStandard) *WorkEffortUpdateOne {
+	ids := make([]int, len(w))
+	for i := range w {
+		ids[i] = w[i].ID
+	}
+	return weuo.AddWorkEffortSkillStandardIDs(ids...)
+}
+
 // Mutation returns the WorkEffortMutation object of the builder.
 func (weuo *WorkEffortUpdateOne) Mutation() *WorkEffortMutation {
 	return weuo.mutation
+}
+
+// ClearWorkEffortType clears the "work_effort_type" edge to the WorkEffortType entity.
+func (weuo *WorkEffortUpdateOne) ClearWorkEffortType() *WorkEffortUpdateOne {
+	weuo.mutation.ClearWorkEffortType()
+	return weuo
 }
 
 // ClearParent clears the "parent" edge to the WorkEffort entity.
@@ -4217,6 +4410,12 @@ func (weuo *WorkEffortUpdateOne) RemoveChildren(w ...*WorkEffort) *WorkEffortUpd
 		ids[i] = w[i].ID
 	}
 	return weuo.RemoveChildIDs(ids...)
+}
+
+// ClearCurrentStatusItem clears the "current_status_item" edge to the StatusItem entity.
+func (weuo *WorkEffortUpdateOne) ClearCurrentStatusItem() *WorkEffortUpdateOne {
+	weuo.mutation.ClearCurrentStatusItem()
+	return weuo
 }
 
 // ClearFixedAsset clears the "fixed_asset" edge to the FixedAsset entity.
@@ -4336,6 +4535,27 @@ func (weuo *WorkEffortUpdateOne) RemoveWorkEffortPartyAssignments(w ...*WorkEffo
 	return weuo.RemoveWorkEffortPartyAssignmentIDs(ids...)
 }
 
+// ClearWorkEffortSkillStandards clears all "work_effort_skill_standards" edges to the WorkEffortSkillStandard entity.
+func (weuo *WorkEffortUpdateOne) ClearWorkEffortSkillStandards() *WorkEffortUpdateOne {
+	weuo.mutation.ClearWorkEffortSkillStandards()
+	return weuo
+}
+
+// RemoveWorkEffortSkillStandardIDs removes the "work_effort_skill_standards" edge to WorkEffortSkillStandard entities by IDs.
+func (weuo *WorkEffortUpdateOne) RemoveWorkEffortSkillStandardIDs(ids ...int) *WorkEffortUpdateOne {
+	weuo.mutation.RemoveWorkEffortSkillStandardIDs(ids...)
+	return weuo
+}
+
+// RemoveWorkEffortSkillStandards removes "work_effort_skill_standards" edges to WorkEffortSkillStandard entities.
+func (weuo *WorkEffortUpdateOne) RemoveWorkEffortSkillStandards(w ...*WorkEffortSkillStandard) *WorkEffortUpdateOne {
+	ids := make([]int, len(w))
+	for i := range w {
+		ids[i] = w[i].ID
+	}
+	return weuo.RemoveWorkEffortSkillStandardIDs(ids...)
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (weuo *WorkEffortUpdateOne) Select(field string, fields ...string) *WorkEffortUpdateOne {
@@ -4349,6 +4569,7 @@ func (weuo *WorkEffortUpdateOne) Save(ctx context.Context) (*WorkEffort, error) 
 		err  error
 		node *WorkEffort
 	)
+	weuo.defaults()
 	if len(weuo.hooks) == 0 {
 		if err = weuo.check(); err != nil {
 			return nil, err
@@ -4397,6 +4618,14 @@ func (weuo *WorkEffortUpdateOne) Exec(ctx context.Context) error {
 func (weuo *WorkEffortUpdateOne) ExecX(ctx context.Context) {
 	if err := weuo.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (weuo *WorkEffortUpdateOne) defaults() {
+	if _, ok := weuo.mutation.UpdateTime(); !ok {
+		v := workeffort.UpdateDefaultUpdateTime()
+		weuo.mutation.SetUpdateTime(v)
 	}
 }
 
@@ -4450,44 +4679,24 @@ func (weuo *WorkEffortUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffort
 			}
 		}
 	}
-	if value, ok := weuo.mutation.WorkEffortTypeID(); ok {
+	if value, ok := weuo.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffort.FieldWorkEffortTypeID,
+			Column: workeffort.FieldUpdateTime,
 		})
 	}
-	if value, ok := weuo.mutation.AddedWorkEffortTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldWorkEffortTypeID,
-		})
-	}
-	if weuo.mutation.WorkEffortTypeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffort.FieldWorkEffortTypeID,
-		})
-	}
-	if value, ok := weuo.mutation.CurrentStatusID(); ok {
+	if value, ok := weuo.mutation.StringRef(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeString,
 			Value:  value,
-			Column: workeffort.FieldCurrentStatusID,
+			Column: workeffort.FieldStringRef,
 		})
 	}
-	if value, ok := weuo.mutation.AddedCurrentStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffort.FieldCurrentStatusID,
-		})
-	}
-	if weuo.mutation.CurrentStatusIDCleared() {
+	if weuo.mutation.StringRefCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffort.FieldCurrentStatusID,
+			Type:   field.TypeString,
+			Column: workeffort.FieldStringRef,
 		})
 	}
 	if value, ok := weuo.mutation.LastStatusUpdate(); ok {
@@ -5284,6 +5493,41 @@ func (weuo *WorkEffortUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffort
 			Column: workeffort.FieldSequenceNum,
 		})
 	}
+	if weuo.mutation.WorkEffortTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.WorkEffortTypeTable,
+			Columns: []string{workeffort.WorkEffortTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workefforttype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weuo.mutation.WorkEffortTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.WorkEffortTypeTable,
+			Columns: []string{workeffort.WorkEffortTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workefforttype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if weuo.mutation.ParentCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -5365,6 +5609,41 @@ func (weuo *WorkEffortUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffort
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: workeffort.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if weuo.mutation.CurrentStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.CurrentStatusItemTable,
+			Columns: []string{workeffort.CurrentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weuo.mutation.CurrentStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.CurrentStatusItemTable,
+			Columns: []string{workeffort.CurrentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
 				},
 			},
 		}
@@ -5705,6 +5984,60 @@ func (weuo *WorkEffortUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffort
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: workeffortpartyassignment.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if weuo.mutation.WorkEffortSkillStandardsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   workeffort.WorkEffortSkillStandardsTable,
+			Columns: []string{workeffort.WorkEffortSkillStandardsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workeffortskillstandard.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weuo.mutation.RemovedWorkEffortSkillStandardsIDs(); len(nodes) > 0 && !weuo.mutation.WorkEffortSkillStandardsCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   workeffort.WorkEffortSkillStandardsTable,
+			Columns: []string{workeffort.WorkEffortSkillStandardsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workeffortskillstandard.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := weuo.mutation.WorkEffortSkillStandardsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   workeffort.WorkEffortSkillStandardsTable,
+			Columns: []string{workeffort.WorkEffortSkillStandardsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workeffortskillstandard.FieldID,
 				},
 			},
 		}

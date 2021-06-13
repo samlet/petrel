@@ -32,6 +32,26 @@ func (ulu *UserLoginUpdate) Where(ps ...predicate.UserLogin) *UserLoginUpdate {
 	return ulu
 }
 
+// SetStringRef sets the "string_ref" field.
+func (ulu *UserLoginUpdate) SetStringRef(s string) *UserLoginUpdate {
+	ulu.mutation.SetStringRef(s)
+	return ulu
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (ulu *UserLoginUpdate) SetNillableStringRef(s *string) *UserLoginUpdate {
+	if s != nil {
+		ulu.SetStringRef(*s)
+	}
+	return ulu
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (ulu *UserLoginUpdate) ClearStringRef() *UserLoginUpdate {
+	ulu.mutation.ClearStringRef()
+	return ulu
+}
+
 // SetCurrentPassword sets the "current_password" field.
 func (ulu *UserLoginUpdate) SetCurrentPassword(s string) *UserLoginUpdate {
 	ulu.mutation.SetCurrentPassword(s)
@@ -567,6 +587,7 @@ func (ulu *UserLoginUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	ulu.defaults()
 	if len(ulu.hooks) == 0 {
 		if err = ulu.check(); err != nil {
 			return 0, err
@@ -615,6 +636,14 @@ func (ulu *UserLoginUpdate) Exec(ctx context.Context) error {
 func (ulu *UserLoginUpdate) ExecX(ctx context.Context) {
 	if err := ulu.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (ulu *UserLoginUpdate) defaults() {
+	if _, ok := ulu.mutation.UpdateTime(); !ok {
+		v := userlogin.UpdateDefaultUpdateTime()
+		ulu.mutation.SetUpdateTime(v)
 	}
 }
 
@@ -670,6 +699,26 @@ func (ulu *UserLoginUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := ulu.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userlogin.FieldUpdateTime,
+		})
+	}
+	if value, ok := ulu.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: userlogin.FieldStringRef,
+		})
+	}
+	if ulu.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: userlogin.FieldStringRef,
+		})
 	}
 	if value, ok := ulu.mutation.CurrentPassword(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -1226,6 +1275,26 @@ type UserLoginUpdateOne struct {
 	mutation *UserLoginMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (uluo *UserLoginUpdateOne) SetStringRef(s string) *UserLoginUpdateOne {
+	uluo.mutation.SetStringRef(s)
+	return uluo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (uluo *UserLoginUpdateOne) SetNillableStringRef(s *string) *UserLoginUpdateOne {
+	if s != nil {
+		uluo.SetStringRef(*s)
+	}
+	return uluo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (uluo *UserLoginUpdateOne) ClearStringRef() *UserLoginUpdateOne {
+	uluo.mutation.ClearStringRef()
+	return uluo
+}
+
 // SetCurrentPassword sets the "current_password" field.
 func (uluo *UserLoginUpdateOne) SetCurrentPassword(s string) *UserLoginUpdateOne {
 	uluo.mutation.SetCurrentPassword(s)
@@ -1768,6 +1837,7 @@ func (uluo *UserLoginUpdateOne) Save(ctx context.Context) (*UserLogin, error) {
 		err  error
 		node *UserLogin
 	)
+	uluo.defaults()
 	if len(uluo.hooks) == 0 {
 		if err = uluo.check(); err != nil {
 			return nil, err
@@ -1816,6 +1886,14 @@ func (uluo *UserLoginUpdateOne) Exec(ctx context.Context) error {
 func (uluo *UserLoginUpdateOne) ExecX(ctx context.Context) {
 	if err := uluo.Exec(ctx); err != nil {
 		panic(err)
+	}
+}
+
+// defaults sets the default values of the builder before save.
+func (uluo *UserLoginUpdateOne) defaults() {
+	if _, ok := uluo.mutation.UpdateTime(); !ok {
+		v := userlogin.UpdateDefaultUpdateTime()
+		uluo.mutation.SetUpdateTime(v)
 	}
 }
 
@@ -1888,6 +1966,26 @@ func (uluo *UserLoginUpdateOne) sqlSave(ctx context.Context) (_node *UserLogin, 
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := uluo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userlogin.FieldUpdateTime,
+		})
+	}
+	if value, ok := uluo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: userlogin.FieldStringRef,
+		})
+	}
+	if uluo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: userlogin.FieldStringRef,
+		})
 	}
 	if value, ok := uluo.mutation.CurrentPassword(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

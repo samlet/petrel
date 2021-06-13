@@ -4,7 +4,9 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
+	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
@@ -17,6 +19,48 @@ type TemporalExpressionAssocCreate struct {
 	config
 	mutation *TemporalExpressionAssocMutation
 	hooks    []Hook
+}
+
+// SetCreateTime sets the "create_time" field.
+func (teac *TemporalExpressionAssocCreate) SetCreateTime(t time.Time) *TemporalExpressionAssocCreate {
+	teac.mutation.SetCreateTime(t)
+	return teac
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (teac *TemporalExpressionAssocCreate) SetNillableCreateTime(t *time.Time) *TemporalExpressionAssocCreate {
+	if t != nil {
+		teac.SetCreateTime(*t)
+	}
+	return teac
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (teac *TemporalExpressionAssocCreate) SetUpdateTime(t time.Time) *TemporalExpressionAssocCreate {
+	teac.mutation.SetUpdateTime(t)
+	return teac
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (teac *TemporalExpressionAssocCreate) SetNillableUpdateTime(t *time.Time) *TemporalExpressionAssocCreate {
+	if t != nil {
+		teac.SetUpdateTime(*t)
+	}
+	return teac
+}
+
+// SetStringRef sets the "string_ref" field.
+func (teac *TemporalExpressionAssocCreate) SetStringRef(s string) *TemporalExpressionAssocCreate {
+	teac.mutation.SetStringRef(s)
+	return teac
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (teac *TemporalExpressionAssocCreate) SetNillableStringRef(s *string) *TemporalExpressionAssocCreate {
+	if s != nil {
+		teac.SetStringRef(*s)
+	}
+	return teac
 }
 
 // SetExprAssocType sets the "expr_assoc_type" field.
@@ -82,6 +126,7 @@ func (teac *TemporalExpressionAssocCreate) Save(ctx context.Context) (*TemporalE
 		err  error
 		node *TemporalExpressionAssoc
 	)
+	teac.defaults()
 	if len(teac.hooks) == 0 {
 		if err = teac.check(); err != nil {
 			return nil, err
@@ -97,7 +142,10 @@ func (teac *TemporalExpressionAssocCreate) Save(ctx context.Context) (*TemporalE
 				return nil, err
 			}
 			teac.mutation = mutation
-			node, err = teac.sqlSave(ctx)
+			if node, err = teac.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -120,8 +168,26 @@ func (teac *TemporalExpressionAssocCreate) SaveX(ctx context.Context) *TemporalE
 	return v
 }
 
+// defaults sets the default values of the builder before save.
+func (teac *TemporalExpressionAssocCreate) defaults() {
+	if _, ok := teac.mutation.CreateTime(); !ok {
+		v := temporalexpressionassoc.DefaultCreateTime()
+		teac.mutation.SetCreateTime(v)
+	}
+	if _, ok := teac.mutation.UpdateTime(); !ok {
+		v := temporalexpressionassoc.DefaultUpdateTime()
+		teac.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (teac *TemporalExpressionAssocCreate) check() error {
+	if _, ok := teac.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := teac.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	return nil
 }
 
@@ -149,6 +215,30 @@ func (teac *TemporalExpressionAssocCreate) createSpec() (*TemporalExpressionAsso
 			},
 		}
 	)
+	if value, ok := teac.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpressionassoc.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := teac.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: temporalexpressionassoc.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := teac.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: temporalexpressionassoc.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := teac.mutation.ExprAssocType(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -214,6 +304,7 @@ func (teacb *TemporalExpressionAssocCreateBulk) Save(ctx context.Context) ([]*Te
 	for i := range teacb.builders {
 		func(i int, root context.Context) {
 			builder := teacb.builders[i]
+			builder.defaults()
 			var mut Mutator = MutateFunc(func(ctx context.Context, m Mutation) (Value, error) {
 				mutation, ok := m.(*TemporalExpressionAssocMutation)
 				if !ok {
@@ -235,10 +326,11 @@ func (teacb *TemporalExpressionAssocCreateBulk) Save(ctx context.Context) ([]*Te
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

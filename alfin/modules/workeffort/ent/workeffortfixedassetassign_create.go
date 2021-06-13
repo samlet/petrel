@@ -11,6 +11,7 @@ import (
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 )
@@ -22,16 +23,44 @@ type WorkEffortFixedAssetAssignCreate struct {
 	hooks    []Hook
 }
 
-// SetStatusID sets the "status_id" field.
-func (wefaac *WorkEffortFixedAssetAssignCreate) SetStatusID(i int) *WorkEffortFixedAssetAssignCreate {
-	wefaac.mutation.SetStatusID(i)
+// SetCreateTime sets the "create_time" field.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetCreateTime(t time.Time) *WorkEffortFixedAssetAssignCreate {
+	wefaac.mutation.SetCreateTime(t)
 	return wefaac
 }
 
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableStatusID(i *int) *WorkEffortFixedAssetAssignCreate {
-	if i != nil {
-		wefaac.SetStatusID(*i)
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableCreateTime(t *time.Time) *WorkEffortFixedAssetAssignCreate {
+	if t != nil {
+		wefaac.SetCreateTime(*t)
+	}
+	return wefaac
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetUpdateTime(t time.Time) *WorkEffortFixedAssetAssignCreate {
+	wefaac.mutation.SetUpdateTime(t)
+	return wefaac
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableUpdateTime(t *time.Time) *WorkEffortFixedAssetAssignCreate {
+	if t != nil {
+		wefaac.SetUpdateTime(*t)
+	}
+	return wefaac
+}
+
+// SetStringRef sets the "string_ref" field.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetStringRef(s string) *WorkEffortFixedAssetAssignCreate {
+	wefaac.mutation.SetStringRef(s)
+	return wefaac
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableStringRef(s *string) *WorkEffortFixedAssetAssignCreate {
+	if s != nil {
+		wefaac.SetStringRef(*s)
 	}
 	return wefaac
 }
@@ -60,20 +89,6 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) SetThruDate(t time.Time) *WorkEf
 func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableThruDate(t *time.Time) *WorkEffortFixedAssetAssignCreate {
 	if t != nil {
 		wefaac.SetThruDate(*t)
-	}
-	return wefaac
-}
-
-// SetAvailabilityStatusID sets the "availability_status_id" field.
-func (wefaac *WorkEffortFixedAssetAssignCreate) SetAvailabilityStatusID(i int) *WorkEffortFixedAssetAssignCreate {
-	wefaac.mutation.SetAvailabilityStatusID(i)
-	return wefaac
-}
-
-// SetNillableAvailabilityStatusID sets the "availability_status_id" field if the given value is not nil.
-func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableAvailabilityStatusID(i *int) *WorkEffortFixedAssetAssignCreate {
-	if i != nil {
-		wefaac.SetAvailabilityStatusID(*i)
 	}
 	return wefaac
 }
@@ -144,6 +159,44 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) SetFixedAsset(f *FixedAsset) *Wo
 	return wefaac.SetFixedAssetID(f.ID)
 }
 
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetStatusItemID(id int) *WorkEffortFixedAssetAssignCreate {
+	wefaac.mutation.SetStatusItemID(id)
+	return wefaac
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableStatusItemID(id *int) *WorkEffortFixedAssetAssignCreate {
+	if id != nil {
+		wefaac = wefaac.SetStatusItemID(*id)
+	}
+	return wefaac
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetStatusItem(s *StatusItem) *WorkEffortFixedAssetAssignCreate {
+	return wefaac.SetStatusItemID(s.ID)
+}
+
+// SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetAvailabilityStatusItemID(id int) *WorkEffortFixedAssetAssignCreate {
+	wefaac.mutation.SetAvailabilityStatusItemID(id)
+	return wefaac
+}
+
+// SetNillableAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetNillableAvailabilityStatusItemID(id *int) *WorkEffortFixedAssetAssignCreate {
+	if id != nil {
+		wefaac = wefaac.SetAvailabilityStatusItemID(*id)
+	}
+	return wefaac
+}
+
+// SetAvailabilityStatusItem sets the "availability_status_item" edge to the StatusItem entity.
+func (wefaac *WorkEffortFixedAssetAssignCreate) SetAvailabilityStatusItem(s *StatusItem) *WorkEffortFixedAssetAssignCreate {
+	return wefaac.SetAvailabilityStatusItemID(s.ID)
+}
+
 // Mutation returns the WorkEffortFixedAssetAssignMutation object of the builder.
 func (wefaac *WorkEffortFixedAssetAssignCreate) Mutation() *WorkEffortFixedAssetAssignMutation {
 	return wefaac.mutation
@@ -171,7 +224,10 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) Save(ctx context.Context) (*Work
 				return nil, err
 			}
 			wefaac.mutation = mutation
-			node, err = wefaac.sqlSave(ctx)
+			if node, err = wefaac.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -196,6 +252,14 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) SaveX(ctx context.Context) *Work
 
 // defaults sets the default values of the builder before save.
 func (wefaac *WorkEffortFixedAssetAssignCreate) defaults() {
+	if _, ok := wefaac.mutation.CreateTime(); !ok {
+		v := workeffortfixedassetassign.DefaultCreateTime()
+		wefaac.mutation.SetCreateTime(v)
+	}
+	if _, ok := wefaac.mutation.UpdateTime(); !ok {
+		v := workeffortfixedassetassign.DefaultUpdateTime()
+		wefaac.mutation.SetUpdateTime(v)
+	}
 	if _, ok := wefaac.mutation.FromDate(); !ok {
 		v := workeffortfixedassetassign.DefaultFromDate()
 		wefaac.mutation.SetFromDate(v)
@@ -208,6 +272,12 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (wefaac *WorkEffortFixedAssetAssignCreate) check() error {
+	if _, ok := wefaac.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := wefaac.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if _, ok := wefaac.mutation.FromDate(); !ok {
 		return &ValidationError{Name: "from_date", err: errors.New("ent: missing required field \"from_date\"")}
 	}
@@ -238,13 +308,29 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) createSpec() (*WorkEffortFixedAs
 			},
 		}
 	)
-	if value, ok := wefaac.mutation.StatusID(); ok {
+	if value, ok := wefaac.mutation.CreateTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffortfixedassetassign.FieldStatusID,
+			Column: workeffortfixedassetassign.FieldCreateTime,
 		})
-		_node.StatusID = value
+		_node.CreateTime = value
+	}
+	if value, ok := wefaac.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: workeffortfixedassetassign.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := wefaac.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: workeffortfixedassetassign.FieldStringRef,
+		})
+		_node.StringRef = value
 	}
 	if value, ok := wefaac.mutation.FromDate(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -261,14 +347,6 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) createSpec() (*WorkEffortFixedAs
 			Column: workeffortfixedassetassign.FieldThruDate,
 		})
 		_node.ThruDate = value
-	}
-	if value, ok := wefaac.mutation.AvailabilityStatusID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortfixedassetassign.FieldAvailabilityStatusID,
-		})
-		_node.AvailabilityStatusID = value
 	}
 	if value, ok := wefaac.mutation.AllocatedCost(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -326,6 +404,46 @@ func (wefaac *WorkEffortFixedAssetAssignCreate) createSpec() (*WorkEffortFixedAs
 		_node.fixed_asset_work_effort_fixed_asset_assigns = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := wefaac.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.StatusItemTable,
+			Columns: []string{workeffortfixedassetassign.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.status_item_work_effort_fixed_asset_assigns = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := wefaac.mutation.AvailabilityStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.AvailabilityStatusItemTable,
+			Columns: []string{workeffortfixedassetassign.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.status_item_availability_work_effort_fixed_asset_assigns = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -365,10 +483,11 @@ func (wefaacb *WorkEffortFixedAssetAssignCreateBulk) Save(ctx context.Context) (
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

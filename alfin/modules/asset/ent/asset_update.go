@@ -28,6 +28,26 @@ func (au *AssetUpdate) Where(ps ...predicate.Asset) *AssetUpdate {
 	return au
 }
 
+// SetStringRef sets the "string_ref" field.
+func (au *AssetUpdate) SetStringRef(s string) *AssetUpdate {
+	au.mutation.SetStringRef(s)
+	return au
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (au *AssetUpdate) SetNillableStringRef(s *string) *AssetUpdate {
+	if s != nil {
+		au.SetStringRef(*s)
+	}
+	return au
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (au *AssetUpdate) ClearStringRef() *AssetUpdate {
+	au.mutation.ClearStringRef()
+	return au
+}
+
 // SetModel sets the "model" field.
 func (au *AssetUpdate) SetModel(s string) *AssetUpdate {
 	au.mutation.SetModel(s)
@@ -76,6 +96,7 @@ func (au *AssetUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	au.defaults()
 	if len(au.hooks) == 0 {
 		affected, err = au.sqlSave(ctx)
 	} else {
@@ -121,6 +142,14 @@ func (au *AssetUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (au *AssetUpdate) defaults() {
+	if _, ok := au.mutation.UpdateTime(); !ok {
+		v := asset.UpdateDefaultUpdateTime()
+		au.mutation.SetUpdateTime(v)
+	}
+}
+
 func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -138,6 +167,26 @@ func (au *AssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := au.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: asset.FieldUpdateTime,
+		})
+	}
+	if value, ok := au.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: asset.FieldStringRef,
+		})
+	}
+	if au.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: asset.FieldStringRef,
+		})
 	}
 	if value, ok := au.mutation.Model(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -207,6 +256,26 @@ type AssetUpdateOne struct {
 	mutation *AssetMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (auo *AssetUpdateOne) SetStringRef(s string) *AssetUpdateOne {
+	auo.mutation.SetStringRef(s)
+	return auo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (auo *AssetUpdateOne) SetNillableStringRef(s *string) *AssetUpdateOne {
+	if s != nil {
+		auo.SetStringRef(*s)
+	}
+	return auo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (auo *AssetUpdateOne) ClearStringRef() *AssetUpdateOne {
+	auo.mutation.ClearStringRef()
+	return auo
+}
+
 // SetModel sets the "model" field.
 func (auo *AssetUpdateOne) SetModel(s string) *AssetUpdateOne {
 	auo.mutation.SetModel(s)
@@ -262,6 +331,7 @@ func (auo *AssetUpdateOne) Save(ctx context.Context) (*Asset, error) {
 		err  error
 		node *Asset
 	)
+	auo.defaults()
 	if len(auo.hooks) == 0 {
 		node, err = auo.sqlSave(ctx)
 	} else {
@@ -307,6 +377,14 @@ func (auo *AssetUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (auo *AssetUpdateOne) defaults() {
+	if _, ok := auo.mutation.UpdateTime(); !ok {
+		v := asset.UpdateDefaultUpdateTime()
+		auo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -341,6 +419,26 @@ func (auo *AssetUpdateOne) sqlSave(ctx context.Context) (_node *Asset, err error
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := auo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: asset.FieldUpdateTime,
+		})
+	}
+	if value, ok := auo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: asset.FieldStringRef,
+		})
+	}
+	if auo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: asset.FieldStringRef,
+		})
 	}
 	if value, ok := auo.mutation.Model(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{

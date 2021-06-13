@@ -18,6 +18,12 @@ type UserLoginSecurityGroup struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// FromDate holds the value of the "from_date" field.
 	FromDate time.Time `json:"from_date,omitempty"`
 	// ThruDate holds the value of the "thru_date" field.
@@ -86,7 +92,9 @@ func (*UserLoginSecurityGroup) scanValues(columns []string) ([]interface{}, erro
 		switch columns[i] {
 		case userloginsecuritygroup.FieldID:
 			values[i] = new(sql.NullInt64)
-		case userloginsecuritygroup.FieldFromDate, userloginsecuritygroup.FieldThruDate:
+		case userloginsecuritygroup.FieldStringRef:
+			values[i] = new(sql.NullString)
+		case userloginsecuritygroup.FieldCreateTime, userloginsecuritygroup.FieldUpdateTime, userloginsecuritygroup.FieldFromDate, userloginsecuritygroup.FieldThruDate:
 			values[i] = new(sql.NullTime)
 		case userloginsecuritygroup.ForeignKeys[0]: // security_group_user_login_security_groups
 			values[i] = new(sql.NullInt64)
@@ -113,6 +121,24 @@ func (ulsg *UserLoginSecurityGroup) assignValues(columns []string, values []inte
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			ulsg.ID = int(value.Int64)
+		case userloginsecuritygroup.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				ulsg.CreateTime = value.Time
+			}
+		case userloginsecuritygroup.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				ulsg.UpdateTime = value.Time
+			}
+		case userloginsecuritygroup.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				ulsg.StringRef = value.String
+			}
 		case userloginsecuritygroup.FieldFromDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
 				return fmt.Errorf("unexpected type %T for field from_date", values[i])
@@ -182,6 +208,12 @@ func (ulsg *UserLoginSecurityGroup) String() string {
 	var builder strings.Builder
 	builder.WriteString("UserLoginSecurityGroup(")
 	builder.WriteString(fmt.Sprintf("id=%v", ulsg.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(ulsg.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(ulsg.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(ulsg.StringRef)
 	builder.WriteString(", from_date=")
 	builder.WriteString(ulsg.FromDate.Format(time.ANSIC))
 	builder.WriteString(", thru_date=")

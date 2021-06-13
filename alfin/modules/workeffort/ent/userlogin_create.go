@@ -4,6 +4,7 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -22,6 +23,48 @@ type UserLoginCreate struct {
 	config
 	mutation *UserLoginMutation
 	hooks    []Hook
+}
+
+// SetCreateTime sets the "create_time" field.
+func (ulc *UserLoginCreate) SetCreateTime(t time.Time) *UserLoginCreate {
+	ulc.mutation.SetCreateTime(t)
+	return ulc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (ulc *UserLoginCreate) SetNillableCreateTime(t *time.Time) *UserLoginCreate {
+	if t != nil {
+		ulc.SetCreateTime(*t)
+	}
+	return ulc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (ulc *UserLoginCreate) SetUpdateTime(t time.Time) *UserLoginCreate {
+	ulc.mutation.SetUpdateTime(t)
+	return ulc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (ulc *UserLoginCreate) SetNillableUpdateTime(t *time.Time) *UserLoginCreate {
+	if t != nil {
+		ulc.SetUpdateTime(*t)
+	}
+	return ulc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (ulc *UserLoginCreate) SetStringRef(s string) *UserLoginCreate {
+	ulc.mutation.SetStringRef(s)
+	return ulc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (ulc *UserLoginCreate) SetNillableStringRef(s *string) *UserLoginCreate {
+	if s != nil {
+		ulc.SetStringRef(*s)
+	}
+	return ulc
 }
 
 // SetCurrentPassword sets the "current_password" field.
@@ -360,7 +403,10 @@ func (ulc *UserLoginCreate) Save(ctx context.Context) (*UserLogin, error) {
 				return nil, err
 			}
 			ulc.mutation = mutation
-			node, err = ulc.sqlSave(ctx)
+			if node, err = ulc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -385,6 +431,14 @@ func (ulc *UserLoginCreate) SaveX(ctx context.Context) *UserLogin {
 
 // defaults sets the default values of the builder before save.
 func (ulc *UserLoginCreate) defaults() {
+	if _, ok := ulc.mutation.CreateTime(); !ok {
+		v := userlogin.DefaultCreateTime()
+		ulc.mutation.SetCreateTime(v)
+	}
+	if _, ok := ulc.mutation.UpdateTime(); !ok {
+		v := userlogin.DefaultUpdateTime()
+		ulc.mutation.SetUpdateTime(v)
+	}
 	if _, ok := ulc.mutation.DisabledDateTime(); !ok {
 		v := userlogin.DefaultDisabledDateTime()
 		ulc.mutation.SetDisabledDateTime(v)
@@ -393,6 +447,12 @@ func (ulc *UserLoginCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (ulc *UserLoginCreate) check() error {
+	if _, ok := ulc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := ulc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if v, ok := ulc.mutation.IsSystem(); ok {
 		if err := userlogin.IsSystemValidator(v); err != nil {
 			return &ValidationError{Name: "is_system", err: fmt.Errorf("ent: validator failed for field \"is_system\": %w", err)}
@@ -450,6 +510,30 @@ func (ulc *UserLoginCreate) createSpec() (*UserLogin, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := ulc.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userlogin.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := ulc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: userlogin.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := ulc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: userlogin.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := ulc.mutation.CurrentPassword(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -736,10 +820,11 @@ func (ulcb *UserLoginCreateBulk) Save(ctx context.Context) ([]*UserLogin, error)
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

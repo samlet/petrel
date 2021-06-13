@@ -11,10 +11,12 @@ var (
 	// FixedAssetsColumns holds the columns for the "fixed_assets" table.
 	FixedAssetsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "fixed_asset_type_id", Type: field.TypeInt, Nullable: true},
 		{Name: "instance_of_product_id", Type: field.TypeInt, Nullable: true},
 		{Name: "class_enum_id", Type: field.TypeInt, Nullable: true},
-		{Name: "role_type_id", Type: field.TypeInt, Nullable: true},
 		{Name: "fixed_asset_name", Type: field.TypeString, Nullable: true},
 		{Name: "acquire_order_id", Type: field.TypeInt, Nullable: true},
 		{Name: "acquire_order_item_seq_id", Type: field.TypeInt, Nullable: true},
@@ -36,6 +38,7 @@ var (
 		{Name: "fixed_asset_children", Type: field.TypeInt, Nullable: true},
 		{Name: "party_fixed_assets", Type: field.TypeInt, Nullable: true},
 		{Name: "party_role_fixed_assets", Type: field.TypeInt, Nullable: true},
+		{Name: "role_type_fixed_assets", Type: field.TypeInt, Nullable: true},
 	}
 	// FixedAssetsTable holds the schema information for the "fixed_assets" table.
 	FixedAssetsTable = &schema.Table{
@@ -45,20 +48,26 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "fixed_assets_fixed_assets_children",
-				Columns:    []*schema.Column{FixedAssetsColumns[23]},
+				Columns:    []*schema.Column{FixedAssetsColumns[25]},
 				RefColumns: []*schema.Column{FixedAssetsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "fixed_assets_parties_fixed_assets",
-				Columns:    []*schema.Column{FixedAssetsColumns[24]},
+				Columns:    []*schema.Column{FixedAssetsColumns[26]},
 				RefColumns: []*schema.Column{PartiesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "fixed_assets_party_roles_fixed_assets",
-				Columns:    []*schema.Column{FixedAssetsColumns[25]},
+				Columns:    []*schema.Column{FixedAssetsColumns[27]},
 				RefColumns: []*schema.Column{PartyRolesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "fixed_assets_role_types_fixed_assets",
+				Columns:    []*schema.Column{FixedAssetsColumns[28]},
+				RefColumns: []*schema.Column{RoleTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -66,15 +75,18 @@ var (
 	// PartiesColumns holds the columns for the "parties" table.
 	PartiesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "party_type_id", Type: field.TypeInt, Nullable: true},
 		{Name: "external_id", Type: field.TypeInt, Nullable: true},
 		{Name: "preferred_currency_uom_id", Type: field.TypeInt, Nullable: true},
 		{Name: "description", Type: field.TypeString, Nullable: true},
-		{Name: "status_id", Type: field.TypeInt, Nullable: true},
 		{Name: "created_date", Type: field.TypeTime, Nullable: true},
 		{Name: "last_modified_date", Type: field.TypeTime, Nullable: true},
 		{Name: "data_source_id", Type: field.TypeInt, Nullable: true},
 		{Name: "is_unread", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
+		{Name: "status_item_parties", Type: field.TypeInt, Nullable: true},
 		{Name: "user_login_created_by_parties", Type: field.TypeInt, Nullable: true},
 		{Name: "user_login_last_modified_by_parties", Type: field.TypeInt, Nullable: true},
 	}
@@ -85,15 +97,73 @@ var (
 		PrimaryKey: []*schema.Column{PartiesColumns[0]},
 		ForeignKeys: []*schema.ForeignKey{
 			{
+				Symbol:     "parties_status_items_parties",
+				Columns:    []*schema.Column{PartiesColumns[12]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
 				Symbol:     "parties_user_logins_created_by_parties",
-				Columns:    []*schema.Column{PartiesColumns[10]},
+				Columns:    []*schema.Column{PartiesColumns[13]},
 				RefColumns: []*schema.Column{UserLoginsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "parties_user_logins_last_modified_by_parties",
-				Columns:    []*schema.Column{PartiesColumns[11]},
+				Columns:    []*schema.Column{PartiesColumns[14]},
 				RefColumns: []*schema.Column{UserLoginsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// PartyContactMechesColumns holds the columns for the "party_contact_meches" table.
+	PartyContactMechesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "contact_mech_id", Type: field.TypeInt},
+		{Name: "from_date", Type: field.TypeTime},
+		{Name: "thru_date", Type: field.TypeTime, Nullable: true},
+		{Name: "allow_solicitation", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
+		{Name: "extension", Type: field.TypeString, Nullable: true},
+		{Name: "verified", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
+		{Name: "comments", Type: field.TypeString, Nullable: true},
+		{Name: "years_with_contact_mech", Type: field.TypeInt, Nullable: true},
+		{Name: "months_with_contact_mech", Type: field.TypeInt, Nullable: true},
+		{Name: "party_party_contact_meches", Type: field.TypeInt, Nullable: true},
+		{Name: "party_role_party_contact_meches", Type: field.TypeInt, Nullable: true},
+		{Name: "person_party_contact_meches", Type: field.TypeInt, Nullable: true},
+		{Name: "role_type_party_contact_meches", Type: field.TypeInt, Nullable: true},
+	}
+	// PartyContactMechesTable holds the schema information for the "party_contact_meches" table.
+	PartyContactMechesTable = &schema.Table{
+		Name:       "party_contact_meches",
+		Columns:    PartyContactMechesColumns,
+		PrimaryKey: []*schema.Column{PartyContactMechesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "party_contact_meches_parties_party_contact_meches",
+				Columns:    []*schema.Column{PartyContactMechesColumns[13]},
+				RefColumns: []*schema.Column{PartiesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "party_contact_meches_party_roles_party_contact_meches",
+				Columns:    []*schema.Column{PartyContactMechesColumns[14]},
+				RefColumns: []*schema.Column{PartyRolesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "party_contact_meches_persons_party_contact_meches",
+				Columns:    []*schema.Column{PartyContactMechesColumns[15]},
+				RefColumns: []*schema.Column{PersonsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "party_contact_meches_role_types_party_contact_meches",
+				Columns:    []*schema.Column{PartyContactMechesColumns[16]},
+				RefColumns: []*schema.Column{RoleTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -101,8 +171,11 @@ var (
 	// PartyRolesColumns holds the columns for the "party_roles" table.
 	PartyRolesColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "role_type_id", Type: field.TypeInt},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "party_party_roles", Type: field.TypeInt, Nullable: true},
+		{Name: "role_type_party_roles", Type: field.TypeInt, Nullable: true},
 	}
 	// PartyRolesTable holds the schema information for the "party_roles" table.
 	PartyRolesTable = &schema.Table{
@@ -112,8 +185,14 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "party_roles_parties_party_roles",
-				Columns:    []*schema.Column{PartyRolesColumns[2]},
+				Columns:    []*schema.Column{PartyRolesColumns[4]},
 				RefColumns: []*schema.Column{PartiesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "party_roles_role_types_party_roles",
+				Columns:    []*schema.Column{PartyRolesColumns[5]},
+				RefColumns: []*schema.Column{RoleTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -121,9 +200,12 @@ var (
 	// PartyStatusColumns holds the columns for the "party_status" table.
 	PartyStatusColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "status_id", Type: field.TypeInt},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "status_date", Type: field.TypeTime},
 		{Name: "party_party_statuses", Type: field.TypeInt, Nullable: true},
+		{Name: "status_item_party_statuses", Type: field.TypeInt, Nullable: true},
 		{Name: "user_login_change_by_party_statuses", Type: field.TypeInt, Nullable: true},
 	}
 	// PartyStatusTable holds the schema information for the "party_status" table.
@@ -134,13 +216,19 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "party_status_parties_party_statuses",
-				Columns:    []*schema.Column{PartyStatusColumns[3]},
+				Columns:    []*schema.Column{PartyStatusColumns[5]},
 				RefColumns: []*schema.Column{PartiesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
+				Symbol:     "party_status_status_items_party_statuses",
+				Columns:    []*schema.Column{PartyStatusColumns[6]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
 				Symbol:     "party_status_user_logins_change_by_party_statuses",
-				Columns:    []*schema.Column{PartyStatusColumns[4]},
+				Columns:    []*schema.Column{PartyStatusColumns[7]},
 				RefColumns: []*schema.Column{UserLoginsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -149,6 +237,9 @@ var (
 	// PersonsColumns holds the columns for the "persons" table.
 	PersonsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "salutation", Type: field.TypeString, Nullable: true},
 		{Name: "first_name", Type: field.TypeString, Nullable: true},
 		{Name: "middle_name", Type: field.TypeString, Nullable: true},
@@ -191,8 +282,32 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "persons_parties_person",
-				Columns:    []*schema.Column{PersonsColumns[33]},
+				Columns:    []*schema.Column{PersonsColumns[36]},
 				RefColumns: []*schema.Column{PartiesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// RoleTypesColumns holds the columns for the "role_types" table.
+	RoleTypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "has_table", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "role_type_children", Type: field.TypeInt, Nullable: true},
+	}
+	// RoleTypesTable holds the schema information for the "role_types" table.
+	RoleTypesTable = &schema.Table{
+		Name:       "role_types",
+		Columns:    RoleTypesColumns,
+		PrimaryKey: []*schema.Column{RoleTypesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "role_types_role_types_children",
+				Columns:    []*schema.Column{RoleTypesColumns[6]},
+				RefColumns: []*schema.Column{RoleTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -200,19 +315,24 @@ var (
 	// SecurityGroupsColumns holds the columns for the "security_groups" table.
 	SecurityGroupsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "group_name", Type: field.TypeString, Nullable: true},
 		{Name: "description", Type: field.TypeString, Nullable: true},
 	}
 	// SecurityGroupsTable holds the schema information for the "security_groups" table.
 	SecurityGroupsTable = &schema.Table{
-		Name:        "security_groups",
-		Columns:     SecurityGroupsColumns,
-		PrimaryKey:  []*schema.Column{SecurityGroupsColumns[0]},
-		ForeignKeys: []*schema.ForeignKey{},
+		Name:       "security_groups",
+		Columns:    SecurityGroupsColumns,
+		PrimaryKey: []*schema.Column{SecurityGroupsColumns[0]},
 	}
 	// SecurityGroupPermissionsColumns holds the columns for the "security_group_permissions" table.
 	SecurityGroupPermissionsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "permission_id", Type: field.TypeString, Size: 32},
 		{Name: "from_date", Type: field.TypeTime},
 		{Name: "thru_date", Type: field.TypeTime, Nullable: true},
@@ -227,14 +347,118 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "security_group_permissions_security_groups_security_group_permissions",
-				Columns:    []*schema.Column{SecurityGroupPermissionsColumns[4]},
+				Columns:    []*schema.Column{SecurityGroupPermissionsColumns[7]},
 				RefColumns: []*schema.Column{SecurityGroupsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "security_group_permissions_user_login_security_groups_security_group_permissions",
-				Columns:    []*schema.Column{SecurityGroupPermissionsColumns[5]},
+				Columns:    []*schema.Column{SecurityGroupPermissionsColumns[8]},
 				RefColumns: []*schema.Column{UserLoginSecurityGroupsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// SkillTypesColumns holds the columns for the "skill_types" table.
+	SkillTypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "has_table", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "skill_type_children", Type: field.TypeInt, Nullable: true},
+	}
+	// SkillTypesTable holds the schema information for the "skill_types" table.
+	SkillTypesTable = &schema.Table{
+		Name:       "skill_types",
+		Columns:    SkillTypesColumns,
+		PrimaryKey: []*schema.Column{SkillTypesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "skill_types_skill_types_children",
+				Columns:    []*schema.Column{SkillTypesColumns[6]},
+				RefColumns: []*schema.Column{SkillTypesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// StatusItemsColumns holds the columns for the "status_items" table.
+	StatusItemsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "status_code", Type: field.TypeString, Nullable: true},
+		{Name: "sequence_id", Type: field.TypeInt, Nullable: true},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "status_type_status_items", Type: field.TypeInt, Nullable: true},
+	}
+	// StatusItemsTable holds the schema information for the "status_items" table.
+	StatusItemsTable = &schema.Table{
+		Name:       "status_items",
+		Columns:    StatusItemsColumns,
+		PrimaryKey: []*schema.Column{StatusItemsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "status_items_status_types_status_items",
+				Columns:    []*schema.Column{StatusItemsColumns[7]},
+				RefColumns: []*schema.Column{StatusTypesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// StatusTypesColumns holds the columns for the "status_types" table.
+	StatusTypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "has_table", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "status_type_children", Type: field.TypeInt, Nullable: true},
+	}
+	// StatusTypesTable holds the schema information for the "status_types" table.
+	StatusTypesTable = &schema.Table{
+		Name:       "status_types",
+		Columns:    StatusTypesColumns,
+		PrimaryKey: []*schema.Column{StatusTypesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "status_types_status_types_children",
+				Columns:    []*schema.Column{StatusTypesColumns[6]},
+				RefColumns: []*schema.Column{StatusTypesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// StatusValidChangesColumns holds the columns for the "status_valid_changes" table.
+	StatusValidChangesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "condition_expression", Type: field.TypeString, Nullable: true},
+		{Name: "transition_name", Type: field.TypeString, Nullable: true},
+		{Name: "status_item_main_status_valid_changes", Type: field.TypeInt, Nullable: true},
+		{Name: "status_item_to_status_valid_changes", Type: field.TypeInt, Nullable: true},
+	}
+	// StatusValidChangesTable holds the schema information for the "status_valid_changes" table.
+	StatusValidChangesTable = &schema.Table{
+		Name:       "status_valid_changes",
+		Columns:    StatusValidChangesColumns,
+		PrimaryKey: []*schema.Column{StatusValidChangesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "status_valid_changes_status_items_main_status_valid_changes",
+				Columns:    []*schema.Column{StatusValidChangesColumns[6]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "status_valid_changes_status_items_to_status_valid_changes",
+				Columns:    []*schema.Column{StatusValidChangesColumns[7]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -242,6 +466,9 @@ var (
 	// TemporalExpressionsColumns holds the columns for the "temporal_expressions" table.
 	TemporalExpressionsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "temp_expr_type_id", Type: field.TypeInt, Nullable: true},
 		{Name: "description", Type: field.TypeString, Nullable: true},
 		{Name: "date_1", Type: field.TypeTime, Nullable: true},
@@ -253,14 +480,16 @@ var (
 	}
 	// TemporalExpressionsTable holds the schema information for the "temporal_expressions" table.
 	TemporalExpressionsTable = &schema.Table{
-		Name:        "temporal_expressions",
-		Columns:     TemporalExpressionsColumns,
-		PrimaryKey:  []*schema.Column{TemporalExpressionsColumns[0]},
-		ForeignKeys: []*schema.ForeignKey{},
+		Name:       "temporal_expressions",
+		Columns:    TemporalExpressionsColumns,
+		PrimaryKey: []*schema.Column{TemporalExpressionsColumns[0]},
 	}
 	// TemporalExpressionAssocsColumns holds the columns for the "temporal_expression_assocs" table.
 	TemporalExpressionAssocsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "expr_assoc_type", Type: field.TypeInt, Nullable: true},
 		{Name: "temporal_expression_from_temporal_expression_assocs", Type: field.TypeInt, Nullable: true},
 		{Name: "temporal_expression_to_temporal_expression_assocs", Type: field.TypeInt, Nullable: true},
@@ -273,13 +502,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "temporal_expression_assocs_temporal_expressions_from_temporal_expression_assocs",
-				Columns:    []*schema.Column{TemporalExpressionAssocsColumns[2]},
+				Columns:    []*schema.Column{TemporalExpressionAssocsColumns[5]},
 				RefColumns: []*schema.Column{TemporalExpressionsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "temporal_expression_assocs_temporal_expressions_to_temporal_expression_assocs",
-				Columns:    []*schema.Column{TemporalExpressionAssocsColumns[3]},
+				Columns:    []*schema.Column{TemporalExpressionAssocsColumns[6]},
 				RefColumns: []*schema.Column{TemporalExpressionsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -288,6 +517,9 @@ var (
 	// UserLoginsColumns holds the columns for the "user_logins" table.
 	UserLoginsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "current_password", Type: field.TypeString, Nullable: true},
 		{Name: "password_hint", Type: field.TypeString, Nullable: true},
 		{Name: "is_system", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
@@ -313,13 +545,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "user_logins_parties_user_logins",
-				Columns:    []*schema.Column{UserLoginsColumns[15]},
+				Columns:    []*schema.Column{UserLoginsColumns[18]},
 				RefColumns: []*schema.Column{PartiesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "user_logins_persons_user_logins",
-				Columns:    []*schema.Column{UserLoginsColumns[16]},
+				Columns:    []*schema.Column{UserLoginsColumns[19]},
 				RefColumns: []*schema.Column{PersonsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -328,6 +560,9 @@ var (
 	// UserLoginSecurityGroupsColumns holds the columns for the "user_login_security_groups" table.
 	UserLoginSecurityGroupsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "from_date", Type: field.TypeTime},
 		{Name: "thru_date", Type: field.TypeTime, Nullable: true},
 		{Name: "security_group_user_login_security_groups", Type: field.TypeInt, Nullable: true},
@@ -341,13 +576,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "user_login_security_groups_security_groups_user_login_security_groups",
-				Columns:    []*schema.Column{UserLoginSecurityGroupsColumns[3]},
+				Columns:    []*schema.Column{UserLoginSecurityGroupsColumns[6]},
 				RefColumns: []*schema.Column{SecurityGroupsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "user_login_security_groups_user_logins_user_login_security_groups",
-				Columns:    []*schema.Column{UserLoginSecurityGroupsColumns[4]},
+				Columns:    []*schema.Column{UserLoginSecurityGroupsColumns[7]},
 				RefColumns: []*schema.Column{UserLoginsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -356,8 +591,9 @@ var (
 	// WorkEffortsColumns holds the columns for the "work_efforts" table.
 	WorkEffortsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "work_effort_type_id", Type: field.TypeInt, Nullable: true},
-		{Name: "current_status_id", Type: field.TypeInt, Nullable: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "last_status_update", Type: field.TypeTime, Nullable: true},
 		{Name: "work_effort_purpose_type_id", Type: field.TypeInt, Nullable: true},
 		{Name: "scope_enum_id", Type: field.TypeInt, Nullable: true},
@@ -405,8 +641,10 @@ var (
 		{Name: "last_modified_by_user_login", Type: field.TypeString, Nullable: true},
 		{Name: "sequence_num", Type: field.TypeInt, Nullable: true},
 		{Name: "fixed_asset_work_efforts", Type: field.TypeInt, Nullable: true},
+		{Name: "status_item_current_work_efforts", Type: field.TypeInt, Nullable: true},
 		{Name: "temporal_expression_work_efforts", Type: field.TypeInt, Nullable: true},
 		{Name: "work_effort_children", Type: field.TypeInt, Nullable: true},
+		{Name: "work_effort_type_work_efforts", Type: field.TypeInt, Nullable: true},
 	}
 	// WorkEffortsTable holds the schema information for the "work_efforts" table.
 	WorkEffortsTable = &schema.Table{
@@ -416,20 +654,32 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "work_efforts_fixed_assets_work_efforts",
-				Columns:    []*schema.Column{WorkEffortsColumns[49]},
+				Columns:    []*schema.Column{WorkEffortsColumns[50]},
 				RefColumns: []*schema.Column{FixedAssetsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
+				Symbol:     "work_efforts_status_items_current_work_efforts",
+				Columns:    []*schema.Column{WorkEffortsColumns[51]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
 				Symbol:     "work_efforts_temporal_expressions_work_efforts",
-				Columns:    []*schema.Column{WorkEffortsColumns[50]},
+				Columns:    []*schema.Column{WorkEffortsColumns[52]},
 				RefColumns: []*schema.Column{TemporalExpressionsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "work_efforts_work_efforts_children",
-				Columns:    []*schema.Column{WorkEffortsColumns[51]},
+				Columns:    []*schema.Column{WorkEffortsColumns[53]},
 				RefColumns: []*schema.Column{WorkEffortsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "work_efforts_work_effort_types_work_efforts",
+				Columns:    []*schema.Column{WorkEffortsColumns[54]},
+				RefColumns: []*schema.Column{WorkEffortTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -437,6 +687,9 @@ var (
 	// WorkEffortAssocsColumns holds the columns for the "work_effort_assocs" table.
 	WorkEffortAssocsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "work_effort_assoc_type_id", Type: field.TypeInt},
 		{Name: "sequence_num", Type: field.TypeInt, Nullable: true},
 		{Name: "from_date", Type: field.TypeTime},
@@ -452,13 +705,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "work_effort_assocs_work_efforts_from_work_effort_assocs",
-				Columns:    []*schema.Column{WorkEffortAssocsColumns[5]},
+				Columns:    []*schema.Column{WorkEffortAssocsColumns[8]},
 				RefColumns: []*schema.Column{WorkEffortsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "work_effort_assocs_work_efforts_to_work_effort_assocs",
-				Columns:    []*schema.Column{WorkEffortAssocsColumns[6]},
+				Columns:    []*schema.Column{WorkEffortAssocsColumns[9]},
 				RefColumns: []*schema.Column{WorkEffortsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -467,13 +720,16 @@ var (
 	// WorkEffortFixedAssetAssignsColumns holds the columns for the "work_effort_fixed_asset_assigns" table.
 	WorkEffortFixedAssetAssignsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "status_id", Type: field.TypeInt, Nullable: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "from_date", Type: field.TypeTime},
 		{Name: "thru_date", Type: field.TypeTime, Nullable: true},
-		{Name: "availability_status_id", Type: field.TypeInt, Nullable: true},
 		{Name: "allocated_cost", Type: field.TypeFloat64, Nullable: true},
 		{Name: "comments", Type: field.TypeString, Nullable: true},
 		{Name: "fixed_asset_work_effort_fixed_asset_assigns", Type: field.TypeInt, Nullable: true},
+		{Name: "status_item_work_effort_fixed_asset_assigns", Type: field.TypeInt, Nullable: true},
+		{Name: "status_item_availability_work_effort_fixed_asset_assigns", Type: field.TypeInt, Nullable: true},
 		{Name: "work_effort_work_effort_fixed_asset_assigns", Type: field.TypeInt, Nullable: true},
 	}
 	// WorkEffortFixedAssetAssignsTable holds the schema information for the "work_effort_fixed_asset_assigns" table.
@@ -484,13 +740,25 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "work_effort_fixed_asset_assigns_fixed_assets_work_effort_fixed_asset_assigns",
-				Columns:    []*schema.Column{WorkEffortFixedAssetAssignsColumns[7]},
+				Columns:    []*schema.Column{WorkEffortFixedAssetAssignsColumns[8]},
 				RefColumns: []*schema.Column{FixedAssetsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
+				Symbol:     "work_effort_fixed_asset_assigns_status_items_work_effort_fixed_asset_assigns",
+				Columns:    []*schema.Column{WorkEffortFixedAssetAssignsColumns[9]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "work_effort_fixed_asset_assigns_status_items_availability_work_effort_fixed_asset_assigns",
+				Columns:    []*schema.Column{WorkEffortFixedAssetAssignsColumns[10]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
 				Symbol:     "work_effort_fixed_asset_assigns_work_efforts_work_effort_fixed_asset_assigns",
-				Columns:    []*schema.Column{WorkEffortFixedAssetAssignsColumns[8]},
+				Columns:    []*schema.Column{WorkEffortFixedAssetAssignsColumns[11]},
 				RefColumns: []*schema.Column{WorkEffortsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -499,19 +767,22 @@ var (
 	// WorkEffortPartyAssignmentsColumns holds the columns for the "work_effort_party_assignments" table.
 	WorkEffortPartyAssignmentsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "role_type_id", Type: field.TypeInt},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "from_date", Type: field.TypeTime},
 		{Name: "thru_date", Type: field.TypeTime, Nullable: true},
-		{Name: "status_id", Type: field.TypeInt, Nullable: true},
 		{Name: "status_date_time", Type: field.TypeTime, Nullable: true},
 		{Name: "expectation_enum_id", Type: field.TypeInt, Nullable: true},
 		{Name: "delegate_reason_enum_id", Type: field.TypeInt, Nullable: true},
 		{Name: "facility_id", Type: field.TypeInt, Nullable: true},
 		{Name: "comments", Type: field.TypeString, Nullable: true},
 		{Name: "must_rsvp", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
-		{Name: "availability_status_id", Type: field.TypeInt, Nullable: true},
 		{Name: "party_work_effort_party_assignments", Type: field.TypeInt, Nullable: true},
 		{Name: "party_role_work_effort_party_assignments", Type: field.TypeInt, Nullable: true},
+		{Name: "role_type_work_effort_party_assignments", Type: field.TypeInt, Nullable: true},
+		{Name: "status_item_assignment_work_effort_party_assignments", Type: field.TypeInt, Nullable: true},
+		{Name: "status_item_availability_work_effort_party_assignments", Type: field.TypeInt, Nullable: true},
 		{Name: "user_login_assigned_by_work_effort_party_assignments", Type: field.TypeInt, Nullable: true},
 		{Name: "work_effort_work_effort_party_assignments", Type: field.TypeInt, Nullable: true},
 	}
@@ -534,15 +805,89 @@ var (
 				OnDelete:   schema.SetNull,
 			},
 			{
-				Symbol:     "work_effort_party_assignments_user_logins_assigned_by_work_effort_party_assignments",
+				Symbol:     "work_effort_party_assignments_role_types_work_effort_party_assignments",
 				Columns:    []*schema.Column{WorkEffortPartyAssignmentsColumns[14]},
+				RefColumns: []*schema.Column{RoleTypesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "work_effort_party_assignments_status_items_assignment_work_effort_party_assignments",
+				Columns:    []*schema.Column{WorkEffortPartyAssignmentsColumns[15]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "work_effort_party_assignments_status_items_availability_work_effort_party_assignments",
+				Columns:    []*schema.Column{WorkEffortPartyAssignmentsColumns[16]},
+				RefColumns: []*schema.Column{StatusItemsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "work_effort_party_assignments_user_logins_assigned_by_work_effort_party_assignments",
+				Columns:    []*schema.Column{WorkEffortPartyAssignmentsColumns[17]},
 				RefColumns: []*schema.Column{UserLoginsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "work_effort_party_assignments_work_efforts_work_effort_party_assignments",
-				Columns:    []*schema.Column{WorkEffortPartyAssignmentsColumns[15]},
+				Columns:    []*schema.Column{WorkEffortPartyAssignmentsColumns[18]},
 				RefColumns: []*schema.Column{WorkEffortsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// WorkEffortSkillStandardsColumns holds the columns for the "work_effort_skill_standards" table.
+	WorkEffortSkillStandardsColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "estimated_num_people", Type: field.TypeFloat64, Nullable: true},
+		{Name: "estimated_duration", Type: field.TypeFloat64, Nullable: true},
+		{Name: "estimated_cost", Type: field.TypeFloat64, Nullable: true},
+		{Name: "skill_type_work_effort_skill_standards", Type: field.TypeInt, Nullable: true},
+		{Name: "work_effort_work_effort_skill_standards", Type: field.TypeInt, Nullable: true},
+	}
+	// WorkEffortSkillStandardsTable holds the schema information for the "work_effort_skill_standards" table.
+	WorkEffortSkillStandardsTable = &schema.Table{
+		Name:       "work_effort_skill_standards",
+		Columns:    WorkEffortSkillStandardsColumns,
+		PrimaryKey: []*schema.Column{WorkEffortSkillStandardsColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "work_effort_skill_standards_skill_types_work_effort_skill_standards",
+				Columns:    []*schema.Column{WorkEffortSkillStandardsColumns[7]},
+				RefColumns: []*schema.Column{SkillTypesColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+			{
+				Symbol:     "work_effort_skill_standards_work_efforts_work_effort_skill_standards",
+				Columns:    []*schema.Column{WorkEffortSkillStandardsColumns[8]},
+				RefColumns: []*schema.Column{WorkEffortsColumns[0]},
+				OnDelete:   schema.SetNull,
+			},
+		},
+	}
+	// WorkEffortTypesColumns holds the columns for the "work_effort_types" table.
+	WorkEffortTypesColumns = []*schema.Column{
+		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
+		{Name: "has_table", Type: field.TypeEnum, Nullable: true, Enums: []string{"Yes", "No", "Unknown"}},
+		{Name: "description", Type: field.TypeString, Nullable: true},
+		{Name: "work_effort_type_children", Type: field.TypeInt, Nullable: true},
+	}
+	// WorkEffortTypesTable holds the schema information for the "work_effort_types" table.
+	WorkEffortTypesTable = &schema.Table{
+		Name:       "work_effort_types",
+		Columns:    WorkEffortTypesColumns,
+		PrimaryKey: []*schema.Column{WorkEffortTypesColumns[0]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "work_effort_types_work_effort_types_children",
+				Columns:    []*schema.Column{WorkEffortTypesColumns[6]},
+				RefColumns: []*schema.Column{WorkEffortTypesColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 		},
@@ -572,6 +917,81 @@ var (
 			},
 		},
 	}
+	// RoleTypeChildRoleTypesColumns holds the columns for the "role_type_child_role_types" table.
+	RoleTypeChildRoleTypesColumns = []*schema.Column{
+		{Name: "role_type_id", Type: field.TypeInt},
+		{Name: "child_role_type_id", Type: field.TypeInt},
+	}
+	// RoleTypeChildRoleTypesTable holds the schema information for the "role_type_child_role_types" table.
+	RoleTypeChildRoleTypesTable = &schema.Table{
+		Name:       "role_type_child_role_types",
+		Columns:    RoleTypeChildRoleTypesColumns,
+		PrimaryKey: []*schema.Column{RoleTypeChildRoleTypesColumns[0], RoleTypeChildRoleTypesColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "role_type_child_role_types_role_type_id",
+				Columns:    []*schema.Column{RoleTypeChildRoleTypesColumns[0]},
+				RefColumns: []*schema.Column{RoleTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "role_type_child_role_types_child_role_type_id",
+				Columns:    []*schema.Column{RoleTypeChildRoleTypesColumns[1]},
+				RefColumns: []*schema.Column{RoleTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
+	// SkillTypeChildSkillTypesColumns holds the columns for the "skill_type_child_skill_types" table.
+	SkillTypeChildSkillTypesColumns = []*schema.Column{
+		{Name: "skill_type_id", Type: field.TypeInt},
+		{Name: "child_skill_type_id", Type: field.TypeInt},
+	}
+	// SkillTypeChildSkillTypesTable holds the schema information for the "skill_type_child_skill_types" table.
+	SkillTypeChildSkillTypesTable = &schema.Table{
+		Name:       "skill_type_child_skill_types",
+		Columns:    SkillTypeChildSkillTypesColumns,
+		PrimaryKey: []*schema.Column{SkillTypeChildSkillTypesColumns[0], SkillTypeChildSkillTypesColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "skill_type_child_skill_types_skill_type_id",
+				Columns:    []*schema.Column{SkillTypeChildSkillTypesColumns[0]},
+				RefColumns: []*schema.Column{SkillTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "skill_type_child_skill_types_child_skill_type_id",
+				Columns:    []*schema.Column{SkillTypeChildSkillTypesColumns[1]},
+				RefColumns: []*schema.Column{SkillTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
+	// StatusTypeChildStatusTypesColumns holds the columns for the "status_type_child_status_types" table.
+	StatusTypeChildStatusTypesColumns = []*schema.Column{
+		{Name: "status_type_id", Type: field.TypeInt},
+		{Name: "child_status_type_id", Type: field.TypeInt},
+	}
+	// StatusTypeChildStatusTypesTable holds the schema information for the "status_type_child_status_types" table.
+	StatusTypeChildStatusTypesTable = &schema.Table{
+		Name:       "status_type_child_status_types",
+		Columns:    StatusTypeChildStatusTypesColumns,
+		PrimaryKey: []*schema.Column{StatusTypeChildStatusTypesColumns[0], StatusTypeChildStatusTypesColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "status_type_child_status_types_status_type_id",
+				Columns:    []*schema.Column{StatusTypeChildStatusTypesColumns[0]},
+				RefColumns: []*schema.Column{StatusTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "status_type_child_status_types_child_status_type_id",
+				Columns:    []*schema.Column{StatusTypeChildStatusTypesColumns[1]},
+				RefColumns: []*schema.Column{StatusTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
 	// WorkEffortChildWorkEffortsColumns holds the columns for the "work_effort_child_work_efforts" table.
 	WorkEffortChildWorkEffortsColumns = []*schema.Column{
 		{Name: "work_effort_id", Type: field.TypeInt},
@@ -597,15 +1017,46 @@ var (
 			},
 		},
 	}
+	// WorkEffortTypeChildWorkEffortTypesColumns holds the columns for the "work_effort_type_child_work_effort_types" table.
+	WorkEffortTypeChildWorkEffortTypesColumns = []*schema.Column{
+		{Name: "work_effort_type_id", Type: field.TypeInt},
+		{Name: "child_work_effort_type_id", Type: field.TypeInt},
+	}
+	// WorkEffortTypeChildWorkEffortTypesTable holds the schema information for the "work_effort_type_child_work_effort_types" table.
+	WorkEffortTypeChildWorkEffortTypesTable = &schema.Table{
+		Name:       "work_effort_type_child_work_effort_types",
+		Columns:    WorkEffortTypeChildWorkEffortTypesColumns,
+		PrimaryKey: []*schema.Column{WorkEffortTypeChildWorkEffortTypesColumns[0], WorkEffortTypeChildWorkEffortTypesColumns[1]},
+		ForeignKeys: []*schema.ForeignKey{
+			{
+				Symbol:     "work_effort_type_child_work_effort_types_work_effort_type_id",
+				Columns:    []*schema.Column{WorkEffortTypeChildWorkEffortTypesColumns[0]},
+				RefColumns: []*schema.Column{WorkEffortTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+			{
+				Symbol:     "work_effort_type_child_work_effort_types_child_work_effort_type_id",
+				Columns:    []*schema.Column{WorkEffortTypeChildWorkEffortTypesColumns[1]},
+				RefColumns: []*schema.Column{WorkEffortTypesColumns[0]},
+				OnDelete:   schema.Cascade,
+			},
+		},
+	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		FixedAssetsTable,
 		PartiesTable,
+		PartyContactMechesTable,
 		PartyRolesTable,
 		PartyStatusTable,
 		PersonsTable,
+		RoleTypesTable,
 		SecurityGroupsTable,
 		SecurityGroupPermissionsTable,
+		SkillTypesTable,
+		StatusItemsTable,
+		StatusTypesTable,
+		StatusValidChangesTable,
 		TemporalExpressionsTable,
 		TemporalExpressionAssocsTable,
 		UserLoginsTable,
@@ -614,8 +1065,14 @@ var (
 		WorkEffortAssocsTable,
 		WorkEffortFixedAssetAssignsTable,
 		WorkEffortPartyAssignmentsTable,
+		WorkEffortSkillStandardsTable,
+		WorkEffortTypesTable,
 		FixedAssetChildFixedAssetsTable,
+		RoleTypeChildRoleTypesTable,
+		SkillTypeChildSkillTypesTable,
+		StatusTypeChildStatusTypesTable,
 		WorkEffortChildWorkEffortsTable,
+		WorkEffortTypeChildWorkEffortTypesTable,
 	}
 )
 
@@ -623,14 +1080,28 @@ func init() {
 	FixedAssetsTable.ForeignKeys[0].RefTable = FixedAssetsTable
 	FixedAssetsTable.ForeignKeys[1].RefTable = PartiesTable
 	FixedAssetsTable.ForeignKeys[2].RefTable = PartyRolesTable
-	PartiesTable.ForeignKeys[0].RefTable = UserLoginsTable
+	FixedAssetsTable.ForeignKeys[3].RefTable = RoleTypesTable
+	PartiesTable.ForeignKeys[0].RefTable = StatusItemsTable
 	PartiesTable.ForeignKeys[1].RefTable = UserLoginsTable
+	PartiesTable.ForeignKeys[2].RefTable = UserLoginsTable
+	PartyContactMechesTable.ForeignKeys[0].RefTable = PartiesTable
+	PartyContactMechesTable.ForeignKeys[1].RefTable = PartyRolesTable
+	PartyContactMechesTable.ForeignKeys[2].RefTable = PersonsTable
+	PartyContactMechesTable.ForeignKeys[3].RefTable = RoleTypesTable
 	PartyRolesTable.ForeignKeys[0].RefTable = PartiesTable
+	PartyRolesTable.ForeignKeys[1].RefTable = RoleTypesTable
 	PartyStatusTable.ForeignKeys[0].RefTable = PartiesTable
-	PartyStatusTable.ForeignKeys[1].RefTable = UserLoginsTable
+	PartyStatusTable.ForeignKeys[1].RefTable = StatusItemsTable
+	PartyStatusTable.ForeignKeys[2].RefTable = UserLoginsTable
 	PersonsTable.ForeignKeys[0].RefTable = PartiesTable
+	RoleTypesTable.ForeignKeys[0].RefTable = RoleTypesTable
 	SecurityGroupPermissionsTable.ForeignKeys[0].RefTable = SecurityGroupsTable
 	SecurityGroupPermissionsTable.ForeignKeys[1].RefTable = UserLoginSecurityGroupsTable
+	SkillTypesTable.ForeignKeys[0].RefTable = SkillTypesTable
+	StatusItemsTable.ForeignKeys[0].RefTable = StatusTypesTable
+	StatusTypesTable.ForeignKeys[0].RefTable = StatusTypesTable
+	StatusValidChangesTable.ForeignKeys[0].RefTable = StatusItemsTable
+	StatusValidChangesTable.ForeignKeys[1].RefTable = StatusItemsTable
 	TemporalExpressionAssocsTable.ForeignKeys[0].RefTable = TemporalExpressionsTable
 	TemporalExpressionAssocsTable.ForeignKeys[1].RefTable = TemporalExpressionsTable
 	UserLoginsTable.ForeignKeys[0].RefTable = PartiesTable
@@ -638,18 +1109,36 @@ func init() {
 	UserLoginSecurityGroupsTable.ForeignKeys[0].RefTable = SecurityGroupsTable
 	UserLoginSecurityGroupsTable.ForeignKeys[1].RefTable = UserLoginsTable
 	WorkEffortsTable.ForeignKeys[0].RefTable = FixedAssetsTable
-	WorkEffortsTable.ForeignKeys[1].RefTable = TemporalExpressionsTable
-	WorkEffortsTable.ForeignKeys[2].RefTable = WorkEffortsTable
+	WorkEffortsTable.ForeignKeys[1].RefTable = StatusItemsTable
+	WorkEffortsTable.ForeignKeys[2].RefTable = TemporalExpressionsTable
+	WorkEffortsTable.ForeignKeys[3].RefTable = WorkEffortsTable
+	WorkEffortsTable.ForeignKeys[4].RefTable = WorkEffortTypesTable
 	WorkEffortAssocsTable.ForeignKeys[0].RefTable = WorkEffortsTable
 	WorkEffortAssocsTable.ForeignKeys[1].RefTable = WorkEffortsTable
 	WorkEffortFixedAssetAssignsTable.ForeignKeys[0].RefTable = FixedAssetsTable
-	WorkEffortFixedAssetAssignsTable.ForeignKeys[1].RefTable = WorkEffortsTable
+	WorkEffortFixedAssetAssignsTable.ForeignKeys[1].RefTable = StatusItemsTable
+	WorkEffortFixedAssetAssignsTable.ForeignKeys[2].RefTable = StatusItemsTable
+	WorkEffortFixedAssetAssignsTable.ForeignKeys[3].RefTable = WorkEffortsTable
 	WorkEffortPartyAssignmentsTable.ForeignKeys[0].RefTable = PartiesTable
 	WorkEffortPartyAssignmentsTable.ForeignKeys[1].RefTable = PartyRolesTable
-	WorkEffortPartyAssignmentsTable.ForeignKeys[2].RefTable = UserLoginsTable
-	WorkEffortPartyAssignmentsTable.ForeignKeys[3].RefTable = WorkEffortsTable
+	WorkEffortPartyAssignmentsTable.ForeignKeys[2].RefTable = RoleTypesTable
+	WorkEffortPartyAssignmentsTable.ForeignKeys[3].RefTable = StatusItemsTable
+	WorkEffortPartyAssignmentsTable.ForeignKeys[4].RefTable = StatusItemsTable
+	WorkEffortPartyAssignmentsTable.ForeignKeys[5].RefTable = UserLoginsTable
+	WorkEffortPartyAssignmentsTable.ForeignKeys[6].RefTable = WorkEffortsTable
+	WorkEffortSkillStandardsTable.ForeignKeys[0].RefTable = SkillTypesTable
+	WorkEffortSkillStandardsTable.ForeignKeys[1].RefTable = WorkEffortsTable
+	WorkEffortTypesTable.ForeignKeys[0].RefTable = WorkEffortTypesTable
 	FixedAssetChildFixedAssetsTable.ForeignKeys[0].RefTable = FixedAssetsTable
 	FixedAssetChildFixedAssetsTable.ForeignKeys[1].RefTable = FixedAssetsTable
+	RoleTypeChildRoleTypesTable.ForeignKeys[0].RefTable = RoleTypesTable
+	RoleTypeChildRoleTypesTable.ForeignKeys[1].RefTable = RoleTypesTable
+	SkillTypeChildSkillTypesTable.ForeignKeys[0].RefTable = SkillTypesTable
+	SkillTypeChildSkillTypesTable.ForeignKeys[1].RefTable = SkillTypesTable
+	StatusTypeChildStatusTypesTable.ForeignKeys[0].RefTable = StatusTypesTable
+	StatusTypeChildStatusTypesTable.ForeignKeys[1].RefTable = StatusTypesTable
 	WorkEffortChildWorkEffortsTable.ForeignKeys[0].RefTable = WorkEffortsTable
 	WorkEffortChildWorkEffortsTable.ForeignKeys[1].RefTable = WorkEffortsTable
+	WorkEffortTypeChildWorkEffortTypesTable.ForeignKeys[0].RefTable = WorkEffortTypesTable
+	WorkEffortTypeChildWorkEffortTypesTable.ForeignKeys[1].RefTable = WorkEffortTypesTable
 }

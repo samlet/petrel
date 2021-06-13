@@ -13,6 +13,8 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
@@ -31,16 +33,23 @@ func (wepau *WorkEffortPartyAssignmentUpdate) Where(ps ...predicate.WorkEffortPa
 	return wepau
 }
 
-// SetRoleTypeID sets the "role_type_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetRoleTypeID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ResetRoleTypeID()
-	wepau.mutation.SetRoleTypeID(i)
+// SetStringRef sets the "string_ref" field.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetStringRef(s string) *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.SetStringRef(s)
 	return wepau
 }
 
-// AddRoleTypeID adds i to the "role_type_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) AddRoleTypeID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.AddRoleTypeID(i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableStringRef(s *string) *WorkEffortPartyAssignmentUpdate {
+	if s != nil {
+		wepau.SetStringRef(*s)
+	}
+	return wepau
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (wepau *WorkEffortPartyAssignmentUpdate) ClearStringRef() *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.ClearStringRef()
 	return wepau
 }
 
@@ -75,33 +84,6 @@ func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableThruDate(t *time.Time) 
 // ClearThruDate clears the value of the "thru_date" field.
 func (wepau *WorkEffortPartyAssignmentUpdate) ClearThruDate() *WorkEffortPartyAssignmentUpdate {
 	wepau.mutation.ClearThruDate()
-	return wepau
-}
-
-// SetStatusID sets the "status_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetStatusID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ResetStatusID()
-	wepau.mutation.SetStatusID(i)
-	return wepau
-}
-
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableStatusID(i *int) *WorkEffortPartyAssignmentUpdate {
-	if i != nil {
-		wepau.SetStatusID(*i)
-	}
-	return wepau
-}
-
-// AddStatusID adds i to the "status_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) AddStatusID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.AddStatusID(i)
-	return wepau
-}
-
-// ClearStatusID clears the value of the "status_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) ClearStatusID() *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ClearStatusID()
 	return wepau
 }
 
@@ -246,33 +228,6 @@ func (wepau *WorkEffortPartyAssignmentUpdate) ClearMustRsvp() *WorkEffortPartyAs
 	return wepau
 }
 
-// SetAvailabilityStatusID sets the "availability_status_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetAvailabilityStatusID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ResetAvailabilityStatusID()
-	wepau.mutation.SetAvailabilityStatusID(i)
-	return wepau
-}
-
-// SetNillableAvailabilityStatusID sets the "availability_status_id" field if the given value is not nil.
-func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableAvailabilityStatusID(i *int) *WorkEffortPartyAssignmentUpdate {
-	if i != nil {
-		wepau.SetAvailabilityStatusID(*i)
-	}
-	return wepau
-}
-
-// AddAvailabilityStatusID adds i to the "availability_status_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) AddAvailabilityStatusID(i int) *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.AddAvailabilityStatusID(i)
-	return wepau
-}
-
-// ClearAvailabilityStatusID clears the value of the "availability_status_id" field.
-func (wepau *WorkEffortPartyAssignmentUpdate) ClearAvailabilityStatusID() *WorkEffortPartyAssignmentUpdate {
-	wepau.mutation.ClearAvailabilityStatusID()
-	return wepau
-}
-
 // SetWorkEffortID sets the "work_effort" edge to the WorkEffort entity by ID.
 func (wepau *WorkEffortPartyAssignmentUpdate) SetWorkEffortID(id int) *WorkEffortPartyAssignmentUpdate {
 	wepau.mutation.SetWorkEffortID(id)
@@ -330,6 +285,25 @@ func (wepau *WorkEffortPartyAssignmentUpdate) SetPartyRole(p *PartyRole) *WorkEf
 	return wepau.SetPartyRoleID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetRoleTypeID(id int) *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.SetRoleTypeID(id)
+	return wepau
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableRoleTypeID(id *int) *WorkEffortPartyAssignmentUpdate {
+	if id != nil {
+		wepau = wepau.SetRoleTypeID(*id)
+	}
+	return wepau
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetRoleType(r *RoleType) *WorkEffortPartyAssignmentUpdate {
+	return wepau.SetRoleTypeID(r.ID)
+}
+
 // SetAssignedByUserLoginID sets the "assigned_by_user_login" edge to the UserLogin entity by ID.
 func (wepau *WorkEffortPartyAssignmentUpdate) SetAssignedByUserLoginID(id int) *WorkEffortPartyAssignmentUpdate {
 	wepau.mutation.SetAssignedByUserLoginID(id)
@@ -347,6 +321,44 @@ func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableAssignedByUserLoginID(i
 // SetAssignedByUserLogin sets the "assigned_by_user_login" edge to the UserLogin entity.
 func (wepau *WorkEffortPartyAssignmentUpdate) SetAssignedByUserLogin(u *UserLogin) *WorkEffortPartyAssignmentUpdate {
 	return wepau.SetAssignedByUserLoginID(u.ID)
+}
+
+// SetAssignmentStatusItemID sets the "assignment_status_item" edge to the StatusItem entity by ID.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetAssignmentStatusItemID(id int) *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.SetAssignmentStatusItemID(id)
+	return wepau
+}
+
+// SetNillableAssignmentStatusItemID sets the "assignment_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableAssignmentStatusItemID(id *int) *WorkEffortPartyAssignmentUpdate {
+	if id != nil {
+		wepau = wepau.SetAssignmentStatusItemID(*id)
+	}
+	return wepau
+}
+
+// SetAssignmentStatusItem sets the "assignment_status_item" edge to the StatusItem entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetAssignmentStatusItem(s *StatusItem) *WorkEffortPartyAssignmentUpdate {
+	return wepau.SetAssignmentStatusItemID(s.ID)
+}
+
+// SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetAvailabilityStatusItemID(id int) *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.SetAvailabilityStatusItemID(id)
+	return wepau
+}
+
+// SetNillableAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetNillableAvailabilityStatusItemID(id *int) *WorkEffortPartyAssignmentUpdate {
+	if id != nil {
+		wepau = wepau.SetAvailabilityStatusItemID(*id)
+	}
+	return wepau
+}
+
+// SetAvailabilityStatusItem sets the "availability_status_item" edge to the StatusItem entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) SetAvailabilityStatusItem(s *StatusItem) *WorkEffortPartyAssignmentUpdate {
+	return wepau.SetAvailabilityStatusItemID(s.ID)
 }
 
 // Mutation returns the WorkEffortPartyAssignmentMutation object of the builder.
@@ -372,9 +384,27 @@ func (wepau *WorkEffortPartyAssignmentUpdate) ClearPartyRole() *WorkEffortPartyA
 	return wepau
 }
 
+// ClearRoleType clears the "role_type" edge to the RoleType entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) ClearRoleType() *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.ClearRoleType()
+	return wepau
+}
+
 // ClearAssignedByUserLogin clears the "assigned_by_user_login" edge to the UserLogin entity.
 func (wepau *WorkEffortPartyAssignmentUpdate) ClearAssignedByUserLogin() *WorkEffortPartyAssignmentUpdate {
 	wepau.mutation.ClearAssignedByUserLogin()
+	return wepau
+}
+
+// ClearAssignmentStatusItem clears the "assignment_status_item" edge to the StatusItem entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) ClearAssignmentStatusItem() *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.ClearAssignmentStatusItem()
+	return wepau
+}
+
+// ClearAvailabilityStatusItem clears the "availability_status_item" edge to the StatusItem entity.
+func (wepau *WorkEffortPartyAssignmentUpdate) ClearAvailabilityStatusItem() *WorkEffortPartyAssignmentUpdate {
+	wepau.mutation.ClearAvailabilityStatusItem()
 	return wepau
 }
 
@@ -384,6 +414,7 @@ func (wepau *WorkEffortPartyAssignmentUpdate) Save(ctx context.Context) (int, er
 		err      error
 		affected int
 	)
+	wepau.defaults()
 	if len(wepau.hooks) == 0 {
 		if err = wepau.check(); err != nil {
 			return 0, err
@@ -435,6 +466,14 @@ func (wepau *WorkEffortPartyAssignmentUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (wepau *WorkEffortPartyAssignmentUpdate) defaults() {
+	if _, ok := wepau.mutation.UpdateTime(); !ok {
+		v := workeffortpartyassignment.UpdateDefaultUpdateTime()
+		wepau.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (wepau *WorkEffortPartyAssignmentUpdate) check() error {
 	if v, ok := wepau.mutation.MustRsvp(); ok {
@@ -463,18 +502,24 @@ func (wepau *WorkEffortPartyAssignmentUpdate) sqlSave(ctx context.Context) (n in
 			}
 		}
 	}
-	if value, ok := wepau.mutation.RoleTypeID(); ok {
+	if value, ok := wepau.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffortpartyassignment.FieldRoleTypeID,
+			Column: workeffortpartyassignment.FieldUpdateTime,
 		})
 	}
-	if value, ok := wepau.mutation.AddedRoleTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := wepau.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: workeffortpartyassignment.FieldRoleTypeID,
+			Column: workeffortpartyassignment.FieldStringRef,
+		})
+	}
+	if wepau.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: workeffortpartyassignment.FieldStringRef,
 		})
 	}
 	if value, ok := wepau.mutation.FromDate(); ok {
@@ -495,26 +540,6 @@ func (wepau *WorkEffortPartyAssignmentUpdate) sqlSave(ctx context.Context) (n in
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Column: workeffortpartyassignment.FieldThruDate,
-		})
-	}
-	if value, ok := wepau.mutation.StatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldStatusID,
-		})
-	}
-	if value, ok := wepau.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldStatusID,
-		})
-	}
-	if wepau.mutation.StatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldStatusID,
 		})
 	}
 	if value, ok := wepau.mutation.StatusDateTime(); ok {
@@ -614,26 +639,6 @@ func (wepau *WorkEffortPartyAssignmentUpdate) sqlSave(ctx context.Context) (n in
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Column: workeffortpartyassignment.FieldMustRsvp,
-		})
-	}
-	if value, ok := wepau.mutation.AvailabilityStatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldAvailabilityStatusID,
-		})
-	}
-	if value, ok := wepau.mutation.AddedAvailabilityStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldAvailabilityStatusID,
-		})
-	}
-	if wepau.mutation.AvailabilityStatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldAvailabilityStatusID,
 		})
 	}
 	if wepau.mutation.WorkEffortCleared() {
@@ -741,6 +746,41 @@ func (wepau *WorkEffortPartyAssignmentUpdate) sqlSave(ctx context.Context) (n in
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if wepau.mutation.RoleTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.RoleTypeTable,
+			Columns: []string{workeffortpartyassignment.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepau.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.RoleTypeTable,
+			Columns: []string{workeffortpartyassignment.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if wepau.mutation.AssignedByUserLoginCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -776,6 +816,76 @@ func (wepau *WorkEffortPartyAssignmentUpdate) sqlSave(ctx context.Context) (n in
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if wepau.mutation.AssignmentStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AssignmentStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AssignmentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepau.mutation.AssignmentStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AssignmentStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AssignmentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wepau.mutation.AvailabilityStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AvailabilityStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepau.mutation.AvailabilityStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AvailabilityStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, wepau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{workeffortpartyassignment.Label}
@@ -795,16 +905,23 @@ type WorkEffortPartyAssignmentUpdateOne struct {
 	mutation *WorkEffortPartyAssignmentMutation
 }
 
-// SetRoleTypeID sets the "role_type_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetRoleTypeID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ResetRoleTypeID()
-	wepauo.mutation.SetRoleTypeID(i)
+// SetStringRef sets the "string_ref" field.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetStringRef(s string) *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.SetStringRef(s)
 	return wepauo
 }
 
-// AddRoleTypeID adds i to the "role_type_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) AddRoleTypeID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.AddRoleTypeID(i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableStringRef(s *string) *WorkEffortPartyAssignmentUpdateOne {
+	if s != nil {
+		wepauo.SetStringRef(*s)
+	}
+	return wepauo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearStringRef() *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.ClearStringRef()
 	return wepauo
 }
 
@@ -839,33 +956,6 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableThruDate(t *time.Ti
 // ClearThruDate clears the value of the "thru_date" field.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearThruDate() *WorkEffortPartyAssignmentUpdateOne {
 	wepauo.mutation.ClearThruDate()
-	return wepauo
-}
-
-// SetStatusID sets the "status_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetStatusID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ResetStatusID()
-	wepauo.mutation.SetStatusID(i)
-	return wepauo
-}
-
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableStatusID(i *int) *WorkEffortPartyAssignmentUpdateOne {
-	if i != nil {
-		wepauo.SetStatusID(*i)
-	}
-	return wepauo
-}
-
-// AddStatusID adds i to the "status_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) AddStatusID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.AddStatusID(i)
-	return wepauo
-}
-
-// ClearStatusID clears the value of the "status_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearStatusID() *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ClearStatusID()
 	return wepauo
 }
 
@@ -1010,33 +1100,6 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearMustRsvp() *WorkEffortPar
 	return wepauo
 }
 
-// SetAvailabilityStatusID sets the "availability_status_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAvailabilityStatusID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ResetAvailabilityStatusID()
-	wepauo.mutation.SetAvailabilityStatusID(i)
-	return wepauo
-}
-
-// SetNillableAvailabilityStatusID sets the "availability_status_id" field if the given value is not nil.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableAvailabilityStatusID(i *int) *WorkEffortPartyAssignmentUpdateOne {
-	if i != nil {
-		wepauo.SetAvailabilityStatusID(*i)
-	}
-	return wepauo
-}
-
-// AddAvailabilityStatusID adds i to the "availability_status_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) AddAvailabilityStatusID(i int) *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.AddAvailabilityStatusID(i)
-	return wepauo
-}
-
-// ClearAvailabilityStatusID clears the value of the "availability_status_id" field.
-func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearAvailabilityStatusID() *WorkEffortPartyAssignmentUpdateOne {
-	wepauo.mutation.ClearAvailabilityStatusID()
-	return wepauo
-}
-
 // SetWorkEffortID sets the "work_effort" edge to the WorkEffort entity by ID.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetWorkEffortID(id int) *WorkEffortPartyAssignmentUpdateOne {
 	wepauo.mutation.SetWorkEffortID(id)
@@ -1094,6 +1157,25 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetPartyRole(p *PartyRole) *Wo
 	return wepauo.SetPartyRoleID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetRoleTypeID(id int) *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.SetRoleTypeID(id)
+	return wepauo
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableRoleTypeID(id *int) *WorkEffortPartyAssignmentUpdateOne {
+	if id != nil {
+		wepauo = wepauo.SetRoleTypeID(*id)
+	}
+	return wepauo
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetRoleType(r *RoleType) *WorkEffortPartyAssignmentUpdateOne {
+	return wepauo.SetRoleTypeID(r.ID)
+}
+
 // SetAssignedByUserLoginID sets the "assigned_by_user_login" edge to the UserLogin entity by ID.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAssignedByUserLoginID(id int) *WorkEffortPartyAssignmentUpdateOne {
 	wepauo.mutation.SetAssignedByUserLoginID(id)
@@ -1111,6 +1193,44 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableAssignedByUserLogin
 // SetAssignedByUserLogin sets the "assigned_by_user_login" edge to the UserLogin entity.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAssignedByUserLogin(u *UserLogin) *WorkEffortPartyAssignmentUpdateOne {
 	return wepauo.SetAssignedByUserLoginID(u.ID)
+}
+
+// SetAssignmentStatusItemID sets the "assignment_status_item" edge to the StatusItem entity by ID.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAssignmentStatusItemID(id int) *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.SetAssignmentStatusItemID(id)
+	return wepauo
+}
+
+// SetNillableAssignmentStatusItemID sets the "assignment_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableAssignmentStatusItemID(id *int) *WorkEffortPartyAssignmentUpdateOne {
+	if id != nil {
+		wepauo = wepauo.SetAssignmentStatusItemID(*id)
+	}
+	return wepauo
+}
+
+// SetAssignmentStatusItem sets the "assignment_status_item" edge to the StatusItem entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAssignmentStatusItem(s *StatusItem) *WorkEffortPartyAssignmentUpdateOne {
+	return wepauo.SetAssignmentStatusItemID(s.ID)
+}
+
+// SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAvailabilityStatusItemID(id int) *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.SetAvailabilityStatusItemID(id)
+	return wepauo
+}
+
+// SetNillableAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetNillableAvailabilityStatusItemID(id *int) *WorkEffortPartyAssignmentUpdateOne {
+	if id != nil {
+		wepauo = wepauo.SetAvailabilityStatusItemID(*id)
+	}
+	return wepauo
+}
+
+// SetAvailabilityStatusItem sets the "availability_status_item" edge to the StatusItem entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) SetAvailabilityStatusItem(s *StatusItem) *WorkEffortPartyAssignmentUpdateOne {
+	return wepauo.SetAvailabilityStatusItemID(s.ID)
 }
 
 // Mutation returns the WorkEffortPartyAssignmentMutation object of the builder.
@@ -1136,9 +1256,27 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearPartyRole() *WorkEffortPa
 	return wepauo
 }
 
+// ClearRoleType clears the "role_type" edge to the RoleType entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearRoleType() *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.ClearRoleType()
+	return wepauo
+}
+
 // ClearAssignedByUserLogin clears the "assigned_by_user_login" edge to the UserLogin entity.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearAssignedByUserLogin() *WorkEffortPartyAssignmentUpdateOne {
 	wepauo.mutation.ClearAssignedByUserLogin()
+	return wepauo
+}
+
+// ClearAssignmentStatusItem clears the "assignment_status_item" edge to the StatusItem entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearAssignmentStatusItem() *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.ClearAssignmentStatusItem()
+	return wepauo
+}
+
+// ClearAvailabilityStatusItem clears the "availability_status_item" edge to the StatusItem entity.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) ClearAvailabilityStatusItem() *WorkEffortPartyAssignmentUpdateOne {
+	wepauo.mutation.ClearAvailabilityStatusItem()
 	return wepauo
 }
 
@@ -1155,6 +1293,7 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) Save(ctx context.Context) (*Wo
 		err  error
 		node *WorkEffortPartyAssignment
 	)
+	wepauo.defaults()
 	if len(wepauo.hooks) == 0 {
 		if err = wepauo.check(); err != nil {
 			return nil, err
@@ -1206,6 +1345,14 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (wepauo *WorkEffortPartyAssignmentUpdateOne) defaults() {
+	if _, ok := wepauo.mutation.UpdateTime(); !ok {
+		v := workeffortpartyassignment.UpdateDefaultUpdateTime()
+		wepauo.mutation.SetUpdateTime(v)
+	}
+}
+
 // check runs all checks and user-defined validators on the builder.
 func (wepauo *WorkEffortPartyAssignmentUpdateOne) check() error {
 	if v, ok := wepauo.mutation.MustRsvp(); ok {
@@ -1251,18 +1398,24 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) sqlSave(ctx context.Context) (
 			}
 		}
 	}
-	if value, ok := wepauo.mutation.RoleTypeID(); ok {
+	if value, ok := wepauo.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffortpartyassignment.FieldRoleTypeID,
+			Column: workeffortpartyassignment.FieldUpdateTime,
 		})
 	}
-	if value, ok := wepauo.mutation.AddedRoleTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := wepauo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: workeffortpartyassignment.FieldRoleTypeID,
+			Column: workeffortpartyassignment.FieldStringRef,
+		})
+	}
+	if wepauo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: workeffortpartyassignment.FieldStringRef,
 		})
 	}
 	if value, ok := wepauo.mutation.FromDate(); ok {
@@ -1283,26 +1436,6 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) sqlSave(ctx context.Context) (
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Column: workeffortpartyassignment.FieldThruDate,
-		})
-	}
-	if value, ok := wepauo.mutation.StatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldStatusID,
-		})
-	}
-	if value, ok := wepauo.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldStatusID,
-		})
-	}
-	if wepauo.mutation.StatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldStatusID,
 		})
 	}
 	if value, ok := wepauo.mutation.StatusDateTime(); ok {
@@ -1402,26 +1535,6 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) sqlSave(ctx context.Context) (
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeEnum,
 			Column: workeffortpartyassignment.FieldMustRsvp,
-		})
-	}
-	if value, ok := wepauo.mutation.AvailabilityStatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldAvailabilityStatusID,
-		})
-	}
-	if value, ok := wepauo.mutation.AddedAvailabilityStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortpartyassignment.FieldAvailabilityStatusID,
-		})
-	}
-	if wepauo.mutation.AvailabilityStatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortpartyassignment.FieldAvailabilityStatusID,
 		})
 	}
 	if wepauo.mutation.WorkEffortCleared() {
@@ -1529,6 +1642,41 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) sqlSave(ctx context.Context) (
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if wepauo.mutation.RoleTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.RoleTypeTable,
+			Columns: []string{workeffortpartyassignment.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepauo.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.RoleTypeTable,
+			Columns: []string{workeffortpartyassignment.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if wepauo.mutation.AssignedByUserLoginCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -1556,6 +1704,76 @@ func (wepauo *WorkEffortPartyAssignmentUpdateOne) sqlSave(ctx context.Context) (
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: userlogin.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wepauo.mutation.AssignmentStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AssignmentStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AssignmentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepauo.mutation.AssignmentStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AssignmentStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AssignmentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wepauo.mutation.AvailabilityStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AvailabilityStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wepauo.mutation.AvailabilityStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortpartyassignment.AvailabilityStatusItemTable,
+			Columns: []string{workeffortpartyassignment.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
 				},
 			},
 		}

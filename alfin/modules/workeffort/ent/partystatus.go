@@ -10,6 +10,7 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 )
 
@@ -18,32 +19,53 @@ type PartyStatus struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
-	// StatusID holds the value of the "status_id" field.
-	StatusID int `json:"status_id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// StatusDate holds the value of the "status_date" field.
 	StatusDate time.Time `json:"status_date,omitempty"`
 	// Edges holds the relations/edges for other nodes in the graph.
 	// The values are being populated by the PartyStatusQuery when eager-loading is set.
 	Edges                               PartyStatusEdges `json:"edges"`
 	party_party_statuses                *int
+	status_item_party_statuses          *int
 	user_login_change_by_party_statuses *int
 }
 
 // PartyStatusEdges holds the relations/edges for other nodes in the graph.
 type PartyStatusEdges struct {
+	// StatusItem holds the value of the status_item edge.
+	StatusItem *StatusItem `json:"status_item,omitempty"`
 	// Party holds the value of the party edge.
 	Party *Party `json:"party,omitempty"`
 	// ChangeByUserLogin holds the value of the change_by_user_login edge.
 	ChangeByUserLogin *UserLogin `json:"change_by_user_login,omitempty"`
 	// loadedTypes holds the information for reporting if a
 	// type was loaded (or requested) in eager-loading or not.
-	loadedTypes [2]bool
+	loadedTypes [3]bool
+}
+
+// StatusItemOrErr returns the StatusItem value or an error if the edge
+// was not loaded in eager-loading, or loaded but was not found.
+func (e PartyStatusEdges) StatusItemOrErr() (*StatusItem, error) {
+	if e.loadedTypes[0] {
+		if e.StatusItem == nil {
+			// The edge status_item was loaded in eager-loading,
+			// but was not found.
+			return nil, &NotFoundError{label: statusitem.Label}
+		}
+		return e.StatusItem, nil
+	}
+	return nil, &NotLoadedError{edge: "status_item"}
 }
 
 // PartyOrErr returns the Party value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e PartyStatusEdges) PartyOrErr() (*Party, error) {
-	if e.loadedTypes[0] {
+	if e.loadedTypes[1] {
 		if e.Party == nil {
 			// The edge party was loaded in eager-loading,
 			// but was not found.
@@ -57,7 +79,7 @@ func (e PartyStatusEdges) PartyOrErr() (*Party, error) {
 // ChangeByUserLoginOrErr returns the ChangeByUserLogin value or an error if the edge
 // was not loaded in eager-loading, or loaded but was not found.
 func (e PartyStatusEdges) ChangeByUserLoginOrErr() (*UserLogin, error) {
-	if e.loadedTypes[1] {
+	if e.loadedTypes[2] {
 		if e.ChangeByUserLogin == nil {
 			// The edge change_by_user_login was loaded in eager-loading,
 			// but was not found.
@@ -73,13 +95,17 @@ func (*PartyStatus) scanValues(columns []string) ([]interface{}, error) {
 	values := make([]interface{}, len(columns))
 	for i := range columns {
 		switch columns[i] {
-		case partystatus.FieldID, partystatus.FieldStatusID:
+		case partystatus.FieldID:
 			values[i] = new(sql.NullInt64)
-		case partystatus.FieldStatusDate:
+		case partystatus.FieldStringRef:
+			values[i] = new(sql.NullString)
+		case partystatus.FieldCreateTime, partystatus.FieldUpdateTime, partystatus.FieldStatusDate:
 			values[i] = new(sql.NullTime)
 		case partystatus.ForeignKeys[0]: // party_party_statuses
 			values[i] = new(sql.NullInt64)
-		case partystatus.ForeignKeys[1]: // user_login_change_by_party_statuses
+		case partystatus.ForeignKeys[1]: // status_item_party_statuses
+			values[i] = new(sql.NullInt64)
+		case partystatus.ForeignKeys[2]: // user_login_change_by_party_statuses
 			values[i] = new(sql.NullInt64)
 		default:
 			return nil, fmt.Errorf("unexpected column %q for type PartyStatus", columns[i])
@@ -102,11 +128,23 @@ func (ps *PartyStatus) assignValues(columns []string, values []interface{}) erro
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			ps.ID = int(value.Int64)
-		case partystatus.FieldStatusID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field status_id", values[i])
+		case partystatus.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
 			} else if value.Valid {
-				ps.StatusID = int(value.Int64)
+				ps.CreateTime = value.Time
+			}
+		case partystatus.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				ps.UpdateTime = value.Time
+			}
+		case partystatus.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				ps.StringRef = value.String
 			}
 		case partystatus.FieldStatusDate:
 			if value, ok := values[i].(*sql.NullTime); !ok {
@@ -123,6 +161,13 @@ func (ps *PartyStatus) assignValues(columns []string, values []interface{}) erro
 			}
 		case partystatus.ForeignKeys[1]:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
+				return fmt.Errorf("unexpected type %T for edge-field status_item_party_statuses", value)
+			} else if value.Valid {
+				ps.status_item_party_statuses = new(int)
+				*ps.status_item_party_statuses = int(value.Int64)
+			}
+		case partystatus.ForeignKeys[2]:
+			if value, ok := values[i].(*sql.NullInt64); !ok {
 				return fmt.Errorf("unexpected type %T for edge-field user_login_change_by_party_statuses", value)
 			} else if value.Valid {
 				ps.user_login_change_by_party_statuses = new(int)
@@ -131,6 +176,11 @@ func (ps *PartyStatus) assignValues(columns []string, values []interface{}) erro
 		}
 	}
 	return nil
+}
+
+// QueryStatusItem queries the "status_item" edge of the PartyStatus entity.
+func (ps *PartyStatus) QueryStatusItem() *StatusItemQuery {
+	return (&PartyStatusClient{config: ps.config}).QueryStatusItem(ps)
 }
 
 // QueryParty queries the "party" edge of the PartyStatus entity.
@@ -166,8 +216,12 @@ func (ps *PartyStatus) String() string {
 	var builder strings.Builder
 	builder.WriteString("PartyStatus(")
 	builder.WriteString(fmt.Sprintf("id=%v", ps.ID))
-	builder.WriteString(", status_id=")
-	builder.WriteString(fmt.Sprintf("%v", ps.StatusID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(ps.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(ps.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(ps.StringRef)
 	builder.WriteString(", status_date=")
 	builder.WriteString(ps.StatusDate.Format(time.ANSIC))
 	builder.WriteByte(')')

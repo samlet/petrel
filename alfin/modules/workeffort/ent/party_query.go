@@ -14,10 +14,12 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
@@ -34,7 +36,9 @@ type PartyQuery struct {
 	// eager-loading edges.
 	withCreatedByUserLogin         *UserLoginQuery
 	withLastModifiedByUserLogin    *UserLoginQuery
+	withStatusItem                 *StatusItemQuery
 	withFixedAssets                *FixedAssetQuery
+	withPartyContactMeches         *PartyContactMechQuery
 	withPartyRoles                 *PartyRoleQuery
 	withPartyStatuses              *PartyStatusQuery
 	withPerson                     *PersonQuery
@@ -121,6 +125,28 @@ func (pq *PartyQuery) QueryLastModifiedByUserLogin() *UserLoginQuery {
 	return query
 }
 
+// QueryStatusItem chains the current query on the "status_item" edge.
+func (pq *PartyQuery) QueryStatusItem() *StatusItemQuery {
+	query := &StatusItemQuery{config: pq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(party.Table, party.FieldID, selector),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, party.StatusItemTable, party.StatusItemColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // QueryFixedAssets chains the current query on the "fixed_assets" edge.
 func (pq *PartyQuery) QueryFixedAssets() *FixedAssetQuery {
 	query := &FixedAssetQuery{config: pq.config}
@@ -136,6 +162,28 @@ func (pq *PartyQuery) QueryFixedAssets() *FixedAssetQuery {
 			sqlgraph.From(party.Table, party.FieldID, selector),
 			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, party.FixedAssetsTable, party.FixedAssetsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryPartyContactMeches chains the current query on the "party_contact_meches" edge.
+func (pq *PartyQuery) QueryPartyContactMeches() *PartyContactMechQuery {
+	query := &PartyContactMechQuery{config: pq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := pq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := pq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(party.Table, party.FieldID, selector),
+			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, party.PartyContactMechesTable, party.PartyContactMechesColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(pq.driver.Dialect(), step)
 		return fromU, nil
@@ -436,7 +484,9 @@ func (pq *PartyQuery) Clone() *PartyQuery {
 		predicates:                     append([]predicate.Party{}, pq.predicates...),
 		withCreatedByUserLogin:         pq.withCreatedByUserLogin.Clone(),
 		withLastModifiedByUserLogin:    pq.withLastModifiedByUserLogin.Clone(),
+		withStatusItem:                 pq.withStatusItem.Clone(),
 		withFixedAssets:                pq.withFixedAssets.Clone(),
+		withPartyContactMeches:         pq.withPartyContactMeches.Clone(),
 		withPartyRoles:                 pq.withPartyRoles.Clone(),
 		withPartyStatuses:              pq.withPartyStatuses.Clone(),
 		withPerson:                     pq.withPerson.Clone(),
@@ -470,6 +520,17 @@ func (pq *PartyQuery) WithLastModifiedByUserLogin(opts ...func(*UserLoginQuery))
 	return pq
 }
 
+// WithStatusItem tells the query-builder to eager-load the nodes that are connected to
+// the "status_item" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PartyQuery) WithStatusItem(opts ...func(*StatusItemQuery)) *PartyQuery {
+	query := &StatusItemQuery{config: pq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withStatusItem = query
+	return pq
+}
+
 // WithFixedAssets tells the query-builder to eager-load the nodes that are connected to
 // the "fixed_assets" edge. The optional arguments are used to configure the query builder of the edge.
 func (pq *PartyQuery) WithFixedAssets(opts ...func(*FixedAssetQuery)) *PartyQuery {
@@ -478,6 +539,17 @@ func (pq *PartyQuery) WithFixedAssets(opts ...func(*FixedAssetQuery)) *PartyQuer
 		opt(query)
 	}
 	pq.withFixedAssets = query
+	return pq
+}
+
+// WithPartyContactMeches tells the query-builder to eager-load the nodes that are connected to
+// the "party_contact_meches" edge. The optional arguments are used to configure the query builder of the edge.
+func (pq *PartyQuery) WithPartyContactMeches(opts ...func(*PartyContactMechQuery)) *PartyQuery {
+	query := &PartyContactMechQuery{config: pq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	pq.withPartyContactMeches = query
 	return pq
 }
 
@@ -542,12 +614,12 @@ func (pq *PartyQuery) WithWorkEffortPartyAssignments(opts ...func(*WorkEffortPar
 // Example:
 //
 //	var v []struct {
-//		PartyTypeID int `json:"party_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.Party.Query().
-//		GroupBy(party.FieldPartyTypeID).
+//		GroupBy(party.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -569,11 +641,11 @@ func (pq *PartyQuery) GroupBy(field string, fields ...string) *PartyGroupBy {
 // Example:
 //
 //	var v []struct {
-//		PartyTypeID int `json:"party_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.Party.Query().
-//		Select(party.FieldPartyTypeID).
+//		Select(party.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (pq *PartyQuery) Select(field string, fields ...string) *PartySelect {
@@ -602,10 +674,12 @@ func (pq *PartyQuery) sqlAll(ctx context.Context) ([]*Party, error) {
 		nodes       = []*Party{}
 		withFKs     = pq.withFKs
 		_spec       = pq.querySpec()
-		loadedTypes = [8]bool{
+		loadedTypes = [10]bool{
 			pq.withCreatedByUserLogin != nil,
 			pq.withLastModifiedByUserLogin != nil,
+			pq.withStatusItem != nil,
 			pq.withFixedAssets != nil,
+			pq.withPartyContactMeches != nil,
 			pq.withPartyRoles != nil,
 			pq.withPartyStatuses != nil,
 			pq.withPerson != nil,
@@ -613,7 +687,7 @@ func (pq *PartyQuery) sqlAll(ctx context.Context) ([]*Party, error) {
 			pq.withWorkEffortPartyAssignments != nil,
 		}
 	)
-	if pq.withCreatedByUserLogin != nil || pq.withLastModifiedByUserLogin != nil {
+	if pq.withCreatedByUserLogin != nil || pq.withLastModifiedByUserLogin != nil || pq.withStatusItem != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -697,6 +771,35 @@ func (pq *PartyQuery) sqlAll(ctx context.Context) ([]*Party, error) {
 		}
 	}
 
+	if query := pq.withStatusItem; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*Party)
+		for i := range nodes {
+			if nodes[i].status_item_parties == nil {
+				continue
+			}
+			fk := *nodes[i].status_item_parties
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(statusitem.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "status_item_parties" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.StatusItem = n
+			}
+		}
+	}
+
 	if query := pq.withFixedAssets; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
 		nodeids := make(map[int]*Party)
@@ -723,6 +826,35 @@ func (pq *PartyQuery) sqlAll(ctx context.Context) ([]*Party, error) {
 				return nil, fmt.Errorf(`unexpected foreign-key "party_fixed_assets" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.FixedAssets = append(node.Edges.FixedAssets, n)
+		}
+	}
+
+	if query := pq.withPartyContactMeches; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int]*Party)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.PartyContactMeches = []*PartyContactMech{}
+		}
+		query.withFKs = true
+		query.Where(predicate.PartyContactMech(func(s *sql.Selector) {
+			s.Where(sql.InValues(party.PartyContactMechesColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.party_party_contact_meches
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "party_party_contact_meches" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "party_party_contact_meches" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.PartyContactMeches = append(node.Edges.PartyContactMeches, n)
 		}
 	}
 
@@ -937,10 +1069,14 @@ func (pq *PartyQuery) querySpec() *sqlgraph.QuerySpec {
 func (pq *PartyQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(pq.driver.Dialect())
 	t1 := builder.Table(party.Table)
-	selector := builder.Select(t1.Columns(party.Columns...)...).From(t1)
+	columns := pq.fields
+	if len(columns) == 0 {
+		columns = party.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if pq.sql != nil {
 		selector = pq.sql
-		selector.Select(selector.Columns(party.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range pq.predicates {
 		p(selector)
@@ -1208,13 +1344,24 @@ func (pgb *PartyGroupBy) sqlScan(ctx context.Context, v interface{}) error {
 }
 
 func (pgb *PartyGroupBy) sqlQuery() *sql.Selector {
-	selector := pgb.sql
-	columns := make([]string, 0, len(pgb.fields)+len(pgb.fns))
-	columns = append(columns, pgb.fields...)
+	selector := pgb.sql.Select()
+	aggregation := make([]string, 0, len(pgb.fns))
 	for _, fn := range pgb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(pgb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(pgb.fields)+len(pgb.fns))
+		for _, f := range pgb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(pgb.fields...)...)
 }
 
 // PartySelect is the builder for selecting fields of Party entities.
@@ -1430,16 +1577,10 @@ func (ps *PartySelect) BoolX(ctx context.Context) bool {
 
 func (ps *PartySelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := ps.sqlQuery().Query()
+	query, args := ps.sql.Query()
 	if err := ps.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (ps *PartySelect) sqlQuery() sql.Querier {
-	selector := ps.sql
-	selector.Select(selector.Columns(ps.fields...)...)
-	return selector
 }

@@ -111,10 +111,11 @@ import (
     "entgo.io/ent"
     // "entgo.io/ent/schema/index"
 	"entgo.io/ent/schema"
-    // "entgo.io/ent/schema/mixin"
+    "entgo.io/ent/schema/mixin"
     "entgo.io/ent/schema/edge"
     "entgo.io/ent/schema/field"
 	"entgo.io/contrib/entproto"
+	"github.com/samlet/petrel/alfin/schemamixins"
     "time"
 )
 `

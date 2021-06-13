@@ -12,6 +12,9 @@ type FixedAsset func(*sql.Selector)
 // Party is the predicate function for party builders.
 type Party func(*sql.Selector)
 
+// PartyContactMech is the predicate function for partycontactmech builders.
+type PartyContactMech func(*sql.Selector)
+
 // PartyRole is the predicate function for partyrole builders.
 type PartyRole func(*sql.Selector)
 
@@ -21,11 +24,26 @@ type PartyStatus func(*sql.Selector)
 // Person is the predicate function for person builders.
 type Person func(*sql.Selector)
 
+// RoleType is the predicate function for roletype builders.
+type RoleType func(*sql.Selector)
+
 // SecurityGroup is the predicate function for securitygroup builders.
 type SecurityGroup func(*sql.Selector)
 
 // SecurityGroupPermission is the predicate function for securitygrouppermission builders.
 type SecurityGroupPermission func(*sql.Selector)
+
+// SkillType is the predicate function for skilltype builders.
+type SkillType func(*sql.Selector)
+
+// StatusItem is the predicate function for statusitem builders.
+type StatusItem func(*sql.Selector)
+
+// StatusType is the predicate function for statustype builders.
+type StatusType func(*sql.Selector)
+
+// StatusValidChange is the predicate function for statusvalidchange builders.
+type StatusValidChange func(*sql.Selector)
 
 // TemporalExpression is the predicate function for temporalexpression builders.
 type TemporalExpression func(*sql.Selector)
@@ -50,3 +68,9 @@ type WorkEffortFixedAssetAssign func(*sql.Selector)
 
 // WorkEffortPartyAssignment is the predicate function for workeffortpartyassignment builders.
 type WorkEffortPartyAssignment func(*sql.Selector)
+
+// WorkEffortSkillStandard is the predicate function for workeffortskillstandard builders.
+type WorkEffortSkillStandard func(*sql.Selector)
+
+// WorkEffortType is the predicate function for workefforttype builders.
+type WorkEffortType func(*sql.Selector)

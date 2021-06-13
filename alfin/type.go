@@ -76,6 +76,10 @@ func (t ModelEntity) HasCombineIndex() bool {
 	return t.PksSize > 1
 }
 
+func (t ModelEntity) PksString() string{
+	return strings.Join(t.Pks, ", ")
+}
+
 func (t ModelEntity) Indexes() string {
 	f := fmt.Sprintf
 	quotePks := MapStrToStr(t.Pks, func(s string) string {

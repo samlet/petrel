@@ -1,3 +1,5 @@
 gen:
-	go generate ./...
+	# go generate ./...
+	go generate ./ent
+
 

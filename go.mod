@@ -3,8 +3,8 @@ module github.com/samlet/petrel
 go 1.16
 
 require (
-	entgo.io/contrib v0.0.0-20210531191413-4a9a7cfbd7dc // indirect
-	entgo.io/ent v0.8.0
+	entgo.io/contrib v0.0.0-20210612181638-98171dd7e367 // indirect
+	entgo.io/ent v0.8.1-0.20210611070438-49d11cc774dc
 	github.com/99designs/gqlgen v0.13.0 // indirect
 	github.com/GeertJohan/go.rice v1.0.2
 	github.com/Microsoft/go-winio v0.5.0 // indirect
@@ -44,7 +44,7 @@ require (
 	github.com/kballard/go-shellquote v0.0.0-20180428030007-95032a82bc51 // indirect
 	github.com/kr/pretty v0.2.1
 	github.com/labstack/echo/v4 v4.3.0
-	github.com/lib/pq v1.10.0
+	github.com/lib/pq v1.10.2
 	github.com/looplab/fsm v0.2.0
 	github.com/magefile/mage v1.11.0
 	github.com/mattn/go-sqlite3 v1.14.7

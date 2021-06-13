@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/samlet/petrel/alfin/modules/asset/ent"
+	"github.com/samlet/petrel/alfin/modules/asset/ent/asset"
 	"github.com/samlet/petrel/alfin/modules/asset/ent/workloadpkg"
 	"log"
 	"testing"
@@ -28,9 +29,24 @@ func TestAsset(t *testing.T) {
 	}
 }
 
+func IdRef(ctx context.Context, client *ent.Client, stringId string) *ent.Asset {
+	rec, err := client.Asset.
+		Query().
+		Where(asset.StringRefEQ(stringId)).
+		// `Only` fails if no record found,
+		// or more than 1 record returned.
+		Only(ctx)
+	if err != nil {
+		panic(err)
+	}
+	log.Println("returned: ", rec)
+	return rec
+}
+
 func Do(ctx context.Context, client *ent.Client) error {
 	asset, err:=client.Asset.Create().SetModel("entity").
 		SetRegisteredAt(time.Now()).
+		SetStringRef("first").
 		Save(ctx)
 	if err != nil {
 		return fmt.Errorf("creating asset: %w", err)
@@ -54,5 +70,7 @@ func Do(ctx context.Context, client *ent.Client) error {
 	}
 	log.Println("assets: ", assets)
 
+	// query by string-ref
+	println("id-ref for first: ", IdRef(ctx, client, "first").ID)
 	return nil
 }

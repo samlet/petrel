@@ -4,12 +4,14 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 )
@@ -19,6 +21,48 @@ type PersonCreate struct {
 	config
 	mutation *PersonMutation
 	hooks    []Hook
+}
+
+// SetCreateTime sets the "create_time" field.
+func (pc *PersonCreate) SetCreateTime(t time.Time) *PersonCreate {
+	pc.mutation.SetCreateTime(t)
+	return pc
+}
+
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (pc *PersonCreate) SetNillableCreateTime(t *time.Time) *PersonCreate {
+	if t != nil {
+		pc.SetCreateTime(*t)
+	}
+	return pc
+}
+
+// SetUpdateTime sets the "update_time" field.
+func (pc *PersonCreate) SetUpdateTime(t time.Time) *PersonCreate {
+	pc.mutation.SetUpdateTime(t)
+	return pc
+}
+
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (pc *PersonCreate) SetNillableUpdateTime(t *time.Time) *PersonCreate {
+	if t != nil {
+		pc.SetUpdateTime(*t)
+	}
+	return pc
+}
+
+// SetStringRef sets the "string_ref" field.
+func (pc *PersonCreate) SetStringRef(s string) *PersonCreate {
+	pc.mutation.SetStringRef(s)
+	return pc
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (pc *PersonCreate) SetNillableStringRef(s *string) *PersonCreate {
+	if s != nil {
+		pc.SetStringRef(*s)
+	}
+	return pc
 }
 
 // SetSalutation sets the "salutation" field.
@@ -488,6 +532,21 @@ func (pc *PersonCreate) SetParty(p *Party) *PersonCreate {
 	return pc.SetPartyID(p.ID)
 }
 
+// AddPartyContactMechIDs adds the "party_contact_meches" edge to the PartyContactMech entity by IDs.
+func (pc *PersonCreate) AddPartyContactMechIDs(ids ...int) *PersonCreate {
+	pc.mutation.AddPartyContactMechIDs(ids...)
+	return pc
+}
+
+// AddPartyContactMeches adds the "party_contact_meches" edges to the PartyContactMech entity.
+func (pc *PersonCreate) AddPartyContactMeches(p ...*PartyContactMech) *PersonCreate {
+	ids := make([]int, len(p))
+	for i := range p {
+		ids[i] = p[i].ID
+	}
+	return pc.AddPartyContactMechIDs(ids...)
+}
+
 // AddUserLoginIDs adds the "user_logins" edge to the UserLogin entity by IDs.
 func (pc *PersonCreate) AddUserLoginIDs(ids ...int) *PersonCreate {
 	pc.mutation.AddUserLoginIDs(ids...)
@@ -530,7 +589,10 @@ func (pc *PersonCreate) Save(ctx context.Context) (*Person, error) {
 				return nil, err
 			}
 			pc.mutation = mutation
-			node, err = pc.sqlSave(ctx)
+			if node, err = pc.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -555,6 +617,14 @@ func (pc *PersonCreate) SaveX(ctx context.Context) *Person {
 
 // defaults sets the default values of the builder before save.
 func (pc *PersonCreate) defaults() {
+	if _, ok := pc.mutation.CreateTime(); !ok {
+		v := person.DefaultCreateTime()
+		pc.mutation.SetCreateTime(v)
+	}
+	if _, ok := pc.mutation.UpdateTime(); !ok {
+		v := person.DefaultUpdateTime()
+		pc.mutation.SetUpdateTime(v)
+	}
 	if _, ok := pc.mutation.BirthDate(); !ok {
 		v := person.DefaultBirthDate()
 		pc.mutation.SetBirthDate(v)
@@ -571,6 +641,12 @@ func (pc *PersonCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (pc *PersonCreate) check() error {
+	if _, ok := pc.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := pc.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if v, ok := pc.mutation.Gender(); ok {
 		if err := person.GenderValidator(v); err != nil {
 			return &ValidationError{Name: "gender", err: fmt.Errorf("ent: validator failed for field \"gender\": %w", err)}
@@ -618,6 +694,30 @@ func (pc *PersonCreate) createSpec() (*Person, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
+	if value, ok := pc.mutation.CreateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: person.FieldCreateTime,
+		})
+		_node.CreateTime = value
+	}
+	if value, ok := pc.mutation.UpdateTime(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: person.FieldUpdateTime,
+		})
+		_node.UpdateTime = value
+	}
+	if value, ok := pc.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: person.FieldStringRef,
+		})
+		_node.StringRef = value
+	}
 	if value, ok := pc.mutation.Salutation(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
@@ -894,6 +994,25 @@ func (pc *PersonCreate) createSpec() (*Person, *sqlgraph.CreateSpec) {
 		_node.party_person = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := pc.mutation.PartyContactMechesIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   person.PartyContactMechesTable,
+			Columns: []string{person.PartyContactMechesColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: partycontactmech.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	if nodes := pc.mutation.UserLoginsIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.O2M,
@@ -952,10 +1071,11 @@ func (pcb *PersonCreateBulk) Save(ctx context.Context) ([]*Person, error) {
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

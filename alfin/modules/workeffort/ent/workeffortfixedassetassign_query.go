@@ -13,6 +13,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 )
@@ -27,9 +28,11 @@ type WorkEffortFixedAssetAssignQuery struct {
 	fields     []string
 	predicates []predicate.WorkEffortFixedAssetAssign
 	// eager-loading edges.
-	withWorkEffort *WorkEffortQuery
-	withFixedAsset *FixedAssetQuery
-	withFKs        bool
+	withWorkEffort             *WorkEffortQuery
+	withFixedAsset             *FixedAssetQuery
+	withStatusItem             *StatusItemQuery
+	withAvailabilityStatusItem *StatusItemQuery
+	withFKs                    bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
 	path func(context.Context) (*sql.Selector, error)
@@ -103,6 +106,50 @@ func (wefaaq *WorkEffortFixedAssetAssignQuery) QueryFixedAsset() *FixedAssetQuer
 			sqlgraph.From(workeffortfixedassetassign.Table, workeffortfixedassetassign.FieldID, selector),
 			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
 			sqlgraph.Edge(sqlgraph.M2O, true, workeffortfixedassetassign.FixedAssetTable, workeffortfixedassetassign.FixedAssetColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(wefaaq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryStatusItem chains the current query on the "status_item" edge.
+func (wefaaq *WorkEffortFixedAssetAssignQuery) QueryStatusItem() *StatusItemQuery {
+	query := &StatusItemQuery{config: wefaaq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := wefaaq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := wefaaq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortfixedassetassign.Table, workeffortfixedassetassign.FieldID, selector),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortfixedassetassign.StatusItemTable, workeffortfixedassetassign.StatusItemColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(wefaaq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryAvailabilityStatusItem chains the current query on the "availability_status_item" edge.
+func (wefaaq *WorkEffortFixedAssetAssignQuery) QueryAvailabilityStatusItem() *StatusItemQuery {
+	query := &StatusItemQuery{config: wefaaq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := wefaaq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := wefaaq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffortfixedassetassign.Table, workeffortfixedassetassign.FieldID, selector),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffortfixedassetassign.AvailabilityStatusItemTable, workeffortfixedassetassign.AvailabilityStatusItemColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(wefaaq.driver.Dialect(), step)
 		return fromU, nil
@@ -286,13 +333,15 @@ func (wefaaq *WorkEffortFixedAssetAssignQuery) Clone() *WorkEffortFixedAssetAssi
 		return nil
 	}
 	return &WorkEffortFixedAssetAssignQuery{
-		config:         wefaaq.config,
-		limit:          wefaaq.limit,
-		offset:         wefaaq.offset,
-		order:          append([]OrderFunc{}, wefaaq.order...),
-		predicates:     append([]predicate.WorkEffortFixedAssetAssign{}, wefaaq.predicates...),
-		withWorkEffort: wefaaq.withWorkEffort.Clone(),
-		withFixedAsset: wefaaq.withFixedAsset.Clone(),
+		config:                     wefaaq.config,
+		limit:                      wefaaq.limit,
+		offset:                     wefaaq.offset,
+		order:                      append([]OrderFunc{}, wefaaq.order...),
+		predicates:                 append([]predicate.WorkEffortFixedAssetAssign{}, wefaaq.predicates...),
+		withWorkEffort:             wefaaq.withWorkEffort.Clone(),
+		withFixedAsset:             wefaaq.withFixedAsset.Clone(),
+		withStatusItem:             wefaaq.withStatusItem.Clone(),
+		withAvailabilityStatusItem: wefaaq.withAvailabilityStatusItem.Clone(),
 		// clone intermediate query.
 		sql:  wefaaq.sql.Clone(),
 		path: wefaaq.path,
@@ -321,18 +370,40 @@ func (wefaaq *WorkEffortFixedAssetAssignQuery) WithFixedAsset(opts ...func(*Fixe
 	return wefaaq
 }
 
+// WithStatusItem tells the query-builder to eager-load the nodes that are connected to
+// the "status_item" edge. The optional arguments are used to configure the query builder of the edge.
+func (wefaaq *WorkEffortFixedAssetAssignQuery) WithStatusItem(opts ...func(*StatusItemQuery)) *WorkEffortFixedAssetAssignQuery {
+	query := &StatusItemQuery{config: wefaaq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	wefaaq.withStatusItem = query
+	return wefaaq
+}
+
+// WithAvailabilityStatusItem tells the query-builder to eager-load the nodes that are connected to
+// the "availability_status_item" edge. The optional arguments are used to configure the query builder of the edge.
+func (wefaaq *WorkEffortFixedAssetAssignQuery) WithAvailabilityStatusItem(opts ...func(*StatusItemQuery)) *WorkEffortFixedAssetAssignQuery {
+	query := &StatusItemQuery{config: wefaaq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	wefaaq.withAvailabilityStatusItem = query
+	return wefaaq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
 //
 // Example:
 //
 //	var v []struct {
-//		StatusID int `json:"status_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.WorkEffortFixedAssetAssign.Query().
-//		GroupBy(workeffortfixedassetassign.FieldStatusID).
+//		GroupBy(workeffortfixedassetassign.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -354,11 +425,11 @@ func (wefaaq *WorkEffortFixedAssetAssignQuery) GroupBy(field string, fields ...s
 // Example:
 //
 //	var v []struct {
-//		StatusID int `json:"status_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.WorkEffortFixedAssetAssign.Query().
-//		Select(workeffortfixedassetassign.FieldStatusID).
+//		Select(workeffortfixedassetassign.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (wefaaq *WorkEffortFixedAssetAssignQuery) Select(field string, fields ...string) *WorkEffortFixedAssetAssignSelect {
@@ -387,12 +458,14 @@ func (wefaaq *WorkEffortFixedAssetAssignQuery) sqlAll(ctx context.Context) ([]*W
 		nodes       = []*WorkEffortFixedAssetAssign{}
 		withFKs     = wefaaq.withFKs
 		_spec       = wefaaq.querySpec()
-		loadedTypes = [2]bool{
+		loadedTypes = [4]bool{
 			wefaaq.withWorkEffort != nil,
 			wefaaq.withFixedAsset != nil,
+			wefaaq.withStatusItem != nil,
+			wefaaq.withAvailabilityStatusItem != nil,
 		}
 	)
-	if wefaaq.withWorkEffort != nil || wefaaq.withFixedAsset != nil {
+	if wefaaq.withWorkEffort != nil || wefaaq.withFixedAsset != nil || wefaaq.withStatusItem != nil || wefaaq.withAvailabilityStatusItem != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -476,6 +549,64 @@ func (wefaaq *WorkEffortFixedAssetAssignQuery) sqlAll(ctx context.Context) ([]*W
 		}
 	}
 
+	if query := wefaaq.withStatusItem; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffortFixedAssetAssign)
+		for i := range nodes {
+			if nodes[i].status_item_work_effort_fixed_asset_assigns == nil {
+				continue
+			}
+			fk := *nodes[i].status_item_work_effort_fixed_asset_assigns
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(statusitem.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "status_item_work_effort_fixed_asset_assigns" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.StatusItem = n
+			}
+		}
+	}
+
+	if query := wefaaq.withAvailabilityStatusItem; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffortFixedAssetAssign)
+		for i := range nodes {
+			if nodes[i].status_item_availability_work_effort_fixed_asset_assigns == nil {
+				continue
+			}
+			fk := *nodes[i].status_item_availability_work_effort_fixed_asset_assigns
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(statusitem.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "status_item_availability_work_effort_fixed_asset_assigns" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.AvailabilityStatusItem = n
+			}
+		}
+	}
+
 	return nodes, nil
 }
 
@@ -543,10 +674,14 @@ func (wefaaq *WorkEffortFixedAssetAssignQuery) querySpec() *sqlgraph.QuerySpec {
 func (wefaaq *WorkEffortFixedAssetAssignQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(wefaaq.driver.Dialect())
 	t1 := builder.Table(workeffortfixedassetassign.Table)
-	selector := builder.Select(t1.Columns(workeffortfixedassetassign.Columns...)...).From(t1)
+	columns := wefaaq.fields
+	if len(columns) == 0 {
+		columns = workeffortfixedassetassign.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if wefaaq.sql != nil {
 		selector = wefaaq.sql
-		selector.Select(selector.Columns(workeffortfixedassetassign.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range wefaaq.predicates {
 		p(selector)
@@ -814,13 +949,24 @@ func (wefaagb *WorkEffortFixedAssetAssignGroupBy) sqlScan(ctx context.Context, v
 }
 
 func (wefaagb *WorkEffortFixedAssetAssignGroupBy) sqlQuery() *sql.Selector {
-	selector := wefaagb.sql
-	columns := make([]string, 0, len(wefaagb.fields)+len(wefaagb.fns))
-	columns = append(columns, wefaagb.fields...)
+	selector := wefaagb.sql.Select()
+	aggregation := make([]string, 0, len(wefaagb.fns))
 	for _, fn := range wefaagb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(wefaagb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(wefaagb.fields)+len(wefaagb.fns))
+		for _, f := range wefaagb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(wefaagb.fields...)...)
 }
 
 // WorkEffortFixedAssetAssignSelect is the builder for selecting fields of WorkEffortFixedAssetAssign entities.
@@ -1036,16 +1182,10 @@ func (wefaas *WorkEffortFixedAssetAssignSelect) BoolX(ctx context.Context) bool 
 
 func (wefaas *WorkEffortFixedAssetAssignSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := wefaas.sqlQuery().Query()
+	query, args := wefaas.sql.Query()
 	if err := wefaas.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (wefaas *WorkEffortFixedAssetAssignSelect) sqlQuery() sql.Querier {
-	selector := wefaas.sql
-	selector.Select(selector.Columns(wefaas.fields...)...)
-	return selector
 }

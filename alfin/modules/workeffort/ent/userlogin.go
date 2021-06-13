@@ -18,6 +18,12 @@ type UserLogin struct {
 	config `json:"-"`
 	// ID of the ent.
 	ID int `json:"id,omitempty"`
+	// CreateTime holds the value of the "create_time" field.
+	CreateTime time.Time `json:"create_time,omitempty"`
+	// UpdateTime holds the value of the "update_time" field.
+	UpdateTime time.Time `json:"update_time,omitempty"`
+	// StringRef holds the value of the "string_ref" field.
+	StringRef string `json:"string_ref,omitempty"`
 	// CurrentPassword holds the value of the "current_password" field.
 	CurrentPassword string `json:"current_password,omitempty"`
 	// PasswordHint holds the value of the "password_hint" field.
@@ -154,9 +160,9 @@ func (*UserLogin) scanValues(columns []string) ([]interface{}, error) {
 		switch columns[i] {
 		case userlogin.FieldID, userlogin.FieldLastCurrencyUom, userlogin.FieldSuccessiveFailedLogins:
 			values[i] = new(sql.NullInt64)
-		case userlogin.FieldCurrentPassword, userlogin.FieldPasswordHint, userlogin.FieldIsSystem, userlogin.FieldEnabled, userlogin.FieldHasLoggedOut, userlogin.FieldRequirePasswordChange, userlogin.FieldLastLocale, userlogin.FieldLastTimeZone, userlogin.FieldExternalAuthID, userlogin.FieldUserLdapDn, userlogin.FieldDisabledBy:
+		case userlogin.FieldStringRef, userlogin.FieldCurrentPassword, userlogin.FieldPasswordHint, userlogin.FieldIsSystem, userlogin.FieldEnabled, userlogin.FieldHasLoggedOut, userlogin.FieldRequirePasswordChange, userlogin.FieldLastLocale, userlogin.FieldLastTimeZone, userlogin.FieldExternalAuthID, userlogin.FieldUserLdapDn, userlogin.FieldDisabledBy:
 			values[i] = new(sql.NullString)
-		case userlogin.FieldDisabledDateTime:
+		case userlogin.FieldCreateTime, userlogin.FieldUpdateTime, userlogin.FieldDisabledDateTime:
 			values[i] = new(sql.NullTime)
 		case userlogin.ForeignKeys[0]: // party_user_logins
 			values[i] = new(sql.NullInt64)
@@ -183,6 +189,24 @@ func (ul *UserLogin) assignValues(columns []string, values []interface{}) error 
 				return fmt.Errorf("unexpected type %T for field id", value)
 			}
 			ul.ID = int(value.Int64)
+		case userlogin.FieldCreateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field create_time", values[i])
+			} else if value.Valid {
+				ul.CreateTime = value.Time
+			}
+		case userlogin.FieldUpdateTime:
+			if value, ok := values[i].(*sql.NullTime); !ok {
+				return fmt.Errorf("unexpected type %T for field update_time", values[i])
+			} else if value.Valid {
+				ul.UpdateTime = value.Time
+			}
+		case userlogin.FieldStringRef:
+			if value, ok := values[i].(*sql.NullString); !ok {
+				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
+			} else if value.Valid {
+				ul.StringRef = value.String
+			}
 		case userlogin.FieldCurrentPassword:
 			if value, ok := values[i].(*sql.NullString); !ok {
 				return fmt.Errorf("unexpected type %T for field current_password", values[i])
@@ -344,6 +368,12 @@ func (ul *UserLogin) String() string {
 	var builder strings.Builder
 	builder.WriteString("UserLogin(")
 	builder.WriteString(fmt.Sprintf("id=%v", ul.ID))
+	builder.WriteString(", create_time=")
+	builder.WriteString(ul.CreateTime.Format(time.ANSIC))
+	builder.WriteString(", update_time=")
+	builder.WriteString(ul.UpdateTime.Format(time.ANSIC))
+	builder.WriteString(", string_ref=")
+	builder.WriteString(ul.StringRef)
 	builder.WriteString(", current_password=")
 	builder.WriteString(ul.CurrentPassword)
 	builder.WriteString(", password_hint=")

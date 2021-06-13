@@ -7,16 +7,21 @@ import (
 	"fmt"
 
 	"entgo.io/ent"
-	"entgo.io/ent/dialect"
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/person"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygroup"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/securitygrouppermission"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/skilltype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statustype"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusvalidchange"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpressionassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
@@ -25,6 +30,8 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortskillstandard"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workefforttype"
 )
 
 // ent aliases to avoid import conflicts in user's code.
@@ -47,11 +54,17 @@ func columnChecker(table string) func(string) error {
 	checks := map[string]func(string) bool{
 		fixedasset.Table:                 fixedasset.ValidColumn,
 		party.Table:                      party.ValidColumn,
+		partycontactmech.Table:           partycontactmech.ValidColumn,
 		partyrole.Table:                  partyrole.ValidColumn,
 		partystatus.Table:                partystatus.ValidColumn,
 		person.Table:                     person.ValidColumn,
+		roletype.Table:                   roletype.ValidColumn,
 		securitygroup.Table:              securitygroup.ValidColumn,
 		securitygrouppermission.Table:    securitygrouppermission.ValidColumn,
+		skilltype.Table:                  skilltype.ValidColumn,
+		statusitem.Table:                 statusitem.ValidColumn,
+		statustype.Table:                 statustype.ValidColumn,
+		statusvalidchange.Table:          statusvalidchange.ValidColumn,
 		temporalexpression.Table:         temporalexpression.ValidColumn,
 		temporalexpressionassoc.Table:    temporalexpressionassoc.ValidColumn,
 		userlogin.Table:                  userlogin.ValidColumn,
@@ -60,6 +73,8 @@ func columnChecker(table string) func(string) error {
 		workeffortassoc.Table:            workeffortassoc.ValidColumn,
 		workeffortfixedassetassign.Table: workeffortfixedassetassign.ValidColumn,
 		workeffortpartyassignment.Table:  workeffortpartyassignment.ValidColumn,
+		workeffortskillstandard.Table:    workeffortskillstandard.ValidColumn,
+		workefforttype.Table:             workefforttype.ValidColumn,
 	}
 	check, ok := checks[table]
 	if !ok {
@@ -187,7 +202,7 @@ func (e *ValidationError) Unwrap() error {
 	return e.err
 }
 
-// IsValidationError returns a boolean indicating whether the error is a validaton error.
+// IsValidationError returns a boolean indicating whether the error is a validation error.
 func IsValidationError(err error) bool {
 	if err == nil {
 		return false
@@ -293,15 +308,4 @@ func isSQLConstraintError(err error) (*ConstraintError, bool) {
 		return &ConstraintError{err.Error(), err}, true
 	}
 	return nil, false
-}
-
-// rollback calls tx.Rollback and wraps the given error with the rollback error if present.
-func rollback(tx dialect.Tx, err error) error {
-	if rerr := tx.Rollback(); rerr != nil {
-		err = fmt.Errorf("%w: %v", err, rerr)
-	}
-	if err, ok := isSQLConstraintError(err); ok {
-		return err
-	}
-	return err
 }

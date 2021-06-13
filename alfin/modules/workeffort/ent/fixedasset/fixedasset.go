@@ -11,14 +11,18 @@ const (
 	Label = "fixed_asset"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldFixedAssetTypeID holds the string denoting the fixed_asset_type_id field in the database.
 	FieldFixedAssetTypeID = "fixed_asset_type_id"
 	// FieldInstanceOfProductID holds the string denoting the instance_of_product_id field in the database.
 	FieldInstanceOfProductID = "instance_of_product_id"
 	// FieldClassEnumID holds the string denoting the class_enum_id field in the database.
 	FieldClassEnumID = "class_enum_id"
-	// FieldRoleTypeID holds the string denoting the role_type_id field in the database.
-	FieldRoleTypeID = "role_type_id"
 	// FieldFixedAssetName holds the string denoting the fixed_asset_name field in the database.
 	FieldFixedAssetName = "fixed_asset_name"
 	// FieldAcquireOrderID holds the string denoting the acquire_order_id field in the database.
@@ -61,6 +65,8 @@ const (
 	EdgeChildren = "children"
 	// EdgeParty holds the string denoting the party edge name in mutations.
 	EdgeParty = "party"
+	// EdgeRoleType holds the string denoting the role_type edge name in mutations.
+	EdgeRoleType = "role_type"
 	// EdgePartyRole holds the string denoting the party_role edge name in mutations.
 	EdgePartyRole = "party_role"
 	// EdgeChildFixedAssets holds the string denoting the child_fixed_assets edge name in mutations.
@@ -86,6 +92,13 @@ const (
 	PartyInverseTable = "parties"
 	// PartyColumn is the table column denoting the party relation/edge.
 	PartyColumn = "party_fixed_assets"
+	// RoleTypeTable is the table the holds the role_type relation/edge.
+	RoleTypeTable = "fixed_assets"
+	// RoleTypeInverseTable is the table name for the RoleType entity.
+	// It exists in this package in order to avoid circular dependency with the "roletype" package.
+	RoleTypeInverseTable = "role_types"
+	// RoleTypeColumn is the table column denoting the role_type relation/edge.
+	RoleTypeColumn = "role_type_fixed_assets"
 	// PartyRoleTable is the table the holds the party_role relation/edge.
 	PartyRoleTable = "fixed_assets"
 	// PartyRoleInverseTable is the table name for the PartyRole entity.
@@ -114,10 +127,12 @@ const (
 // Columns holds all SQL columns for fixedasset fields.
 var Columns = []string{
 	FieldID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldFixedAssetTypeID,
 	FieldInstanceOfProductID,
 	FieldClassEnumID,
-	FieldRoleTypeID,
 	FieldFixedAssetName,
 	FieldAcquireOrderID,
 	FieldAcquireOrderItemSeqID,
@@ -144,6 +159,7 @@ var ForeignKeys = []string{
 	"fixed_asset_children",
 	"party_fixed_assets",
 	"party_role_fixed_assets",
+	"role_type_fixed_assets",
 }
 
 var (
@@ -168,6 +184,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultDateAcquired holds the default value on creation for the "date_acquired" field.
 	DefaultDateAcquired func() time.Time
 	// DefaultDateLastServiced holds the default value on creation for the "date_last_serviced" field.

@@ -14,6 +14,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 )
@@ -28,6 +29,26 @@ type FixedAssetUpdate struct {
 // Where adds a new predicate for the FixedAssetUpdate builder.
 func (fau *FixedAssetUpdate) Where(ps ...predicate.FixedAsset) *FixedAssetUpdate {
 	fau.mutation.predicates = append(fau.mutation.predicates, ps...)
+	return fau
+}
+
+// SetStringRef sets the "string_ref" field.
+func (fau *FixedAssetUpdate) SetStringRef(s string) *FixedAssetUpdate {
+	fau.mutation.SetStringRef(s)
+	return fau
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (fau *FixedAssetUpdate) SetNillableStringRef(s *string) *FixedAssetUpdate {
+	if s != nil {
+		fau.SetStringRef(*s)
+	}
+	return fau
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (fau *FixedAssetUpdate) ClearStringRef() *FixedAssetUpdate {
+	fau.mutation.ClearStringRef()
 	return fau
 }
 
@@ -109,33 +130,6 @@ func (fau *FixedAssetUpdate) AddClassEnumID(i int) *FixedAssetUpdate {
 // ClearClassEnumID clears the value of the "class_enum_id" field.
 func (fau *FixedAssetUpdate) ClearClassEnumID() *FixedAssetUpdate {
 	fau.mutation.ClearClassEnumID()
-	return fau
-}
-
-// SetRoleTypeID sets the "role_type_id" field.
-func (fau *FixedAssetUpdate) SetRoleTypeID(i int) *FixedAssetUpdate {
-	fau.mutation.ResetRoleTypeID()
-	fau.mutation.SetRoleTypeID(i)
-	return fau
-}
-
-// SetNillableRoleTypeID sets the "role_type_id" field if the given value is not nil.
-func (fau *FixedAssetUpdate) SetNillableRoleTypeID(i *int) *FixedAssetUpdate {
-	if i != nil {
-		fau.SetRoleTypeID(*i)
-	}
-	return fau
-}
-
-// AddRoleTypeID adds i to the "role_type_id" field.
-func (fau *FixedAssetUpdate) AddRoleTypeID(i int) *FixedAssetUpdate {
-	fau.mutation.AddRoleTypeID(i)
-	return fau
-}
-
-// ClearRoleTypeID clears the value of the "role_type_id" field.
-func (fau *FixedAssetUpdate) ClearRoleTypeID() *FixedAssetUpdate {
-	fau.mutation.ClearRoleTypeID()
 	return fau
 }
 
@@ -629,6 +623,25 @@ func (fau *FixedAssetUpdate) SetParty(p *Party) *FixedAssetUpdate {
 	return fau.SetPartyID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (fau *FixedAssetUpdate) SetRoleTypeID(id int) *FixedAssetUpdate {
+	fau.mutation.SetRoleTypeID(id)
+	return fau
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (fau *FixedAssetUpdate) SetNillableRoleTypeID(id *int) *FixedAssetUpdate {
+	if id != nil {
+		fau = fau.SetRoleTypeID(*id)
+	}
+	return fau
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (fau *FixedAssetUpdate) SetRoleType(r *RoleType) *FixedAssetUpdate {
+	return fau.SetRoleTypeID(r.ID)
+}
+
 // SetPartyRoleID sets the "party_role" edge to the PartyRole entity by ID.
 func (fau *FixedAssetUpdate) SetPartyRoleID(id int) *FixedAssetUpdate {
 	fau.mutation.SetPartyRoleID(id)
@@ -731,6 +744,12 @@ func (fau *FixedAssetUpdate) ClearParty() *FixedAssetUpdate {
 	return fau
 }
 
+// ClearRoleType clears the "role_type" edge to the RoleType entity.
+func (fau *FixedAssetUpdate) ClearRoleType() *FixedAssetUpdate {
+	fau.mutation.ClearRoleType()
+	return fau
+}
+
 // ClearPartyRole clears the "party_role" edge to the PartyRole entity.
 func (fau *FixedAssetUpdate) ClearPartyRole() *FixedAssetUpdate {
 	fau.mutation.ClearPartyRole()
@@ -806,6 +825,7 @@ func (fau *FixedAssetUpdate) Save(ctx context.Context) (int, error) {
 		err      error
 		affected int
 	)
+	fau.defaults()
 	if len(fau.hooks) == 0 {
 		affected, err = fau.sqlSave(ctx)
 	} else {
@@ -851,6 +871,14 @@ func (fau *FixedAssetUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (fau *FixedAssetUpdate) defaults() {
+	if _, ok := fau.mutation.UpdateTime(); !ok {
+		v := fixedasset.UpdateDefaultUpdateTime()
+		fau.mutation.SetUpdateTime(v)
+	}
+}
+
 func (fau *FixedAssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -868,6 +896,26 @@ func (fau *FixedAssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := fau.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: fixedasset.FieldUpdateTime,
+		})
+	}
+	if value, ok := fau.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: fixedasset.FieldStringRef,
+		})
+	}
+	if fau.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: fixedasset.FieldStringRef,
+		})
 	}
 	if value, ok := fau.mutation.FixedAssetTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -927,26 +975,6 @@ func (fau *FixedAssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Column: fixedasset.FieldClassEnumID,
-		})
-	}
-	if value, ok := fau.mutation.RoleTypeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldRoleTypeID,
-		})
-	}
-	if value, ok := fau.mutation.AddedRoleTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldRoleTypeID,
-		})
-	}
-	if fau.mutation.RoleTypeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: fixedasset.FieldRoleTypeID,
 		})
 	}
 	if value, ok := fau.mutation.FixedAssetName(); ok {
@@ -1384,6 +1412,41 @@ func (fau *FixedAssetUpdate) sqlSave(ctx context.Context) (n int, err error) {
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if fau.mutation.RoleTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.RoleTypeTable,
+			Columns: []string{fixedasset.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := fau.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.RoleTypeTable,
+			Columns: []string{fixedasset.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if fau.mutation.PartyRoleCleared() {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -1600,6 +1663,26 @@ type FixedAssetUpdateOne struct {
 	mutation *FixedAssetMutation
 }
 
+// SetStringRef sets the "string_ref" field.
+func (fauo *FixedAssetUpdateOne) SetStringRef(s string) *FixedAssetUpdateOne {
+	fauo.mutation.SetStringRef(s)
+	return fauo
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (fauo *FixedAssetUpdateOne) SetNillableStringRef(s *string) *FixedAssetUpdateOne {
+	if s != nil {
+		fauo.SetStringRef(*s)
+	}
+	return fauo
+}
+
+// ClearStringRef clears the value of the "string_ref" field.
+func (fauo *FixedAssetUpdateOne) ClearStringRef() *FixedAssetUpdateOne {
+	fauo.mutation.ClearStringRef()
+	return fauo
+}
+
 // SetFixedAssetTypeID sets the "fixed_asset_type_id" field.
 func (fauo *FixedAssetUpdateOne) SetFixedAssetTypeID(i int) *FixedAssetUpdateOne {
 	fauo.mutation.ResetFixedAssetTypeID()
@@ -1678,33 +1761,6 @@ func (fauo *FixedAssetUpdateOne) AddClassEnumID(i int) *FixedAssetUpdateOne {
 // ClearClassEnumID clears the value of the "class_enum_id" field.
 func (fauo *FixedAssetUpdateOne) ClearClassEnumID() *FixedAssetUpdateOne {
 	fauo.mutation.ClearClassEnumID()
-	return fauo
-}
-
-// SetRoleTypeID sets the "role_type_id" field.
-func (fauo *FixedAssetUpdateOne) SetRoleTypeID(i int) *FixedAssetUpdateOne {
-	fauo.mutation.ResetRoleTypeID()
-	fauo.mutation.SetRoleTypeID(i)
-	return fauo
-}
-
-// SetNillableRoleTypeID sets the "role_type_id" field if the given value is not nil.
-func (fauo *FixedAssetUpdateOne) SetNillableRoleTypeID(i *int) *FixedAssetUpdateOne {
-	if i != nil {
-		fauo.SetRoleTypeID(*i)
-	}
-	return fauo
-}
-
-// AddRoleTypeID adds i to the "role_type_id" field.
-func (fauo *FixedAssetUpdateOne) AddRoleTypeID(i int) *FixedAssetUpdateOne {
-	fauo.mutation.AddRoleTypeID(i)
-	return fauo
-}
-
-// ClearRoleTypeID clears the value of the "role_type_id" field.
-func (fauo *FixedAssetUpdateOne) ClearRoleTypeID() *FixedAssetUpdateOne {
-	fauo.mutation.ClearRoleTypeID()
 	return fauo
 }
 
@@ -2198,6 +2254,25 @@ func (fauo *FixedAssetUpdateOne) SetParty(p *Party) *FixedAssetUpdateOne {
 	return fauo.SetPartyID(p.ID)
 }
 
+// SetRoleTypeID sets the "role_type" edge to the RoleType entity by ID.
+func (fauo *FixedAssetUpdateOne) SetRoleTypeID(id int) *FixedAssetUpdateOne {
+	fauo.mutation.SetRoleTypeID(id)
+	return fauo
+}
+
+// SetNillableRoleTypeID sets the "role_type" edge to the RoleType entity by ID if the given value is not nil.
+func (fauo *FixedAssetUpdateOne) SetNillableRoleTypeID(id *int) *FixedAssetUpdateOne {
+	if id != nil {
+		fauo = fauo.SetRoleTypeID(*id)
+	}
+	return fauo
+}
+
+// SetRoleType sets the "role_type" edge to the RoleType entity.
+func (fauo *FixedAssetUpdateOne) SetRoleType(r *RoleType) *FixedAssetUpdateOne {
+	return fauo.SetRoleTypeID(r.ID)
+}
+
 // SetPartyRoleID sets the "party_role" edge to the PartyRole entity by ID.
 func (fauo *FixedAssetUpdateOne) SetPartyRoleID(id int) *FixedAssetUpdateOne {
 	fauo.mutation.SetPartyRoleID(id)
@@ -2300,6 +2375,12 @@ func (fauo *FixedAssetUpdateOne) ClearParty() *FixedAssetUpdateOne {
 	return fauo
 }
 
+// ClearRoleType clears the "role_type" edge to the RoleType entity.
+func (fauo *FixedAssetUpdateOne) ClearRoleType() *FixedAssetUpdateOne {
+	fauo.mutation.ClearRoleType()
+	return fauo
+}
+
 // ClearPartyRole clears the "party_role" edge to the PartyRole entity.
 func (fauo *FixedAssetUpdateOne) ClearPartyRole() *FixedAssetUpdateOne {
 	fauo.mutation.ClearPartyRole()
@@ -2382,6 +2463,7 @@ func (fauo *FixedAssetUpdateOne) Save(ctx context.Context) (*FixedAsset, error) 
 		err  error
 		node *FixedAsset
 	)
+	fauo.defaults()
 	if len(fauo.hooks) == 0 {
 		node, err = fauo.sqlSave(ctx)
 	} else {
@@ -2427,6 +2509,14 @@ func (fauo *FixedAssetUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (fauo *FixedAssetUpdateOne) defaults() {
+	if _, ok := fauo.mutation.UpdateTime(); !ok {
+		v := fixedasset.UpdateDefaultUpdateTime()
+		fauo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (fauo *FixedAssetUpdateOne) sqlSave(ctx context.Context) (_node *FixedAsset, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -2461,6 +2551,26 @@ func (fauo *FixedAssetUpdateOne) sqlSave(ctx context.Context) (_node *FixedAsset
 				ps[i](selector)
 			}
 		}
+	}
+	if value, ok := fauo.mutation.UpdateTime(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeTime,
+			Value:  value,
+			Column: fixedasset.FieldUpdateTime,
+		})
+	}
+	if value, ok := fauo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: fixedasset.FieldStringRef,
+		})
+	}
+	if fauo.mutation.StringRefCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: fixedasset.FieldStringRef,
+		})
 	}
 	if value, ok := fauo.mutation.FixedAssetTypeID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
@@ -2520,26 +2630,6 @@ func (fauo *FixedAssetUpdateOne) sqlSave(ctx context.Context) (_node *FixedAsset
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
 			Column: fixedasset.FieldClassEnumID,
-		})
-	}
-	if value, ok := fauo.mutation.RoleTypeID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldRoleTypeID,
-		})
-	}
-	if value, ok := fauo.mutation.AddedRoleTypeID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: fixedasset.FieldRoleTypeID,
-		})
-	}
-	if fauo.mutation.RoleTypeIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: fixedasset.FieldRoleTypeID,
 		})
 	}
 	if value, ok := fauo.mutation.FixedAssetName(); ok {
@@ -2969,6 +3059,41 @@ func (fauo *FixedAssetUpdateOne) sqlSave(ctx context.Context) (_node *FixedAsset
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: party.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if fauo.mutation.RoleTypeCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.RoleTypeTable,
+			Columns: []string{fixedasset.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := fauo.mutation.RoleTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   fixedasset.RoleTypeTable,
+			Columns: []string{fixedasset.RoleTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: roletype.FieldID,
 				},
 			},
 		}

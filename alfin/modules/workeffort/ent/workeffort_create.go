@@ -4,17 +4,21 @@ package ent
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortskillstandard"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workefforttype"
 )
 
 // WorkEffortCreate is the builder for creating a WorkEffort entity.
@@ -24,30 +28,44 @@ type WorkEffortCreate struct {
 	hooks    []Hook
 }
 
-// SetWorkEffortTypeID sets the "work_effort_type_id" field.
-func (wec *WorkEffortCreate) SetWorkEffortTypeID(i int) *WorkEffortCreate {
-	wec.mutation.SetWorkEffortTypeID(i)
+// SetCreateTime sets the "create_time" field.
+func (wec *WorkEffortCreate) SetCreateTime(t time.Time) *WorkEffortCreate {
+	wec.mutation.SetCreateTime(t)
 	return wec
 }
 
-// SetNillableWorkEffortTypeID sets the "work_effort_type_id" field if the given value is not nil.
-func (wec *WorkEffortCreate) SetNillableWorkEffortTypeID(i *int) *WorkEffortCreate {
-	if i != nil {
-		wec.SetWorkEffortTypeID(*i)
+// SetNillableCreateTime sets the "create_time" field if the given value is not nil.
+func (wec *WorkEffortCreate) SetNillableCreateTime(t *time.Time) *WorkEffortCreate {
+	if t != nil {
+		wec.SetCreateTime(*t)
 	}
 	return wec
 }
 
-// SetCurrentStatusID sets the "current_status_id" field.
-func (wec *WorkEffortCreate) SetCurrentStatusID(i int) *WorkEffortCreate {
-	wec.mutation.SetCurrentStatusID(i)
+// SetUpdateTime sets the "update_time" field.
+func (wec *WorkEffortCreate) SetUpdateTime(t time.Time) *WorkEffortCreate {
+	wec.mutation.SetUpdateTime(t)
 	return wec
 }
 
-// SetNillableCurrentStatusID sets the "current_status_id" field if the given value is not nil.
-func (wec *WorkEffortCreate) SetNillableCurrentStatusID(i *int) *WorkEffortCreate {
-	if i != nil {
-		wec.SetCurrentStatusID(*i)
+// SetNillableUpdateTime sets the "update_time" field if the given value is not nil.
+func (wec *WorkEffortCreate) SetNillableUpdateTime(t *time.Time) *WorkEffortCreate {
+	if t != nil {
+		wec.SetUpdateTime(*t)
+	}
+	return wec
+}
+
+// SetStringRef sets the "string_ref" field.
+func (wec *WorkEffortCreate) SetStringRef(s string) *WorkEffortCreate {
+	wec.mutation.SetStringRef(s)
+	return wec
+}
+
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (wec *WorkEffortCreate) SetNillableStringRef(s *string) *WorkEffortCreate {
+	if s != nil {
+		wec.SetStringRef(*s)
 	}
 	return wec
 }
@@ -696,6 +714,25 @@ func (wec *WorkEffortCreate) SetNillableSequenceNum(i *int) *WorkEffortCreate {
 	return wec
 }
 
+// SetWorkEffortTypeID sets the "work_effort_type" edge to the WorkEffortType entity by ID.
+func (wec *WorkEffortCreate) SetWorkEffortTypeID(id int) *WorkEffortCreate {
+	wec.mutation.SetWorkEffortTypeID(id)
+	return wec
+}
+
+// SetNillableWorkEffortTypeID sets the "work_effort_type" edge to the WorkEffortType entity by ID if the given value is not nil.
+func (wec *WorkEffortCreate) SetNillableWorkEffortTypeID(id *int) *WorkEffortCreate {
+	if id != nil {
+		wec = wec.SetWorkEffortTypeID(*id)
+	}
+	return wec
+}
+
+// SetWorkEffortType sets the "work_effort_type" edge to the WorkEffortType entity.
+func (wec *WorkEffortCreate) SetWorkEffortType(w *WorkEffortType) *WorkEffortCreate {
+	return wec.SetWorkEffortTypeID(w.ID)
+}
+
 // SetParentID sets the "parent" edge to the WorkEffort entity by ID.
 func (wec *WorkEffortCreate) SetParentID(id int) *WorkEffortCreate {
 	wec.mutation.SetParentID(id)
@@ -728,6 +765,25 @@ func (wec *WorkEffortCreate) AddChildren(w ...*WorkEffort) *WorkEffortCreate {
 		ids[i] = w[i].ID
 	}
 	return wec.AddChildIDs(ids...)
+}
+
+// SetCurrentStatusItemID sets the "current_status_item" edge to the StatusItem entity by ID.
+func (wec *WorkEffortCreate) SetCurrentStatusItemID(id int) *WorkEffortCreate {
+	wec.mutation.SetCurrentStatusItemID(id)
+	return wec
+}
+
+// SetNillableCurrentStatusItemID sets the "current_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wec *WorkEffortCreate) SetNillableCurrentStatusItemID(id *int) *WorkEffortCreate {
+	if id != nil {
+		wec = wec.SetCurrentStatusItemID(*id)
+	}
+	return wec
+}
+
+// SetCurrentStatusItem sets the "current_status_item" edge to the StatusItem entity.
+func (wec *WorkEffortCreate) SetCurrentStatusItem(s *StatusItem) *WorkEffortCreate {
+	return wec.SetCurrentStatusItemID(s.ID)
 }
 
 // SetFixedAssetID sets the "fixed_asset" edge to the FixedAsset entity by ID.
@@ -843,6 +899,21 @@ func (wec *WorkEffortCreate) AddWorkEffortPartyAssignments(w ...*WorkEffortParty
 	return wec.AddWorkEffortPartyAssignmentIDs(ids...)
 }
 
+// AddWorkEffortSkillStandardIDs adds the "work_effort_skill_standards" edge to the WorkEffortSkillStandard entity by IDs.
+func (wec *WorkEffortCreate) AddWorkEffortSkillStandardIDs(ids ...int) *WorkEffortCreate {
+	wec.mutation.AddWorkEffortSkillStandardIDs(ids...)
+	return wec
+}
+
+// AddWorkEffortSkillStandards adds the "work_effort_skill_standards" edges to the WorkEffortSkillStandard entity.
+func (wec *WorkEffortCreate) AddWorkEffortSkillStandards(w ...*WorkEffortSkillStandard) *WorkEffortCreate {
+	ids := make([]int, len(w))
+	for i := range w {
+		ids[i] = w[i].ID
+	}
+	return wec.AddWorkEffortSkillStandardIDs(ids...)
+}
+
 // Mutation returns the WorkEffortMutation object of the builder.
 func (wec *WorkEffortCreate) Mutation() *WorkEffortMutation {
 	return wec.mutation
@@ -870,7 +941,10 @@ func (wec *WorkEffortCreate) Save(ctx context.Context) (*WorkEffort, error) {
 				return nil, err
 			}
 			wec.mutation = mutation
-			node, err = wec.sqlSave(ctx)
+			if node, err = wec.sqlSave(ctx); err != nil {
+				return nil, err
+			}
+			mutation.id = &node.ID
 			mutation.done = true
 			return node, err
 		})
@@ -895,6 +969,14 @@ func (wec *WorkEffortCreate) SaveX(ctx context.Context) *WorkEffort {
 
 // defaults sets the default values of the builder before save.
 func (wec *WorkEffortCreate) defaults() {
+	if _, ok := wec.mutation.CreateTime(); !ok {
+		v := workeffort.DefaultCreateTime()
+		wec.mutation.SetCreateTime(v)
+	}
+	if _, ok := wec.mutation.UpdateTime(); !ok {
+		v := workeffort.DefaultUpdateTime()
+		wec.mutation.SetUpdateTime(v)
+	}
 	if _, ok := wec.mutation.LastStatusUpdate(); !ok {
 		v := workeffort.DefaultLastStatusUpdate()
 		wec.mutation.SetLastStatusUpdate(v)
@@ -927,6 +1009,12 @@ func (wec *WorkEffortCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (wec *WorkEffortCreate) check() error {
+	if _, ok := wec.mutation.CreateTime(); !ok {
+		return &ValidationError{Name: "create_time", err: errors.New("ent: missing required field \"create_time\"")}
+	}
+	if _, ok := wec.mutation.UpdateTime(); !ok {
+		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
+	}
 	if v, ok := wec.mutation.SendNotificationEmail(); ok {
 		if err := workeffort.SendNotificationEmailValidator(v); err != nil {
 			return &ValidationError{Name: "send_notification_email", err: fmt.Errorf("ent: validator failed for field \"send_notification_email\": %w", err)}
@@ -964,21 +1052,29 @@ func (wec *WorkEffortCreate) createSpec() (*WorkEffort, *sqlgraph.CreateSpec) {
 			},
 		}
 	)
-	if value, ok := wec.mutation.WorkEffortTypeID(); ok {
+	if value, ok := wec.mutation.CreateTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffort.FieldWorkEffortTypeID,
+			Column: workeffort.FieldCreateTime,
 		})
-		_node.WorkEffortTypeID = value
+		_node.CreateTime = value
 	}
-	if value, ok := wec.mutation.CurrentStatusID(); ok {
+	if value, ok := wec.mutation.UpdateTime(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffort.FieldCurrentStatusID,
+			Column: workeffort.FieldUpdateTime,
 		})
-		_node.CurrentStatusID = value
+		_node.UpdateTime = value
+	}
+	if value, ok := wec.mutation.StringRef(); ok {
+		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Value:  value,
+			Column: workeffort.FieldStringRef,
+		})
+		_node.StringRef = value
 	}
 	if value, ok := wec.mutation.LastStatusUpdate(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
@@ -1348,6 +1444,26 @@ func (wec *WorkEffortCreate) createSpec() (*WorkEffort, *sqlgraph.CreateSpec) {
 		})
 		_node.SequenceNum = value
 	}
+	if nodes := wec.mutation.WorkEffortTypeIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.WorkEffortTypeTable,
+			Columns: []string{workeffort.WorkEffortTypeColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workefforttype.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.work_effort_type_work_efforts = &nodes[0]
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	if nodes := wec.mutation.ParentIDs(); len(nodes) > 0 {
 		edge := &sqlgraph.EdgeSpec{
 			Rel:     sqlgraph.M2O,
@@ -1385,6 +1501,26 @@ func (wec *WorkEffortCreate) createSpec() (*WorkEffort, *sqlgraph.CreateSpec) {
 		for _, k := range nodes {
 			edge.Target.Nodes = append(edge.Target.Nodes, k)
 		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
+	if nodes := wec.mutation.CurrentStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffort.CurrentStatusItemTable,
+			Columns: []string{workeffort.CurrentStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_node.status_item_current_work_efforts = &nodes[0]
 		_spec.Edges = append(_spec.Edges, edge)
 	}
 	if nodes := wec.mutation.FixedAssetIDs(); len(nodes) > 0 {
@@ -1522,6 +1658,25 @@ func (wec *WorkEffortCreate) createSpec() (*WorkEffort, *sqlgraph.CreateSpec) {
 		}
 		_spec.Edges = append(_spec.Edges, edge)
 	}
+	if nodes := wec.mutation.WorkEffortSkillStandardsIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.O2M,
+			Inverse: false,
+			Table:   workeffort.WorkEffortSkillStandardsTable,
+			Columns: []string{workeffort.WorkEffortSkillStandardsColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: workeffortskillstandard.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges = append(_spec.Edges, edge)
+	}
 	return _node, _spec
 }
 
@@ -1561,10 +1716,11 @@ func (wecb *WorkEffortCreateBulk) Save(ctx context.Context) ([]*WorkEffort, erro
 						}
 					}
 				}
-				mutation.done = true
 				if err != nil {
 					return nil, err
 				}
+				mutation.id = &nodes[i].ID
+				mutation.done = true
 				id := specs[i].ID.Value.(int64)
 				nodes[i].ID = int(id)
 				return nodes[i], nil

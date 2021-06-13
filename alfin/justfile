@@ -21,6 +21,7 @@ procs:
 	foreman start
 
 # $ just gencase purchaseorder
+# $ just gencase workeffort
 gencase modname:
     python meta_generator.py gen_case ./assets/cases/{{modname}}
     mage CreateMod {{modname}}

@@ -14,11 +14,14 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/temporalexpression"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortassoc"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortskillstandard"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workefforttype"
 )
 
 // WorkEffortQuery is the builder for querying WorkEffort entities.
@@ -31,8 +34,10 @@ type WorkEffortQuery struct {
 	fields     []string
 	predicates []predicate.WorkEffort
 	// eager-loading edges.
+	withWorkEffortType              *WorkEffortTypeQuery
 	withParent                      *WorkEffortQuery
 	withChildren                    *WorkEffortQuery
+	withCurrentStatusItem           *StatusItemQuery
 	withFixedAsset                  *FixedAssetQuery
 	withTemporalExpression          *TemporalExpressionQuery
 	withChildWorkEfforts            *WorkEffortQuery
@@ -40,6 +45,7 @@ type WorkEffortQuery struct {
 	withToWorkEffortAssocs          *WorkEffortAssocQuery
 	withWorkEffortFixedAssetAssigns *WorkEffortFixedAssetAssignQuery
 	withWorkEffortPartyAssignments  *WorkEffortPartyAssignmentQuery
+	withWorkEffortSkillStandards    *WorkEffortSkillStandardQuery
 	withFKs                         bool
 	// intermediate query (i.e. traversal path).
 	sql  *sql.Selector
@@ -75,6 +81,28 @@ func (weq *WorkEffortQuery) Unique(unique bool) *WorkEffortQuery {
 func (weq *WorkEffortQuery) Order(o ...OrderFunc) *WorkEffortQuery {
 	weq.order = append(weq.order, o...)
 	return weq
+}
+
+// QueryWorkEffortType chains the current query on the "work_effort_type" edge.
+func (weq *WorkEffortQuery) QueryWorkEffortType() *WorkEffortTypeQuery {
+	query := &WorkEffortTypeQuery{config: weq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := weq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := weq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, selector),
+			sqlgraph.To(workefforttype.Table, workefforttype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.WorkEffortTypeTable, workeffort.WorkEffortTypeColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(weq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // QueryParent chains the current query on the "parent" edge.
@@ -114,6 +142,28 @@ func (weq *WorkEffortQuery) QueryChildren() *WorkEffortQuery {
 			sqlgraph.From(workeffort.Table, workeffort.FieldID, selector),
 			sqlgraph.To(workeffort.Table, workeffort.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, workeffort.ChildrenTable, workeffort.ChildrenColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(weq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryCurrentStatusItem chains the current query on the "current_status_item" edge.
+func (weq *WorkEffortQuery) QueryCurrentStatusItem() *StatusItemQuery {
+	query := &StatusItemQuery{config: weq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := weq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := weq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, selector),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, workeffort.CurrentStatusItemTable, workeffort.CurrentStatusItemColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(weq.driver.Dialect(), step)
 		return fromU, nil
@@ -268,6 +318,28 @@ func (weq *WorkEffortQuery) QueryWorkEffortPartyAssignments() *WorkEffortPartyAs
 			sqlgraph.From(workeffort.Table, workeffort.FieldID, selector),
 			sqlgraph.To(workeffortpartyassignment.Table, workeffortpartyassignment.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, workeffort.WorkEffortPartyAssignmentsTable, workeffort.WorkEffortPartyAssignmentsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(weq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryWorkEffortSkillStandards chains the current query on the "work_effort_skill_standards" edge.
+func (weq *WorkEffortQuery) QueryWorkEffortSkillStandards() *WorkEffortSkillStandardQuery {
+	query := &WorkEffortSkillStandardQuery{config: weq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := weq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := weq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(workeffort.Table, workeffort.FieldID, selector),
+			sqlgraph.To(workeffortskillstandard.Table, workeffortskillstandard.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, workeffort.WorkEffortSkillStandardsTable, workeffort.WorkEffortSkillStandardsColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(weq.driver.Dialect(), step)
 		return fromU, nil
@@ -456,8 +528,10 @@ func (weq *WorkEffortQuery) Clone() *WorkEffortQuery {
 		offset:                          weq.offset,
 		order:                           append([]OrderFunc{}, weq.order...),
 		predicates:                      append([]predicate.WorkEffort{}, weq.predicates...),
+		withWorkEffortType:              weq.withWorkEffortType.Clone(),
 		withParent:                      weq.withParent.Clone(),
 		withChildren:                    weq.withChildren.Clone(),
+		withCurrentStatusItem:           weq.withCurrentStatusItem.Clone(),
 		withFixedAsset:                  weq.withFixedAsset.Clone(),
 		withTemporalExpression:          weq.withTemporalExpression.Clone(),
 		withChildWorkEfforts:            weq.withChildWorkEfforts.Clone(),
@@ -465,10 +539,22 @@ func (weq *WorkEffortQuery) Clone() *WorkEffortQuery {
 		withToWorkEffortAssocs:          weq.withToWorkEffortAssocs.Clone(),
 		withWorkEffortFixedAssetAssigns: weq.withWorkEffortFixedAssetAssigns.Clone(),
 		withWorkEffortPartyAssignments:  weq.withWorkEffortPartyAssignments.Clone(),
+		withWorkEffortSkillStandards:    weq.withWorkEffortSkillStandards.Clone(),
 		// clone intermediate query.
 		sql:  weq.sql.Clone(),
 		path: weq.path,
 	}
+}
+
+// WithWorkEffortType tells the query-builder to eager-load the nodes that are connected to
+// the "work_effort_type" edge. The optional arguments are used to configure the query builder of the edge.
+func (weq *WorkEffortQuery) WithWorkEffortType(opts ...func(*WorkEffortTypeQuery)) *WorkEffortQuery {
+	query := &WorkEffortTypeQuery{config: weq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	weq.withWorkEffortType = query
+	return weq
 }
 
 // WithParent tells the query-builder to eager-load the nodes that are connected to
@@ -490,6 +576,17 @@ func (weq *WorkEffortQuery) WithChildren(opts ...func(*WorkEffortQuery)) *WorkEf
 		opt(query)
 	}
 	weq.withChildren = query
+	return weq
+}
+
+// WithCurrentStatusItem tells the query-builder to eager-load the nodes that are connected to
+// the "current_status_item" edge. The optional arguments are used to configure the query builder of the edge.
+func (weq *WorkEffortQuery) WithCurrentStatusItem(opts ...func(*StatusItemQuery)) *WorkEffortQuery {
+	query := &StatusItemQuery{config: weq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	weq.withCurrentStatusItem = query
 	return weq
 }
 
@@ -570,18 +667,29 @@ func (weq *WorkEffortQuery) WithWorkEffortPartyAssignments(opts ...func(*WorkEff
 	return weq
 }
 
+// WithWorkEffortSkillStandards tells the query-builder to eager-load the nodes that are connected to
+// the "work_effort_skill_standards" edge. The optional arguments are used to configure the query builder of the edge.
+func (weq *WorkEffortQuery) WithWorkEffortSkillStandards(opts ...func(*WorkEffortSkillStandardQuery)) *WorkEffortQuery {
+	query := &WorkEffortSkillStandardQuery{config: weq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	weq.withWorkEffortSkillStandards = query
+	return weq
+}
+
 // GroupBy is used to group vertices by one or more fields/columns.
 // It is often used with aggregate functions, like: count, max, mean, min, sum.
 //
 // Example:
 //
 //	var v []struct {
-//		WorkEffortTypeID int `json:"work_effort_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.WorkEffort.Query().
-//		GroupBy(workeffort.FieldWorkEffortTypeID).
+//		GroupBy(workeffort.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -603,11 +711,11 @@ func (weq *WorkEffortQuery) GroupBy(field string, fields ...string) *WorkEffortG
 // Example:
 //
 //	var v []struct {
-//		WorkEffortTypeID int `json:"work_effort_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.WorkEffort.Query().
-//		Select(workeffort.FieldWorkEffortTypeID).
+//		Select(workeffort.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (weq *WorkEffortQuery) Select(field string, fields ...string) *WorkEffortSelect {
@@ -636,9 +744,11 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 		nodes       = []*WorkEffort{}
 		withFKs     = weq.withFKs
 		_spec       = weq.querySpec()
-		loadedTypes = [9]bool{
+		loadedTypes = [12]bool{
+			weq.withWorkEffortType != nil,
 			weq.withParent != nil,
 			weq.withChildren != nil,
+			weq.withCurrentStatusItem != nil,
 			weq.withFixedAsset != nil,
 			weq.withTemporalExpression != nil,
 			weq.withChildWorkEfforts != nil,
@@ -646,9 +756,10 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 			weq.withToWorkEffortAssocs != nil,
 			weq.withWorkEffortFixedAssetAssigns != nil,
 			weq.withWorkEffortPartyAssignments != nil,
+			weq.withWorkEffortSkillStandards != nil,
 		}
 	)
-	if weq.withParent != nil || weq.withFixedAsset != nil || weq.withTemporalExpression != nil {
+	if weq.withWorkEffortType != nil || weq.withParent != nil || weq.withCurrentStatusItem != nil || weq.withFixedAsset != nil || weq.withTemporalExpression != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -672,6 +783,35 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
+	}
+
+	if query := weq.withWorkEffortType; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffort)
+		for i := range nodes {
+			if nodes[i].work_effort_type_work_efforts == nil {
+				continue
+			}
+			fk := *nodes[i].work_effort_type_work_efforts
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(workefforttype.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "work_effort_type_work_efforts" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.WorkEffortType = n
+			}
+		}
 	}
 
 	if query := weq.withParent; query != nil {
@@ -729,6 +869,35 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 				return nil, fmt.Errorf(`unexpected foreign-key "work_effort_children" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.Children = append(node.Edges.Children, n)
+		}
+	}
+
+	if query := weq.withCurrentStatusItem; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*WorkEffort)
+		for i := range nodes {
+			if nodes[i].status_item_current_work_efforts == nil {
+				continue
+			}
+			fk := *nodes[i].status_item_current_work_efforts
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(statusitem.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "status_item_current_work_efforts" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.CurrentStatusItem = n
+			}
 		}
 	}
 
@@ -812,7 +981,7 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 				s.Where(sql.InValues(workeffort.ChildWorkEffortsPrimaryKey[0], fks...))
 			},
 			ScanValues: func() [2]interface{} {
-				return [2]interface{}{&sql.NullInt64{}, &sql.NullInt64{}}
+				return [2]interface{}{new(sql.NullInt64), new(sql.NullInt64)}
 			},
 			Assign: func(out, in interface{}) error {
 				eout, ok := out.(*sql.NullInt64)
@@ -971,6 +1140,35 @@ func (weq *WorkEffortQuery) sqlAll(ctx context.Context) ([]*WorkEffort, error) {
 		}
 	}
 
+	if query := weq.withWorkEffortSkillStandards; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int]*WorkEffort)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.WorkEffortSkillStandards = []*WorkEffortSkillStandard{}
+		}
+		query.withFKs = true
+		query.Where(predicate.WorkEffortSkillStandard(func(s *sql.Selector) {
+			s.Where(sql.InValues(workeffort.WorkEffortSkillStandardsColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.work_effort_work_effort_skill_standards
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "work_effort_work_effort_skill_standards" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "work_effort_work_effort_skill_standards" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.WorkEffortSkillStandards = append(node.Edges.WorkEffortSkillStandards, n)
+		}
+	}
+
 	return nodes, nil
 }
 
@@ -1038,10 +1236,14 @@ func (weq *WorkEffortQuery) querySpec() *sqlgraph.QuerySpec {
 func (weq *WorkEffortQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(weq.driver.Dialect())
 	t1 := builder.Table(workeffort.Table)
-	selector := builder.Select(t1.Columns(workeffort.Columns...)...).From(t1)
+	columns := weq.fields
+	if len(columns) == 0 {
+		columns = workeffort.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if weq.sql != nil {
 		selector = weq.sql
-		selector.Select(selector.Columns(workeffort.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range weq.predicates {
 		p(selector)
@@ -1309,13 +1511,24 @@ func (wegb *WorkEffortGroupBy) sqlScan(ctx context.Context, v interface{}) error
 }
 
 func (wegb *WorkEffortGroupBy) sqlQuery() *sql.Selector {
-	selector := wegb.sql
-	columns := make([]string, 0, len(wegb.fields)+len(wegb.fns))
-	columns = append(columns, wegb.fields...)
+	selector := wegb.sql.Select()
+	aggregation := make([]string, 0, len(wegb.fns))
 	for _, fn := range wegb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(wegb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(wegb.fields)+len(wegb.fns))
+		for _, f := range wegb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(wegb.fields...)...)
 }
 
 // WorkEffortSelect is the builder for selecting fields of WorkEffort entities.
@@ -1531,16 +1744,10 @@ func (wes *WorkEffortSelect) BoolX(ctx context.Context) bool {
 
 func (wes *WorkEffortSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := wes.sqlQuery().Query()
+	query, args := wes.sql.Query()
 	if err := wes.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (wes *WorkEffortSelect) sqlQuery() sql.Querier {
-	selector := wes.sql
-	selector.Select(selector.Columns(wes.fields...)...)
-	return selector
 }

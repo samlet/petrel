@@ -1,0 +1,170 @@
+{
+  "name": "SkillType",
+  "fields": [
+    {
+      "name": "skillTypeId",
+      "type": "id",
+      "col": "SKILL_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentSkillType",
+      "type": "one",
+      "relEntityName": "SkillType",
+      "fkName": "PARNT_SKILL_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "skillTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "JobRequisition",
+      "type": "many",
+      "relEntityName": "JobRequisition",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "skillTypeId",
+          "relFieldName": "skillTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartySkill",
+      "type": "many",
+      "relEntityName": "PartySkill",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "skillTypeId",
+          "relFieldName": "skillTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteItem",
+      "type": "many",
+      "relEntityName": "QuoteItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "skillTypeId",
+          "relFieldName": "skillTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildSkillType",
+      "type": "many",
+      "relEntityName": "SkillType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "skillTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortSkillStandard",
+      "type": "many",
+      "relEntityName": "WorkEffortSkillStandard",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "skillTypeId",
+          "relFieldName": "skillTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "skillTypeId"
+  ],
+  "isView": false
+}

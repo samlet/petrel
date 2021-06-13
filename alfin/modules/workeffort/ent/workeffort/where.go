@@ -93,17 +93,24 @@ func IDLTE(id int) predicate.WorkEffort {
 	})
 }
 
-// WorkEffortTypeID applies equality check predicate on the "work_effort_type_id" field. It's identical to WorkEffortTypeIDEQ.
-func WorkEffortTypeID(v int) predicate.WorkEffort {
+// CreateTime applies equality check predicate on the "create_time" field. It's identical to CreateTimeEQ.
+func CreateTime(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldWorkEffortTypeID), v))
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
 	})
 }
 
-// CurrentStatusID applies equality check predicate on the "current_status_id" field. It's identical to CurrentStatusIDEQ.
-func CurrentStatusID(v int) predicate.WorkEffort {
+// UpdateTime applies equality check predicate on the "update_time" field. It's identical to UpdateTimeEQ.
+func UpdateTime(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCurrentStatusID), v))
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
+	})
+}
+
+// StringRef applies equality check predicate on the "string_ref" field. It's identical to StringRefEQ.
+func StringRef(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.EQ(s.C(FieldStringRef), v))
 	})
 }
 
@@ -422,22 +429,22 @@ func SequenceNum(v int) predicate.WorkEffort {
 	})
 }
 
-// WorkEffortTypeIDEQ applies the EQ predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDEQ(v int) predicate.WorkEffort {
+// CreateTimeEQ applies the EQ predicate on the "create_time" field.
+func CreateTimeEQ(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldWorkEffortTypeID), v))
+		s.Where(sql.EQ(s.C(FieldCreateTime), v))
 	})
 }
 
-// WorkEffortTypeIDNEQ applies the NEQ predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDNEQ(v int) predicate.WorkEffort {
+// CreateTimeNEQ applies the NEQ predicate on the "create_time" field.
+func CreateTimeNEQ(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldWorkEffortTypeID), v))
+		s.Where(sql.NEQ(s.C(FieldCreateTime), v))
 	})
 }
 
-// WorkEffortTypeIDIn applies the In predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDIn(vs ...int) predicate.WorkEffort {
+// CreateTimeIn applies the In predicate on the "create_time" field.
+func CreateTimeIn(vs ...time.Time) predicate.WorkEffort {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -449,12 +456,12 @@ func WorkEffortTypeIDIn(vs ...int) predicate.WorkEffort {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldWorkEffortTypeID), v...))
+		s.Where(sql.In(s.C(FieldCreateTime), v...))
 	})
 }
 
-// WorkEffortTypeIDNotIn applies the NotIn predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDNotIn(vs ...int) predicate.WorkEffort {
+// CreateTimeNotIn applies the NotIn predicate on the "create_time" field.
+func CreateTimeNotIn(vs ...time.Time) predicate.WorkEffort {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -466,68 +473,54 @@ func WorkEffortTypeIDNotIn(vs ...int) predicate.WorkEffort {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldWorkEffortTypeID), v...))
+		s.Where(sql.NotIn(s.C(FieldCreateTime), v...))
 	})
 }
 
-// WorkEffortTypeIDGT applies the GT predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDGT(v int) predicate.WorkEffort {
+// CreateTimeGT applies the GT predicate on the "create_time" field.
+func CreateTimeGT(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldWorkEffortTypeID), v))
+		s.Where(sql.GT(s.C(FieldCreateTime), v))
 	})
 }
 
-// WorkEffortTypeIDGTE applies the GTE predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDGTE(v int) predicate.WorkEffort {
+// CreateTimeGTE applies the GTE predicate on the "create_time" field.
+func CreateTimeGTE(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldWorkEffortTypeID), v))
+		s.Where(sql.GTE(s.C(FieldCreateTime), v))
 	})
 }
 
-// WorkEffortTypeIDLT applies the LT predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDLT(v int) predicate.WorkEffort {
+// CreateTimeLT applies the LT predicate on the "create_time" field.
+func CreateTimeLT(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldWorkEffortTypeID), v))
+		s.Where(sql.LT(s.C(FieldCreateTime), v))
 	})
 }
 
-// WorkEffortTypeIDLTE applies the LTE predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDLTE(v int) predicate.WorkEffort {
+// CreateTimeLTE applies the LTE predicate on the "create_time" field.
+func CreateTimeLTE(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldWorkEffortTypeID), v))
+		s.Where(sql.LTE(s.C(FieldCreateTime), v))
 	})
 }
 
-// WorkEffortTypeIDIsNil applies the IsNil predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDIsNil() predicate.WorkEffort {
+// UpdateTimeEQ applies the EQ predicate on the "update_time" field.
+func UpdateTimeEQ(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldWorkEffortTypeID)))
+		s.Where(sql.EQ(s.C(FieldUpdateTime), v))
 	})
 }
 
-// WorkEffortTypeIDNotNil applies the NotNil predicate on the "work_effort_type_id" field.
-func WorkEffortTypeIDNotNil() predicate.WorkEffort {
+// UpdateTimeNEQ applies the NEQ predicate on the "update_time" field.
+func UpdateTimeNEQ(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldWorkEffortTypeID)))
+		s.Where(sql.NEQ(s.C(FieldUpdateTime), v))
 	})
 }
 
-// CurrentStatusIDEQ applies the EQ predicate on the "current_status_id" field.
-func CurrentStatusIDEQ(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldCurrentStatusID), v))
-	})
-}
-
-// CurrentStatusIDNEQ applies the NEQ predicate on the "current_status_id" field.
-func CurrentStatusIDNEQ(v int) predicate.WorkEffort {
-	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldCurrentStatusID), v))
-	})
-}
-
-// CurrentStatusIDIn applies the In predicate on the "current_status_id" field.
-func CurrentStatusIDIn(vs ...int) predicate.WorkEffort {
+// UpdateTimeIn applies the In predicate on the "update_time" field.
+func UpdateTimeIn(vs ...time.Time) predicate.WorkEffort {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -539,12 +532,12 @@ func CurrentStatusIDIn(vs ...int) predicate.WorkEffort {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.In(s.C(FieldCurrentStatusID), v...))
+		s.Where(sql.In(s.C(FieldUpdateTime), v...))
 	})
 }
 
-// CurrentStatusIDNotIn applies the NotIn predicate on the "current_status_id" field.
-func CurrentStatusIDNotIn(vs ...int) predicate.WorkEffort {
+// UpdateTimeNotIn applies the NotIn predicate on the "update_time" field.
+func UpdateTimeNotIn(vs ...time.Time) predicate.WorkEffort {
 	v := make([]interface{}, len(vs))
 	for i := range v {
 		v[i] = vs[i]
@@ -556,49 +549,160 @@ func CurrentStatusIDNotIn(vs ...int) predicate.WorkEffort {
 			s.Where(sql.False())
 			return
 		}
-		s.Where(sql.NotIn(s.C(FieldCurrentStatusID), v...))
+		s.Where(sql.NotIn(s.C(FieldUpdateTime), v...))
 	})
 }
 
-// CurrentStatusIDGT applies the GT predicate on the "current_status_id" field.
-func CurrentStatusIDGT(v int) predicate.WorkEffort {
+// UpdateTimeGT applies the GT predicate on the "update_time" field.
+func UpdateTimeGT(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldCurrentStatusID), v))
+		s.Where(sql.GT(s.C(FieldUpdateTime), v))
 	})
 }
 
-// CurrentStatusIDGTE applies the GTE predicate on the "current_status_id" field.
-func CurrentStatusIDGTE(v int) predicate.WorkEffort {
+// UpdateTimeGTE applies the GTE predicate on the "update_time" field.
+func UpdateTimeGTE(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldCurrentStatusID), v))
+		s.Where(sql.GTE(s.C(FieldUpdateTime), v))
 	})
 }
 
-// CurrentStatusIDLT applies the LT predicate on the "current_status_id" field.
-func CurrentStatusIDLT(v int) predicate.WorkEffort {
+// UpdateTimeLT applies the LT predicate on the "update_time" field.
+func UpdateTimeLT(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldCurrentStatusID), v))
+		s.Where(sql.LT(s.C(FieldUpdateTime), v))
 	})
 }
 
-// CurrentStatusIDLTE applies the LTE predicate on the "current_status_id" field.
-func CurrentStatusIDLTE(v int) predicate.WorkEffort {
+// UpdateTimeLTE applies the LTE predicate on the "update_time" field.
+func UpdateTimeLTE(v time.Time) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldCurrentStatusID), v))
+		s.Where(sql.LTE(s.C(FieldUpdateTime), v))
 	})
 }
 
-// CurrentStatusIDIsNil applies the IsNil predicate on the "current_status_id" field.
-func CurrentStatusIDIsNil() predicate.WorkEffort {
+// StringRefEQ applies the EQ predicate on the "string_ref" field.
+func StringRefEQ(v string) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.IsNull(s.C(FieldCurrentStatusID)))
+		s.Where(sql.EQ(s.C(FieldStringRef), v))
 	})
 }
 
-// CurrentStatusIDNotNil applies the NotNil predicate on the "current_status_id" field.
-func CurrentStatusIDNotNil() predicate.WorkEffort {
+// StringRefNEQ applies the NEQ predicate on the "string_ref" field.
+func StringRefNEQ(v string) predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
-		s.Where(sql.NotNull(s.C(FieldCurrentStatusID)))
+		s.Where(sql.NEQ(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefIn applies the In predicate on the "string_ref" field.
+func StringRefIn(vs ...string) predicate.WorkEffort {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.In(s.C(FieldStringRef), v...))
+	})
+}
+
+// StringRefNotIn applies the NotIn predicate on the "string_ref" field.
+func StringRefNotIn(vs ...string) predicate.WorkEffort {
+	v := make([]interface{}, len(vs))
+	for i := range v {
+		v[i] = vs[i]
+	}
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		// if not arguments were provided, append the FALSE constants,
+		// since we can't apply "IN ()". This will make this predicate falsy.
+		if len(v) == 0 {
+			s.Where(sql.False())
+			return
+		}
+		s.Where(sql.NotIn(s.C(FieldStringRef), v...))
+	})
+}
+
+// StringRefGT applies the GT predicate on the "string_ref" field.
+func StringRefGT(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.GT(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefGTE applies the GTE predicate on the "string_ref" field.
+func StringRefGTE(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.GTE(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefLT applies the LT predicate on the "string_ref" field.
+func StringRefLT(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.LT(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefLTE applies the LTE predicate on the "string_ref" field.
+func StringRefLTE(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.LTE(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefContains applies the Contains predicate on the "string_ref" field.
+func StringRefContains(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.Contains(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefHasPrefix applies the HasPrefix predicate on the "string_ref" field.
+func StringRefHasPrefix(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.HasPrefix(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefHasSuffix applies the HasSuffix predicate on the "string_ref" field.
+func StringRefHasSuffix(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.HasSuffix(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefIsNil applies the IsNil predicate on the "string_ref" field.
+func StringRefIsNil() predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldStringRef)))
+	})
+}
+
+// StringRefNotNil applies the NotNil predicate on the "string_ref" field.
+func StringRefNotNil() predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldStringRef)))
+	})
+}
+
+// StringRefEqualFold applies the EqualFold predicate on the "string_ref" field.
+func StringRefEqualFold(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.EqualFold(s.C(FieldStringRef), v))
+	})
+}
+
+// StringRefContainsFold applies the ContainsFold predicate on the "string_ref" field.
+func StringRefContainsFold(v string) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		s.Where(sql.ContainsFold(s.C(FieldStringRef), v))
 	})
 }
 
@@ -5064,6 +5168,34 @@ func SequenceNumNotNil() predicate.WorkEffort {
 	})
 }
 
+// HasWorkEffortType applies the HasEdge predicate on the "work_effort_type" edge.
+func HasWorkEffortType() predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(WorkEffortTypeTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, WorkEffortTypeTable, WorkEffortTypeColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasWorkEffortTypeWith applies the HasEdge predicate on the "work_effort_type" edge with a given conditions (other predicates).
+func HasWorkEffortTypeWith(preds ...predicate.WorkEffortType) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(WorkEffortTypeInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, WorkEffortTypeTable, WorkEffortTypeColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
 // HasParent applies the HasEdge predicate on the "parent" edge.
 func HasParent() predicate.WorkEffort {
 	return predicate.WorkEffort(func(s *sql.Selector) {
@@ -5111,6 +5243,34 @@ func HasChildrenWith(preds ...predicate.WorkEffort) predicate.WorkEffort {
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(Table, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, ChildrenTable, ChildrenColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasCurrentStatusItem applies the HasEdge predicate on the "current_status_item" edge.
+func HasCurrentStatusItem() predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(CurrentStatusItemTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, CurrentStatusItemTable, CurrentStatusItemColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasCurrentStatusItemWith applies the HasEdge predicate on the "current_status_item" edge with a given conditions (other predicates).
+func HasCurrentStatusItemWith(preds ...predicate.StatusItem) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(CurrentStatusItemInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, CurrentStatusItemTable, CurrentStatusItemColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {
@@ -5307,6 +5467,34 @@ func HasWorkEffortPartyAssignmentsWith(preds ...predicate.WorkEffortPartyAssignm
 			sqlgraph.From(Table, FieldID),
 			sqlgraph.To(WorkEffortPartyAssignmentsInverseTable, FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, WorkEffortPartyAssignmentsTable, WorkEffortPartyAssignmentsColumn),
+		)
+		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
+			for _, p := range preds {
+				p(s)
+			}
+		})
+	})
+}
+
+// HasWorkEffortSkillStandards applies the HasEdge predicate on the "work_effort_skill_standards" edge.
+func HasWorkEffortSkillStandards() predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(WorkEffortSkillStandardsTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, WorkEffortSkillStandardsTable, WorkEffortSkillStandardsColumn),
+		)
+		sqlgraph.HasNeighbors(s, step)
+	})
+}
+
+// HasWorkEffortSkillStandardsWith applies the HasEdge predicate on the "work_effort_skill_standards" edge with a given conditions (other predicates).
+func HasWorkEffortSkillStandardsWith(preds ...predicate.WorkEffortSkillStandard) predicate.WorkEffort {
+	return predicate.WorkEffort(func(s *sql.Selector) {
+		step := sqlgraph.NewStep(
+			sqlgraph.From(Table, FieldID),
+			sqlgraph.To(WorkEffortSkillStandardsInverseTable, FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, WorkEffortSkillStandardsTable, WorkEffortSkillStandardsColumn),
 		)
 		sqlgraph.HasNeighborsWith(s, step, func(s *sql.Selector) {
 			for _, p := range preds {

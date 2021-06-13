@@ -4,6 +4,8 @@ import (
 	"entgo.io/ent"
 	"entgo.io/ent/schema/edge"
 	"entgo.io/ent/schema/field"
+	"entgo.io/ent/schema/mixin"
+	"github.com/samlet/petrel/alfin/schemamixins"
 )
 
 // Asset holds the schema definition for the Asset entity.
@@ -26,3 +28,11 @@ func (Asset) Edges() []ent.Edge {
 			Ref("assets").
 			Unique()}
 }
+
+func (Asset) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+

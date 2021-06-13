@@ -1,0 +1,144 @@
+{
+  "name": "WorkEffortType",
+  "fields": [
+    {
+      "name": "workEffortTypeId",
+      "type": "id",
+      "col": "WORK_EFFORT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentWorkEffortType",
+      "type": "one",
+      "relEntityName": "WorkEffortType",
+      "fkName": "WK_EFFRT_TYPE_PAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "workEffortTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortTypeId",
+          "relFieldName": "workEffortTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildWorkEffortType",
+      "type": "many",
+      "relEntityName": "WorkEffortType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortTypeAttr",
+      "type": "many",
+      "relEntityName": "WorkEffortTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortTypeId",
+          "relFieldName": "workEffortTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "workEffortTypeId"
+  ],
+  "isView": false
+}

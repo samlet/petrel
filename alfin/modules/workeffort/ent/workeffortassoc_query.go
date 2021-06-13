@@ -326,12 +326,12 @@ func (weaq *WorkEffortAssocQuery) WithToWorkEffort(opts ...func(*WorkEffortQuery
 // Example:
 //
 //	var v []struct {
-//		WorkEffortAssocTypeID int `json:"work_effort_assoc_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.WorkEffortAssoc.Query().
-//		GroupBy(workeffortassoc.FieldWorkEffortAssocTypeID).
+//		GroupBy(workeffortassoc.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -353,11 +353,11 @@ func (weaq *WorkEffortAssocQuery) GroupBy(field string, fields ...string) *WorkE
 // Example:
 //
 //	var v []struct {
-//		WorkEffortAssocTypeID int `json:"work_effort_assoc_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.WorkEffortAssoc.Query().
-//		Select(workeffortassoc.FieldWorkEffortAssocTypeID).
+//		Select(workeffortassoc.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (weaq *WorkEffortAssocQuery) Select(field string, fields ...string) *WorkEffortAssocSelect {
@@ -542,10 +542,14 @@ func (weaq *WorkEffortAssocQuery) querySpec() *sqlgraph.QuerySpec {
 func (weaq *WorkEffortAssocQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(weaq.driver.Dialect())
 	t1 := builder.Table(workeffortassoc.Table)
-	selector := builder.Select(t1.Columns(workeffortassoc.Columns...)...).From(t1)
+	columns := weaq.fields
+	if len(columns) == 0 {
+		columns = workeffortassoc.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if weaq.sql != nil {
 		selector = weaq.sql
-		selector.Select(selector.Columns(workeffortassoc.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range weaq.predicates {
 		p(selector)
@@ -813,13 +817,24 @@ func (weagb *WorkEffortAssocGroupBy) sqlScan(ctx context.Context, v interface{})
 }
 
 func (weagb *WorkEffortAssocGroupBy) sqlQuery() *sql.Selector {
-	selector := weagb.sql
-	columns := make([]string, 0, len(weagb.fields)+len(weagb.fns))
-	columns = append(columns, weagb.fields...)
+	selector := weagb.sql.Select()
+	aggregation := make([]string, 0, len(weagb.fns))
 	for _, fn := range weagb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(weagb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(weagb.fields)+len(weagb.fns))
+		for _, f := range weagb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(weagb.fields...)...)
 }
 
 // WorkEffortAssocSelect is the builder for selecting fields of WorkEffortAssoc entities.
@@ -1035,16 +1050,10 @@ func (weas *WorkEffortAssocSelect) BoolX(ctx context.Context) bool {
 
 func (weas *WorkEffortAssocSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := weas.sqlQuery().Query()
+	query, args := weas.sql.Query()
 	if err := weas.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (weas *WorkEffortAssocSelect) sqlQuery() sql.Querier {
-	selector := weas.sql
-	selector.Select(selector.Columns(weas.fields...)...)
-	return selector
 }

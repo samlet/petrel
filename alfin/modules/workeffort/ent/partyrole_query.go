@@ -14,8 +14,10 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partycontactmech"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partyrole"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/roletype"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortpartyassignment"
 )
 
@@ -30,7 +32,9 @@ type PartyRoleQuery struct {
 	predicates []predicate.PartyRole
 	// eager-loading edges.
 	withParty                      *PartyQuery
+	withRoleType                   *RoleTypeQuery
 	withFixedAssets                *FixedAssetQuery
+	withPartyContactMeches         *PartyContactMechQuery
 	withWorkEffortPartyAssignments *WorkEffortPartyAssignmentQuery
 	withFKs                        bool
 	// intermediate query (i.e. traversal path).
@@ -91,6 +95,28 @@ func (prq *PartyRoleQuery) QueryParty() *PartyQuery {
 	return query
 }
 
+// QueryRoleType chains the current query on the "role_type" edge.
+func (prq *PartyRoleQuery) QueryRoleType() *RoleTypeQuery {
+	query := &RoleTypeQuery{config: prq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := prq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := prq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrole.Table, partyrole.FieldID, selector),
+			sqlgraph.To(roletype.Table, roletype.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partyrole.RoleTypeTable, partyrole.RoleTypeColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(prq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
 // QueryFixedAssets chains the current query on the "fixed_assets" edge.
 func (prq *PartyRoleQuery) QueryFixedAssets() *FixedAssetQuery {
 	query := &FixedAssetQuery{config: prq.config}
@@ -106,6 +132,28 @@ func (prq *PartyRoleQuery) QueryFixedAssets() *FixedAssetQuery {
 			sqlgraph.From(partyrole.Table, partyrole.FieldID, selector),
 			sqlgraph.To(fixedasset.Table, fixedasset.FieldID),
 			sqlgraph.Edge(sqlgraph.O2M, false, partyrole.FixedAssetsTable, partyrole.FixedAssetsColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(prq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
+}
+
+// QueryPartyContactMeches chains the current query on the "party_contact_meches" edge.
+func (prq *PartyRoleQuery) QueryPartyContactMeches() *PartyContactMechQuery {
+	query := &PartyContactMechQuery{config: prq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := prq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := prq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partyrole.Table, partyrole.FieldID, selector),
+			sqlgraph.To(partycontactmech.Table, partycontactmech.FieldID),
+			sqlgraph.Edge(sqlgraph.O2M, false, partyrole.PartyContactMechesTable, partyrole.PartyContactMechesColumn),
 		)
 		fromU = sqlgraph.SetNeighbors(prq.driver.Dialect(), step)
 		return fromU, nil
@@ -317,7 +365,9 @@ func (prq *PartyRoleQuery) Clone() *PartyRoleQuery {
 		order:                          append([]OrderFunc{}, prq.order...),
 		predicates:                     append([]predicate.PartyRole{}, prq.predicates...),
 		withParty:                      prq.withParty.Clone(),
+		withRoleType:                   prq.withRoleType.Clone(),
 		withFixedAssets:                prq.withFixedAssets.Clone(),
+		withPartyContactMeches:         prq.withPartyContactMeches.Clone(),
 		withWorkEffortPartyAssignments: prq.withWorkEffortPartyAssignments.Clone(),
 		// clone intermediate query.
 		sql:  prq.sql.Clone(),
@@ -336,6 +386,17 @@ func (prq *PartyRoleQuery) WithParty(opts ...func(*PartyQuery)) *PartyRoleQuery 
 	return prq
 }
 
+// WithRoleType tells the query-builder to eager-load the nodes that are connected to
+// the "role_type" edge. The optional arguments are used to configure the query builder of the edge.
+func (prq *PartyRoleQuery) WithRoleType(opts ...func(*RoleTypeQuery)) *PartyRoleQuery {
+	query := &RoleTypeQuery{config: prq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	prq.withRoleType = query
+	return prq
+}
+
 // WithFixedAssets tells the query-builder to eager-load the nodes that are connected to
 // the "fixed_assets" edge. The optional arguments are used to configure the query builder of the edge.
 func (prq *PartyRoleQuery) WithFixedAssets(opts ...func(*FixedAssetQuery)) *PartyRoleQuery {
@@ -344,6 +405,17 @@ func (prq *PartyRoleQuery) WithFixedAssets(opts ...func(*FixedAssetQuery)) *Part
 		opt(query)
 	}
 	prq.withFixedAssets = query
+	return prq
+}
+
+// WithPartyContactMeches tells the query-builder to eager-load the nodes that are connected to
+// the "party_contact_meches" edge. The optional arguments are used to configure the query builder of the edge.
+func (prq *PartyRoleQuery) WithPartyContactMeches(opts ...func(*PartyContactMechQuery)) *PartyRoleQuery {
+	query := &PartyContactMechQuery{config: prq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	prq.withPartyContactMeches = query
 	return prq
 }
 
@@ -364,12 +436,12 @@ func (prq *PartyRoleQuery) WithWorkEffortPartyAssignments(opts ...func(*WorkEffo
 // Example:
 //
 //	var v []struct {
-//		RoleTypeID int `json:"role_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.PartyRole.Query().
-//		GroupBy(partyrole.FieldRoleTypeID).
+//		GroupBy(partyrole.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -391,11 +463,11 @@ func (prq *PartyRoleQuery) GroupBy(field string, fields ...string) *PartyRoleGro
 // Example:
 //
 //	var v []struct {
-//		RoleTypeID int `json:"role_type_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.PartyRole.Query().
-//		Select(partyrole.FieldRoleTypeID).
+//		Select(partyrole.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (prq *PartyRoleQuery) Select(field string, fields ...string) *PartyRoleSelect {
@@ -424,13 +496,15 @@ func (prq *PartyRoleQuery) sqlAll(ctx context.Context) ([]*PartyRole, error) {
 		nodes       = []*PartyRole{}
 		withFKs     = prq.withFKs
 		_spec       = prq.querySpec()
-		loadedTypes = [3]bool{
+		loadedTypes = [5]bool{
 			prq.withParty != nil,
+			prq.withRoleType != nil,
 			prq.withFixedAssets != nil,
+			prq.withPartyContactMeches != nil,
 			prq.withWorkEffortPartyAssignments != nil,
 		}
 	)
-	if prq.withParty != nil {
+	if prq.withParty != nil || prq.withRoleType != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -485,6 +559,35 @@ func (prq *PartyRoleQuery) sqlAll(ctx context.Context) ([]*PartyRole, error) {
 		}
 	}
 
+	if query := prq.withRoleType; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*PartyRole)
+		for i := range nodes {
+			if nodes[i].role_type_party_roles == nil {
+				continue
+			}
+			fk := *nodes[i].role_type_party_roles
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(roletype.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "role_type_party_roles" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.RoleType = n
+			}
+		}
+	}
+
 	if query := prq.withFixedAssets; query != nil {
 		fks := make([]driver.Value, 0, len(nodes))
 		nodeids := make(map[int]*PartyRole)
@@ -511,6 +614,35 @@ func (prq *PartyRoleQuery) sqlAll(ctx context.Context) ([]*PartyRole, error) {
 				return nil, fmt.Errorf(`unexpected foreign-key "party_role_fixed_assets" returned %v for node %v`, *fk, n.ID)
 			}
 			node.Edges.FixedAssets = append(node.Edges.FixedAssets, n)
+		}
+	}
+
+	if query := prq.withPartyContactMeches; query != nil {
+		fks := make([]driver.Value, 0, len(nodes))
+		nodeids := make(map[int]*PartyRole)
+		for i := range nodes {
+			fks = append(fks, nodes[i].ID)
+			nodeids[nodes[i].ID] = nodes[i]
+			nodes[i].Edges.PartyContactMeches = []*PartyContactMech{}
+		}
+		query.withFKs = true
+		query.Where(predicate.PartyContactMech(func(s *sql.Selector) {
+			s.Where(sql.InValues(partyrole.PartyContactMechesColumn, fks...))
+		}))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			fk := n.party_role_party_contact_meches
+			if fk == nil {
+				return nil, fmt.Errorf(`foreign-key "party_role_party_contact_meches" is nil for node %v`, n.ID)
+			}
+			node, ok := nodeids[*fk]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "party_role_party_contact_meches" returned %v for node %v`, *fk, n.ID)
+			}
+			node.Edges.PartyContactMeches = append(node.Edges.PartyContactMeches, n)
 		}
 	}
 
@@ -610,10 +742,14 @@ func (prq *PartyRoleQuery) querySpec() *sqlgraph.QuerySpec {
 func (prq *PartyRoleQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(prq.driver.Dialect())
 	t1 := builder.Table(partyrole.Table)
-	selector := builder.Select(t1.Columns(partyrole.Columns...)...).From(t1)
+	columns := prq.fields
+	if len(columns) == 0 {
+		columns = partyrole.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if prq.sql != nil {
 		selector = prq.sql
-		selector.Select(selector.Columns(partyrole.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range prq.predicates {
 		p(selector)
@@ -881,13 +1017,24 @@ func (prgb *PartyRoleGroupBy) sqlScan(ctx context.Context, v interface{}) error 
 }
 
 func (prgb *PartyRoleGroupBy) sqlQuery() *sql.Selector {
-	selector := prgb.sql
-	columns := make([]string, 0, len(prgb.fields)+len(prgb.fns))
-	columns = append(columns, prgb.fields...)
+	selector := prgb.sql.Select()
+	aggregation := make([]string, 0, len(prgb.fns))
 	for _, fn := range prgb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(prgb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(prgb.fields)+len(prgb.fns))
+		for _, f := range prgb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(prgb.fields...)...)
 }
 
 // PartyRoleSelect is the builder for selecting fields of PartyRole entities.
@@ -1103,16 +1250,10 @@ func (prs *PartyRoleSelect) BoolX(ctx context.Context) bool {
 
 func (prs *PartyRoleSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := prs.sqlQuery().Query()
+	query, args := prs.sql.Query()
 	if err := prs.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (prs *PartyRoleSelect) sqlQuery() sql.Querier {
-	selector := prs.sql
-	selector.Select(selector.Columns(prs.fields...)...)
-	return selector
 }

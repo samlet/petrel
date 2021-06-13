@@ -14,6 +14,7 @@ import (
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/party"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/partystatus"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/userlogin"
 )
 
@@ -27,6 +28,7 @@ type PartyStatusQuery struct {
 	fields     []string
 	predicates []predicate.PartyStatus
 	// eager-loading edges.
+	withStatusItem        *StatusItemQuery
 	withParty             *PartyQuery
 	withChangeByUserLogin *UserLoginQuery
 	withFKs               bool
@@ -64,6 +66,28 @@ func (psq *PartyStatusQuery) Unique(unique bool) *PartyStatusQuery {
 func (psq *PartyStatusQuery) Order(o ...OrderFunc) *PartyStatusQuery {
 	psq.order = append(psq.order, o...)
 	return psq
+}
+
+// QueryStatusItem chains the current query on the "status_item" edge.
+func (psq *PartyStatusQuery) QueryStatusItem() *StatusItemQuery {
+	query := &StatusItemQuery{config: psq.config}
+	query.path = func(ctx context.Context) (fromU *sql.Selector, err error) {
+		if err := psq.prepareQuery(ctx); err != nil {
+			return nil, err
+		}
+		selector := psq.sqlQuery(ctx)
+		if err := selector.Err(); err != nil {
+			return nil, err
+		}
+		step := sqlgraph.NewStep(
+			sqlgraph.From(partystatus.Table, partystatus.FieldID, selector),
+			sqlgraph.To(statusitem.Table, statusitem.FieldID),
+			sqlgraph.Edge(sqlgraph.M2O, true, partystatus.StatusItemTable, partystatus.StatusItemColumn),
+		)
+		fromU = sqlgraph.SetNeighbors(psq.driver.Dialect(), step)
+		return fromU, nil
+	}
+	return query
 }
 
 // QueryParty chains the current query on the "party" edge.
@@ -291,12 +315,24 @@ func (psq *PartyStatusQuery) Clone() *PartyStatusQuery {
 		offset:                psq.offset,
 		order:                 append([]OrderFunc{}, psq.order...),
 		predicates:            append([]predicate.PartyStatus{}, psq.predicates...),
+		withStatusItem:        psq.withStatusItem.Clone(),
 		withParty:             psq.withParty.Clone(),
 		withChangeByUserLogin: psq.withChangeByUserLogin.Clone(),
 		// clone intermediate query.
 		sql:  psq.sql.Clone(),
 		path: psq.path,
 	}
+}
+
+// WithStatusItem tells the query-builder to eager-load the nodes that are connected to
+// the "status_item" edge. The optional arguments are used to configure the query builder of the edge.
+func (psq *PartyStatusQuery) WithStatusItem(opts ...func(*StatusItemQuery)) *PartyStatusQuery {
+	query := &StatusItemQuery{config: psq.config}
+	for _, opt := range opts {
+		opt(query)
+	}
+	psq.withStatusItem = query
+	return psq
 }
 
 // WithParty tells the query-builder to eager-load the nodes that are connected to
@@ -327,12 +363,12 @@ func (psq *PartyStatusQuery) WithChangeByUserLogin(opts ...func(*UserLoginQuery)
 // Example:
 //
 //	var v []struct {
-//		StatusID int `json:"status_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //		Count int `json:"count,omitempty"`
 //	}
 //
 //	client.PartyStatus.Query().
-//		GroupBy(partystatus.FieldStatusID).
+//		GroupBy(partystatus.FieldCreateTime).
 //		Aggregate(ent.Count()).
 //		Scan(ctx, &v)
 //
@@ -354,11 +390,11 @@ func (psq *PartyStatusQuery) GroupBy(field string, fields ...string) *PartyStatu
 // Example:
 //
 //	var v []struct {
-//		StatusID int `json:"status_id,omitempty"`
+//		CreateTime time.Time `json:"create_time,omitempty"`
 //	}
 //
 //	client.PartyStatus.Query().
-//		Select(partystatus.FieldStatusID).
+//		Select(partystatus.FieldCreateTime).
 //		Scan(ctx, &v)
 //
 func (psq *PartyStatusQuery) Select(field string, fields ...string) *PartyStatusSelect {
@@ -387,12 +423,13 @@ func (psq *PartyStatusQuery) sqlAll(ctx context.Context) ([]*PartyStatus, error)
 		nodes       = []*PartyStatus{}
 		withFKs     = psq.withFKs
 		_spec       = psq.querySpec()
-		loadedTypes = [2]bool{
+		loadedTypes = [3]bool{
+			psq.withStatusItem != nil,
 			psq.withParty != nil,
 			psq.withChangeByUserLogin != nil,
 		}
 	)
-	if psq.withParty != nil || psq.withChangeByUserLogin != nil {
+	if psq.withStatusItem != nil || psq.withParty != nil || psq.withChangeByUserLogin != nil {
 		withFKs = true
 	}
 	if withFKs {
@@ -416,6 +453,35 @@ func (psq *PartyStatusQuery) sqlAll(ctx context.Context) ([]*PartyStatus, error)
 	}
 	if len(nodes) == 0 {
 		return nodes, nil
+	}
+
+	if query := psq.withStatusItem; query != nil {
+		ids := make([]int, 0, len(nodes))
+		nodeids := make(map[int][]*PartyStatus)
+		for i := range nodes {
+			if nodes[i].status_item_party_statuses == nil {
+				continue
+			}
+			fk := *nodes[i].status_item_party_statuses
+			if _, ok := nodeids[fk]; !ok {
+				ids = append(ids, fk)
+			}
+			nodeids[fk] = append(nodeids[fk], nodes[i])
+		}
+		query.Where(statusitem.IDIn(ids...))
+		neighbors, err := query.All(ctx)
+		if err != nil {
+			return nil, err
+		}
+		for _, n := range neighbors {
+			nodes, ok := nodeids[n.ID]
+			if !ok {
+				return nil, fmt.Errorf(`unexpected foreign-key "status_item_party_statuses" returned %v`, n.ID)
+			}
+			for i := range nodes {
+				nodes[i].Edges.StatusItem = n
+			}
+		}
 	}
 
 	if query := psq.withParty; query != nil {
@@ -543,10 +609,14 @@ func (psq *PartyStatusQuery) querySpec() *sqlgraph.QuerySpec {
 func (psq *PartyStatusQuery) sqlQuery(ctx context.Context) *sql.Selector {
 	builder := sql.Dialect(psq.driver.Dialect())
 	t1 := builder.Table(partystatus.Table)
-	selector := builder.Select(t1.Columns(partystatus.Columns...)...).From(t1)
+	columns := psq.fields
+	if len(columns) == 0 {
+		columns = partystatus.Columns
+	}
+	selector := builder.Select(t1.Columns(columns...)...).From(t1)
 	if psq.sql != nil {
 		selector = psq.sql
-		selector.Select(selector.Columns(partystatus.Columns...)...)
+		selector.Select(selector.Columns(columns...)...)
 	}
 	for _, p := range psq.predicates {
 		p(selector)
@@ -814,13 +884,24 @@ func (psgb *PartyStatusGroupBy) sqlScan(ctx context.Context, v interface{}) erro
 }
 
 func (psgb *PartyStatusGroupBy) sqlQuery() *sql.Selector {
-	selector := psgb.sql
-	columns := make([]string, 0, len(psgb.fields)+len(psgb.fns))
-	columns = append(columns, psgb.fields...)
+	selector := psgb.sql.Select()
+	aggregation := make([]string, 0, len(psgb.fns))
 	for _, fn := range psgb.fns {
-		columns = append(columns, fn(selector))
+		aggregation = append(aggregation, fn(selector))
 	}
-	return selector.Select(columns...).GroupBy(psgb.fields...)
+	// If no columns were selected in a custom aggregation function, the default
+	// selection is the fields used for "group-by", and the aggregation functions.
+	if len(selector.SelectedColumns()) == 0 {
+		columns := make([]string, 0, len(psgb.fields)+len(psgb.fns))
+		for _, f := range psgb.fields {
+			columns = append(columns, selector.C(f))
+		}
+		for _, c := range aggregation {
+			columns = append(columns, c)
+		}
+		selector.Select(columns...)
+	}
+	return selector.GroupBy(selector.Columns(psgb.fields...)...)
 }
 
 // PartyStatusSelect is the builder for selecting fields of PartyStatus entities.
@@ -1036,16 +1117,10 @@ func (pss *PartyStatusSelect) BoolX(ctx context.Context) bool {
 
 func (pss *PartyStatusSelect) sqlScan(ctx context.Context, v interface{}) error {
 	rows := &sql.Rows{}
-	query, args := pss.sqlQuery().Query()
+	query, args := pss.sql.Query()
 	if err := pss.driver.Query(ctx, query, args, rows); err != nil {
 		return err
 	}
 	defer rows.Close()
 	return sql.ScanSlice(rows, v)
-}
-
-func (pss *PartyStatusSelect) sqlQuery() sql.Querier {
-	selector := pss.sql
-	selector.Select(selector.Columns(pss.fields...)...)
-	return selector
 }

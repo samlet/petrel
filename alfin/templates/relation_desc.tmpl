@@ -14,29 +14,30 @@ func ({{.Name}}) Edges() []ent.Edge {
                     // Field("{{$r.FieldName|snakecase}}").
                     Unique().Annotations(entproto.Field({{$r.FieldNumber}})),
             {{- else }}
-                // m2o
                 {{- if eq $r.Type "many" }}
-                edge.To("{{$r.PluralName}}", {{$r.RelEntityName}}.Type).
-                    Annotations(entproto.Field({{$r.FieldNumber}})),
-                // o2o
+                    // m2o
+                    edge.To("{{$r.PluralName}}", {{$r.RelEntityName}}.Type).
+                        Annotations(entproto.Field({{$r.FieldNumber}})),
                 {{- else if eq $r.BackrefType "one" }}
+                    // o2o
                     edge.To("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
                         // Bind the "{{$r.FieldName}}" field to this edge.
                         // Field("{{$r.FieldName|snakecase}}").
                         Unique().Annotations(entproto.Field({{$r.FieldNumber}})),
                 {{- else if eq $r.BackrefType "one-nofk" }}
+                    // o2o (nofk)
                     edge.From("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
                         Ref("{{$r.Backref}}").
                         // Bind the "{{$r.FieldName}}" field to this edge.
                         // Field("{{$r.FieldName|snakecase}}").
                         Unique().Annotations(entproto.Field({{$r.FieldNumber}})),
-                // o2m
                 {{- else }}
-                edge.From("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
-                    {{- if ne $r.Backref "" }}Ref("{{$r.Backref}}").{{- end }}
-                    // Bind the "{{$r.FieldName}}" field to this edge.
-                    // Field("{{$r.FieldName|snakecase}}").
-                    Unique().Annotations(entproto.Field({{$r.FieldNumber}})),
+                    // o2m
+                    edge.From("{{$r.Name|snakecase}}", {{$r.RelEntityName}}.Type).
+                        {{- if ne $r.Backref "" }}Ref("{{$r.Backref}}").{{- end }}
+                        // Bind the "{{$r.FieldName}}" field to this edge.
+                        // Field("{{$r.FieldName|snakecase}}").
+                        Unique().Annotations(entproto.Field({{$r.FieldNumber}})),
                 {{- end}}
             {{- end}}
         {{- end }}

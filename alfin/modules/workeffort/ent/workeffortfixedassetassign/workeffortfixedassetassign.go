@@ -11,14 +11,16 @@ const (
 	Label = "work_effort_fixed_asset_assign"
 	// FieldID holds the string denoting the id field in the database.
 	FieldID = "id"
-	// FieldStatusID holds the string denoting the status_id field in the database.
-	FieldStatusID = "status_id"
+	// FieldCreateTime holds the string denoting the create_time field in the database.
+	FieldCreateTime = "create_time"
+	// FieldUpdateTime holds the string denoting the update_time field in the database.
+	FieldUpdateTime = "update_time"
+	// FieldStringRef holds the string denoting the string_ref field in the database.
+	FieldStringRef = "string_ref"
 	// FieldFromDate holds the string denoting the from_date field in the database.
 	FieldFromDate = "from_date"
 	// FieldThruDate holds the string denoting the thru_date field in the database.
 	FieldThruDate = "thru_date"
-	// FieldAvailabilityStatusID holds the string denoting the availability_status_id field in the database.
-	FieldAvailabilityStatusID = "availability_status_id"
 	// FieldAllocatedCost holds the string denoting the allocated_cost field in the database.
 	FieldAllocatedCost = "allocated_cost"
 	// FieldComments holds the string denoting the comments field in the database.
@@ -27,6 +29,10 @@ const (
 	EdgeWorkEffort = "work_effort"
 	// EdgeFixedAsset holds the string denoting the fixed_asset edge name in mutations.
 	EdgeFixedAsset = "fixed_asset"
+	// EdgeStatusItem holds the string denoting the status_item edge name in mutations.
+	EdgeStatusItem = "status_item"
+	// EdgeAvailabilityStatusItem holds the string denoting the availability_status_item edge name in mutations.
+	EdgeAvailabilityStatusItem = "availability_status_item"
 	// Table holds the table name of the workeffortfixedassetassign in the database.
 	Table = "work_effort_fixed_asset_assigns"
 	// WorkEffortTable is the table the holds the work_effort relation/edge.
@@ -43,15 +49,30 @@ const (
 	FixedAssetInverseTable = "fixed_assets"
 	// FixedAssetColumn is the table column denoting the fixed_asset relation/edge.
 	FixedAssetColumn = "fixed_asset_work_effort_fixed_asset_assigns"
+	// StatusItemTable is the table the holds the status_item relation/edge.
+	StatusItemTable = "work_effort_fixed_asset_assigns"
+	// StatusItemInverseTable is the table name for the StatusItem entity.
+	// It exists in this package in order to avoid circular dependency with the "statusitem" package.
+	StatusItemInverseTable = "status_items"
+	// StatusItemColumn is the table column denoting the status_item relation/edge.
+	StatusItemColumn = "status_item_work_effort_fixed_asset_assigns"
+	// AvailabilityStatusItemTable is the table the holds the availability_status_item relation/edge.
+	AvailabilityStatusItemTable = "work_effort_fixed_asset_assigns"
+	// AvailabilityStatusItemInverseTable is the table name for the StatusItem entity.
+	// It exists in this package in order to avoid circular dependency with the "statusitem" package.
+	AvailabilityStatusItemInverseTable = "status_items"
+	// AvailabilityStatusItemColumn is the table column denoting the availability_status_item relation/edge.
+	AvailabilityStatusItemColumn = "status_item_availability_work_effort_fixed_asset_assigns"
 )
 
 // Columns holds all SQL columns for workeffortfixedassetassign fields.
 var Columns = []string{
 	FieldID,
-	FieldStatusID,
+	FieldCreateTime,
+	FieldUpdateTime,
+	FieldStringRef,
 	FieldFromDate,
 	FieldThruDate,
-	FieldAvailabilityStatusID,
 	FieldAllocatedCost,
 	FieldComments,
 }
@@ -60,6 +81,8 @@ var Columns = []string{
 // table and are not defined as standalone fields in the schema.
 var ForeignKeys = []string{
 	"fixed_asset_work_effort_fixed_asset_assigns",
+	"status_item_work_effort_fixed_asset_assigns",
+	"status_item_availability_work_effort_fixed_asset_assigns",
 	"work_effort_work_effort_fixed_asset_assigns",
 }
 
@@ -79,6 +102,12 @@ func ValidColumn(column string) bool {
 }
 
 var (
+	// DefaultCreateTime holds the default value on creation for the "create_time" field.
+	DefaultCreateTime func() time.Time
+	// DefaultUpdateTime holds the default value on creation for the "update_time" field.
+	DefaultUpdateTime func() time.Time
+	// UpdateDefaultUpdateTime holds the default value on update for the "update_time" field.
+	UpdateDefaultUpdateTime func() time.Time
 	// DefaultFromDate holds the default value on creation for the "from_date" field.
 	DefaultFromDate func() time.Time
 	// DefaultThruDate holds the default value on creation for the "thru_date" field.

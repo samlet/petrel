@@ -11,6 +11,9 @@ var (
 	// AssetsColumns holds the columns for the "assets" table.
 	AssetsColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt, Increment: true},
+		{Name: "create_time", Type: field.TypeTime},
+		{Name: "update_time", Type: field.TypeTime},
+		{Name: "string_ref", Type: field.TypeString, Nullable: true},
 		{Name: "model", Type: field.TypeString},
 		{Name: "registered_at", Type: field.TypeTime},
 		{Name: "workload_pkg_assets", Type: field.TypeInt, Nullable: true},
@@ -23,7 +26,7 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "assets_workload_pkgs_assets",
-				Columns:    []*schema.Column{AssetsColumns[3]},
+				Columns:    []*schema.Column{AssetsColumns[6]},
 				RefColumns: []*schema.Column{WorkloadPkgsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
@@ -36,10 +39,9 @@ var (
 	}
 	// WorkloadPkgsTable holds the schema information for the "workload_pkgs" table.
 	WorkloadPkgsTable = &schema.Table{
-		Name:        "workload_pkgs",
-		Columns:     WorkloadPkgsColumns,
-		PrimaryKey:  []*schema.Column{WorkloadPkgsColumns[0]},
-		ForeignKeys: []*schema.ForeignKey{},
+		Name:       "workload_pkgs",
+		Columns:    WorkloadPkgsColumns,
+		PrimaryKey: []*schema.Column{WorkloadPkgsColumns[0]},
 	}
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{

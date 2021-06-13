@@ -12,6 +12,7 @@ import (
 	"entgo.io/ent/schema/field"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/fixedasset"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/predicate"
+	"github.com/samlet/petrel/alfin/modules/workeffort/ent/statusitem"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffort"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent/workeffortfixedassetassign"
 )
@@ -29,30 +30,23 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) Where(ps ...predicate.WorkEffort
 	return wefaau
 }
 
-// SetStatusID sets the "status_id" field.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) SetStatusID(i int) *WorkEffortFixedAssetAssignUpdate {
-	wefaau.mutation.ResetStatusID()
-	wefaau.mutation.SetStatusID(i)
+// SetStringRef sets the "string_ref" field.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetStringRef(s string) *WorkEffortFixedAssetAssignUpdate {
+	wefaau.mutation.SetStringRef(s)
 	return wefaau
 }
 
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) SetNillableStatusID(i *int) *WorkEffortFixedAssetAssignUpdate {
-	if i != nil {
-		wefaau.SetStatusID(*i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetNillableStringRef(s *string) *WorkEffortFixedAssetAssignUpdate {
+	if s != nil {
+		wefaau.SetStringRef(*s)
 	}
 	return wefaau
 }
 
-// AddStatusID adds i to the "status_id" field.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) AddStatusID(i int) *WorkEffortFixedAssetAssignUpdate {
-	wefaau.mutation.AddStatusID(i)
-	return wefaau
-}
-
-// ClearStatusID clears the value of the "status_id" field.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) ClearStatusID() *WorkEffortFixedAssetAssignUpdate {
-	wefaau.mutation.ClearStatusID()
+// ClearStringRef clears the value of the "string_ref" field.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) ClearStringRef() *WorkEffortFixedAssetAssignUpdate {
+	wefaau.mutation.ClearStringRef()
 	return wefaau
 }
 
@@ -87,33 +81,6 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) SetNillableThruDate(t *time.Time
 // ClearThruDate clears the value of the "thru_date" field.
 func (wefaau *WorkEffortFixedAssetAssignUpdate) ClearThruDate() *WorkEffortFixedAssetAssignUpdate {
 	wefaau.mutation.ClearThruDate()
-	return wefaau
-}
-
-// SetAvailabilityStatusID sets the "availability_status_id" field.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) SetAvailabilityStatusID(i int) *WorkEffortFixedAssetAssignUpdate {
-	wefaau.mutation.ResetAvailabilityStatusID()
-	wefaau.mutation.SetAvailabilityStatusID(i)
-	return wefaau
-}
-
-// SetNillableAvailabilityStatusID sets the "availability_status_id" field if the given value is not nil.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) SetNillableAvailabilityStatusID(i *int) *WorkEffortFixedAssetAssignUpdate {
-	if i != nil {
-		wefaau.SetAvailabilityStatusID(*i)
-	}
-	return wefaau
-}
-
-// AddAvailabilityStatusID adds i to the "availability_status_id" field.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) AddAvailabilityStatusID(i int) *WorkEffortFixedAssetAssignUpdate {
-	wefaau.mutation.AddAvailabilityStatusID(i)
-	return wefaau
-}
-
-// ClearAvailabilityStatusID clears the value of the "availability_status_id" field.
-func (wefaau *WorkEffortFixedAssetAssignUpdate) ClearAvailabilityStatusID() *WorkEffortFixedAssetAssignUpdate {
-	wefaau.mutation.ClearAvailabilityStatusID()
 	return wefaau
 }
 
@@ -202,6 +169,44 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) SetFixedAsset(f *FixedAsset) *Wo
 	return wefaau.SetFixedAssetID(f.ID)
 }
 
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetStatusItemID(id int) *WorkEffortFixedAssetAssignUpdate {
+	wefaau.mutation.SetStatusItemID(id)
+	return wefaau
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetNillableStatusItemID(id *int) *WorkEffortFixedAssetAssignUpdate {
+	if id != nil {
+		wefaau = wefaau.SetStatusItemID(*id)
+	}
+	return wefaau
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetStatusItem(s *StatusItem) *WorkEffortFixedAssetAssignUpdate {
+	return wefaau.SetStatusItemID(s.ID)
+}
+
+// SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetAvailabilityStatusItemID(id int) *WorkEffortFixedAssetAssignUpdate {
+	wefaau.mutation.SetAvailabilityStatusItemID(id)
+	return wefaau
+}
+
+// SetNillableAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetNillableAvailabilityStatusItemID(id *int) *WorkEffortFixedAssetAssignUpdate {
+	if id != nil {
+		wefaau = wefaau.SetAvailabilityStatusItemID(*id)
+	}
+	return wefaau
+}
+
+// SetAvailabilityStatusItem sets the "availability_status_item" edge to the StatusItem entity.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) SetAvailabilityStatusItem(s *StatusItem) *WorkEffortFixedAssetAssignUpdate {
+	return wefaau.SetAvailabilityStatusItemID(s.ID)
+}
+
 // Mutation returns the WorkEffortFixedAssetAssignMutation object of the builder.
 func (wefaau *WorkEffortFixedAssetAssignUpdate) Mutation() *WorkEffortFixedAssetAssignMutation {
 	return wefaau.mutation
@@ -219,12 +224,25 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) ClearFixedAsset() *WorkEffortFix
 	return wefaau
 }
 
+// ClearStatusItem clears the "status_item" edge to the StatusItem entity.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) ClearStatusItem() *WorkEffortFixedAssetAssignUpdate {
+	wefaau.mutation.ClearStatusItem()
+	return wefaau
+}
+
+// ClearAvailabilityStatusItem clears the "availability_status_item" edge to the StatusItem entity.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) ClearAvailabilityStatusItem() *WorkEffortFixedAssetAssignUpdate {
+	wefaau.mutation.ClearAvailabilityStatusItem()
+	return wefaau
+}
+
 // Save executes the query and returns the number of nodes affected by the update operation.
 func (wefaau *WorkEffortFixedAssetAssignUpdate) Save(ctx context.Context) (int, error) {
 	var (
 		err      error
 		affected int
 	)
+	wefaau.defaults()
 	if len(wefaau.hooks) == 0 {
 		affected, err = wefaau.sqlSave(ctx)
 	} else {
@@ -270,6 +288,14 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (wefaau *WorkEffortFixedAssetAssignUpdate) defaults() {
+	if _, ok := wefaau.mutation.UpdateTime(); !ok {
+		v := workeffortfixedassetassign.UpdateDefaultUpdateTime()
+		wefaau.mutation.SetUpdateTime(v)
+	}
+}
+
 func (wefaau *WorkEffortFixedAssetAssignUpdate) sqlSave(ctx context.Context) (n int, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -288,24 +314,24 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) sqlSave(ctx context.Context) (n 
 			}
 		}
 	}
-	if value, ok := wefaau.mutation.StatusID(); ok {
+	if value, ok := wefaau.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffortfixedassetassign.FieldStatusID,
+			Column: workeffortfixedassetassign.FieldUpdateTime,
 		})
 	}
-	if value, ok := wefaau.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := wefaau.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: workeffortfixedassetassign.FieldStatusID,
+			Column: workeffortfixedassetassign.FieldStringRef,
 		})
 	}
-	if wefaau.mutation.StatusIDCleared() {
+	if wefaau.mutation.StringRefCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortfixedassetassign.FieldStatusID,
+			Type:   field.TypeString,
+			Column: workeffortfixedassetassign.FieldStringRef,
 		})
 	}
 	if value, ok := wefaau.mutation.FromDate(); ok {
@@ -326,26 +352,6 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) sqlSave(ctx context.Context) (n 
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Column: workeffortfixedassetassign.FieldThruDate,
-		})
-	}
-	if value, ok := wefaau.mutation.AvailabilityStatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortfixedassetassign.FieldAvailabilityStatusID,
-		})
-	}
-	if value, ok := wefaau.mutation.AddedAvailabilityStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortfixedassetassign.FieldAvailabilityStatusID,
-		})
-	}
-	if wefaau.mutation.AvailabilityStatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortfixedassetassign.FieldAvailabilityStatusID,
 		})
 	}
 	if value, ok := wefaau.mutation.AllocatedCost(); ok {
@@ -451,6 +457,76 @@ func (wefaau *WorkEffortFixedAssetAssignUpdate) sqlSave(ctx context.Context) (n 
 		}
 		_spec.Edges.Add = append(_spec.Edges.Add, edge)
 	}
+	if wefaau.mutation.StatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.StatusItemTable,
+			Columns: []string{workeffortfixedassetassign.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wefaau.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.StatusItemTable,
+			Columns: []string{workeffortfixedassetassign.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wefaau.mutation.AvailabilityStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.AvailabilityStatusItemTable,
+			Columns: []string{workeffortfixedassetassign.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wefaau.mutation.AvailabilityStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.AvailabilityStatusItemTable,
+			Columns: []string{workeffortfixedassetassign.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
 	if n, err = sqlgraph.UpdateNodes(ctx, wefaau.driver, _spec); err != nil {
 		if _, ok := err.(*sqlgraph.NotFoundError); ok {
 			err = &NotFoundError{workeffortfixedassetassign.Label}
@@ -470,30 +546,23 @@ type WorkEffortFixedAssetAssignUpdateOne struct {
 	mutation *WorkEffortFixedAssetAssignMutation
 }
 
-// SetStatusID sets the "status_id" field.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetStatusID(i int) *WorkEffortFixedAssetAssignUpdateOne {
-	wefaauo.mutation.ResetStatusID()
-	wefaauo.mutation.SetStatusID(i)
+// SetStringRef sets the "string_ref" field.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetStringRef(s string) *WorkEffortFixedAssetAssignUpdateOne {
+	wefaauo.mutation.SetStringRef(s)
 	return wefaauo
 }
 
-// SetNillableStatusID sets the "status_id" field if the given value is not nil.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetNillableStatusID(i *int) *WorkEffortFixedAssetAssignUpdateOne {
-	if i != nil {
-		wefaauo.SetStatusID(*i)
+// SetNillableStringRef sets the "string_ref" field if the given value is not nil.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetNillableStringRef(s *string) *WorkEffortFixedAssetAssignUpdateOne {
+	if s != nil {
+		wefaauo.SetStringRef(*s)
 	}
 	return wefaauo
 }
 
-// AddStatusID adds i to the "status_id" field.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) AddStatusID(i int) *WorkEffortFixedAssetAssignUpdateOne {
-	wefaauo.mutation.AddStatusID(i)
-	return wefaauo
-}
-
-// ClearStatusID clears the value of the "status_id" field.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ClearStatusID() *WorkEffortFixedAssetAssignUpdateOne {
-	wefaauo.mutation.ClearStatusID()
+// ClearStringRef clears the value of the "string_ref" field.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ClearStringRef() *WorkEffortFixedAssetAssignUpdateOne {
+	wefaauo.mutation.ClearStringRef()
 	return wefaauo
 }
 
@@ -528,33 +597,6 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetNillableThruDate(t *time.
 // ClearThruDate clears the value of the "thru_date" field.
 func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ClearThruDate() *WorkEffortFixedAssetAssignUpdateOne {
 	wefaauo.mutation.ClearThruDate()
-	return wefaauo
-}
-
-// SetAvailabilityStatusID sets the "availability_status_id" field.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetAvailabilityStatusID(i int) *WorkEffortFixedAssetAssignUpdateOne {
-	wefaauo.mutation.ResetAvailabilityStatusID()
-	wefaauo.mutation.SetAvailabilityStatusID(i)
-	return wefaauo
-}
-
-// SetNillableAvailabilityStatusID sets the "availability_status_id" field if the given value is not nil.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetNillableAvailabilityStatusID(i *int) *WorkEffortFixedAssetAssignUpdateOne {
-	if i != nil {
-		wefaauo.SetAvailabilityStatusID(*i)
-	}
-	return wefaauo
-}
-
-// AddAvailabilityStatusID adds i to the "availability_status_id" field.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) AddAvailabilityStatusID(i int) *WorkEffortFixedAssetAssignUpdateOne {
-	wefaauo.mutation.AddAvailabilityStatusID(i)
-	return wefaauo
-}
-
-// ClearAvailabilityStatusID clears the value of the "availability_status_id" field.
-func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ClearAvailabilityStatusID() *WorkEffortFixedAssetAssignUpdateOne {
-	wefaauo.mutation.ClearAvailabilityStatusID()
 	return wefaauo
 }
 
@@ -643,6 +685,44 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetFixedAsset(f *FixedAsset)
 	return wefaauo.SetFixedAssetID(f.ID)
 }
 
+// SetStatusItemID sets the "status_item" edge to the StatusItem entity by ID.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetStatusItemID(id int) *WorkEffortFixedAssetAssignUpdateOne {
+	wefaauo.mutation.SetStatusItemID(id)
+	return wefaauo
+}
+
+// SetNillableStatusItemID sets the "status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetNillableStatusItemID(id *int) *WorkEffortFixedAssetAssignUpdateOne {
+	if id != nil {
+		wefaauo = wefaauo.SetStatusItemID(*id)
+	}
+	return wefaauo
+}
+
+// SetStatusItem sets the "status_item" edge to the StatusItem entity.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetStatusItem(s *StatusItem) *WorkEffortFixedAssetAssignUpdateOne {
+	return wefaauo.SetStatusItemID(s.ID)
+}
+
+// SetAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetAvailabilityStatusItemID(id int) *WorkEffortFixedAssetAssignUpdateOne {
+	wefaauo.mutation.SetAvailabilityStatusItemID(id)
+	return wefaauo
+}
+
+// SetNillableAvailabilityStatusItemID sets the "availability_status_item" edge to the StatusItem entity by ID if the given value is not nil.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetNillableAvailabilityStatusItemID(id *int) *WorkEffortFixedAssetAssignUpdateOne {
+	if id != nil {
+		wefaauo = wefaauo.SetAvailabilityStatusItemID(*id)
+	}
+	return wefaauo
+}
+
+// SetAvailabilityStatusItem sets the "availability_status_item" edge to the StatusItem entity.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) SetAvailabilityStatusItem(s *StatusItem) *WorkEffortFixedAssetAssignUpdateOne {
+	return wefaauo.SetAvailabilityStatusItemID(s.ID)
+}
+
 // Mutation returns the WorkEffortFixedAssetAssignMutation object of the builder.
 func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) Mutation() *WorkEffortFixedAssetAssignMutation {
 	return wefaauo.mutation
@@ -660,6 +740,18 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ClearFixedAsset() *WorkEffor
 	return wefaauo
 }
 
+// ClearStatusItem clears the "status_item" edge to the StatusItem entity.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ClearStatusItem() *WorkEffortFixedAssetAssignUpdateOne {
+	wefaauo.mutation.ClearStatusItem()
+	return wefaauo
+}
+
+// ClearAvailabilityStatusItem clears the "availability_status_item" edge to the StatusItem entity.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ClearAvailabilityStatusItem() *WorkEffortFixedAssetAssignUpdateOne {
+	wefaauo.mutation.ClearAvailabilityStatusItem()
+	return wefaauo
+}
+
 // Select allows selecting one or more fields (columns) of the returned entity.
 // The default is selecting all fields defined in the entity schema.
 func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) Select(field string, fields ...string) *WorkEffortFixedAssetAssignUpdateOne {
@@ -673,6 +765,7 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) Save(ctx context.Context) (*
 		err  error
 		node *WorkEffortFixedAssetAssign
 	)
+	wefaauo.defaults()
 	if len(wefaauo.hooks) == 0 {
 		node, err = wefaauo.sqlSave(ctx)
 	} else {
@@ -718,6 +811,14 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) ExecX(ctx context.Context) {
 	}
 }
 
+// defaults sets the default values of the builder before save.
+func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) defaults() {
+	if _, ok := wefaauo.mutation.UpdateTime(); !ok {
+		v := workeffortfixedassetassign.UpdateDefaultUpdateTime()
+		wefaauo.mutation.SetUpdateTime(v)
+	}
+}
+
 func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) sqlSave(ctx context.Context) (_node *WorkEffortFixedAssetAssign, err error) {
 	_spec := &sqlgraph.UpdateSpec{
 		Node: &sqlgraph.NodeSpec{
@@ -753,24 +854,24 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) sqlSave(ctx context.Context)
 			}
 		}
 	}
-	if value, ok := wefaauo.mutation.StatusID(); ok {
+	if value, ok := wefaauo.mutation.UpdateTime(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+			Type:   field.TypeTime,
 			Value:  value,
-			Column: workeffortfixedassetassign.FieldStatusID,
+			Column: workeffortfixedassetassign.FieldUpdateTime,
 		})
 	}
-	if value, ok := wefaauo.mutation.AddedStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
+	if value, ok := wefaauo.mutation.StringRef(); ok {
+		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Value:  value,
-			Column: workeffortfixedassetassign.FieldStatusID,
+			Column: workeffortfixedassetassign.FieldStringRef,
 		})
 	}
-	if wefaauo.mutation.StatusIDCleared() {
+	if wefaauo.mutation.StringRefCleared() {
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortfixedassetassign.FieldStatusID,
+			Type:   field.TypeString,
+			Column: workeffortfixedassetassign.FieldStringRef,
 		})
 	}
 	if value, ok := wefaauo.mutation.FromDate(); ok {
@@ -791,26 +892,6 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) sqlSave(ctx context.Context)
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
 			Column: workeffortfixedassetassign.FieldThruDate,
-		})
-	}
-	if value, ok := wefaauo.mutation.AvailabilityStatusID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortfixedassetassign.FieldAvailabilityStatusID,
-		})
-	}
-	if value, ok := wefaauo.mutation.AddedAvailabilityStatusID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: workeffortfixedassetassign.FieldAvailabilityStatusID,
-		})
-	}
-	if wefaauo.mutation.AvailabilityStatusIDCleared() {
-		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Column: workeffortfixedassetassign.FieldAvailabilityStatusID,
 		})
 	}
 	if value, ok := wefaauo.mutation.AllocatedCost(); ok {
@@ -908,6 +989,76 @@ func (wefaauo *WorkEffortFixedAssetAssignUpdateOne) sqlSave(ctx context.Context)
 				IDSpec: &sqlgraph.FieldSpec{
 					Type:   field.TypeInt,
 					Column: fixedasset.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wefaauo.mutation.StatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.StatusItemTable,
+			Columns: []string{workeffortfixedassetassign.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wefaauo.mutation.StatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.StatusItemTable,
+			Columns: []string{workeffortfixedassetassign.StatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		for _, k := range nodes {
+			edge.Target.Nodes = append(edge.Target.Nodes, k)
+		}
+		_spec.Edges.Add = append(_spec.Edges.Add, edge)
+	}
+	if wefaauo.mutation.AvailabilityStatusItemCleared() {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.AvailabilityStatusItemTable,
+			Columns: []string{workeffortfixedassetassign.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
+				},
+			},
+		}
+		_spec.Edges.Clear = append(_spec.Edges.Clear, edge)
+	}
+	if nodes := wefaauo.mutation.AvailabilityStatusItemIDs(); len(nodes) > 0 {
+		edge := &sqlgraph.EdgeSpec{
+			Rel:     sqlgraph.M2O,
+			Inverse: true,
+			Table:   workeffortfixedassetassign.AvailabilityStatusItemTable,
+			Columns: []string{workeffortfixedassetassign.AvailabilityStatusItemColumn},
+			Bidi:    false,
+			Target: &sqlgraph.EdgeTarget{
+				IDSpec: &sqlgraph.FieldSpec{
+					Type:   field.TypeInt,
+					Column: statusitem.FieldID,
 				},
 			},
 		}

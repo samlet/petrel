@@ -94,7 +94,7 @@ func NewMetaManipulate(ents []string) (*MetaManipulate, error) {
 func (t *MetaManipulate) MustEntity(entName string) *ModelEntity {
 	ent, ok := t.EntsMap[entName]
 	if !ok {
-		panic(errors.New("Cannot find entity " + entName))
+		log.Fatal(errors.New("Cannot find entity " + entName))
 	}
 	return ent
 }

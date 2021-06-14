@@ -157,6 +157,6 @@ func TestCreateTree(t *testing.T) {
 	//}
 	tree := treeprint.New()
 	ent := mani.MustEntity(entName)
-	DisplayEntInfo(ent, tree)
+	DisplayEntInfo(ent, tree, true)
 	fmt.Println(tree.String())
 }

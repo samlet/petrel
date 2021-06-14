@@ -12,6 +12,8 @@ import (
 
 /**
 $ just cli -l debug meta workeffort WorkEffort
+$ just cli meta --show-fields workeffort WorkEffort
+$ just cli meta --all-ents workeffort
 */
 
 type Globals struct {
@@ -96,8 +98,10 @@ func (cmd *RunCmd) Run(globals *Globals) error {
 }
 
 type MetaCmd struct {
+	ShowFields bool `help:"Show fields" default:"false"`
+	AllEnts bool `help:"Show all entity meta" default:"false"`
 	Pkg string `arg required`
-	Ent string `arg required`
+	Ent string `arg optional`
 }
 
 func (cmd *MetaCmd) Run(globals *Globals) error {
@@ -105,12 +109,21 @@ func (cmd *MetaCmd) Run(globals *Globals) error {
 	if err != nil {
 		panic(err)
 	}
-	//for _, ent := range mani.Entities().Entities {
-	//	displayEntInfo(ent)
-	//}
 	tree := treeprint.New()
-	ent := mani.MustEntity(cmd.Ent)
-	alfin.DisplayEntInfo(ent, tree)
+
+	if cmd.AllEnts {
+		for _, ent := range mani.Entities().Entities {
+			alfin.DisplayEntInfo(ent, tree, cmd.ShowFields)
+		}
+	}else {
+		if len(cmd.Ent)!=0 {
+			ent := mani.MustEntity(cmd.Ent)
+			alfin.DisplayEntInfo(ent, tree, cmd.ShowFields)
+		}else{
+			return fmt.Errorf("specify a entity")
+		}
+	}
+
 	fmt.Println(tree.String())
 
 	return nil

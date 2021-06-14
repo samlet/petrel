@@ -3,8 +3,8 @@ package alfin
 import (
 	"errors"
 	"fmt"
+	log "github.com/sirupsen/logrus"
 	"io"
-	"log"
 	"path/filepath"
 	"strings"
 )
@@ -25,7 +25,7 @@ func NewMetaManipulateWithMap(entsMap map[string]*ModelEntity) (*MetaManipulate,
 		keys = append(keys, k)
 	}
 
-	log.Printf("%s\n", keys)
+	log.Debugf("%s\n", keys)
 
 	for _, e := range entsMap {
 		e.EntitiesInPkg = &keys
@@ -44,10 +44,10 @@ func NewMetaManipulateWithMap(entsMap map[string]*ModelEntity) (*MetaManipulate,
 			relEntName := rel.RelEntityName
 			if rel.HashBackref() {
 				if relEntName == e.Name {
-					log.Printf("entity %s has a self-relation\n", e.Name)
+					log.Debugf("entity %s has a self-relation\n", e.Name)
 					rel.SelfRelation = true
 				} else {
-					log.Printf(".. check %s.%s(%s)\n", e.Name, rel.Name, relEntName)
+					log.Debugf(".. check %s.%s(%s)\n", e.Name, rel.Name, relEntName)
 					relEnt, ok := entsMap[relEntName]
 					if ok {
 						refName, refType, err := relEnt.GetBackRefNameAndType(e.Name, rel)
@@ -56,11 +56,11 @@ func NewMetaManipulateWithMap(entsMap map[string]*ModelEntity) (*MetaManipulate,
 						}
 						rel.Backref = refName
 						rel.BackrefType = refType
-						log.Printf("*** %s.%s backref: %s.%s(%s)\n",
+						log.Debugf("*** %s.%s backref: %s.%s(%s)\n",
 							e.Name, rel.Name,
 							relEntName, refName, refType)
 					} else {
-						log.Printf("\tEntity %s is not exists in meta-collection\n", relEntName)
+						log.Debugf("\tEntity %s is not exists in meta-collection\n", relEntName)
 					}
 				}
 			}
@@ -142,7 +142,7 @@ import (
 `
 )
 
-func GenSchemas(pkg string) (*MetaManipulate, error) {
+func NewManipulateWithPackage(pkg string) (*MetaManipulate, error) {
 	assetDir := filepath.Join(AssetRoot, pkg)
 	metaFile := filepath.Join(assetDir, "meta.json")
 	var pkgMeta PackageMeta
@@ -150,7 +150,7 @@ func GenSchemas(pkg string) (*MetaManipulate, error) {
 	if err != nil {
 		return nil, err
 	}
-	println(pkgMeta.Package)
+	log.Debugf("process pkg %s", pkgMeta.Package)
 	files := []string{}
 	//ents:=[]string{}
 	for _, entFile := range pkgMeta.Entities {

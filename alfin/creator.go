@@ -229,9 +229,8 @@ func WriteSchemas(pkg string, onlyWrite bool) {
 	path:=filepath.Join("modules", pkg, "ent", "schema", "modent.go")
 	f, err := os.Create(path)
 	check(err)
-	defer f.Close()
 
-	mani, err:=GenSchemas(pkg)
+	mani, err:= NewManipulateWithPackage(pkg)
 	if err != nil {
 		panic(err)
 	}
@@ -239,17 +238,18 @@ func WriteSchemas(pkg string, onlyWrite bool) {
 	if err != nil {
 		log.Fatalf(" fail: %v", err)
 	}
-	f.Sync()
+	f.Close()
 	println("write modent to ", path)
+	sh.RunV("go", "fmt", path)
 
 	// write helper
 	path=filepath.Join("modules", pkg, "helper", pkg+"helper.go")
 	f, err = os.Create(path)
 	check(err)
-	defer f.Close()
 	mani.GenHelpers(f)
-	f.Sync()
+	f.Close()
 	println("write helper to ", path)
+	sh.RunV("go", "fmt", path)
 
 	if !onlyWrite {
 		// invoke generate

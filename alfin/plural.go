@@ -291,13 +291,13 @@ func Pluralize(singular string) string {
 }
 
 func PluralizeTypeName(typeName string) string {
-	words:=camelcase.Split(typeName)
+	words := camelcase.Split(typeName)
 	var result []string
-	for i:=0;i<len(words)-1;i+=1{
-		result=append(result, strings.ToLower(words[i]))
+	for i := 0; i < len(words)-1; i += 1 {
+		result = append(result, strings.ToLower(words[i]))
 	}
-	lastPart:=strings.ToLower(words[len(words)-1])
-	result=append(result, Pluralize(lastPart))
+	lastPart := strings.ToLower(words[len(words)-1])
+	result = append(result, Pluralize(lastPart))
 
 	return strings.Join(result, "_")
 }

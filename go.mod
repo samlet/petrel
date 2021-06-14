@@ -58,6 +58,7 @@ require (
 	github.com/segmentio/kafka-go v0.4.16
 	github.com/shomali11/slacker v0.0.0-20210527125624-74795172e04f // indirect
 	github.com/shopspring/decimal v1.2.0
+	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/streadway/amqp v1.0.0
 	github.com/streadway/quantile v0.0.0-20150917103942-b0c588724d25 // indirect
 	github.com/stretchr/testify v1.7.0
@@ -70,6 +71,7 @@ require (
 	github.com/urfave/cli/v2 v2.3.0
 	github.com/vektah/gqlparser/v2 v2.1.0 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.4 // indirect
+	github.com/xlab/treeprint v1.1.0 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.uber.org/atomic v1.8.0 // indirect
 	go.uber.org/cadence v0.8.9-0.20190711214419-cef99c5ba19e

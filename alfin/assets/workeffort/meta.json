@@ -3,187 +3,47 @@
   "package": "workeffort",
   "total": 39,
   "entities": {
-    "CommunicationEventType": "communicationeventtype.json",
+    "CommunicationEventPrpTyp": "communicationeventprptyp.json",
+    "ContactMechTypePurpose": "contactmechtypepurpose.json",
+    "WorkEffortPartyAssignment": "workeffortpartyassignment.json",
+    "StatusType": "statustype.json",
+    "PartyClassificationType": "partyclassificationtype.json",
+    "WorkEffortSkillStandard": "workeffortskillstandard.json",
+    "WorkEffortFixedAssetAssign": "workeffortfixedassetassign.json",
+    "PartyStatus": "partystatus.json",
+    "Enumeration": "enumeration.json",
+    "PartyType": "partytype.json",
+    "TemporalExpressionAssoc": "temporalexpressionassoc.json",
+    "ContactMechType": "contactmechtype.json",
+    "EnumerationType": "enumerationtype.json",
+    "PartyRole": "partyrole.json",
+    "FixedAsset": "fixedasset.json",
     "UserLoginSecurityGroup": "userloginsecuritygroup.json",
     "UserPreference": "userpreference.json",
-    "ContactMechTypePurpose": "contactmechtypepurpose.json",
-    "ContactMechType": "contactmechtype.json",
-    "Person": "person.json",
-    "WorkEffortSkillStandard": "workeffortskillstandard.json",
-    "PartyContactMech": "partycontactmech.json",
-    "CommunicationEventPrpTyp": "communicationeventprptyp.json",
-    "PartyType": "partytype.json",
-    "WorkEffortPartyAssignment": "workeffortpartyassignment.json",
-    "Party": "party.json",
-    "WorkEffortType": "workefforttype.json",
-    "PartyClassificationType": "partyclassificationtype.json",
-    "PartyContentType": "partycontenttype.json",
-    "Enumeration": "enumeration.json",
-    "FixedAsset": "fixedasset.json",
-    "EnumerationType": "enumerationtype.json",
-    "PartyStatus": "partystatus.json",
-    "PartyRole": "partyrole.json",
-    "SecurityGroup": "securitygroup.json",
-    "SkillType": "skilltype.json",
-    "UserLogin": "userlogin.json",
-    "WorkEffortAssoc": "workeffortassoc.json",
-    "PartyRelationshipType": "partyrelationshiptype.json",
-    "PartyQualType": "partyqualtype.json",
-    "StatusType": "statustype.json",
-    "WorkEffortFixedAssetAssign": "workeffortfixedassetassign.json",
-    "PartyIdentificationType": "partyidentificationtype.json",
     "TemporalExpression": "temporalexpression.json",
-    "TemporalExpressionAssoc": "temporalexpressionassoc.json",
-    "TermType": "termtype.json",
-    "WorkEffort": "workeffort.json",
-    "SecurityGroupPermission": "securitygrouppermission.json",
-    "ContactMechPurposeType": "contactmechpurposetype.json",
-    "SecurityPermission": "securitypermission.json",
-    "RoleType": "roletype.json",
+    "SecurityGroup": "securitygroup.json",
     "StatusValidChange": "statusvalidchange.json",
-    "StatusItem": "statusitem.json"
+    "StatusItem": "statusitem.json",
+    "SecurityGroupPermission": "securitygrouppermission.json",
+    "SecurityPermission": "securitypermission.json",
+    "Person": "person.json",
+    "ContactMechPurposeType": "contactmechpurposetype.json",
+    "PartyQualType": "partyqualtype.json",
+    "WorkEffortAssoc": "workeffortassoc.json",
+    "RoleType": "roletype.json",
+    "PartyRelationshipType": "partyrelationshiptype.json",
+    "WorkEffortType": "workefforttype.json",
+    "PartyContactMech": "partycontactmech.json",
+    "WorkEffort": "workeffort.json",
+    "PartyIdentificationType": "partyidentificationtype.json",
+    "SkillType": "skilltype.json",
+    "Party": "party.json",
+    "PartyContentType": "partycontenttype.json",
+    "TermType": "termtype.json",
+    "UserLogin": "userlogin.json",
+    "CommunicationEventType": "communicationeventtype.json"
   },
   "edges": [
-    {
-      "name": "CommunicationEventType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "CommunicationEventType"
-        },
-        {
-          "type": "one",
-          "rel": "ContactMechType"
-        },
-        {
-          "type": "many",
-          "rel": "CommunicationEventType"
-        }
-      ]
-    },
-    {
-      "name": "UserLoginSecurityGroup",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "UserLogin"
-        },
-        {
-          "type": "one",
-          "rel": "SecurityGroup"
-        },
-        {
-          "type": "many",
-          "rel": "SecurityGroupPermission"
-        }
-      ]
-    },
-    {
-      "name": "UserPreference",
-      "relations": [
-        {
-          "type": "one-nofk",
-          "rel": "UserLogin"
-        }
-      ]
-    },
-    {
-      "name": "ContactMechTypePurpose",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ContactMechType"
-        },
-        {
-          "type": "one",
-          "rel": "ContactMechPurposeType"
-        }
-      ]
-    },
-    {
-      "name": "ContactMechType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ContactMechType"
-        },
-        {
-          "type": "many",
-          "rel": "CommunicationEventType"
-        },
-        {
-          "type": "many",
-          "rel": "ContactMechType"
-        },
-        {
-          "type": "many",
-          "rel": "ContactMechTypePurpose"
-        }
-      ]
-    },
-    {
-      "name": "Person",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "Party"
-        },
-        {
-          "type": "one",
-          "rel": "Enumeration"
-        },
-        {
-          "type": "one",
-          "rel": "Enumeration"
-        },
-        {
-          "type": "one",
-          "rel": "Enumeration"
-        },
-        {
-          "type": "many",
-          "rel": "PartyContactMech"
-        },
-        {
-          "type": "many",
-          "rel": "UserLogin"
-        }
-      ]
-    },
-    {
-      "name": "WorkEffortSkillStandard",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "WorkEffort"
-        },
-        {
-          "type": "one",
-          "rel": "SkillType"
-        }
-      ]
-    },
-    {
-      "name": "PartyContactMech",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "Party"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "Person"
-        },
-        {
-          "type": "one",
-          "rel": "PartyRole"
-        },
-        {
-          "type": "one",
-          "rel": "RoleType"
-        }
-      ]
-    },
     {
       "name": "CommunicationEventPrpTyp",
       "relations": [
@@ -198,23 +58,15 @@
       ]
     },
     {
-      "name": "PartyType",
+      "name": "ContactMechTypePurpose",
       "relations": [
         {
           "type": "one",
-          "rel": "PartyType"
+          "rel": "ContactMechType"
         },
         {
-          "type": "many",
-          "rel": "PartyType"
-        },
-        {
-          "type": "many",
-          "rel": "Party"
-        },
-        {
-          "type": "many",
-          "rel": "PartyType"
+          "type": "one",
+          "rel": "ContactMechPurposeType"
         }
       ]
     },
@@ -260,68 +112,19 @@
       ]
     },
     {
-      "name": "Party",
+      "name": "StatusType",
       "relations": [
         {
           "type": "one",
-          "rel": "PartyType"
+          "rel": "StatusType"
         },
         {
-          "type": "one",
-          "rel": "UserLogin"
-        },
-        {
-          "type": "one",
-          "rel": "UserLogin"
-        },
-        {
-          "type": "one",
+          "type": "many",
           "rel": "StatusItem"
         },
         {
           "type": "many",
-          "rel": "FixedAsset"
-        },
-        {
-          "type": "many",
-          "rel": "PartyContactMech"
-        },
-        {
-          "type": "many",
-          "rel": "PartyRole"
-        },
-        {
-          "type": "many",
-          "rel": "PartyStatus"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "Person"
-        },
-        {
-          "type": "many",
-          "rel": "UserLogin"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortPartyAssignment"
-        }
-      ]
-    },
-    {
-      "name": "WorkEffortType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "WorkEffortType"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffort"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortType"
+          "rel": "StatusType"
         }
       ]
     },
@@ -339,15 +142,53 @@
       ]
     },
     {
-      "name": "PartyContentType",
+      "name": "WorkEffortSkillStandard",
       "relations": [
         {
           "type": "one",
-          "rel": "PartyContentType"
+          "rel": "WorkEffort"
         },
         {
-          "type": "many",
-          "rel": "PartyContentType"
+          "type": "one",
+          "rel": "SkillType"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffortFixedAssetAssign",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "WorkEffort"
+        },
+        {
+          "type": "one",
+          "rel": "FixedAsset"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        }
+      ]
+    },
+    {
+      "name": "PartyStatus",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "one",
+          "rel": "Party"
+        },
+        {
+          "type": "one",
+          "rel": "UserLogin"
         }
       ]
     },
@@ -381,6 +222,103 @@
         {
           "type": "many",
           "rel": "WorkEffortPartyAssignment"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortPartyAssignment"
+        }
+      ]
+    },
+    {
+      "name": "PartyType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "PartyType"
+        },
+        {
+          "type": "many",
+          "rel": "PartyType"
+        },
+        {
+          "type": "many",
+          "rel": "Party"
+        },
+        {
+          "type": "many",
+          "rel": "PartyType"
+        }
+      ]
+    },
+    {
+      "name": "TemporalExpressionAssoc",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "TemporalExpression"
+        },
+        {
+          "type": "one",
+          "rel": "TemporalExpression"
+        }
+      ]
+    },
+    {
+      "name": "ContactMechType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ContactMechType"
+        },
+        {
+          "type": "many",
+          "rel": "CommunicationEventType"
+        },
+        {
+          "type": "many",
+          "rel": "ContactMechType"
+        },
+        {
+          "type": "many",
+          "rel": "ContactMechTypePurpose"
+        }
+      ]
+    },
+    {
+      "name": "EnumerationType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "EnumerationType"
+        },
+        {
+          "type": "many",
+          "rel": "Enumeration"
+        },
+        {
+          "type": "many",
+          "rel": "EnumerationType"
+        }
+      ]
+    },
+    {
+      "name": "PartyRole",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "Party"
+        },
+        {
+          "type": "one",
+          "rel": "RoleType"
+        },
+        {
+          "type": "many",
+          "rel": "FixedAsset"
+        },
+        {
+          "type": "many",
+          "rel": "PartyContactMech"
         },
         {
           "type": "many",
@@ -426,226 +364,28 @@
       ]
     },
     {
-      "name": "EnumerationType",
+      "name": "UserLoginSecurityGroup",
       "relations": [
-        {
-          "type": "one",
-          "rel": "EnumerationType"
-        },
-        {
-          "type": "many",
-          "rel": "Enumeration"
-        },
-        {
-          "type": "many",
-          "rel": "EnumerationType"
-        }
-      ]
-    },
-    {
-      "name": "PartyStatus",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "one",
-          "rel": "Party"
-        },
         {
           "type": "one",
           "rel": "UserLogin"
-        }
-      ]
-    },
-    {
-      "name": "PartyRole",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "Party"
         },
         {
           "type": "one",
-          "rel": "RoleType"
+          "rel": "SecurityGroup"
         },
-        {
-          "type": "many",
-          "rel": "FixedAsset"
-        },
-        {
-          "type": "many",
-          "rel": "PartyContactMech"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortPartyAssignment"
-        }
-      ]
-    },
-    {
-      "name": "SecurityGroup",
-      "relations": [
         {
           "type": "many",
           "rel": "SecurityGroupPermission"
-        },
-        {
-          "type": "many",
-          "rel": "UserLoginSecurityGroup"
         }
       ]
     },
     {
-      "name": "SkillType",
+      "name": "UserPreference",
       "relations": [
-        {
-          "type": "one",
-          "rel": "SkillType"
-        },
-        {
-          "type": "many",
-          "rel": "SkillType"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortSkillStandard"
-        }
-      ]
-    },
-    {
-      "name": "UserLogin",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "Party"
-        },
         {
           "type": "one-nofk",
-          "rel": "Person"
-        },
-        {
-          "type": "many",
-          "rel": "Party"
-        },
-        {
-          "type": "many",
-          "rel": "Party"
-        },
-        {
-          "type": "many",
-          "rel": "PartyStatus"
-        },
-        {
-          "type": "many",
-          "rel": "UserLoginSecurityGroup"
-        },
-        {
-          "type": "many",
-          "rel": "UserPreference"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortPartyAssignment"
-        }
-      ]
-    },
-    {
-      "name": "WorkEffortAssoc",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "WorkEffort"
-        },
-        {
-          "type": "one",
-          "rel": "WorkEffort"
-        }
-      ]
-    },
-    {
-      "name": "PartyRelationshipType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "PartyRelationshipType"
-        },
-        {
-          "type": "one",
-          "rel": "RoleType"
-        },
-        {
-          "type": "one",
-          "rel": "RoleType"
-        },
-        {
-          "type": "many",
-          "rel": "PartyRelationshipType"
-        }
-      ]
-    },
-    {
-      "name": "PartyQualType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "PartyQualType"
-        },
-        {
-          "type": "many",
-          "rel": "PartyQualType"
-        }
-      ]
-    },
-    {
-      "name": "StatusType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "StatusType"
-        },
-        {
-          "type": "many",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "many",
-          "rel": "StatusType"
-        }
-      ]
-    },
-    {
-      "name": "WorkEffortFixedAssetAssign",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "WorkEffort"
-        },
-        {
-          "type": "one",
-          "rel": "FixedAsset"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        }
-      ]
-    },
-    {
-      "name": "PartyIdentificationType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "PartyIdentificationType"
-        },
-        {
-          "type": "many",
-          "rel": "PartyIdentificationType"
+          "rel": "UserLogin"
         }
       ]
     },
@@ -667,149 +407,15 @@
       ]
     },
     {
-      "name": "TemporalExpressionAssoc",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "TemporalExpression"
-        },
-        {
-          "type": "one",
-          "rel": "TemporalExpression"
-        }
-      ]
-    },
-    {
-      "name": "TermType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "TermType"
-        },
-        {
-          "type": "many",
-          "rel": "TermType"
-        }
-      ]
-    },
-    {
-      "name": "WorkEffort",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "WorkEffortType"
-        },
-        {
-          "type": "one",
-          "rel": "WorkEffort"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "one",
-          "rel": "Enumeration"
-        },
-        {
-          "type": "one",
-          "rel": "FixedAsset"
-        },
-        {
-          "type": "one",
-          "rel": "TemporalExpression"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffort"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortAssoc"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortAssoc"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortFixedAssetAssign"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortPartyAssignment"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortSkillStandard"
-        }
-      ]
-    },
-    {
-      "name": "SecurityGroupPermission",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "SecurityGroup"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "SecurityPermission"
-        }
-      ]
-    },
-    {
-      "name": "ContactMechPurposeType",
-      "relations": [
-        {
-          "type": "many",
-          "rel": "ContactMechTypePurpose"
-        }
-      ]
-    },
-    {
-      "name": "SecurityPermission",
+      "name": "SecurityGroup",
       "relations": [
         {
           "type": "many",
           "rel": "SecurityGroupPermission"
-        }
-      ]
-    },
-    {
-      "name": "RoleType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "RoleType"
         },
         {
           "type": "many",
-          "rel": "FixedAsset"
-        },
-        {
-          "type": "many",
-          "rel": "PartyContactMech"
-        },
-        {
-          "type": "many",
-          "rel": "PartyRelationshipType"
-        },
-        {
-          "type": "many",
-          "rel": "PartyRelationshipType"
-        },
-        {
-          "type": "many",
-          "rel": "PartyRole"
-        },
-        {
-          "type": "many",
-          "rel": "RoleType"
-        },
-        {
-          "type": "many",
-          "rel": "WorkEffortPartyAssignment"
+          "rel": "UserLoginSecurityGroup"
         }
       ]
     },
@@ -868,6 +474,400 @@
         {
           "type": "many",
           "rel": "WorkEffortPartyAssignment"
+        }
+      ]
+    },
+    {
+      "name": "SecurityGroupPermission",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "SecurityGroup"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "SecurityPermission"
+        }
+      ]
+    },
+    {
+      "name": "SecurityPermission",
+      "relations": [
+        {
+          "type": "many",
+          "rel": "SecurityGroupPermission"
+        }
+      ]
+    },
+    {
+      "name": "Person",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "Party"
+        },
+        {
+          "type": "one",
+          "rel": "Enumeration"
+        },
+        {
+          "type": "one",
+          "rel": "Enumeration"
+        },
+        {
+          "type": "one",
+          "rel": "Enumeration"
+        },
+        {
+          "type": "many",
+          "rel": "PartyContactMech"
+        },
+        {
+          "type": "many",
+          "rel": "UserLogin"
+        }
+      ]
+    },
+    {
+      "name": "ContactMechPurposeType",
+      "relations": [
+        {
+          "type": "many",
+          "rel": "ContactMechTypePurpose"
+        }
+      ]
+    },
+    {
+      "name": "PartyQualType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "PartyQualType"
+        },
+        {
+          "type": "many",
+          "rel": "PartyQualType"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffortAssoc",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "WorkEffort"
+        },
+        {
+          "type": "one",
+          "rel": "WorkEffort"
+        }
+      ]
+    },
+    {
+      "name": "RoleType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "RoleType"
+        },
+        {
+          "type": "many",
+          "rel": "FixedAsset"
+        },
+        {
+          "type": "many",
+          "rel": "PartyContactMech"
+        },
+        {
+          "type": "many",
+          "rel": "PartyRelationshipType"
+        },
+        {
+          "type": "many",
+          "rel": "PartyRelationshipType"
+        },
+        {
+          "type": "many",
+          "rel": "PartyRole"
+        },
+        {
+          "type": "many",
+          "rel": "RoleType"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortPartyAssignment"
+        }
+      ]
+    },
+    {
+      "name": "PartyRelationshipType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "PartyRelationshipType"
+        },
+        {
+          "type": "one",
+          "rel": "RoleType"
+        },
+        {
+          "type": "one",
+          "rel": "RoleType"
+        },
+        {
+          "type": "many",
+          "rel": "PartyRelationshipType"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffortType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "WorkEffortType"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffort"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortType"
+        }
+      ]
+    },
+    {
+      "name": "PartyContactMech",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "Party"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "Person"
+        },
+        {
+          "type": "one",
+          "rel": "PartyRole"
+        },
+        {
+          "type": "one",
+          "rel": "RoleType"
+        }
+      ]
+    },
+    {
+      "name": "WorkEffort",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "WorkEffortType"
+        },
+        {
+          "type": "one",
+          "rel": "WorkEffort"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "one",
+          "rel": "Enumeration"
+        },
+        {
+          "type": "one",
+          "rel": "FixedAsset"
+        },
+        {
+          "type": "one",
+          "rel": "TemporalExpression"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffort"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortFixedAssetAssign"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortPartyAssignment"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortSkillStandard"
+        }
+      ]
+    },
+    {
+      "name": "PartyIdentificationType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "PartyIdentificationType"
+        },
+        {
+          "type": "many",
+          "rel": "PartyIdentificationType"
+        }
+      ]
+    },
+    {
+      "name": "SkillType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "SkillType"
+        },
+        {
+          "type": "many",
+          "rel": "SkillType"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortSkillStandard"
+        }
+      ]
+    },
+    {
+      "name": "Party",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "PartyType"
+        },
+        {
+          "type": "one",
+          "rel": "UserLogin"
+        },
+        {
+          "type": "one",
+          "rel": "UserLogin"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "many",
+          "rel": "FixedAsset"
+        },
+        {
+          "type": "many",
+          "rel": "PartyContactMech"
+        },
+        {
+          "type": "many",
+          "rel": "PartyRole"
+        },
+        {
+          "type": "many",
+          "rel": "PartyStatus"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "Person"
+        },
+        {
+          "type": "many",
+          "rel": "UserLogin"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortPartyAssignment"
+        }
+      ]
+    },
+    {
+      "name": "PartyContentType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "PartyContentType"
+        },
+        {
+          "type": "many",
+          "rel": "PartyContentType"
+        }
+      ]
+    },
+    {
+      "name": "TermType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "TermType"
+        },
+        {
+          "type": "many",
+          "rel": "TermType"
+        }
+      ]
+    },
+    {
+      "name": "UserLogin",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "Party"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "Person"
+        },
+        {
+          "type": "many",
+          "rel": "Party"
+        },
+        {
+          "type": "many",
+          "rel": "Party"
+        },
+        {
+          "type": "many",
+          "rel": "PartyStatus"
+        },
+        {
+          "type": "many",
+          "rel": "UserLoginSecurityGroup"
+        },
+        {
+          "type": "many",
+          "rel": "UserPreference"
+        },
+        {
+          "type": "many",
+          "rel": "WorkEffortPartyAssignment"
+        }
+      ]
+    },
+    {
+      "name": "CommunicationEventType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "CommunicationEventType"
+        },
+        {
+          "type": "one",
+          "rel": "ContactMechType"
+        },
+        {
+          "type": "many",
+          "rel": "CommunicationEventType"
         }
       ]
     }

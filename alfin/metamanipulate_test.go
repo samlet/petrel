@@ -3,7 +3,8 @@ package alfin
 import (
 	"encoding/json"
 	"fmt"
-	"log"
+	log "github.com/sirupsen/logrus"
+	"github.com/xlab/treeprint"
 	"os"
 	"path/filepath"
 	"testing"
@@ -11,24 +12,24 @@ import (
 
 func TestMetaManipulate(t *testing.T) {
 	ents := []string{"Example", "ExampleItem"}
-	mani, err:=NewMetaManipulate(ents)
+	mani, err := NewMetaManipulate(ents)
 	if err != nil {
 		panic(err)
 	}
 
-	e:=mani.MustEntity("ExampleItem")
+	e := mani.MustEntity("ExampleItem")
 	//jsonr, err:=json.MarshalIndent(e, "", "  ")
 	//if err != nil {
 	//	panic(err)
 	//}
 	//fmt.Printf("%s", jsonr)
-	for _,r := range e.Relations {
+	for _, r := range e.Relations {
 		println(r.Backref)
 	}
 }
 
 func TestPackageMeta(t *testing.T) {
-	sample:=`{
+	sample := `{
   "name": "workload",
   "package": "com.bluecc.workload",
   "entities": {
@@ -42,7 +43,7 @@ func TestPackageMeta(t *testing.T) {
   }
 }`
 	var pkgMeta PackageMeta
-	err:=json.Unmarshal([]byte(sample), &pkgMeta)
+	err := json.Unmarshal([]byte(sample), &pkgMeta)
 	if err != nil {
 		panic(err)
 	}
@@ -50,71 +51,71 @@ func TestPackageMeta(t *testing.T) {
 }
 
 func TestLoadPackage(t *testing.T) {
-	pkg:="workload"
-	assetDir:=filepath.Join(AssetRoot, pkg)
-	metaFile:=filepath.Join(assetDir, "meta.json")
+	pkg := "workload"
+	assetDir := filepath.Join(AssetRoot, pkg)
+	metaFile := filepath.Join(assetDir, "meta.json")
 	var pkgMeta PackageMeta
-	err:=ReadJsonFile(metaFile, &pkgMeta)
+	err := ReadJsonFile(metaFile, &pkgMeta)
 	if err != nil {
 		panic(err)
 	}
 	println(pkgMeta.Package)
-	files:=[]string{}
-	for _,entFile:=range pkgMeta.Entities{
-		files=append(files, filepath.Join(assetDir, entFile))
+	files := []string{}
+	for _, entFile := range pkgMeta.Entities {
+		files = append(files, filepath.Join(assetDir, entFile))
 	}
 
-	mani, err:=NewMetaManipulate(files)
+	mani, err := NewMetaManipulate(files)
 	if err != nil {
 		panic(err)
 	}
 
-	e:=mani.MustEntity("Workload")
+	e := mani.MustEntity("Workload")
 	println(e.Name)
 
-	e=mani.MustEntity("WorkloadType")
+	e = mani.MustEntity("WorkloadType")
 	println(e.Name)
-	for _,r:=range e.Relations{
+	for _, r := range e.Relations {
 		println(e.Name, r.Name, r.FieldName(), r.SelfRelation)
 	}
 }
 
 func TestGenSchemas(t *testing.T) {
-	pkg:="workload"
-	mani, err:=GenSchemas(pkg)
+	pkg := "workload"
+	mani, err := NewManipulateWithPackage(pkg)
 	if err != nil {
 		panic(err)
 	}
-	err=mani.GenSchemaWithFiles(os.Stdout)
+	err = mani.GenSchemaWithFiles(os.Stdout)
 	if err != nil {
 		log.Fatalf(" fail: %v", err)
 	}
 }
 
 func TestGenSchemas_purchaseorder(t *testing.T) {
-	pkg:="purchaseorder"
-	mani, err:=GenSchemas(pkg)
+	pkg := "purchaseorder"
+	mani, err := NewManipulateWithPackage(pkg)
 	if err != nil {
 		panic(err)
 	}
-	err=mani.GenSchemaWithFiles(os.Stdout)
+	err = mani.GenSchemaWithFiles(os.Stdout)
 	if err != nil {
 		log.Fatalf(" fail: %v", err)
 	}
 }
 
 func TestWriteSchemas(t *testing.T) {
-	pkg:="workload"
-	path:=filepath.Join("modules", pkg, "ent", "schema", "modent.go")
+	pkg := "workload"
+	path := filepath.Join("modules", pkg, "ent", "schema", "modent.go")
 	f, err := os.Create(path)
 	check(err)
 	defer f.Close()
 
-	mani, err:=GenSchemas(pkg)
+	mani, err := NewManipulateWithPackage(pkg)
 	if err != nil {
 		panic(err)
 	}
-	err=mani.GenSchemaWithFiles(f)
+	err = mani.GenSchemaWithFiles(f)
 	if err != nil {
 		log.Fatalf(" fail: %v", err)
 	}
@@ -124,15 +125,14 @@ func TestWriteSchemas(t *testing.T) {
 	println("write to ", path)
 }
 
-
 func TestWriteHelpers(t *testing.T) {
-	pkg:="workeffort"
-	path:=filepath.Join("modules", pkg, "helper", pkg+"helper.go")
+	pkg := "workeffort"
+	path := filepath.Join("modules", pkg, "helper", pkg+"helper.go")
 	f, err := os.Create(path)
 	check(err)
 	defer f.Close()
 
-	mani, err:=GenSchemas(pkg)
+	mani, err := NewManipulateWithPackage(pkg)
 	if err != nil {
 		panic(err)
 	}
@@ -141,4 +141,22 @@ func TestWriteHelpers(t *testing.T) {
 	f.Sync()
 
 	println("write to ", path)
+}
+
+func TestCreateTree(t *testing.T) {
+	log.SetLevel(log.InfoLevel)
+
+	pkg := "workeffort"
+	entName := "WorkEffort"
+	mani, err := NewManipulateWithPackage(pkg)
+	if err != nil {
+		panic(err)
+	}
+	//for _, ent := range mani.Entities().Entities {
+	//	DisplayEntInfo(ent)
+	//}
+	tree := treeprint.New()
+	ent := mani.MustEntity(entName)
+	DisplayEntInfo(ent, tree)
+	fmt.Println(tree.String())
 }

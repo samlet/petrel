@@ -18,8 +18,14 @@ var (
 )
 
 const (
-	EstimateCalcMethod_Simple=100
+	EstimateCalcMethod_Simple int = iota+100
+	EstimateCalcMethod_Special
 )
+
+var ValueRefDict = map[int]string{
+	EstimateCalcMethod_Simple: "Simple",
+	EstimateCalcMethod_Special : "Special",
+}
 
 func TestProject(t *testing.T) {
 	client, err := ent.Open("sqlite3", "file:ent?mode=memory&cache=shared&_fk=1")
@@ -45,7 +51,7 @@ func DoProject(ctx context.Context, client *ent.Client) error {
 	workeff, err := client.WorkEffort.Create().
 		SetWorkEffortType(helper.WorkEffortTypeRef(ctx, "PROJECT")).
 		SetWorkEffortName("Demo Project1 Cust1").
-		SetEstimateCalcMethod(EstimateCalcMethod_Simple).
+		SetEstimateCalcMethod(EstimateCalcMethod_Special).
 		Save(ctx)
 	if err != nil {
 		log.Fatalf("create workeffort fail: %v", err)

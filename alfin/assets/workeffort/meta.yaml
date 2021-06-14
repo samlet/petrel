@@ -1,86 +1,16 @@
 edges:
-- name: CommunicationEventType
-  relations:
-  - rel: CommunicationEventType
-    type: one
-  - rel: ContactMechType
-    type: one
-  - rel: CommunicationEventType
-    type: many
-- name: UserLoginSecurityGroup
-  relations:
-  - rel: UserLogin
-    type: one
-  - rel: SecurityGroup
-    type: one
-  - rel: SecurityGroupPermission
-    type: many
-- name: UserPreference
-  relations:
-  - rel: UserLogin
-    type: one-nofk
-- name: ContactMechTypePurpose
-  relations:
-  - rel: ContactMechType
-    type: one
-  - rel: ContactMechPurposeType
-    type: one
-- name: ContactMechType
-  relations:
-  - rel: ContactMechType
-    type: one
-  - rel: CommunicationEventType
-    type: many
-  - rel: ContactMechType
-    type: many
-  - rel: ContactMechTypePurpose
-    type: many
-- name: Person
-  relations:
-  - rel: Party
-    type: one
-  - rel: Enumeration
-    type: one
-  - rel: Enumeration
-    type: one
-  - rel: Enumeration
-    type: one
-  - rel: PartyContactMech
-    type: many
-  - rel: UserLogin
-    type: many
-- name: WorkEffortSkillStandard
-  relations:
-  - rel: WorkEffort
-    type: one
-  - rel: SkillType
-    type: one
-- name: PartyContactMech
-  relations:
-  - rel: Party
-    type: one
-  - rel: Person
-    type: one-nofk
-  - rel: PartyRole
-    type: one
-  - rel: RoleType
-    type: one
 - name: CommunicationEventPrpTyp
   relations:
   - rel: CommunicationEventPrpTyp
     type: one
   - rel: CommunicationEventPrpTyp
     type: many
-- name: PartyType
+- name: ContactMechTypePurpose
   relations:
-  - rel: PartyType
+  - rel: ContactMechType
     type: one
-  - rel: PartyType
-    type: many
-  - rel: Party
-    type: many
-  - rel: PartyType
-    type: many
+  - rel: ContactMechPurposeType
+    type: one
 - name: WorkEffortPartyAssignment
   relations:
   - rel: WorkEffort
@@ -101,37 +31,13 @@ edges:
     type: one
   - rel: StatusItem
     type: one
-- name: Party
+- name: StatusType
   relations:
-  - rel: PartyType
-    type: one
-  - rel: UserLogin
-    type: one
-  - rel: UserLogin
+  - rel: StatusType
     type: one
   - rel: StatusItem
-    type: one
-  - rel: FixedAsset
     type: many
-  - rel: PartyContactMech
-    type: many
-  - rel: PartyRole
-    type: many
-  - rel: PartyStatus
-    type: many
-  - rel: Person
-    type: one-nofk
-  - rel: UserLogin
-    type: many
-  - rel: WorkEffortPartyAssignment
-    type: many
-- name: WorkEffortType
-  relations:
-  - rel: WorkEffortType
-    type: one
-  - rel: WorkEffort
-    type: many
-  - rel: WorkEffortType
+  - rel: StatusType
     type: many
 - name: PartyClassificationType
   relations:
@@ -139,12 +45,30 @@ edges:
     type: one
   - rel: PartyClassificationType
     type: many
-- name: PartyContentType
+- name: WorkEffortSkillStandard
   relations:
-  - rel: PartyContentType
+  - rel: WorkEffort
     type: one
-  - rel: PartyContentType
-    type: many
+  - rel: SkillType
+    type: one
+- name: WorkEffortFixedAssetAssign
+  relations:
+  - rel: WorkEffort
+    type: one
+  - rel: FixedAsset
+    type: one
+  - rel: StatusItem
+    type: one
+  - rel: StatusItem
+    type: one
+- name: PartyStatus
+  relations:
+  - rel: StatusItem
+    type: one
+  - rel: Party
+    type: one
+  - rel: UserLogin
+    type: one
 - name: Enumeration
   relations:
   - rel: EnumerationType
@@ -160,6 +84,52 @@ edges:
   - rel: WorkEffort
     type: many
   - rel: WorkEffortPartyAssignment
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: PartyType
+  relations:
+  - rel: PartyType
+    type: one
+  - rel: PartyType
+    type: many
+  - rel: Party
+    type: many
+  - rel: PartyType
+    type: many
+- name: TemporalExpressionAssoc
+  relations:
+  - rel: TemporalExpression
+    type: one
+  - rel: TemporalExpression
+    type: one
+- name: ContactMechType
+  relations:
+  - rel: ContactMechType
+    type: one
+  - rel: CommunicationEventType
+    type: many
+  - rel: ContactMechType
+    type: many
+  - rel: ContactMechTypePurpose
+    type: many
+- name: EnumerationType
+  relations:
+  - rel: EnumerationType
+    type: one
+  - rel: Enumeration
+    type: many
+  - rel: EnumerationType
+    type: many
+- name: PartyRole
+  relations:
+  - rel: Party
+    type: one
+  - rel: RoleType
+    type: one
+  - rel: FixedAsset
+    type: many
+  - rel: PartyContactMech
     type: many
   - rel: WorkEffortPartyAssignment
     type: many
@@ -181,112 +151,18 @@ edges:
     type: many
   - rel: WorkEffortFixedAssetAssign
     type: many
-- name: EnumerationType
+- name: UserLoginSecurityGroup
   relations:
-  - rel: EnumerationType
-    type: one
-  - rel: Enumeration
-    type: many
-  - rel: EnumerationType
-    type: many
-- name: PartyStatus
-  relations:
-  - rel: StatusItem
-    type: one
-  - rel: Party
-    type: one
   - rel: UserLogin
     type: one
-- name: PartyRole
-  relations:
-  - rel: Party
+  - rel: SecurityGroup
     type: one
-  - rel: RoleType
-    type: one
-  - rel: FixedAsset
-    type: many
-  - rel: PartyContactMech
-    type: many
-  - rel: WorkEffortPartyAssignment
-    type: many
-- name: SecurityGroup
-  relations:
   - rel: SecurityGroupPermission
     type: many
-  - rel: UserLoginSecurityGroup
-    type: many
-- name: SkillType
+- name: UserPreference
   relations:
-  - rel: SkillType
-    type: one
-  - rel: SkillType
-    type: many
-  - rel: WorkEffortSkillStandard
-    type: many
-- name: UserLogin
-  relations:
-  - rel: Party
-    type: one
-  - rel: Person
+  - rel: UserLogin
     type: one-nofk
-  - rel: Party
-    type: many
-  - rel: Party
-    type: many
-  - rel: PartyStatus
-    type: many
-  - rel: UserLoginSecurityGroup
-    type: many
-  - rel: UserPreference
-    type: many
-  - rel: WorkEffortPartyAssignment
-    type: many
-- name: WorkEffortAssoc
-  relations:
-  - rel: WorkEffort
-    type: one
-  - rel: WorkEffort
-    type: one
-- name: PartyRelationshipType
-  relations:
-  - rel: PartyRelationshipType
-    type: one
-  - rel: RoleType
-    type: one
-  - rel: RoleType
-    type: one
-  - rel: PartyRelationshipType
-    type: many
-- name: PartyQualType
-  relations:
-  - rel: PartyQualType
-    type: one
-  - rel: PartyQualType
-    type: many
-- name: StatusType
-  relations:
-  - rel: StatusType
-    type: one
-  - rel: StatusItem
-    type: many
-  - rel: StatusType
-    type: many
-- name: WorkEffortFixedAssetAssign
-  relations:
-  - rel: WorkEffort
-    type: one
-  - rel: FixedAsset
-    type: one
-  - rel: StatusItem
-    type: one
-  - rel: StatusItem
-    type: one
-- name: PartyIdentificationType
-  relations:
-  - rel: PartyIdentificationType
-    type: one
-  - rel: PartyIdentificationType
-    type: many
 - name: TemporalExpression
   relations:
   - rel: TemporalExpressionAssoc
@@ -295,75 +171,11 @@ edges:
     type: many
   - rel: WorkEffort
     type: many
-- name: TemporalExpressionAssoc
-  relations:
-  - rel: TemporalExpression
-    type: one
-  - rel: TemporalExpression
-    type: one
-- name: TermType
-  relations:
-  - rel: TermType
-    type: one
-  - rel: TermType
-    type: many
-- name: WorkEffort
-  relations:
-  - rel: WorkEffortType
-    type: one
-  - rel: WorkEffort
-    type: one
-  - rel: StatusItem
-    type: one
-  - rel: Enumeration
-    type: one
-  - rel: FixedAsset
-    type: one
-  - rel: TemporalExpression
-    type: one
-  - rel: WorkEffort
-    type: many
-  - rel: WorkEffortAssoc
-    type: many
-  - rel: WorkEffortAssoc
-    type: many
-  - rel: WorkEffortFixedAssetAssign
-    type: many
-  - rel: WorkEffortPartyAssignment
-    type: many
-  - rel: WorkEffortSkillStandard
-    type: many
-- name: SecurityGroupPermission
-  relations:
-  - rel: SecurityGroup
-    type: one
-  - rel: SecurityPermission
-    type: one-nofk
-- name: ContactMechPurposeType
-  relations:
-  - rel: ContactMechTypePurpose
-    type: many
-- name: SecurityPermission
+- name: SecurityGroup
   relations:
   - rel: SecurityGroupPermission
     type: many
-- name: RoleType
-  relations:
-  - rel: RoleType
-    type: one
-  - rel: FixedAsset
-    type: many
-  - rel: PartyContactMech
-    type: many
-  - rel: PartyRelationshipType
-    type: many
-  - rel: PartyRelationshipType
-    type: many
-  - rel: PartyRole
-    type: many
-  - rel: RoleType
-    type: many
-  - rel: WorkEffortPartyAssignment
+  - rel: UserLoginSecurityGroup
     type: many
 - name: StatusValidChange
   relations:
@@ -392,6 +204,194 @@ edges:
   - rel: WorkEffortPartyAssignment
     type: many
   - rel: WorkEffortPartyAssignment
+    type: many
+- name: SecurityGroupPermission
+  relations:
+  - rel: SecurityGroup
+    type: one
+  - rel: SecurityPermission
+    type: one-nofk
+- name: SecurityPermission
+  relations:
+  - rel: SecurityGroupPermission
+    type: many
+- name: Person
+  relations:
+  - rel: Party
+    type: one
+  - rel: Enumeration
+    type: one
+  - rel: Enumeration
+    type: one
+  - rel: Enumeration
+    type: one
+  - rel: PartyContactMech
+    type: many
+  - rel: UserLogin
+    type: many
+- name: ContactMechPurposeType
+  relations:
+  - rel: ContactMechTypePurpose
+    type: many
+- name: PartyQualType
+  relations:
+  - rel: PartyQualType
+    type: one
+  - rel: PartyQualType
+    type: many
+- name: WorkEffortAssoc
+  relations:
+  - rel: WorkEffort
+    type: one
+  - rel: WorkEffort
+    type: one
+- name: RoleType
+  relations:
+  - rel: RoleType
+    type: one
+  - rel: FixedAsset
+    type: many
+  - rel: PartyContactMech
+    type: many
+  - rel: PartyRelationshipType
+    type: many
+  - rel: PartyRelationshipType
+    type: many
+  - rel: PartyRole
+    type: many
+  - rel: RoleType
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: PartyRelationshipType
+  relations:
+  - rel: PartyRelationshipType
+    type: one
+  - rel: RoleType
+    type: one
+  - rel: RoleType
+    type: one
+  - rel: PartyRelationshipType
+    type: many
+- name: WorkEffortType
+  relations:
+  - rel: WorkEffortType
+    type: one
+  - rel: WorkEffort
+    type: many
+  - rel: WorkEffortType
+    type: many
+- name: PartyContactMech
+  relations:
+  - rel: Party
+    type: one
+  - rel: Person
+    type: one-nofk
+  - rel: PartyRole
+    type: one
+  - rel: RoleType
+    type: one
+- name: WorkEffort
+  relations:
+  - rel: WorkEffortType
+    type: one
+  - rel: WorkEffort
+    type: one
+  - rel: StatusItem
+    type: one
+  - rel: Enumeration
+    type: one
+  - rel: FixedAsset
+    type: one
+  - rel: TemporalExpression
+    type: one
+  - rel: WorkEffort
+    type: many
+  - rel: WorkEffortAssoc
+    type: many
+  - rel: WorkEffortAssoc
+    type: many
+  - rel: WorkEffortFixedAssetAssign
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+  - rel: WorkEffortSkillStandard
+    type: many
+- name: PartyIdentificationType
+  relations:
+  - rel: PartyIdentificationType
+    type: one
+  - rel: PartyIdentificationType
+    type: many
+- name: SkillType
+  relations:
+  - rel: SkillType
+    type: one
+  - rel: SkillType
+    type: many
+  - rel: WorkEffortSkillStandard
+    type: many
+- name: Party
+  relations:
+  - rel: PartyType
+    type: one
+  - rel: UserLogin
+    type: one
+  - rel: UserLogin
+    type: one
+  - rel: StatusItem
+    type: one
+  - rel: FixedAsset
+    type: many
+  - rel: PartyContactMech
+    type: many
+  - rel: PartyRole
+    type: many
+  - rel: PartyStatus
+    type: many
+  - rel: Person
+    type: one-nofk
+  - rel: UserLogin
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: PartyContentType
+  relations:
+  - rel: PartyContentType
+    type: one
+  - rel: PartyContentType
+    type: many
+- name: TermType
+  relations:
+  - rel: TermType
+    type: one
+  - rel: TermType
+    type: many
+- name: UserLogin
+  relations:
+  - rel: Party
+    type: one
+  - rel: Person
+    type: one-nofk
+  - rel: Party
+    type: many
+  - rel: Party
+    type: many
+  - rel: PartyStatus
+    type: many
+  - rel: UserLoginSecurityGroup
+    type: many
+  - rel: UserPreference
+    type: many
+  - rel: WorkEffortPartyAssignment
+    type: many
+- name: CommunicationEventType
+  relations:
+  - rel: CommunicationEventType
+    type: one
+  - rel: ContactMechType
+    type: one
+  - rel: CommunicationEventType
     type: many
 entities:
   CommunicationEventPrpTyp: communicationeventprptyp.json

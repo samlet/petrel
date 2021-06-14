@@ -29,3 +29,6 @@ gencase modname:
 
 onlygen mod:
     mage OnlyWriteSchemas {{mod}}
+
+cli +FLAGS='':
+    go run cli/main.go {{FLAGS}}

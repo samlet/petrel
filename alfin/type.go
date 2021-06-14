@@ -76,7 +76,7 @@ func (t ModelEntity) HasCombineIndex() bool {
 	return t.PksSize > 1
 }
 
-func (t ModelEntity) PksString() string{
+func (t ModelEntity) PksString() string {
 	return strings.Join(t.Pks, ", ")
 }
 
@@ -164,6 +164,16 @@ func (t ModelField) EntFieldType() string {
 	return resultDef
 }
 
+func (t ModelField) QuoteValue(v string) string {
+	switch t.Type {
+	case "currency-amount", "currency-precise", "fixed-point", "floating-point",
+		"integer", "numeric":
+		return v
+	default:
+		return "\"" + v + "\""
+	}
+}
+
 func (t ModelField) EthFieldType() string {
 	return EthType(t.Type)
 }
@@ -172,9 +182,25 @@ func (t ModelField) GoFieldType() string {
 	return FieldType(t.Type)
 }
 
+func (t ModelField) GoRefFieldType() string {
+	typ := FieldType(t.Type)
+	if typ[0] == '*' {
+		return typ
+	}
+	return "*" + typ
+}
+
 func (t ModelRelation) FieldName() string {
 	return t.Keymaps[0].FieldName
 }
+func (t ModelRelation) Keys() string {
+	var keys []string
+	for _, k := range t.Keymaps {
+		keys = append(keys, k.FieldName)
+	}
+	return strings.Join(keys, ", ")
+}
+
 func (t ModelRelation) PluralName() string {
 	return PluralizeTypeName(t.Name)
 }
@@ -261,7 +287,7 @@ func GenModelEntity(templateFile string, inputFile string, writer io.Writer) err
 func GenModelEntityWithMeta(templateFile string, m interface{}, writer io.Writer) error {
 	tf := template.FuncMap{
 		"title":     strings.Title,
-		"lower": strings.ToLower,
+		"lower":     strings.ToLower,
 		"snakecase": strcase.ToSnake,
 		"isUniquePk": func(ent ModelEntity, fld string) bool {
 			return ent.IsUniqueIdField(fld)

@@ -63,11 +63,13 @@ func DoProject(ctx context.Context, client *ent.Client) error {
 
 func createParties(ctx context.Context, client *ent.Client) {
 	var err error
-	partyTypePerson, err = client.PartyType.Create().SetStringRef("PERSON").SetDescription("Person").Save(ctx)
+	partyTypePerson, err = client.PartyType.Create().
+		SetStringRef("PERSON").SetDescription("Person").Save(ctx)
 	if err != nil {
 		log.Fatalf(" fail: %v", err)
 	}
-	statusItemPartyEnabled, err=client.StatusItem.Create().SetStringRef("PARTY_ENABLED").SetDescription("Party enabled").Save(ctx)
+	statusItemPartyEnabled, err=client.StatusItem.Create().
+		SetStringRef("PARTY_ENABLED").SetDescription("Party enabled").Save(ctx)
 	if err != nil {
 		log.Fatalf(" fail: %v", err)
 	}

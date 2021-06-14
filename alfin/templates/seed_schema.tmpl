@@ -2,7 +2,7 @@
 
 type {{.Name}} struct {
 {{- range $fld := $.Fields }}
-    {{ $fld.Name|title }} {{ $fld.GoFieldType }} `json:"{{$fld.Name}},omitempty" xml:"{{$fld.Name}},attr"`
+    {{ $fld.Name|title }} {{ $fld.GoRefFieldType }} `json:"{{$fld.Name}},omitempty" xml:"{{$fld.Name}},attr"`
 {{- end}}
 }
 

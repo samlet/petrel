@@ -2,6 +2,7 @@ package alfin
 
 import (
 	"context"
+	"fmt"
 	"github.com/beevik/etree"
 	"github.com/samlet/petrel/alfin/modules/workload"
 	"github.com/samlet/petrel/alfin/modules/workload/ent"
@@ -37,6 +38,14 @@ func TestXmlSeed(t *testing.T) {
 		for _, att := range node.Attr {
 			log.Println("\t-", att.Key, att.Value)
 		}
+	}
+
+	// search
+	for _, t := range doc.FindElements("//OrderRole[@partyId='DemoSupplier']") {
+		fmt.Println("Tag:", t.Tag, t.SelectAttrValue("orderId",""))
+	}
+	for _, t := range doc.FindElements("//OrderRole[@partyId='DemoSupplier'][@orderId='DEMO10091']") {
+		fmt.Println("Tag:", t.Tag, t.SelectAttrValue("roleTypeId",""))
 	}
 }
 

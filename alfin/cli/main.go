@@ -6,6 +6,9 @@ import (
 	"github.com/samlet/petrel/alfin"
 	log "github.com/sirupsen/logrus"
 	"github.com/xlab/treeprint"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"github.com/alecthomas/kong"
 )
@@ -29,6 +32,14 @@ type Globals struct {
 	Version   VersionFlag `name:"version" help:"Print version information and quit"`
 }
 
+type CLI struct {
+	Globals
+	Attach AttachCmd `cmd help:"Attach local standard input, output, and error streams to a running container"`
+	Run    RunCmd    `cmd help:"Run a command"`
+	Meta   MetaCmd   `cmd help:"Show meta-info"`
+	SeedTypes SeedTypesCmd `cmd help:"Generate seed types"`
+}
+
 type VersionFlag string
 
 func (v VersionFlag) Decode(ctx *kong.DecodeContext) error { return nil }
@@ -39,12 +50,6 @@ func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
 	return nil
 }
 
-type CLI struct {
-	Globals
-	Attach AttachCmd `cmd help:"Attach local standard input, output, and error streams to a running container"`
-	Run    RunCmd    `cmd help:"Run a command"`
-	Meta   MetaCmd   `cmd help:"Show meta-info"`
-}
 
 func main() {
 	cli := CLI{
@@ -125,6 +130,41 @@ func (cmd *MetaCmd) Run(globals *Globals) error {
 	}
 
 	fmt.Println(tree.String())
+
+	return nil
+}
+
+type SeedTypesCmd struct {
+	Pkg string `arg required`
+}
+
+func (cmd *SeedTypesCmd) Run(globals *Globals) error {
+	tmpl:="templates/seed_schema.tmpl"
+	header:=`package seedtypes
+import "github.com/samlet/petrel/services"
+`
+
+	mani, err:=alfin.NewManipulateWithPackage(cmd.Pkg)
+	if err != nil {
+		panic(err)
+	}
+
+	for _,ent := range mani.Entities().Entities {
+		filePath:=strings.ToLower(ent.Name)+".go"
+		f, err := os.Create(filepath.Join("seedtypes", filePath))
+		if err != nil {
+			log.Fatalf("create file fail: %v", err)
+		}
+		_, err=f.WriteString(header)
+		if err != nil {
+			log.Fatalf("write header fail: %v", err)
+		}
+		err = alfin.GenModelEntityWithMeta(tmpl, ent, f)
+		if err != nil {
+			panic(err)
+		}
+		f.Close()
+	}
 
 	return nil
 }

@@ -263,9 +263,10 @@ func (t SeedProcessor) queryElements(doc *etree.Document, edge *ModelRelation, k
 		if t.WriteRelation {
 			var procName string
 			if edge.Type == "many" {
-				procName = entModel.AdderName()
+				//procName = entModel.AdderName()
+				procName = edge.AdderName()
 			} else {
-				procName = "Set" + strcase.ToCamel(edge.Name)
+				procName = edge.SetterName()
 			}
 			code := fmt.Sprintf("\t  %s(%s).\n",
 				procName,

@@ -241,6 +241,24 @@ func (t ModelRelation) SnakecaseName() string {
 	return strcase.ToSnake(t.Name)
 }
 
+func (t ModelRelation) AdderName() string{
+	if t.SelfRelation{
+		if strings.HasPrefix(t.Name, "Child"){
+			return "AddChildren"
+		}
+	}
+	return "Add"+strcase.ToCamel(t.PluralName())
+}
+
+func (t ModelRelation) SetterName() string{
+	if t.SelfRelation{
+		if strings.HasPrefix(t.Name, "Parent"){
+			return "SetParent"
+		}
+	}
+	return "Set"+strcase.ToCamel(t.Name)
+}
+
 func (t ModelRelation) HashBackref() bool {
 	return t.Type == "one" || t.Type == "one-nofk"
 }

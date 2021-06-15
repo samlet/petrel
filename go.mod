@@ -13,6 +13,7 @@ require (
 	github.com/alecthomas/repr v0.0.0-20210301060118-828286944d6a
 	github.com/antchfx/htmlquery v1.2.3
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
+	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de // indirect
 	github.com/beevik/etree v1.1.0 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
 	github.com/bwmarrin/snowflake v0.3.0

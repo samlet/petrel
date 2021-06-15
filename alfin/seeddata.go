@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/beevik/etree"
 	"github.com/iancoleman/strcase"
+	"log"
+	"strconv"
 	"strings"
 )
 
@@ -120,7 +122,16 @@ func (t SeedProcessor) ProcessElements(doc *etree.Document, elements []*etree.El
 func GetStringRef(ent *ModelEntity, element *etree.Element) string {
 	var pkValues []string
 	for _, pk := range ent.Pks {
-		pkValues = append(pkValues, element.SelectAttrValue(pk, ""))
+		val:=element.SelectAttrValue(pk, "")
+		fld:=ent.GetField(pk)
+		if fld.IsDateTime(){
+			intval,err:=ToSecs(val)
+			if err != nil {
+				log.Fatalf(" fail: %v", err)
+			}
+			val=strconv.FormatInt(intval,10)
+		}
+		pkValues = append(pkValues, val)
 	}
 	pkString := strings.ToLower(strings.Join(pkValues, "__") + "__" + element.Tag)
 	return pkString

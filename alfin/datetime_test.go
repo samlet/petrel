@@ -3,6 +3,7 @@ package alfin
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/araddon/dateparse"
 	"github.com/samlet/petrel/services"
 	"testing"
 	"time"
@@ -38,6 +39,16 @@ func TestDateTimeRfc3339(tt *testing.T) {
 		panic(err)
 	}
 	fmt.Println("time format:", t)
+}
+
+func TestSeedDateTime(tt *testing.T) {
+	dtStr:="2020-01-01 10:01:48.933"
+	t, err := dateparse.ParseAny(dtStr)
+	if err != nil { // Always check errors even if they should not happen.
+		panic(err)
+	}
+	fmt.Println("time format:", t)
+	println(t.Unix(), t.UnixNano())
 }
 
 // ref: https://golang.org/pkg/time/

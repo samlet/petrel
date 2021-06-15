@@ -115,8 +115,24 @@ func (t ModelEntity) PluralName() string {
 	return PluralizeTypeName(t.Name)
 }
 
+func (t ModelEntity) GetField(fld string) *ModelField {
+	for _, f := range t.Fields {
+		if f.Name==fld{
+			return f
+		}
+	}
+	return nil
+}
+
 func (t ModelField) VarName() string {
 	return strcase.ToSnake(t.Name)
+}
+
+func (t ModelField) IsDateTime() bool{
+	if t.Type=="date-time" || t.Type=="date" || t.Type=="time"{
+		return true
+	}
+	return false
 }
 
 func (t ModelField) EntFieldType() string {

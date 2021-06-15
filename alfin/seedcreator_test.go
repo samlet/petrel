@@ -3,6 +3,7 @@ package alfin
 import (
 	"context"
 	cachecomp "github.com/samlet/petrel/alfin/cache"
+	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"github.com/stretchr/testify/assert"
 	"log"
@@ -57,7 +58,7 @@ func createPersons(ctx context.Context) error {
 	c, err := client.Person.Create().SetStringRef("democustomer3__person").
 		SetFirstName("Billing").
 		SetLastName("Customer 3").
-		SetBirthDate(ParseDateTime("2000-01-01 10:01:48.933")).
+		SetBirthDate(common.ParseDateTime("2000-01-01 10:01:48.933")).
 		Save(ctx)
 	if err != nil {
 		log.Printf("fail to create democustomer3__person: %v", err)

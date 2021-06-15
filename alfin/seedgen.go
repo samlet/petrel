@@ -36,8 +36,20 @@ func NewSeedGen(pkg string, entName string) *SeedGen {
 	return &SeedGen{mani,doc,pkg,entName}
 }
 
+func (t SeedGen) ModDir() string{
+	return filepath.Join("modules", t.pkg)
+}
+
+func (t SeedGen) CreatorsDir() string{
+	return filepath.Join(t.ModDir(), "seedcreators")
+}
+
 func (t SeedGen) Generate(onlyCreator bool) error {
-	err := t.seedCreator()
+	err:=EnsureDir(t.CreatorsDir())
+	if err != nil {
+		log.Fatalf("create dir %s fail: %v", t.CreatorsDir(), err)
+	}
+	err = t.seedCreator()
 	if err != nil {
 		return err
 	}
@@ -67,7 +79,7 @@ func (t SeedGen) seedCreator() error {
 	//println("-------------------")
 	outputCode := seedProc.Buffer.String()
 	//println(outputCode)
-	targetFile := filepath.Join("seedcreators", strings.ToLower(t.entName)+"_creator.go")
+	targetFile := filepath.Join(t.CreatorsDir(), strings.ToLower(t.entName)+"_creator.go")
 	err := WriteContent(targetFile, outputCode)
 	if err != nil {
 		log.Fatalf("write code fail: %v", err)
@@ -87,7 +99,7 @@ func (t SeedGen) seedUpdater() error {
 	seedProc.WriteFunctionFooter()
 
 	outputCode := seedProc.Buffer.String()
-	targetFile := filepath.Join("seedcreators", strings.ToLower(t.entName)+"_updater.go")
+	targetFile := filepath.Join(t.CreatorsDir(), strings.ToLower(t.entName)+"_updater.go")
 	err := WriteContent(targetFile, outputCode)
 	if err != nil {
 		log.Fatalf("write code fail: %v", err)

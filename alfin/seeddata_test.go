@@ -242,6 +242,6 @@ func TestSeedGen(t *testing.T) {
 	pkg:="workeffort"
 
 	seedgen:=NewSeedGen(pkg, "Person")
-	seedgen.Generate()
+	seedgen.Generate(false)
 }
 

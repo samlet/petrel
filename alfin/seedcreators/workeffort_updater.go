@@ -20,8 +20,8 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetLastStatusUpdate(common.ParseDateTime("2007-12-14 15:07:52.901")).
 		SetWorkEffortName("Demo Project1 Cust1").
 		SetRevisionNumber(1).
-		AddChildWorkEfforts(cache.Get("9001__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9004__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9001__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9004__workeffort").(*ent.WorkEffort)).
 		AddWorkEffortPartyAssignments(cache.Get("9000__company__internal_organizatio__1238963272__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		AddWorkEffortPartyAssignments(cache.Get("9000__admin__provider_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		AddWorkEffortPartyAssignments(cache.Get("9000__democustomer1__client_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
@@ -42,8 +42,8 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetRevisionNumber(1).
 		SetSequenceNum(1).
 		SetParent(cache.Get("9000__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9002__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9003__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9002__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9003__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
 		log.Printf("fail to create 9001__workeffort: %v", err)
@@ -98,8 +98,8 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetRevisionNumber(1).
 		SetSequenceNum(2).
 		SetParent(cache.Get("9000__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9005__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9006__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9005__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9006__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
 		log.Printf("fail to create 9004__workeffort: %v", err)
@@ -151,8 +151,8 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetLastStatusUpdate(common.ParseDateTime("2007-12-14 15:07:52.911")).
 		SetWorkEffortName("Demo Project2 Cust 2").
 		SetRevisionNumber(1).
-		AddChildWorkEfforts(cache.Get("9101__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9104__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9101__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9104__workeffort").(*ent.WorkEffort)).
 		AddWorkEffortPartyAssignments(cache.Get("9100__admin__provider_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		AddWorkEffortPartyAssignments(cache.Get("9100__company__internal_organizatio__1238963272__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		AddWorkEffortPartyAssignments(cache.Get("9100__democustomer2__client_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
@@ -173,8 +173,8 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetRevisionNumber(1).
 		SetSequenceNum(1).
 		SetParent(cache.Get("9100__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9102__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9103__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9102__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9103__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
 		log.Printf("fail to create 9101__workeffort: %v", err)
@@ -228,8 +228,8 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetRevisionNumber(1).
 		SetSequenceNum(2).
 		SetParent(cache.Get("9100__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9105__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9106__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9105__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9106__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
 		log.Printf("fail to create 9104__workeffort: %v", err)
@@ -281,7 +281,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetLastStatusUpdate(common.ParseDateTime("2007-12-14 15:07:52.911")).
 		SetWorkEffortName("Demo Project3 DemoCustomerCompany").
 		SetRevisionNumber(1).
-		AddChildWorkEfforts(cache.Get("9201__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9201__workeffort").(*ent.WorkEffort)).
 		AddWorkEffortPartyAssignments(cache.Get("9200__demoemployee3__provider_analyst__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		AddWorkEffortPartyAssignments(cache.Get("9200__company__internal_organizatio__1238963272__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		AddWorkEffortPartyAssignments(cache.Get("9200__democustcompany__client_billing__1238963272__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
@@ -299,7 +299,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		SetWorkEffortName("phase1").
 		SetRevisionNumber(1).
 		SetParent(cache.Get("9200__workeffort").(*ent.WorkEffort)).
-		AddChildWorkEfforts(cache.Get("9202__workeffort").(*ent.WorkEffort)).
+		AddChildren(cache.Get("9202__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
 		log.Printf("fail to create 9201__workeffort: %v", err)

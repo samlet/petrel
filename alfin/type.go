@@ -114,10 +114,10 @@ func (t ModelEntity) isRelationField(fldName string) bool {
 func (t ModelEntity) PluralName() string {
 	return PluralizeTypeName(t.Name)
 }
-
-func (t ModelEntity) AdderName() string{
-	return "Add"+strcase.ToCamel(t.PluralName())
-}
+//
+//func (t ModelEntity) AdderName() string{
+//	return "Add"+strcase.ToCamel(t.PluralName())
+//}
 
 func (t ModelEntity) GetField(fld string) *ModelField {
 	for _, f := range t.Fields {
@@ -242,11 +242,11 @@ func (t ModelRelation) SnakecaseName() string {
 }
 
 func (t ModelRelation) AdderName() string{
-	if t.SelfRelation{
-		if strings.HasPrefix(t.Name, "Child"){
-			return "AddChildren"
-		}
+	//if t.SelfRelation{
+	if strings.HasPrefix(t.Name, "Child"){
+		return "AddChildren"
 	}
+	//}
 	return "Add"+strcase.ToCamel(t.PluralName())
 }
 

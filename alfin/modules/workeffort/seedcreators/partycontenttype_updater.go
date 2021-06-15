@@ -9,7 +9,7 @@ import (
 )
 
 func UpdatePartyContentType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("PartyContentType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -20,40 +20,48 @@ func UpdatePartyContentType(ctx context.Context) error {
 		SetDescription("Internal Content").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create internal__partycontenttype: %v", err)
-		return err
+		log.Printf("fail to update internal__partycontenttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("internal__partycontenttype", c)
 	}
-	cache.Put("internal__partycontenttype", c)
 
 	c = cache.Get("userdef__partycontenttype").(*ent.PartyContentType)
 	c, err = c.Update().
 		SetDescription("User Defined Content").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create userdef__partycontenttype: %v", err)
-		return err
+		log.Printf("fail to update userdef__partycontenttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("userdef__partycontenttype", c)
 	}
-	cache.Put("userdef__partycontenttype", c)
 
 	c = cache.Get("lgoimgurl__partycontenttype").(*ent.PartyContentType)
 	c, err = c.Update().
 		SetDescription("Logo Image URL").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create lgoimgurl__partycontenttype: %v", err)
-		return err
+		log.Printf("fail to update lgoimgurl__partycontenttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("lgoimgurl__partycontenttype", c)
 	}
-	cache.Put("lgoimgurl__partycontenttype", c)
 
 	c = cache.Get("vndshpinf__partycontenttype").(*ent.PartyContentType)
 	c, err = c.Update().
 		SetDescription("Vendor Shipping Info").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create vndshpinf__partycontenttype: %v", err)
-		return err
+		log.Printf("fail to update vndshpinf__partycontenttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("vndshpinf__partycontenttype", c)
 	}
-	cache.Put("vndshpinf__partycontenttype", c)
 
 	return nil
 }

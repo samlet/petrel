@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateWorkEffortType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("WorkEffortType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -23,10 +23,12 @@ func UpdateWorkEffortType(ctx context.Context) error {
 		AddChildren(cache.Get("task_template__workefforttype").(*ent.WorkEffortType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create template__workefforttype: %v", err)
-		return err
+		log.Printf("fail to update template__workefforttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("template__workefforttype", c)
 	}
-	cache.Put("template__workefforttype", c)
 
 	c = cache.Get("project_template__workefforttype").(*ent.WorkEffortType)
 	c, err = c.Update().
@@ -34,10 +36,12 @@ func UpdateWorkEffortType(ctx context.Context) error {
 		SetParent(cache.Get("template__workefforttype").(*ent.WorkEffortType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_template__workefforttype: %v", err)
-		return err
+		log.Printf("fail to update project_template__workefforttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_template__workefforttype", c)
 	}
-	cache.Put("project_template__workefforttype", c)
 
 	c = cache.Get("phase_template__workefforttype").(*ent.WorkEffortType)
 	c, err = c.Update().
@@ -45,10 +49,12 @@ func UpdateWorkEffortType(ctx context.Context) error {
 		SetParent(cache.Get("template__workefforttype").(*ent.WorkEffortType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create phase_template__workefforttype: %v", err)
-		return err
+		log.Printf("fail to update phase_template__workefforttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("phase_template__workefforttype", c)
 	}
-	cache.Put("phase_template__workefforttype", c)
 
 	c = cache.Get("task_template__workefforttype").(*ent.WorkEffortType)
 	c, err = c.Update().
@@ -56,10 +62,12 @@ func UpdateWorkEffortType(ctx context.Context) error {
 		SetParent(cache.Get("template__workefforttype").(*ent.WorkEffortType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create task_template__workefforttype: %v", err)
-		return err
+		log.Printf("fail to update task_template__workefforttype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("task_template__workefforttype", c)
 	}
-	cache.Put("task_template__workefforttype", c)
 
 	return nil
 }

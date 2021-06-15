@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateWorkEffort(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("WorkEffort updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -30,10 +30,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9000__demoemployee2__provider_analyst__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9000__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9000__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9000__workeffort", c)
 	}
-	cache.Put("9000__workeffort", c)
 
 	c = cache.Get("9001__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -46,10 +48,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddChildren(cache.Get("9003__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9001__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9001__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9001__workeffort", c)
 	}
-	cache.Put("9001__workeffort", c)
 
 	c = cache.Get("9002__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -66,10 +70,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9002__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9002__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9002__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9002__workeffort", c)
 	}
-	cache.Put("9002__workeffort", c)
 
 	c = cache.Get("9003__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -86,10 +92,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9003__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9003__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9003__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9003__workeffort", c)
 	}
-	cache.Put("9003__workeffort", c)
 
 	c = cache.Get("9004__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -102,10 +110,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddChildren(cache.Get("9006__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9004__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9004__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9004__workeffort", c)
 	}
-	cache.Put("9004__workeffort", c)
 
 	c = cache.Get("9005__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -122,10 +132,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9005__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9005__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9005__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9005__workeffort", c)
 	}
-	cache.Put("9005__workeffort", c)
 
 	c = cache.Get("9006__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -141,10 +153,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9006__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9006__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9006__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9006__workeffort", c)
 	}
-	cache.Put("9006__workeffort", c)
 
 	c = cache.Get("9100__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -161,10 +175,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9100__demoemployee3__provider_analyst__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9100__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9100__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9100__workeffort", c)
 	}
-	cache.Put("9100__workeffort", c)
 
 	c = cache.Get("9101__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -177,10 +193,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddChildren(cache.Get("9103__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9101__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9101__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9101__workeffort", c)
 	}
-	cache.Put("9101__workeffort", c)
 
 	c = cache.Get("9102__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -196,10 +214,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9102__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9102__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9102__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9102__workeffort", c)
 	}
-	cache.Put("9102__workeffort", c)
 
 	c = cache.Get("9103__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -216,10 +236,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9103__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9103__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9103__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9103__workeffort", c)
 	}
-	cache.Put("9103__workeffort", c)
 
 	c = cache.Get("9104__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -232,10 +254,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddChildren(cache.Get("9106__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9104__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9104__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9104__workeffort", c)
 	}
-	cache.Put("9104__workeffort", c)
 
 	c = cache.Get("9105__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -252,10 +276,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9105__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9105__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9105__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9105__workeffort", c)
 	}
-	cache.Put("9105__workeffort", c)
 
 	c = cache.Get("9106__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -271,10 +297,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9106__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9106__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9106__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9106__workeffort", c)
 	}
-	cache.Put("9106__workeffort", c)
 
 	c = cache.Get("9200__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -288,10 +316,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9200__demoemployee1__provider_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9200__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9200__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9200__workeffort", c)
 	}
-	cache.Put("9200__workeffort", c)
 
 	c = cache.Get("9201__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -302,10 +332,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddChildren(cache.Get("9202__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9201__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9201__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9201__workeffort", c)
 	}
-	cache.Put("9201__workeffort", c)
 
 	c = cache.Get("9202__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -319,10 +351,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortSkillStandards(cache.Get("9202__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9202__workeffort: %v", err)
-		return err
+		log.Printf("fail to update 9202__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9202__workeffort", c)
 	}
-	cache.Put("9202__workeffort", c)
 
 	c = cache.Get("staff_mtg__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -340,10 +374,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("staff_mtg__admin__cal_attendee__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create staff_mtg__workeffort: %v", err)
-		return err
+		log.Printf("fail to update staff_mtg__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("staff_mtg__workeffort", c)
 	}
-	cache.Put("staff_mtg__workeffort", c)
 
 	c = cache.Get("calendar_pub_demo__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -353,10 +389,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("calendar_pub_demo__admin__cal_owner__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create calendar_pub_demo__workeffort: %v", err)
-		return err
+		log.Printf("fail to update calendar_pub_demo__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("calendar_pub_demo__workeffort", c)
 	}
-	cache.Put("calendar_pub_demo__workeffort", c)
 
 	c = cache.Get("project_pub_demo__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -368,10 +406,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("project_pub_demo__demoemployee1__cal_owner__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_pub_demo__workeffort: %v", err)
-		return err
+		log.Printf("fail to update project_pub_demo__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_pub_demo__workeffort", c)
 	}
-	cache.Put("project_pub_demo__workeffort", c)
 
 	c = cache.Get("oneoffmeeting__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -386,10 +426,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("oneoffmeeting__admin__cal_attendee__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create oneoffmeeting__workeffort: %v", err)
-		return err
+		log.Printf("fail to update oneoffmeeting__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("oneoffmeeting__workeffort", c)
 	}
-	cache.Put("oneoffmeeting__workeffort", c)
 
 	c = cache.Get("privatedemoemployee1__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -402,10 +444,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("privatedemoemployee1__demoemployee1__cal_owner__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create privatedemoemployee1__workeffort: %v", err)
-		return err
+		log.Printf("fail to update privatedemoemployee1__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("privatedemoemployee1__workeffort", c)
 	}
-	cache.Put("privatedemoemployee1__workeffort", c)
 
 	c = cache.Get("publicevent__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -418,10 +462,12 @@ func UpdateWorkEffort(ctx context.Context) error {
 		AddToWorkEffortAssocs(cache.Get("project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc").(*ent.WorkEffortAssoc)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create publicevent__workeffort: %v", err)
-		return err
+		log.Printf("fail to update publicevent__workeffort: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("publicevent__workeffort", c)
 	}
-	cache.Put("publicevent__workeffort", c)
 
 	return nil
 }

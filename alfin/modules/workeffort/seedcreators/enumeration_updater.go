@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateEnumeration(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("Enumeration updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -23,10 +23,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create emps_fulltime__enumeration: %v", err)
-		return err
+		log.Printf("fail to update emps_fulltime__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("emps_fulltime__enumeration", c)
 	}
-	cache.Put("emps_fulltime__enumeration", c)
 
 	c = cache.Get("emps_parttime__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -36,10 +38,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create emps_parttime__enumeration: %v", err)
-		return err
+		log.Printf("fail to update emps_parttime__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("emps_parttime__enumeration", c)
 	}
-	cache.Put("emps_parttime__enumeration", c)
 
 	c = cache.Get("emps_self__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -49,10 +53,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create emps_self__enumeration: %v", err)
-		return err
+		log.Printf("fail to update emps_self__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("emps_self__enumeration", c)
 	}
-	cache.Put("emps_self__enumeration", c)
 
 	c = cache.Get("emps_house__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -62,10 +68,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create emps_house__enumeration: %v", err)
-		return err
+		log.Printf("fail to update emps_house__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("emps_house__enumeration", c)
 	}
-	cache.Put("emps_house__enumeration", c)
 
 	c = cache.Get("emps_retired__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -75,10 +83,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create emps_retired__enumeration: %v", err)
-		return err
+		log.Printf("fail to update emps_retired__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("emps_retired__enumeration", c)
 	}
-	cache.Put("emps_retired__enumeration", c)
 
 	c = cache.Get("emps_student__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -88,10 +98,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create emps_student__enumeration: %v", err)
-		return err
+		log.Printf("fail to update emps_student__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("emps_student__enumeration", c)
 	}
-	cache.Put("emps_student__enumeration", c)
 
 	c = cache.Get("emps_unemp__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -101,10 +113,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create emps_unemp__enumeration: %v", err)
-		return err
+		log.Printf("fail to update emps_unemp__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("emps_unemp__enumeration", c)
 	}
-	cache.Put("emps_unemp__enumeration", c)
 
 	c = cache.Get("single__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -113,10 +127,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("marital_status__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create single__enumeration: %v", err)
-		return err
+		log.Printf("fail to update single__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("single__enumeration", c)
 	}
-	cache.Put("single__enumeration", c)
 
 	c = cache.Get("married__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -125,10 +141,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("marital_status__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create married__enumeration: %v", err)
-		return err
+		log.Printf("fail to update married__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("married__enumeration", c)
 	}
-	cache.Put("married__enumeration", c)
 
 	c = cache.Get("press_own__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -138,10 +156,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("pty_resid_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create press_own__enumeration: %v", err)
-		return err
+		log.Printf("fail to update press_own__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("press_own__enumeration", c)
 	}
-	cache.Put("press_own__enumeration", c)
 
 	c = cache.Get("press_pvt_tenant__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -151,10 +171,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("pty_resid_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create press_pvt_tenant__enumeration: %v", err)
-		return err
+		log.Printf("fail to update press_pvt_tenant__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("press_pvt_tenant__enumeration", c)
 	}
-	cache.Put("press_pvt_tenant__enumeration", c)
 
 	c = cache.Get("press_pub_tenant__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -164,10 +186,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("pty_resid_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create press_pub_tenant__enumeration: %v", err)
-		return err
+		log.Printf("fail to update press_pub_tenant__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("press_pub_tenant__enumeration", c)
 	}
-	cache.Put("press_pub_tenant__enumeration", c)
 
 	c = cache.Get("press_parents__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -177,10 +201,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("pty_resid_stts__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create press_parents__enumeration: %v", err)
-		return err
+		log.Printf("fail to update press_parents__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("press_parents__enumeration", c)
 	}
-	cache.Put("press_parents__enumeration", c)
 
 	c = cache.Get("party_regis_confirm__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -190,10 +216,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_regis_confirm__enumeration: %v", err)
-		return err
+		log.Printf("fail to update party_regis_confirm__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_regis_confirm__enumeration", c)
 	}
-	cache.Put("party_regis_confirm__enumeration", c)
 
 	c = cache.Get("upd_prsnl_inf_cnfrm__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -203,10 +231,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create upd_prsnl_inf_cnfrm__enumeration: %v", err)
-		return err
+		log.Printf("fail to update upd_prsnl_inf_cnfrm__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("upd_prsnl_inf_cnfrm__enumeration", c)
 	}
-	cache.Put("upd_prsnl_inf_cnfrm__enumeration", c)
 
 	c = cache.Get("prds_email_verify__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -216,10 +246,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create prds_email_verify__enumeration: %v", err)
-		return err
+		log.Printf("fail to update prds_email_verify__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("prds_email_verify__enumeration", c)
 	}
-	cache.Put("prds_email_verify__enumeration", c)
 
 	c = cache.Get("prds_partyinv_email__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -229,10 +261,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create prds_partyinv_email__enumeration: %v", err)
-		return err
+		log.Printf("fail to update prds_partyinv_email__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("prds_partyinv_email__enumeration", c)
 	}
-	cache.Put("prds_partyinv_email__enumeration", c)
 
 	c = cache.Get("cont_noti_email__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -242,10 +276,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cont_noti_email__enumeration: %v", err)
-		return err
+		log.Printf("fail to update cont_noti_email__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cont_noti_email__enumeration", c)
 	}
-	cache.Put("cont_noti_email__enumeration", c)
 
 	c = cache.Get("prds_cust_activated__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -255,10 +291,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create prds_cust_activated__enumeration: %v", err)
-		return err
+		log.Printf("fail to update prds_cust_activated__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("prds_cust_activated__enumeration", c)
 	}
-	cache.Put("prds_cust_activated__enumeration", c)
 
 	c = cache.Get("unsub_cont_list_noti__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -268,10 +306,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create unsub_cont_list_noti__enumeration: %v", err)
-		return err
+		log.Printf("fail to update unsub_cont_list_noti__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("unsub_cont_list_noti__enumeration", c)
 	}
-	cache.Put("unsub_cont_list_noti__enumeration", c)
 
 	c = cache.Get("sub_cont_list_noti__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -281,10 +321,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create sub_cont_list_noti__enumeration: %v", err)
-		return err
+		log.Printf("fail to update sub_cont_list_noti__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("sub_cont_list_noti__enumeration", c)
 	}
-	cache.Put("sub_cont_list_noti__enumeration", c)
 
 	c = cache.Get("unsub_cont_list_veri__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -294,10 +336,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create unsub_cont_list_veri__enumeration: %v", err)
-		return err
+		log.Printf("fail to update unsub_cont_list_veri__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("unsub_cont_list_veri__enumeration", c)
 	}
-	cache.Put("unsub_cont_list_veri__enumeration", c)
 
 	c = cache.Get("cont_email_template__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -307,10 +351,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("party_email__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cont_email_template__enumeration: %v", err)
-		return err
+		log.Printf("fail to update cont_email_template__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cont_email_template__enumeration", c)
 	}
-	cache.Put("cont_email_template__enumeration", c)
 
 	c = cache.Get("organization_party__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -319,10 +365,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("global_preferences__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create organization_party__enumeration: %v", err)
-		return err
+		log.Printf("fail to update organization_party__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("organization_party__enumeration", c)
 	}
-	cache.Put("organization_party__enumeration", c)
 
 	c = cache.Get("visual_theme__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -331,10 +379,12 @@ func UpdateEnumeration(ctx context.Context) error {
 		SetEnumerationType(cache.Get("global_preferences__enumerationtype").(*ent.EnumerationType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create visual_theme__enumeration: %v", err)
-		return err
+		log.Printf("fail to update visual_theme__enumeration: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("visual_theme__enumeration", c)
 	}
-	cache.Put("visual_theme__enumeration", c)
 
 	return nil
 }

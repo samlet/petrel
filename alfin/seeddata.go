@@ -102,12 +102,12 @@ func (t SeedProcessor) WriteFunctionHeader(ent *ModelEntity) {
 
 	case UpdatePhrase:
 		t.WriteLine(`func Update%s(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("%s updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
 	var c *ent.%s
-`, ent.Name, ent.Name)
+`, ent.Name, ent.Name, ent.Name)
 	}
 }
 
@@ -199,12 +199,33 @@ func (t SeedProcessor) ProcessElements(doc *etree.Document, elements []*etree.El
 		}
 
 		t.WriteLine("\t  Save(ctx)")
-		t.WriteLine(`if err != nil {
-	log.Printf("fail to create %s: %%v", err)
+		var opcode string
+		switch t.Phrase {
+		case CreatePhrase:
+			opcode="create"
+			t.WriteLine(`if err != nil {
+	log.Printf("fail to %s %s: %%v", err)
 	return err
 }
 cache.Put("%s", c)
-`, pkString, pkString)
+`, opcode, pkString, pkString)
+
+		case UpdatePhrase:
+			opcode="update"
+			t.WriteLine(`if err != nil {
+	log.Printf("fail to %s %s: %%v", err)
+	// return err 
+	// skip update failure
+} else {
+	cache.Put("%s", c)
+}
+`, opcode, pkString, pkString)
+
+		default:
+			log.Fatal("Cannot process phrase", t.Phrase)
+		}
+
+
 	}
 }
 

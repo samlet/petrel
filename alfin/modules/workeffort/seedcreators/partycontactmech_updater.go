@@ -9,7 +9,7 @@ import (
 )
 
 func UpdatePartyContactMech(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("PartyContactMech updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -24,10 +24,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee__9020__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee__9020__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee__9020__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee__9020__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee__9001__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -38,10 +40,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee__9001__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee__9001__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee__9001__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee__9001__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee__9023__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -52,10 +56,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee__9023__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee__9023__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee__9023__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee__9023__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee1__9020__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -67,10 +73,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee1__9020__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee1__9020__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee1__9020__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee1__9020__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee1__9001__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -82,10 +90,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee1__9001__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee1__9001__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee1__9001__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee1__9001__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee1__9023__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -97,10 +107,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee1__9023__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee1__9023__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee1__9023__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee1__9023__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee2__9020__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -112,10 +124,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee2__9020__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee2__9020__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee2__9020__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee2__9020__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee2__9001__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -127,10 +141,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee2__9001__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee2__9001__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee2__9001__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee2__9001__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee2__9023__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -142,10 +158,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee2__9023__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee2__9023__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee2__9023__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee2__9023__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee3__9020__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -157,10 +175,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee3__9020__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee3__9020__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee3__9020__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee3__9020__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee3__9001__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -172,10 +192,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee3__9001__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee3__9001__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee3__9001__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee3__9001__946720908__partycontactmech", c)
 
 	c = cache.Get("demoemployee3__9023__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -187,10 +209,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee3__9023__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update demoemployee3__9023__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee3__9023__946720908__partycontactmech", c)
 	}
-	cache.Put("demoemployee3__9023__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer1__9020__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -201,10 +225,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer1__9020__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer1__9020__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer1__9020__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer1__9020__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer1__9001__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -215,10 +241,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer1__9001__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer1__9001__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer1__9001__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer1__9001__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer1__9023__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -229,10 +257,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer1__9023__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer1__9023__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer1__9023__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer1__9023__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer2__9020__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -243,10 +273,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer2__9020__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer2__9020__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer2__9020__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer2__9020__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer2__9001__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -257,10 +289,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer2__9001__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer2__9001__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer2__9001__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer2__9001__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer2__9023__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -271,10 +305,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer2__9023__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer2__9023__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer2__9023__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer2__9023__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer3__9020__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -285,10 +321,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer3__9020__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer3__9020__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer3__9020__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer3__9020__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer3__9001__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -299,10 +337,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer3__9001__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer3__9001__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer3__9001__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer3__9001__946720908__partycontactmech", c)
 
 	c = cache.Get("democustomer3__9023__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -313,10 +353,12 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		SetRoleType(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer3__9023__946720908__partycontactmech: %v", err)
-		return err
+		log.Printf("fail to update democustomer3__9023__946720908__partycontactmech: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer3__9023__946720908__partycontactmech", c)
 	}
-	cache.Put("democustomer3__9023__946720908__partycontactmech", c)
 
 	return nil
 }

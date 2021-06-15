@@ -130,7 +130,7 @@ import (
 	"log"
 )
 
-func LoadSeeds() {
+func LoadSeeds(execUpdaters bool) {
 	client, err := ent.Open("sqlite3",
 		"file:ent?mode=memory&cache=shared&_fk=1")
 	if err != nil {
@@ -174,12 +174,23 @@ func GeneratePackage(pkg string) error{
 	buf:=strings.Builder{}
 	f:=fmt.Sprintf
 	buf.WriteString(f(Header, pkg))
+
 	for _,entName := range mani.EntityNames() {
 		buf.WriteString(f(`if err := Create%s(ctx); err != nil {
 		log.Fatal(err)
 	}
 	`, entName))
 	}
+
+	buf.WriteString("if execUpdaters {")
+	for _,entName := range mani.EntityNames() {
+		buf.WriteString(f(`if err := Update%s(ctx); err != nil {
+		log.Fatal(err)
+	}
+	`, entName))
+	}
+	buf.WriteString("}")
+
 	buf.WriteString(Footer)
 	creatorDir:=filepath.Join("modules", pkg, "seedcreators")
 	targetFile:=filepath.Join(creatorDir, "seedloader.go")

@@ -9,7 +9,7 @@ import (
 )
 
 func UpdatePartyType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("PartyType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -21,10 +21,12 @@ func UpdatePartyType(ctx context.Context) error {
 		SetDescription("Automated Agent").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create automated_agent__partytype: %v", err)
-		return err
+		log.Printf("fail to update automated_agent__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("automated_agent__partytype", c)
 	}
-	cache.Put("automated_agent__partytype", c)
 
 	c = cache.Get("person__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -40,10 +42,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddParties(cache.Get("workeffortuser__party").(*ent.Party)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create person__partytype: %v", err)
-		return err
+		log.Printf("fail to update person__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("person__partytype", c)
 	}
-	cache.Put("person__partytype", c)
 
 	c = cache.Get("party_group__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -53,10 +57,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddChildren(cache.Get("legal_organization__partytype").(*ent.PartyType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_group__partytype: %v", err)
-		return err
+		log.Printf("fail to update party_group__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_group__partytype", c)
 	}
-	cache.Put("party_group__partytype", c)
 
 	c = cache.Get("informal_group__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -69,10 +75,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddChildren(cache.Get("team__partytype").(*ent.PartyType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create informal_group__partytype: %v", err)
-		return err
+		log.Printf("fail to update informal_group__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("informal_group__partytype", c)
 	}
-	cache.Put("informal_group__partytype", c)
 
 	c = cache.Get("family__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -83,10 +91,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddSiblingPartyTypes(cache.Get("team__partytype").(*ent.PartyType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create family__partytype: %v", err)
-		return err
+		log.Printf("fail to update family__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("family__partytype", c)
 	}
-	cache.Put("family__partytype", c)
 
 	c = cache.Get("team__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -97,10 +107,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddSiblingPartyTypes(cache.Get("team__partytype").(*ent.PartyType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create team__partytype: %v", err)
-		return err
+		log.Printf("fail to update team__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("team__partytype", c)
 	}
-	cache.Put("team__partytype", c)
 
 	c = cache.Get("legal_organization__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -113,10 +125,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddChildren(cache.Get("government_agency__partytype").(*ent.PartyType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create legal_organization__partytype: %v", err)
-		return err
+		log.Printf("fail to update legal_organization__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("legal_organization__partytype", c)
 	}
-	cache.Put("legal_organization__partytype", c)
 
 	c = cache.Get("corporation__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -127,10 +141,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddSiblingPartyTypes(cache.Get("government_agency__partytype").(*ent.PartyType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create corporation__partytype: %v", err)
-		return err
+		log.Printf("fail to update corporation__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("corporation__partytype", c)
 	}
-	cache.Put("corporation__partytype", c)
 
 	c = cache.Get("government_agency__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -141,10 +157,12 @@ func UpdatePartyType(ctx context.Context) error {
 		AddSiblingPartyTypes(cache.Get("government_agency__partytype").(*ent.PartyType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create government_agency__partytype: %v", err)
-		return err
+		log.Printf("fail to update government_agency__partytype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("government_agency__partytype", c)
 	}
-	cache.Put("government_agency__partytype", c)
 
 	return nil
 }

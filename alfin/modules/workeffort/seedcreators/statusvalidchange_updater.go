@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateStatusValidChange(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("StatusValidChange updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -22,10 +22,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("party_disabled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_enabled__party_disabled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update party_enabled__party_disabled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_enabled__party_disabled__statusvalidchange", c)
 	}
-	cache.Put("party_enabled__party_disabled__statusvalidchange", c)
 
 	c = cache.Get("party_disabled__party_enabled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -34,10 +36,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("party_enabled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_disabled__party_enabled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update party_disabled__party_enabled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_disabled__party_enabled__statusvalidchange", c)
 	}
-	cache.Put("party_disabled__party_enabled__statusvalidchange", c)
 
 	c = cache.Get("com_entered__com_pending__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -46,10 +50,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_pending__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_entered__com_pending__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_entered__com_pending__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_entered__com_pending__statusvalidchange", c)
 	}
-	cache.Put("com_entered__com_pending__statusvalidchange", c)
 
 	c = cache.Get("com_entered__com_in_progress__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -58,10 +64,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_in_progress__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_entered__com_in_progress__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_entered__com_in_progress__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_entered__com_in_progress__statusvalidchange", c)
 	}
-	cache.Put("com_entered__com_in_progress__statusvalidchange", c)
 
 	c = cache.Get("com_entered__com_complete__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -70,10 +78,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_complete__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_entered__com_complete__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_entered__com_complete__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_entered__com_complete__statusvalidchange", c)
 	}
-	cache.Put("com_entered__com_complete__statusvalidchange", c)
 
 	c = cache.Get("com_pending__com_entered__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -82,10 +92,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_entered__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_pending__com_entered__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_pending__com_entered__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_pending__com_entered__statusvalidchange", c)
 	}
-	cache.Put("com_pending__com_entered__statusvalidchange", c)
 
 	c = cache.Get("com_pending__com_in_progress__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -94,10 +106,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_in_progress__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_pending__com_in_progress__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_pending__com_in_progress__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_pending__com_in_progress__statusvalidchange", c)
 	}
-	cache.Put("com_pending__com_in_progress__statusvalidchange", c)
 
 	c = cache.Get("com_in_progress__com_complete__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -106,10 +120,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_complete__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_in_progress__com_complete__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_in_progress__com_complete__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_in_progress__com_complete__statusvalidchange", c)
 	}
-	cache.Put("com_in_progress__com_complete__statusvalidchange", c)
 
 	c = cache.Get("com_in_progress__com_bounced__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -118,10 +134,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_bounced__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_in_progress__com_bounced__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_in_progress__com_bounced__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_in_progress__com_bounced__statusvalidchange", c)
 	}
-	cache.Put("com_in_progress__com_bounced__statusvalidchange", c)
 
 	c = cache.Get("com_complete__com_resolved__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -130,10 +148,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_resolved__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_complete__com_resolved__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_complete__com_resolved__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_complete__com_resolved__statusvalidchange", c)
 	}
-	cache.Put("com_complete__com_resolved__statusvalidchange", c)
 
 	c = cache.Get("com_complete__com_referred__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -142,10 +162,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_referred__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_complete__com_referred__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_complete__com_referred__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_complete__com_referred__statusvalidchange", c)
 	}
-	cache.Put("com_complete__com_referred__statusvalidchange", c)
 
 	c = cache.Get("com_complete__com_bounced__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -154,10 +176,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_bounced__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_complete__com_bounced__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_complete__com_bounced__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_complete__com_bounced__statusvalidchange", c)
 	}
-	cache.Put("com_complete__com_bounced__statusvalidchange", c)
 
 	c = cache.Get("com_unknown_party__com_complete__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -166,10 +190,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_complete__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_unknown_party__com_complete__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_unknown_party__com_complete__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_unknown_party__com_complete__statusvalidchange", c)
 	}
-	cache.Put("com_unknown_party__com_complete__statusvalidchange", c)
 
 	c = cache.Get("com_unknown_party__com_entered__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -178,10 +204,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_entered__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_unknown_party__com_entered__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_unknown_party__com_entered__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_unknown_party__com_entered__statusvalidchange", c)
 	}
-	cache.Put("com_unknown_party__com_entered__statusvalidchange", c)
 
 	c = cache.Get("com_pending__com_complete__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -190,10 +218,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_complete__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_pending__com_complete__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_pending__com_complete__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_pending__com_complete__statusvalidchange", c)
 	}
-	cache.Put("com_pending__com_complete__statusvalidchange", c)
 
 	c = cache.Get("com_entered__com_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -202,10 +232,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_entered__com_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_entered__com_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_entered__com_cancelled__statusvalidchange", c)
 	}
-	cache.Put("com_entered__com_cancelled__statusvalidchange", c)
 
 	c = cache.Get("com_pending__com_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -214,10 +246,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_pending__com_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_pending__com_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_pending__com_cancelled__statusvalidchange", c)
 	}
-	cache.Put("com_pending__com_cancelled__statusvalidchange", c)
 
 	c = cache.Get("com_in_progress__com_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -226,10 +260,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_in_progress__com_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_in_progress__com_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_in_progress__com_cancelled__statusvalidchange", c)
 	}
-	cache.Put("com_in_progress__com_cancelled__statusvalidchange", c)
 
 	c = cache.Get("com_complete__com_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -238,10 +274,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_complete__com_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_complete__com_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_complete__com_cancelled__statusvalidchange", c)
 	}
-	cache.Put("com_complete__com_cancelled__statusvalidchange", c)
 
 	c = cache.Get("com_resolved__com_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -250,10 +288,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_resolved__com_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_resolved__com_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_resolved__com_cancelled__statusvalidchange", c)
 	}
-	cache.Put("com_resolved__com_cancelled__statusvalidchange", c)
 
 	c = cache.Get("com_referred__com_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -262,10 +302,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_referred__com_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_referred__com_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_referred__com_cancelled__statusvalidchange", c)
 	}
-	cache.Put("com_referred__com_cancelled__statusvalidchange", c)
 
 	c = cache.Get("com_unknown_party__com_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -274,10 +316,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_unknown_party__com_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_unknown_party__com_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_unknown_party__com_cancelled__statusvalidchange", c)
 	}
-	cache.Put("com_unknown_party__com_cancelled__statusvalidchange", c)
 
 	c = cache.Get("com_role_created__com_role_read__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -286,10 +330,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_role_read__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_role_created__com_role_read__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_role_created__com_role_read__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_role_created__com_role_read__statusvalidchange", c)
 	}
-	cache.Put("com_role_created__com_role_read__statusvalidchange", c)
 
 	c = cache.Get("com_role_created__com_role_completed__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -298,10 +344,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_role_completed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_role_created__com_role_completed__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_role_created__com_role_completed__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_role_created__com_role_completed__statusvalidchange", c)
 	}
-	cache.Put("com_role_created__com_role_completed__statusvalidchange", c)
 
 	c = cache.Get("com_role_read__com_role_completed__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -310,10 +358,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("com_role_completed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_role_read__com_role_completed__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update com_role_read__com_role_completed__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_role_read__com_role_completed__statusvalidchange", c)
 	}
-	cache.Put("com_role_read__com_role_completed__statusvalidchange", c)
 
 	c = cache.Get("partyrel_created__partyrel_expired__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -322,10 +372,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("partyrel_expired__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partyrel_created__partyrel_expired__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update partyrel_created__partyrel_expired__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partyrel_created__partyrel_expired__statusvalidchange", c)
 	}
-	cache.Put("partyrel_created__partyrel_expired__statusvalidchange", c)
 
 	c = cache.Get("partyinv_sent__partyinv_pending__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -334,10 +386,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("partyinv_pending__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partyinv_sent__partyinv_pending__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update partyinv_sent__partyinv_pending__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partyinv_sent__partyinv_pending__statusvalidchange", c)
 	}
-	cache.Put("partyinv_sent__partyinv_pending__statusvalidchange", c)
 
 	c = cache.Get("partyinv_sent__partyinv_accepted__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -346,10 +400,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("partyinv_accepted__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partyinv_sent__partyinv_accepted__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update partyinv_sent__partyinv_accepted__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partyinv_sent__partyinv_accepted__statusvalidchange", c)
 	}
-	cache.Put("partyinv_sent__partyinv_accepted__statusvalidchange", c)
 
 	c = cache.Get("partyinv_sent__partyinv_declined__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -358,10 +414,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("partyinv_declined__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partyinv_sent__partyinv_declined__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update partyinv_sent__partyinv_declined__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partyinv_sent__partyinv_declined__statusvalidchange", c)
 	}
-	cache.Put("partyinv_sent__partyinv_declined__statusvalidchange", c)
 
 	c = cache.Get("partyinv_sent__partyinv_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -370,10 +428,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("partyinv_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partyinv_sent__partyinv_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update partyinv_sent__partyinv_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partyinv_sent__partyinv_cancelled__statusvalidchange", c)
 	}
-	cache.Put("partyinv_sent__partyinv_cancelled__statusvalidchange", c)
 
 	c = cache.Get("partyinv_pending__partyinv_accepted__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -382,10 +442,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("partyinv_accepted__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partyinv_pending__partyinv_accepted__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update partyinv_pending__partyinv_accepted__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partyinv_pending__partyinv_accepted__statusvalidchange", c)
 	}
-	cache.Put("partyinv_pending__partyinv_accepted__statusvalidchange", c)
 
 	c = cache.Get("partyinv_pending__partyinv_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -394,10 +456,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("partyinv_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partyinv_pending__partyinv_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update partyinv_pending__partyinv_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partyinv_pending__partyinv_cancelled__statusvalidchange", c)
 	}
-	cache.Put("partyinv_pending__partyinv_cancelled__statusvalidchange", c)
 
 	c = cache.Get("pas_assigned__pas_completed__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -406,10 +470,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("pas_completed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create pas_assigned__pas_completed__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update pas_assigned__pas_completed__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("pas_assigned__pas_completed__statusvalidchange", c)
 	}
-	cache.Put("pas_assigned__pas_completed__statusvalidchange", c)
 
 	c = cache.Get("pts_created__pts_completed__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -418,10 +484,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("pts_completed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create pts_created__pts_completed__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update pts_created__pts_completed__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("pts_created__pts_completed__statusvalidchange", c)
 	}
-	cache.Put("pts_created__pts_completed__statusvalidchange", c)
 
 	c = cache.Get("pts_created__pts_on_hold__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -430,10 +498,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("pts_on_hold__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create pts_created__pts_on_hold__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update pts_created__pts_on_hold__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("pts_created__pts_on_hold__statusvalidchange", c)
 	}
-	cache.Put("pts_created__pts_on_hold__statusvalidchange", c)
 
 	c = cache.Get("pts_created__pts_cancelled__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -442,10 +512,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("pts_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create pts_created__pts_cancelled__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update pts_created__pts_cancelled__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("pts_created__pts_cancelled__statusvalidchange", c)
 	}
-	cache.Put("pts_created__pts_cancelled__statusvalidchange", c)
 
 	c = cache.Get("pts_on_hold__pts_created__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -454,10 +526,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("pts_created__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create pts_on_hold__pts_created__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update pts_on_hold__pts_created__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("pts_on_hold__pts_created__statusvalidchange", c)
 	}
-	cache.Put("pts_on_hold__pts_created__statusvalidchange", c)
 
 	c = cache.Get("prj_active__prj_closed__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -466,10 +540,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("prj_closed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create prj_active__prj_closed__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update prj_active__prj_closed__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("prj_active__prj_closed__statusvalidchange", c)
 	}
-	cache.Put("prj_active__prj_closed__statusvalidchange", c)
 
 	c = cache.Get("_na___prj_closed__statusvalidchange").(*ent.StatusValidChange)
 	c, err = c.Update().
@@ -477,10 +553,12 @@ func UpdateStatusValidChange(ctx context.Context) error {
 		SetToStatusItem(cache.Get("prj_closed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create _na___prj_closed__statusvalidchange: %v", err)
-		return err
+		log.Printf("fail to update _na___prj_closed__statusvalidchange: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("_na___prj_closed__statusvalidchange", c)
 	}
-	cache.Put("_na___prj_closed__statusvalidchange", c)
 
 	return nil
 }

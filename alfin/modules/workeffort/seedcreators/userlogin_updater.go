@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateUserLogin(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("UserLogin updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -21,10 +21,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("demoemployee__projectadmin__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee__userlogin: %v", err)
-		return err
+		log.Printf("fail to update demoemployee__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee__userlogin", c)
 	}
-	cache.Put("demoemployee__userlogin", c)
 
 	c = cache.Get("demoemployee1__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -33,10 +35,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("demoemployee1__projectadmin__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee1__userlogin: %v", err)
-		return err
+		log.Printf("fail to update demoemployee1__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee1__userlogin", c)
 	}
-	cache.Put("demoemployee1__userlogin", c)
 
 	c = cache.Get("demoemployee2__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -45,10 +49,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("demoemployee2__projectuser__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee2__userlogin: %v", err)
-		return err
+		log.Printf("fail to update demoemployee2__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee2__userlogin", c)
 	}
-	cache.Put("demoemployee2__userlogin", c)
 
 	c = cache.Get("demoemployee3__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -57,10 +63,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("demoemployee3__projectuser__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee3__userlogin: %v", err)
-		return err
+		log.Printf("fail to update demoemployee3__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee3__userlogin", c)
 	}
-	cache.Put("demoemployee3__userlogin", c)
 
 	c = cache.Get("democustomer1__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -68,10 +76,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("democustomer1__projectuser__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer1__userlogin: %v", err)
-		return err
+		log.Printf("fail to update democustomer1__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer1__userlogin", c)
 	}
-	cache.Put("democustomer1__userlogin", c)
 
 	c = cache.Get("democustomer2__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -79,10 +89,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("democustomer2__projectuser__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer2__userlogin: %v", err)
-		return err
+		log.Printf("fail to update democustomer2__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer2__userlogin", c)
 	}
-	cache.Put("democustomer2__userlogin", c)
 
 	c = cache.Get("democustomer3__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -90,10 +102,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("democustomer3__projectuser__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer3__userlogin: %v", err)
-		return err
+		log.Printf("fail to update democustomer3__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer3__userlogin", c)
 	}
-	cache.Put("democustomer3__userlogin", c)
 
 	c = cache.Get("workeffortuser__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -102,10 +116,12 @@ func UpdateUserLogin(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("workeffortuser__workeffort_user__1293840000__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create workeffortuser__userlogin: %v", err)
-		return err
+		log.Printf("fail to update workeffortuser__userlogin: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("workeffortuser__userlogin", c)
 	}
-	cache.Put("workeffortuser__userlogin", c)
 
 	return nil
 }

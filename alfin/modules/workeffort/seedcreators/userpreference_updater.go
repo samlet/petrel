@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateUserPreference(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("UserPreference updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -22,10 +22,12 @@ func UpdateUserPreference(ctx context.Context) error {
 		SetUserPrefValue("DEFAULT").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create _na___organization_party__userpreference: %v", err)
-		return err
+		log.Printf("fail to update _na___organization_party__userpreference: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("_na___organization_party__userpreference", c)
 	}
-	cache.Put("_na___organization_party__userpreference", c)
 
 	return nil
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateStatusType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("StatusType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -23,10 +23,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddStatusItems(cache.Get("party_disabled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update party_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_status__statustype", c)
 	}
-	cache.Put("party_status__statustype", c)
 
 	c = cache.Get("case_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -34,10 +36,12 @@ func UpdateStatusType(ctx context.Context) error {
 		SetDescription("Case").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create case_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update case_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("case_status__statustype", c)
 	}
-	cache.Put("case_status__statustype", c)
 
 	c = cache.Get("com_event_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -55,10 +59,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddChildren(cache.Get("com_event_rol_status__statustype").(*ent.StatusType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_event_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update com_event_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_event_status__statustype", c)
 	}
-	cache.Put("com_event_status__statustype", c)
 
 	c = cache.Get("com_event_rol_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -70,10 +76,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddStatusItems(cache.Get("com_role_completed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create com_event_rol_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update com_event_rol_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("com_event_rol_status__statustype", c)
 	}
-	cache.Put("com_event_rol_status__statustype", c)
 
 	c = cache.Get("party_rel_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -83,10 +91,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddStatusItems(cache.Get("partyrel_expired__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_rel_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update party_rel_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_rel_status__statustype", c)
 	}
-	cache.Put("party_rel_status__statustype", c)
 
 	c = cache.Get("party_inv_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -99,10 +109,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddStatusItems(cache.Get("partyinv_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_inv_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update party_inv_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_inv_status__statustype", c)
 	}
-	cache.Put("party_inv_status__statustype", c)
 
 	c = cache.Get("project__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -113,10 +125,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddChildren(cache.Get("project_assgn_status__statustype").(*ent.StatusType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project__statustype: %v", err)
-		return err
+		log.Printf("fail to update project__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project__statustype", c)
 	}
-	cache.Put("project__statustype", c)
 
 	c = cache.Get("project_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -127,10 +141,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddStatusItems(cache.Get("prj_closed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update project_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_status__statustype", c)
 	}
-	cache.Put("project_status__statustype", c)
 
 	c = cache.Get("project_task_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -146,10 +162,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddStatusItems(cache.Get("pts_cancelled__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_task_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update project_task_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_task_status__statustype", c)
 	}
-	cache.Put("project_task_status__statustype", c)
 
 	c = cache.Get("project_assgn_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -160,10 +178,12 @@ func UpdateStatusType(ctx context.Context) error {
 		AddStatusItems(cache.Get("pas_completed__statusitem").(*ent.StatusItem)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_assgn_status__statustype: %v", err)
-		return err
+		log.Printf("fail to update project_assgn_status__statustype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_assgn_status__statustype", c)
 	}
-	cache.Put("project_assgn_status__statustype", c)
 
 	return nil
 }

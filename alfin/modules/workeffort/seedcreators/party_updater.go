@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateParty(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("Party updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -29,10 +29,12 @@ func UpdateParty(ctx context.Context) error {
 		AddUserLogins(cache.Get("demoemployee__userlogin").(*ent.UserLogin)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee__party: %v", err)
-		return err
+		log.Printf("fail to update demoemployee__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee__party", c)
 	}
-	cache.Put("demoemployee__party", c)
 
 	c = cache.Get("demoemployee1__party").(*ent.Party)
 	c, err = c.Update().
@@ -56,10 +58,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("privatedemoemployee1__demoemployee1__cal_owner__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee1__party: %v", err)
-		return err
+		log.Printf("fail to update demoemployee1__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee1__party", c)
 	}
-	cache.Put("demoemployee1__party", c)
 
 	c = cache.Get("demoemployee2__party").(*ent.Party)
 	c, err = c.Update().
@@ -79,10 +83,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("oneoffmeeting__demoemployee2__cal_attendee__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee2__party: %v", err)
-		return err
+		log.Printf("fail to update demoemployee2__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee2__party", c)
 	}
-	cache.Put("demoemployee2__party", c)
 
 	c = cache.Get("demoemployee3__party").(*ent.Party)
 	c, err = c.Update().
@@ -102,10 +108,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("staff_mtg__demoemployee3__cal_attendee__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee3__party: %v", err)
-		return err
+		log.Printf("fail to update demoemployee3__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee3__party", c)
 	}
-	cache.Put("demoemployee3__party", c)
 
 	c = cache.Get("democustomer1__party").(*ent.Party)
 	c, err = c.Update().
@@ -122,10 +130,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9000__democustomer1__client_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer1__party: %v", err)
-		return err
+		log.Printf("fail to update democustomer1__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer1__party", c)
 	}
-	cache.Put("democustomer1__party", c)
 
 	c = cache.Get("democustomer2__party").(*ent.Party)
 	c, err = c.Update().
@@ -142,10 +152,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9100__democustomer2__client_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer2__party: %v", err)
-		return err
+		log.Printf("fail to update democustomer2__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer2__party", c)
 	}
-	cache.Put("democustomer2__party", c)
 
 	c = cache.Get("democustomer3__party").(*ent.Party)
 	c, err = c.Update().
@@ -163,10 +175,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9100__democustomer3__client_billing__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create democustomer3__party: %v", err)
-		return err
+		log.Printf("fail to update democustomer3__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("democustomer3__party", c)
 	}
-	cache.Put("democustomer3__party", c)
 
 	c = cache.Get("workeffortuser__party").(*ent.Party)
 	c, err = c.Update().
@@ -176,10 +190,12 @@ func UpdateParty(ctx context.Context) error {
 		AddUserLogins(cache.Get("workeffortuser__userlogin").(*ent.UserLogin)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create workeffortuser__party: %v", err)
-		return err
+		log.Printf("fail to update workeffortuser__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("workeffortuser__party", c)
 	}
-	cache.Put("workeffortuser__party", c)
 
 	c = cache.Get("demoemployee1__party").(*ent.Party)
 	c, err = c.Update().
@@ -202,10 +218,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("privatedemoemployee1__demoemployee1__cal_owner__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee1__party: %v", err)
-		return err
+		log.Printf("fail to update demoemployee1__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee1__party", c)
 	}
-	cache.Put("demoemployee1__party", c)
 
 	c = cache.Get("demoemployee2__party").(*ent.Party)
 	c, err = c.Update().
@@ -224,10 +242,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("oneoffmeeting__demoemployee2__cal_attendee__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee2__party: %v", err)
-		return err
+		log.Printf("fail to update demoemployee2__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee2__party", c)
 	}
-	cache.Put("demoemployee2__party", c)
 
 	c = cache.Get("demoemployee3__party").(*ent.Party)
 	c, err = c.Update().
@@ -246,10 +266,12 @@ func UpdateParty(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("staff_mtg__demoemployee3__cal_attendee__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create demoemployee3__party: %v", err)
-		return err
+		log.Printf("fail to update demoemployee3__party: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("demoemployee3__party", c)
 	}
-	cache.Put("demoemployee3__party", c)
 
 	return nil
 }

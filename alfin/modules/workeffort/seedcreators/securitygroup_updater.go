@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateSecurityGroup(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("SecurityGroup updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -28,10 +28,12 @@ func UpdateSecurityGroup(ctx context.Context) error {
 		AddUserLoginSecurityGroups(cache.Get("workeffortuser__workeffort_user__1293840000__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create workeffort_user__securitygroup: %v", err)
-		return err
+		log.Printf("fail to update workeffort_user__securitygroup: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("workeffort_user__securitygroup", c)
 	}
-	cache.Put("workeffort_user__securitygroup", c)
 
 	c = cache.Get("workeffortadmin__securitygroup").(*ent.SecurityGroup)
 	c, err = c.Update().
@@ -40,10 +42,12 @@ func UpdateSecurityGroup(ctx context.Context) error {
 		AddSecurityGroupPermissions(cache.Get("workeffortadmin__workeffortmgr_admin__989755200__securitygrouppermission").(*ent.SecurityGroupPermission)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create workeffortadmin__securitygroup: %v", err)
-		return err
+		log.Printf("fail to update workeffortadmin__securitygroup: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("workeffortadmin__securitygroup", c)
 	}
-	cache.Put("workeffortadmin__securitygroup", c)
 
 	return nil
 }

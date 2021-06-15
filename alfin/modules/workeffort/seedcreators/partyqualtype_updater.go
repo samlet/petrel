@@ -9,7 +9,7 @@ import (
 )
 
 func UpdatePartyQualType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("PartyQualType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -21,10 +21,12 @@ func UpdatePartyQualType(ctx context.Context) error {
 		SetDescription("Work experience").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create experience__partyqualtype: %v", err)
-		return err
+		log.Printf("fail to update experience__partyqualtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("experience__partyqualtype", c)
 	}
-	cache.Put("experience__partyqualtype", c)
 
 	c = cache.Get("certification__partyqualtype").(*ent.PartyQualType)
 	c, err = c.Update().
@@ -32,10 +34,12 @@ func UpdatePartyQualType(ctx context.Context) error {
 		SetDescription("Certification").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create certification__partyqualtype: %v", err)
-		return err
+		log.Printf("fail to update certification__partyqualtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("certification__partyqualtype", c)
 	}
-	cache.Put("certification__partyqualtype", c)
 
 	c = cache.Get("degree__partyqualtype").(*ent.PartyQualType)
 	c, err = c.Update().
@@ -43,10 +47,12 @@ func UpdatePartyQualType(ctx context.Context) error {
 		SetDescription("Degree").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create degree__partyqualtype: %v", err)
-		return err
+		log.Printf("fail to update degree__partyqualtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("degree__partyqualtype", c)
 	}
-	cache.Put("degree__partyqualtype", c)
 
 	return nil
 }

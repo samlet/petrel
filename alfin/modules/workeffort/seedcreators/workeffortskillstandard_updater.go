@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateWorkEffortSkillStandard(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("WorkEffortSkillStandard updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -22,10 +22,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9002__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9002__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9002__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9002__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9003__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -34,10 +36,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9003__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9003__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9003__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9003__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9005__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -46,10 +50,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9005__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9005__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9005__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9005__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9006__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -58,10 +64,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9006__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9006__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9006__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9006__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9102__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -70,10 +78,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9102__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9102__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9102__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9102__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9103__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -82,10 +92,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9103__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9103__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9103__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9103__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9105__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -94,10 +106,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9105__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9105__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9105__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9105__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9106__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -106,10 +120,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9106__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9106__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9106__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9106__9000__workeffortskillstandard", c)
 
 	c = cache.Get("9202__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -118,10 +134,12 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		SetSkillType(cache.Get("9000__skilltype").(*ent.SkillType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9202__9000__workeffortskillstandard: %v", err)
-		return err
+		log.Printf("fail to update 9202__9000__workeffortskillstandard: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9202__9000__workeffortskillstandard", c)
 	}
-	cache.Put("9202__9000__workeffortskillstandard", c)
 
 	return nil
 }

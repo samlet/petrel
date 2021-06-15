@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateTemporalExpression(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("TemporalExpression updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -25,10 +25,12 @@ func UpdateTemporalExpression(ctx context.Context) error {
 		AddWorkEfforts(cache.Get("staff_mtg__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create staff_mtg__temporalexpression: %v", err)
-		return err
+		log.Printf("fail to update staff_mtg__temporalexpression: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("staff_mtg__temporalexpression", c)
 	}
-	cache.Put("staff_mtg__temporalexpression", c)
 
 	return nil
 }

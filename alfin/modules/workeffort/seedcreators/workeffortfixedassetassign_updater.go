@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateWorkEffortFixedAssetAssign(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("WorkEffortFixedAssetAssign updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -22,10 +22,12 @@ func UpdateWorkEffortFixedAssetAssign(ctx context.Context) error {
 		SetFixedAsset(cache.Get("demo_projector__fixedasset").(*ent.FixedAsset)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create staff_mtg__demo_projector__1199145600__workeffortfixedassetassign: %v", err)
-		return err
+		log.Printf("fail to update staff_mtg__demo_projector__1199145600__workeffortfixedassetassign: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("staff_mtg__demo_projector__1199145600__workeffortfixedassetassign", c)
 	}
-	cache.Put("staff_mtg__demo_projector__1199145600__workeffortfixedassetassign", c)
 
 	return nil
 }

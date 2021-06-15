@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateRoleType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("RoleType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -23,10 +23,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("sfa_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create main_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update main_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("main_role__roletype", c)
 	}
-	cache.Put("main_role__roletype", c)
 
 	c = cache.Get("account_lead__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -34,10 +36,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Account Lead").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create account_lead__roletype: %v", err)
-		return err
+		log.Printf("fail to update account_lead__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("account_lead__roletype", c)
 	}
-	cache.Put("account_lead__roletype", c)
 
 	c = cache.Get("admin__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -46,10 +50,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("ltd_admin__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create admin__roletype: %v", err)
-		return err
+		log.Printf("fail to update admin__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("admin__roletype", c)
 	}
-	cache.Put("admin__roletype", c)
 
 	c = cache.Get("agent__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -57,10 +63,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Agent").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create agent__roletype: %v", err)
-		return err
+		log.Printf("fail to update agent__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("agent__roletype", c)
 	}
-	cache.Put("agent__roletype", c)
 
 	c = cache.Get("automated_agent_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -68,10 +76,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Automated Agent").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create automated_agent_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update automated_agent_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("automated_agent_role__roletype", c)
 	}
-	cache.Put("automated_agent_role__roletype", c)
 
 	c = cache.Get("calendar_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -84,10 +94,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("cal_owner__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create calendar_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update calendar_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("calendar_role__roletype", c)
 	}
-	cache.Put("calendar_role__roletype", c)
 
 	c = cache.Get("client__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -95,10 +107,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Client").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create client__roletype: %v", err)
-		return err
+		log.Printf("fail to update client__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("client__roletype", c)
 	}
-	cache.Put("client__roletype", c)
 
 	c = cache.Get("commevent_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -110,10 +124,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("originator__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create commevent_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update commevent_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("commevent_role__roletype", c)
 	}
-	cache.Put("commevent_role__roletype", c)
 
 	c = cache.Get("consumer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -121,10 +137,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Consumer").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create consumer__roletype: %v", err)
-		return err
+		log.Printf("fail to update consumer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("consumer__roletype", c)
 	}
-	cache.Put("consumer__roletype", c)
 
 	c = cache.Get("contractor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -132,10 +150,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Contractor").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create contractor__roletype: %v", err)
-		return err
+		log.Printf("fail to update contractor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("contractor__roletype", c)
 	}
-	cache.Put("contractor__roletype", c)
 
 	c = cache.Get("customer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -161,10 +181,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("ship_to_customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create customer__roletype: %v", err)
-		return err
+		log.Printf("fail to update customer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("customer__roletype", c)
 	}
-	cache.Put("customer__roletype", c)
 
 	c = cache.Get("distribution_channel__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -173,10 +195,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("distributor__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create distribution_channel__roletype: %v", err)
-		return err
+		log.Printf("fail to update distribution_channel__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("distribution_channel__roletype", c)
 	}
-	cache.Put("distribution_channel__roletype", c)
 
 	c = cache.Get("isp__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -184,10 +208,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("ISP").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create isp__roletype: %v", err)
-		return err
+		log.Printf("fail to update isp__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("isp__roletype", c)
 	}
-	cache.Put("isp__roletype", c)
 
 	c = cache.Get("hosting_server__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -195,10 +221,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Hosting Server").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create hosting_server__roletype: %v", err)
-		return err
+		log.Printf("fail to update hosting_server__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("hosting_server__roletype", c)
 	}
-	cache.Put("hosting_server__roletype", c)
 
 	c = cache.Get("manufacturer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -206,10 +234,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Manufacturer").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create manufacturer__roletype: %v", err)
-		return err
+		log.Printf("fail to update manufacturer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("manufacturer__roletype", c)
 	}
-	cache.Put("manufacturer__roletype", c)
 
 	c = cache.Get("_na___roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -217,10 +247,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Not Applicable").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create _na___roletype: %v", err)
-		return err
+		log.Printf("fail to update _na___roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("_na___roletype", c)
 	}
-	cache.Put("_na___roletype", c)
 
 	c = cache.Get("organization_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -241,10 +273,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("gov_agency__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create organization_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update organization_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("organization_role__roletype", c)
 	}
-	cache.Put("organization_role__roletype", c)
 
 	c = cache.Get("owner__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -252,10 +286,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Owner").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create owner__roletype: %v", err)
-		return err
+		log.Printf("fail to update owner__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("owner__roletype", c)
 	}
-	cache.Put("owner__roletype", c)
 
 	c = cache.Get("prospect__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -263,10 +299,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Prospect").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create prospect__roletype: %v", err)
-		return err
+		log.Printf("fail to update prospect__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("prospect__roletype", c)
 	}
-	cache.Put("prospect__roletype", c)
 
 	c = cache.Get("person_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -281,10 +319,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("email_admin__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create person_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update person_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("person_role__roletype", c)
 	}
-	cache.Put("person_role__roletype", c)
 
 	c = cache.Get("referrer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -292,10 +332,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Referrer").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create referrer__roletype: %v", err)
-		return err
+		log.Printf("fail to update referrer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("referrer__roletype", c)
 	}
-	cache.Put("referrer__roletype", c)
 
 	c = cache.Get("request_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -307,10 +349,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("req_respond__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create request_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update request_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("request_role__roletype", c)
 	}
-	cache.Put("request_role__roletype", c)
 
 	c = cache.Get("req_manager__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -319,10 +363,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("request_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create req_manager__roletype: %v", err)
-		return err
+		log.Printf("fail to update req_manager__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("req_manager__roletype", c)
 	}
-	cache.Put("req_manager__roletype", c)
 
 	c = cache.Get("req_requester__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -331,10 +377,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("request_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create req_requester__roletype: %v", err)
-		return err
+		log.Printf("fail to update req_requester__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("req_requester__roletype", c)
 	}
-	cache.Put("req_requester__roletype", c)
 
 	c = cache.Get("req_taker__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -343,10 +391,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("request_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create req_taker__roletype: %v", err)
-		return err
+		log.Printf("fail to update req_taker__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("req_taker__roletype", c)
 	}
-	cache.Put("req_taker__roletype", c)
 
 	c = cache.Get("req_respond__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -355,10 +405,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("request_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create req_respond__roletype: %v", err)
-		return err
+		log.Printf("fail to update req_respond__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("req_respond__roletype", c)
 	}
-	cache.Put("req_respond__roletype", c)
 
 	c = cache.Get("sfa_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -370,10 +422,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("lead__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create sfa_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update sfa_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("sfa_role__roletype", c)
 	}
-	cache.Put("sfa_role__roletype", c)
 
 	c = cache.Get("shareholder__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -381,10 +435,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Shareholder").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create shareholder__roletype: %v", err)
-		return err
+		log.Printf("fail to update shareholder__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("shareholder__roletype", c)
 	}
-	cache.Put("shareholder__roletype", c)
 
 	c = cache.Get("subscriber__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -392,10 +448,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Subscriber").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create subscriber__roletype: %v", err)
-		return err
+		log.Printf("fail to update subscriber__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("subscriber__roletype", c)
 	}
-	cache.Put("subscriber__roletype", c)
 
 	c = cache.Get("vendor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -405,10 +463,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("ship_from_vendor__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create vendor__roletype: %v", err)
-		return err
+		log.Printf("fail to update vendor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("vendor__roletype", c)
 	}
-	cache.Put("vendor__roletype", c)
 
 	c = cache.Get("visitor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -416,10 +476,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Visitor").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create visitor__roletype: %v", err)
-		return err
+		log.Printf("fail to update visitor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("visitor__roletype", c)
 	}
-	cache.Put("visitor__roletype", c)
 
 	c = cache.Get("web_master__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -427,10 +489,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Web Master").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create web_master__roletype: %v", err)
-		return err
+		log.Printf("fail to update web_master__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("web_master__roletype", c)
 	}
-	cache.Put("web_master__roletype", c)
 
 	c = cache.Get("workflow_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -439,10 +503,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("wf_owner__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create workflow_role__roletype: %v", err)
-		return err
+		log.Printf("fail to update workflow_role__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("workflow_role__roletype", c)
 	}
-	cache.Put("workflow_role__roletype", c)
 
 	c = cache.Get("accountant__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -450,10 +516,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetDescription("Accountant").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create accountant__roletype: %v", err)
-		return err
+		log.Printf("fail to update accountant__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("accountant__roletype", c)
 	}
-	cache.Put("accountant__roletype", c)
 
 	c = cache.Get("account__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -462,10 +530,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("sfa_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create account__roletype: %v", err)
-		return err
+		log.Printf("fail to update account__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("account__roletype", c)
 	}
-	cache.Put("account__roletype", c)
 
 	c = cache.Get("addressee__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -474,10 +544,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("commevent_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create addressee__roletype: %v", err)
-		return err
+		log.Printf("fail to update addressee__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("addressee__roletype", c)
 	}
-	cache.Put("addressee__roletype", c)
 
 	c = cache.Get("association__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -486,10 +558,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create association__roletype: %v", err)
-		return err
+		log.Printf("fail to update association__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("association__roletype", c)
 	}
-	cache.Put("association__roletype", c)
 
 	c = cache.Get("bill_from_vendor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -498,10 +572,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("vendor__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create bill_from_vendor__roletype: %v", err)
-		return err
+		log.Printf("fail to update bill_from_vendor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("bill_from_vendor__roletype", c)
 	}
-	cache.Put("bill_from_vendor__roletype", c)
 
 	c = cache.Get("bill_to_customer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -510,10 +586,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create bill_to_customer__roletype: %v", err)
-		return err
+		log.Printf("fail to update bill_to_customer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("bill_to_customer__roletype", c)
 	}
-	cache.Put("bill_to_customer__roletype", c)
 
 	c = cache.Get("bcc__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -522,10 +600,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("commevent_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create bcc__roletype: %v", err)
-		return err
+		log.Printf("fail to update bcc__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("bcc__roletype", c)
 	}
-	cache.Put("bcc__roletype", c)
 
 	c = cache.Get("bulk_customer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -534,10 +614,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create bulk_customer__roletype: %v", err)
-		return err
+		log.Printf("fail to update bulk_customer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("bulk_customer__roletype", c)
 	}
-	cache.Put("bulk_customer__roletype", c)
 
 	c = cache.Get("cal_attendee__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -554,10 +636,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("oneoffmeeting__admin__cal_attendee__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cal_attendee__roletype: %v", err)
-		return err
+		log.Printf("fail to update cal_attendee__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cal_attendee__roletype", c)
 	}
-	cache.Put("cal_attendee__roletype", c)
 
 	c = cache.Get("cal_delegate__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -566,10 +650,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("calendar_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cal_delegate__roletype: %v", err)
-		return err
+		log.Printf("fail to update cal_delegate__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cal_delegate__roletype", c)
 	}
-	cache.Put("cal_delegate__roletype", c)
 
 	c = cache.Get("cal_host__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -578,10 +664,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("calendar_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cal_host__roletype: %v", err)
-		return err
+		log.Printf("fail to update cal_host__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cal_host__roletype", c)
 	}
-	cache.Put("cal_host__roletype", c)
 
 	c = cache.Get("cal_organizer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -590,10 +678,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("calendar_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cal_organizer__roletype: %v", err)
-		return err
+		log.Printf("fail to update cal_organizer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cal_organizer__roletype", c)
 	}
-	cache.Put("cal_organizer__roletype", c)
 
 	c = cache.Get("cal_owner__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -609,10 +699,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("privatedemoemployee1__demoemployee1__cal_owner__1199145600__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cal_owner__roletype: %v", err)
-		return err
+		log.Printf("fail to update cal_owner__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cal_owner__roletype", c)
 	}
-	cache.Put("cal_owner__roletype", c)
 
 	c = cache.Get("carrier__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -621,10 +713,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create carrier__roletype: %v", err)
-		return err
+		log.Printf("fail to update carrier__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("carrier__roletype", c)
 	}
-	cache.Put("carrier__roletype", c)
 
 	c = cache.Get("competitor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -633,10 +727,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create competitor__roletype: %v", err)
-		return err
+		log.Printf("fail to update competitor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("competitor__roletype", c)
 	}
-	cache.Put("competitor__roletype", c)
 
 	c = cache.Get("contact__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -645,10 +741,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("sfa_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create contact__roletype: %v", err)
-		return err
+		log.Printf("fail to update contact__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("contact__roletype", c)
 	}
-	cache.Put("contact__roletype", c)
 
 	c = cache.Get("cc__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -657,10 +755,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("commevent_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cc__roletype: %v", err)
-		return err
+		log.Printf("fail to update cc__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cc__roletype", c)
 	}
-	cache.Put("cc__roletype", c)
 
 	c = cache.Get("originator__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -669,10 +769,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("commevent_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create originator__roletype: %v", err)
-		return err
+		log.Printf("fail to update originator__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("originator__roletype", c)
 	}
-	cache.Put("originator__roletype", c)
 
 	c = cache.Get("distributor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -681,10 +783,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("distribution_channel__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create distributor__roletype: %v", err)
-		return err
+		log.Printf("fail to update distributor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("distributor__roletype", c)
 	}
-	cache.Put("distributor__roletype", c)
 
 	c = cache.Get("employee__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -719,10 +823,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("worker__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create employee__roletype: %v", err)
-		return err
+		log.Printf("fail to update employee__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("employee__roletype", c)
 	}
-	cache.Put("employee__roletype", c)
 
 	c = cache.Get("end_user_customer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -731,10 +837,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create end_user_customer__roletype: %v", err)
-		return err
+		log.Printf("fail to update end_user_customer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("end_user_customer__roletype", c)
 	}
-	cache.Put("end_user_customer__roletype", c)
 
 	c = cache.Get("household__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -743,10 +851,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create household__roletype: %v", err)
-		return err
+		log.Printf("fail to update household__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("household__roletype", c)
 	}
-	cache.Put("household__roletype", c)
 
 	c = cache.Get("internal_organizatio__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -759,10 +869,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9200__company__internal_organizatio__1238963272__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create internal_organizatio__roletype: %v", err)
-		return err
+		log.Printf("fail to update internal_organizatio__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("internal_organizatio__roletype", c)
 	}
-	cache.Put("internal_organizatio__roletype", c)
 
 	c = cache.Get("lead__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -771,10 +883,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("sfa_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create lead__roletype: %v", err)
-		return err
+		log.Printf("fail to update lead__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("lead__roletype", c)
 	}
-	cache.Put("lead__roletype", c)
 
 	c = cache.Get("ltd_admin__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -783,10 +897,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("admin__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create ltd_admin__roletype: %v", err)
-		return err
+		log.Printf("fail to update ltd_admin__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("ltd_admin__roletype", c)
 	}
-	cache.Put("ltd_admin__roletype", c)
 
 	c = cache.Get("organization_unit__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -800,10 +916,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("subsidiary__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create organization_unit__roletype: %v", err)
-		return err
+		log.Printf("fail to update organization_unit__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("organization_unit__roletype", c)
 	}
-	cache.Put("organization_unit__roletype", c)
 
 	c = cache.Get("partner__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -812,10 +930,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create partner__roletype: %v", err)
-		return err
+		log.Printf("fail to update partner__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("partner__roletype", c)
 	}
-	cache.Put("partner__roletype", c)
 
 	c = cache.Get("placing_customer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -824,10 +944,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create placing_customer__roletype: %v", err)
-		return err
+		log.Printf("fail to update placing_customer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("placing_customer__roletype", c)
 	}
-	cache.Put("placing_customer__roletype", c)
 
 	c = cache.Get("regulatory_agency__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -836,10 +958,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create regulatory_agency__roletype: %v", err)
-		return err
+		log.Printf("fail to update regulatory_agency__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("regulatory_agency__roletype", c)
 	}
-	cache.Put("regulatory_agency__roletype", c)
 
 	c = cache.Get("sales_rep__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -849,10 +973,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("affiliate__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create sales_rep__roletype: %v", err)
-		return err
+		log.Printf("fail to update sales_rep__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("sales_rep__roletype", c)
 	}
-	cache.Put("sales_rep__roletype", c)
 
 	c = cache.Get("ship_from_vendor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -861,10 +987,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("vendor__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create ship_from_vendor__roletype: %v", err)
-		return err
+		log.Printf("fail to update ship_from_vendor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("ship_from_vendor__roletype", c)
 	}
-	cache.Put("ship_from_vendor__roletype", c)
 
 	c = cache.Get("ship_to_customer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -873,10 +1001,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("customer__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create ship_to_customer__roletype: %v", err)
-		return err
+		log.Printf("fail to update ship_to_customer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("ship_to_customer__roletype", c)
 	}
-	cache.Put("ship_to_customer__roletype", c)
 
 	c = cache.Get("sponsor__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -885,10 +1015,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("person_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create sponsor__roletype: %v", err)
-		return err
+		log.Printf("fail to update sponsor__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("sponsor__roletype", c)
 	}
-	cache.Put("sponsor__roletype", c)
 
 	c = cache.Get("spouse__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -897,10 +1029,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("person_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create spouse__roletype: %v", err)
-		return err
+		log.Printf("fail to update spouse__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("spouse__roletype", c)
 	}
-	cache.Put("spouse__roletype", c)
 
 	c = cache.Get("supplier_agent__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -909,10 +1043,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("person_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create supplier_agent__roletype: %v", err)
-		return err
+		log.Printf("fail to update supplier_agent__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("supplier_agent__roletype", c)
 	}
-	cache.Put("supplier_agent__roletype", c)
 
 	c = cache.Get("supplier__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -921,10 +1057,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create supplier__roletype: %v", err)
-		return err
+		log.Printf("fail to update supplier__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("supplier__roletype", c)
 	}
-	cache.Put("supplier__roletype", c)
 
 	c = cache.Get("tax_authority__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -933,10 +1071,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create tax_authority__roletype: %v", err)
-		return err
+		log.Printf("fail to update tax_authority__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("tax_authority__roletype", c)
 	}
-	cache.Put("tax_authority__roletype", c)
 
 	c = cache.Get("union__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -945,10 +1085,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create union__roletype: %v", err)
-		return err
+		log.Printf("fail to update union__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("union__roletype", c)
 	}
-	cache.Put("union__roletype", c)
 
 	c = cache.Get("wf_owner__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -957,10 +1099,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("workflow_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create wf_owner__roletype: %v", err)
-		return err
+		log.Printf("fail to update wf_owner__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("wf_owner__roletype", c)
 	}
-	cache.Put("wf_owner__roletype", c)
 
 	c = cache.Get("gov_agency__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -969,10 +1113,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create gov_agency__roletype: %v", err)
-		return err
+		log.Printf("fail to update gov_agency__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("gov_agency__roletype", c)
 	}
-	cache.Put("gov_agency__roletype", c)
 
 	c = cache.Get("affiliate__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -981,10 +1127,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("sales_rep__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create affiliate__roletype: %v", err)
-		return err
+		log.Printf("fail to update affiliate__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("affiliate__roletype", c)
 	}
-	cache.Put("affiliate__roletype", c)
 
 	c = cache.Get("buyer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -993,10 +1141,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create buyer__roletype: %v", err)
-		return err
+		log.Printf("fail to update buyer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("buyer__roletype", c)
 	}
-	cache.Put("buyer__roletype", c)
 
 	c = cache.Get("cashier__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1005,10 +1155,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create cashier__roletype: %v", err)
-		return err
+		log.Printf("fail to update cashier__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("cashier__roletype", c)
 	}
-	cache.Put("cashier__roletype", c)
 
 	c = cache.Get("department__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1017,10 +1169,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_unit__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create department__roletype: %v", err)
-		return err
+		log.Printf("fail to update department__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("department__roletype", c)
 	}
-	cache.Put("department__roletype", c)
 
 	c = cache.Get("division__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1029,10 +1183,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_unit__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create division__roletype: %v", err)
-		return err
+		log.Printf("fail to update division__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("division__roletype", c)
 	}
-	cache.Put("division__roletype", c)
 
 	c = cache.Get("family_member__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1041,10 +1197,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("person_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create family_member__roletype: %v", err)
-		return err
+		log.Printf("fail to update family_member__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("family_member__roletype", c)
 	}
-	cache.Put("family_member__roletype", c)
 
 	c = cache.Get("manager__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1053,10 +1211,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create manager__roletype: %v", err)
-		return err
+		log.Printf("fail to update manager__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("manager__roletype", c)
 	}
-	cache.Put("manager__roletype", c)
 
 	c = cache.Get("order_clerk__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1065,10 +1225,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create order_clerk__roletype: %v", err)
-		return err
+		log.Printf("fail to update order_clerk__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("order_clerk__roletype", c)
 	}
-	cache.Put("order_clerk__roletype", c)
 
 	c = cache.Get("other_internal_organ__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1077,10 +1239,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("internal_organizatio__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create other_internal_organ__roletype: %v", err)
-		return err
+		log.Printf("fail to update other_internal_organ__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("other_internal_organ__roletype", c)
 	}
-	cache.Put("other_internal_organ__roletype", c)
 
 	c = cache.Get("other_organization_u__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1089,10 +1253,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_unit__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create other_organization_u__roletype: %v", err)
-		return err
+		log.Printf("fail to update other_organization_u__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("other_organization_u__roletype", c)
 	}
-	cache.Put("other_organization_u__roletype", c)
 
 	c = cache.Get("parent_organization__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1101,10 +1267,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_unit__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create parent_organization__roletype: %v", err)
-		return err
+		log.Printf("fail to update parent_organization__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("parent_organization__roletype", c)
 	}
-	cache.Put("parent_organization__roletype", c)
 
 	c = cache.Get("packer__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1113,10 +1281,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create packer__roletype: %v", err)
-		return err
+		log.Printf("fail to update packer__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("packer__roletype", c)
 	}
-	cache.Put("packer__roletype", c)
 
 	c = cache.Get("picker__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1125,10 +1295,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create picker__roletype: %v", err)
-		return err
+		log.Printf("fail to update picker__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("picker__roletype", c)
 	}
-	cache.Put("picker__roletype", c)
 
 	c = cache.Get("receiver__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1137,10 +1309,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create receiver__roletype: %v", err)
-		return err
+		log.Printf("fail to update receiver__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("receiver__roletype", c)
 	}
-	cache.Put("receiver__roletype", c)
 
 	c = cache.Get("shipment_clerk__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1149,10 +1323,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create shipment_clerk__roletype: %v", err)
-		return err
+		log.Printf("fail to update shipment_clerk__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("shipment_clerk__roletype", c)
 	}
-	cache.Put("shipment_clerk__roletype", c)
 
 	c = cache.Get("stocker__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1161,10 +1337,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create stocker__roletype: %v", err)
-		return err
+		log.Printf("fail to update stocker__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("stocker__roletype", c)
 	}
-	cache.Put("stocker__roletype", c)
 
 	c = cache.Get("subsidiary__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1173,10 +1351,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("organization_unit__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create subsidiary__roletype: %v", err)
-		return err
+		log.Printf("fail to update subsidiary__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("subsidiary__roletype", c)
 	}
-	cache.Put("subsidiary__roletype", c)
 
 	c = cache.Get("worker__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1185,10 +1365,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("employee__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create worker__roletype: %v", err)
-		return err
+		log.Printf("fail to update worker__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("worker__roletype", c)
 	}
-	cache.Put("worker__roletype", c)
 
 	c = cache.Get("email_admin__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1197,10 +1379,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("person_role__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create email_admin__roletype: %v", err)
-		return err
+		log.Printf("fail to update email_admin__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("email_admin__roletype", c)
 	}
-	cache.Put("email_admin__roletype", c)
 
 	c = cache.Get("project_team__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1225,10 +1409,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddChildren(cache.Get("provider_tester__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_team__roletype: %v", err)
-		return err
+		log.Printf("fail to update project_team__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_team__roletype", c)
 	}
-	cache.Put("project_team__roletype", c)
 
 	c = cache.Get("client_manager__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1241,10 +1427,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9100__democustomer2__client_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create client_manager__roletype: %v", err)
-		return err
+		log.Printf("fail to update client_manager__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("client_manager__roletype", c)
 	}
-	cache.Put("client_manager__roletype", c)
 
 	c = cache.Get("client_analyst__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1253,10 +1441,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("project_team__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create client_analyst__roletype: %v", err)
-		return err
+		log.Printf("fail to update client_analyst__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("client_analyst__roletype", c)
 	}
-	cache.Put("client_analyst__roletype", c)
 
 	c = cache.Get("client_billing__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1270,10 +1460,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9200__democustcompany__client_billing__1238963272__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create client_billing__roletype: %v", err)
-		return err
+		log.Printf("fail to update client_billing__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("client_billing__roletype", c)
 	}
-	cache.Put("client_billing__roletype", c)
 
 	c = cache.Get("provider_manager__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1290,10 +1482,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9200__demoemployee1__provider_manager__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create provider_manager__roletype: %v", err)
-		return err
+		log.Printf("fail to update provider_manager__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("provider_manager__roletype", c)
 	}
-	cache.Put("provider_manager__roletype", c)
 
 	c = cache.Get("provider_accounting__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1302,10 +1496,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("project_team__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create provider_accounting__roletype: %v", err)
-		return err
+		log.Printf("fail to update provider_accounting__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("provider_accounting__roletype", c)
 	}
-	cache.Put("provider_accounting__roletype", c)
 
 	c = cache.Get("provider_analyst__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1320,10 +1516,12 @@ func UpdateRoleType(ctx context.Context) error {
 		AddWorkEffortPartyAssignments(cache.Get("9200__demoemployee3__provider_analyst__1197650721__workeffortpartyassignment").(*ent.WorkEffortPartyAssignment)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create provider_analyst__roletype: %v", err)
-		return err
+		log.Printf("fail to update provider_analyst__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("provider_analyst__roletype", c)
 	}
-	cache.Put("provider_analyst__roletype", c)
 
 	c = cache.Get("provider_validator__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1332,10 +1530,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("project_team__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create provider_validator__roletype: %v", err)
-		return err
+		log.Printf("fail to update provider_validator__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("provider_validator__roletype", c)
 	}
-	cache.Put("provider_validator__roletype", c)
 
 	c = cache.Get("provider_functional__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1344,10 +1544,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("project_team__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create provider_functional__roletype: %v", err)
-		return err
+		log.Printf("fail to update provider_functional__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("provider_functional__roletype", c)
 	}
-	cache.Put("provider_functional__roletype", c)
 
 	c = cache.Get("provider_tester__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -1356,10 +1558,12 @@ func UpdateRoleType(ctx context.Context) error {
 		SetParent(cache.Get("project_team__roletype").(*ent.RoleType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create provider_tester__roletype: %v", err)
-		return err
+		log.Printf("fail to update provider_tester__roletype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("provider_tester__roletype", c)
 	}
-	cache.Put("provider_tester__roletype", c)
 
 	return nil
 }

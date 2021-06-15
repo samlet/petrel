@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateWorkEffortAssoc(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("WorkEffortAssoc updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -24,10 +24,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("9003__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9002__9003__work_eff_dependency__946684800__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update 9002__9003__work_eff_dependency__946684800__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9002__9003__work_eff_dependency__946684800__workeffortassoc", c)
 	}
-	cache.Put("9002__9003__work_eff_dependency__946684800__workeffortassoc", c)
 
 	c = cache.Get("9003__9005__work_eff_dependency__946684800__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -38,10 +40,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("9005__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9003__9005__work_eff_dependency__946684800__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update 9003__9005__work_eff_dependency__946684800__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9003__9005__work_eff_dependency__946684800__workeffortassoc", c)
 	}
-	cache.Put("9003__9005__work_eff_dependency__946684800__workeffortassoc", c)
 
 	c = cache.Get("9005__9006__work_eff_dependency__946684800__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -52,10 +56,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("9006__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9005__9006__work_eff_dependency__946684800__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update 9005__9006__work_eff_dependency__946684800__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9005__9006__work_eff_dependency__946684800__workeffortassoc", c)
 	}
-	cache.Put("9005__9006__work_eff_dependency__946684800__workeffortassoc", c)
 
 	c = cache.Get("9102__9103__work_eff_dependency__946684800__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -66,10 +72,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("9103__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9102__9103__work_eff_dependency__946684800__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update 9102__9103__work_eff_dependency__946684800__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9102__9103__work_eff_dependency__946684800__workeffortassoc", c)
 	}
-	cache.Put("9102__9103__work_eff_dependency__946684800__workeffortassoc", c)
 
 	c = cache.Get("9103__9105__work_eff_dependency__946684800__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -80,10 +88,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("9105__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9103__9105__work_eff_dependency__946684800__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update 9103__9105__work_eff_dependency__946684800__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9103__9105__work_eff_dependency__946684800__workeffortassoc", c)
 	}
-	cache.Put("9103__9105__work_eff_dependency__946684800__workeffortassoc", c)
 
 	c = cache.Get("9105__9106__work_eff_dependency__946684800__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -94,10 +104,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("9106__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create 9105__9106__work_eff_dependency__946684800__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update 9105__9106__work_eff_dependency__946684800__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("9105__9106__work_eff_dependency__946684800__workeffortassoc", c)
 	}
-	cache.Put("9105__9106__work_eff_dependency__946684800__workeffortassoc", c)
 
 	c = cache.Get("calendar_pub_demo__staff_mtg__work_eff_dependency__1199145600__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -107,10 +119,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("staff_mtg__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create calendar_pub_demo__staff_mtg__work_eff_dependency__1199145600__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update calendar_pub_demo__staff_mtg__work_eff_dependency__1199145600__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("calendar_pub_demo__staff_mtg__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
-	cache.Put("calendar_pub_demo__staff_mtg__work_eff_dependency__1199145600__workeffortassoc", c)
 
 	c = cache.Get("project_pub_demo__oneoffmeeting__work_eff_dependency__1199145600__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -120,10 +134,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("oneoffmeeting__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_pub_demo__oneoffmeeting__work_eff_dependency__1199145600__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update project_pub_demo__oneoffmeeting__work_eff_dependency__1199145600__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_pub_demo__oneoffmeeting__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
-	cache.Put("project_pub_demo__oneoffmeeting__work_eff_dependency__1199145600__workeffortassoc", c)
 
 	c = cache.Get("project_pub_demo__privatedemoemployee1__work_eff_dependency__1199145600__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -133,10 +149,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("privatedemoemployee1__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_pub_demo__privatedemoemployee1__work_eff_dependency__1199145600__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update project_pub_demo__privatedemoemployee1__work_eff_dependency__1199145600__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_pub_demo__privatedemoemployee1__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
-	cache.Put("project_pub_demo__privatedemoemployee1__work_eff_dependency__1199145600__workeffortassoc", c)
 
 	c = cache.Get("project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -146,10 +164,12 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		SetToWorkEffort(cache.Get("publicevent__workeffort").(*ent.WorkEffort)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc: %v", err)
-		return err
+		log.Printf("fail to update project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
-	cache.Put("project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc", c)
 
 	return nil
 }

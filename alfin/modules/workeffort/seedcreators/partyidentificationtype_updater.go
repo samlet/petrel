@@ -9,7 +9,7 @@ import (
 )
 
 func UpdatePartyIdentificationType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("PartyIdentificationType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -20,10 +20,12 @@ func UpdatePartyIdentificationType(ctx context.Context) error {
 		SetDescription("Original ID in the system where this record was imported from").
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create party_import__partyidentificationtype: %v", err)
-		return err
+		log.Printf("fail to update party_import__partyidentificationtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("party_import__partyidentificationtype", c)
 	}
-	cache.Put("party_import__partyidentificationtype", c)
 
 	return nil
 }

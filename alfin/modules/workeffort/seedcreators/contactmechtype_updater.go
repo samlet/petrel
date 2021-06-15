@@ -9,7 +9,7 @@ import (
 )
 
 func UpdateContactMechType(ctx context.Context) error {
-	log.Println("updater", common.Version)
+	log.Println("ContactMechType updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -27,10 +27,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		AddChildren(cache.Get("ftp_address__contactmechtype").(*ent.ContactMechType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create electronic_address__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update electronic_address__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("electronic_address__contactmechtype", c)
 	}
-	cache.Put("electronic_address__contactmechtype", c)
 
 	c = cache.Get("postal_address__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -47,10 +49,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		AddContactMechTypePurposes(cache.Get("postal_address__previous_location__contactmechtypepurpose").(*ent.ContactMechTypePurpose)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create postal_address__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update postal_address__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("postal_address__contactmechtype", c)
 	}
-	cache.Put("postal_address__contactmechtype", c)
 
 	c = cache.Get("telecom_number__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -76,10 +80,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		AddContactMechTypePurposes(cache.Get("telecom_number__phone_assistant__contactmechtypepurpose").(*ent.ContactMechTypePurpose)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create telecom_number__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update telecom_number__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("telecom_number__contactmechtype", c)
 	}
-	cache.Put("telecom_number__contactmechtype", c)
 
 	c = cache.Get("email_address__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -96,10 +102,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		AddContactMechTypePurposes(cache.Get("email_address__primary_email__contactmechtypepurpose").(*ent.ContactMechTypePurpose)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create email_address__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update email_address__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("email_address__contactmechtype", c)
 	}
-	cache.Put("email_address__contactmechtype", c)
 
 	c = cache.Get("ip_address__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -108,10 +116,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		SetParent(cache.Get("electronic_address__contactmechtype").(*ent.ContactMechType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create ip_address__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update ip_address__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("ip_address__contactmechtype", c)
 	}
-	cache.Put("ip_address__contactmechtype", c)
 
 	c = cache.Get("domain_name__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -120,10 +130,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		SetParent(cache.Get("electronic_address__contactmechtype").(*ent.ContactMechType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create domain_name__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update domain_name__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("domain_name__contactmechtype", c)
 	}
-	cache.Put("domain_name__contactmechtype", c)
 
 	c = cache.Get("web_address__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -137,10 +149,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		AddContactMechTypePurposes(cache.Get("web_address__linkedin_url__contactmechtypepurpose").(*ent.ContactMechTypePurpose)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create web_address__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update web_address__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("web_address__contactmechtype", c)
 	}
-	cache.Put("web_address__contactmechtype", c)
 
 	c = cache.Get("internal_partyid__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -150,10 +164,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		AddContacMechTypeCommunicationEventTypes(cache.Get("comment_note__communicationeventtype").(*ent.CommunicationEventType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create internal_partyid__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update internal_partyid__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("internal_partyid__contactmechtype", c)
 	}
-	cache.Put("internal_partyid__contactmechtype", c)
 
 	c = cache.Get("ftp_address__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -163,10 +179,12 @@ func UpdateContactMechType(ctx context.Context) error {
 		AddContacMechTypeCommunicationEventTypes(cache.Get("file_transfer_comm__communicationeventtype").(*ent.CommunicationEventType)).
 		Save(ctx)
 	if err != nil {
-		log.Printf("fail to create ftp_address__contactmechtype: %v", err)
-		return err
+		log.Printf("fail to update ftp_address__contactmechtype: %v", err)
+		// return err
+		// skip update failure
+	} else {
+		cache.Put("ftp_address__contactmechtype", c)
 	}
-	cache.Put("ftp_address__contactmechtype", c)
 
 	return nil
 }

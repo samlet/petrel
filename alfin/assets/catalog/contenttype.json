@@ -1,0 +1,144 @@
+{
+  "name": "ContentType",
+  "fields": [
+    {
+      "name": "contentTypeId",
+      "type": "id",
+      "col": "CONTENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentContentType",
+      "type": "one",
+      "relEntityName": "ContentType",
+      "fkName": "CNTNT_TYPE_PARENT",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "contentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Content",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contentTypeId",
+          "relFieldName": "contentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildContentType",
+      "type": "many",
+      "relEntityName": "ContentType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contentTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentTypeAttr",
+      "type": "many",
+      "relEntityName": "ContentTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "contentTypeId",
+          "relFieldName": "contentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "contentTypeId"
+  ],
+  "isView": false
+}

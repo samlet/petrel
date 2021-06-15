@@ -1,0 +1,313 @@
+{
+  "name": "CustomMethod",
+  "fields": [
+    {
+      "name": "customMethodId",
+      "type": "id",
+      "col": "CUSTOM_METHOD_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "customMethodTypeId",
+      "type": "id",
+      "col": "CUSTOM_METHOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "customMethodName",
+      "type": "long-varchar",
+      "col": "CUSTOM_METHOD_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "CustomMethodType",
+      "type": "one",
+      "relEntityName": "CustomMethodType",
+      "fkName": "CME_TO_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "customMethodTypeId",
+          "relFieldName": "customMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Content",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CostComponentCalc",
+      "type": "many",
+      "relEntityName": "CostComponentCalc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "costCustomMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetDepMethod",
+      "type": "many",
+      "relEntityName": "FixedAssetDepMethod",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "depreciationCustomMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoicePartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "invoiceSeqCustMethId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuotePartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "quoteSeqCustMethId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderPartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "orderSeqCustMethId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductAssoc",
+      "type": "many",
+      "relEntityName": "ProductAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "estimateCalcMethod"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "customPriceCalcService"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoAction",
+      "type": "many",
+      "relEntityName": "ProductPromoAction",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPromoCond",
+      "type": "many",
+      "relEntityName": "ProductPromoCond",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStorePaymentSetting",
+      "type": "many",
+      "relEntityName": "ProductStorePaymentSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "paymentCustomMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreShipmentMeth",
+      "type": "many",
+      "relEntityName": "ProductStoreShipmentMeth",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "shipmentCustomMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreTelecomSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreTelecomSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "telecomCustomMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "uomCustomMethodUomConversion",
+      "type": "many",
+      "relEntityName": "UomConversion",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "uomCustomMethodUomConversionDated",
+      "type": "many",
+      "relEntityName": "UomConversionDated",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "customMethodId",
+          "relFieldName": "estimateCalcMethod"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "customMethodId"
+  ],
+  "isView": false
+}

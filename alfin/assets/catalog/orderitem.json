@@ -1,0 +1,1300 @@
+{
+  "name": "OrderItem",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "externalId",
+      "type": "id",
+      "col": "EXTERNAL_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemTypeId",
+      "type": "id",
+      "col": "ORDER_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemGroupSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_GROUP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isItemGroupPrimary",
+      "type": "indicator",
+      "col": "IS_ITEM_GROUP_PRIMARY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fromInventoryItemId",
+      "type": "id",
+      "col": "FROM_INVENTORY_ITEM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "budgetId",
+      "type": "id",
+      "col": "BUDGET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "budgetItemSeqId",
+      "type": "id",
+      "col": "BUDGET_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "supplierProductId",
+      "type": "id-long",
+      "col": "SUPPLIER_PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productFeatureId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "prodCatalogId",
+      "type": "id",
+      "col": "PROD_CATALOG_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productCategoryId",
+      "type": "id",
+      "col": "PRODUCT_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isPromo",
+      "type": "indicator",
+      "col": "IS_PROMO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quoteId",
+      "type": "id",
+      "col": "QUOTE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quoteItemSeqId",
+      "type": "id",
+      "col": "QUOTE_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shoppingListId",
+      "type": "id",
+      "col": "SHOPPING_LIST_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shoppingListItemSeqId",
+      "type": "id",
+      "col": "SHOPPING_LIST_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "subscriptionId",
+      "type": "id",
+      "col": "SUBSCRIPTION_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "deploymentId",
+      "type": "id",
+      "col": "DEPLOYMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "cancelQuantity",
+      "type": "fixed-point",
+      "col": "CANCEL_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "selectedAmount",
+      "type": "fixed-point",
+      "col": "SELECTED_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "unitPrice",
+      "type": "currency-precise",
+      "col": "UNIT_PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "unitListPrice",
+      "type": "currency-precise",
+      "col": "UNIT_LIST_PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "unitAverageCost",
+      "type": "currency-amount",
+      "col": "UNIT_AVERAGE_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "unitRecurringPrice",
+      "type": "currency-amount",
+      "col": "UNIT_RECURRING_PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isModifiedPrice",
+      "type": "indicator",
+      "col": "IS_MODIFIED_PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "recurringFreqUomId",
+      "type": "id",
+      "col": "RECURRING_FREQ_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "itemDescription",
+      "type": "description",
+      "col": "ITEM_DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "correspondingPoId",
+      "type": "id",
+      "col": "CORRESPONDING_PO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "syncStatusId",
+      "type": "id",
+      "col": "SYNC_STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedShipDate",
+      "type": "date-time",
+      "col": "ESTIMATED_SHIP_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimatedDeliveryDate",
+      "type": "date-time",
+      "col": "ESTIMATED_DELIVERY_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoCancelDate",
+      "type": "date-time",
+      "col": "AUTO_CANCEL_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "dontCancelSetDate",
+      "type": "date-time",
+      "col": "DONT_CANCEL_SET_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "dontCancelSetUserLogin",
+      "type": "id-vlong",
+      "col": "DONT_CANCEL_SET_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipBeforeDate",
+      "type": "date-time",
+      "col": "SHIP_BEFORE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipAfterDate",
+      "type": "date-time",
+      "col": "SHIP_AFTER_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reserveAfterDate",
+      "type": "date-time",
+      "col": "RESERVE_AFTER_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "cancelBackOrderDate",
+      "type": "date-time",
+      "col": "CANCEL_BACK_ORDER_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "overrideGlAccountId",
+      "type": "id",
+      "col": "OVERRIDE_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "salesOpportunityId",
+      "type": "id",
+      "col": "SALES_OPPORTUNITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "changeByUserLoginId",
+      "type": "id-vlong",
+      "col": "CHANGE_BY_USER_LOGIN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "ORDER_ITEM_HDR",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemType",
+      "type": "one",
+      "relEntityName": "OrderItemType",
+      "fkName": "ORDER_ITEM_ORTYP",
+      "keymaps": [
+        {
+          "fieldName": "orderItemTypeId",
+          "relFieldName": "orderItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemGroup",
+      "type": "one",
+      "relEntityName": "OrderItemGroup",
+      "fkName": "ORDER_ITEM_ITGRP",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemGroupSeqId",
+          "relFieldName": "orderItemGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemTypeAttr",
+      "type": "many",
+      "relEntityName": "OrderItemTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderItemTypeId",
+          "relFieldName": "orderItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "ORDER_ITEM_PRODUCT",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FromInventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "ORDER_ITEM_FMINV",
+      "keymaps": [
+        {
+          "fieldName": "fromInventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RecurringFreqUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "ORDER_ITEM_RFUOM",
+      "keymaps": [
+        {
+          "fieldName": "recurringFreqUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "ORDER_ITEM_STTS",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductFacilityLocation",
+      "type": "many",
+      "relEntityName": "ProductFacilityLocation",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusValidChange",
+      "type": "many",
+      "relEntityName": "StatusValidChange",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SyncStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "ORDER_ITEM_SYST",
+      "keymaps": [
+        {
+          "fieldName": "syncStatusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DontCancelSetUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "ORDER_ITEM_DCUL",
+      "keymaps": [
+        {
+          "fieldName": "dontCancelSetUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "QuoteItem",
+      "type": "one",
+      "relEntityName": "QuoteItem",
+      "fkName": "ORDER_ITEM_QUIT",
+      "keymaps": [
+        {
+          "fieldName": "quoteId",
+          "relFieldName": "quoteId"
+        },
+        {
+          "fieldName": "quoteItemSeqId",
+          "relFieldName": "quoteItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShoppingListItem",
+      "type": "one-nofk",
+      "relEntityName": "ShoppingListItem",
+      "fkName": "ORDER_ITEM_SLI",
+      "keymaps": [
+        {
+          "fieldName": "shoppingListId",
+          "relFieldName": "shoppingListId"
+        },
+        {
+          "fieldName": "shoppingListItemSeqId",
+          "relFieldName": "shoppingListItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OverrideGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "ORDER_ITEM_OGLA",
+      "keymaps": [
+        {
+          "fieldName": "overrideGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SalesOpportunity",
+      "type": "one",
+      "relEntityName": "SalesOpportunity",
+      "fkName": "ORDER_ITEM_SLSOPP",
+      "keymaps": [
+        {
+          "fieldName": "salesOpportunityId",
+          "relFieldName": "salesOpportunityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ChangeByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "ORDER_ITEM_USRLGN",
+      "keymaps": [
+        {
+          "fieldName": "changeByUserLoginId",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Order ItemAllocationPlanItem",
+      "type": "many",
+      "relEntityName": "AllocationPlanItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountTrans",
+      "type": "many",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AcquireFixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "acquireOrderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "acquireOrderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetMaintOrder",
+      "type": "many",
+      "relEntityName": "FixedAssetMaintOrder",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GiftCardFulfillment",
+      "type": "many",
+      "relEntityName": "GiftCardFulfillment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "many",
+      "relEntityName": "ItemIssuance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderAdjustment",
+      "type": "many",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderDeliverySchedule",
+      "type": "one-nofk",
+      "relEntityName": "OrderDeliverySchedule",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromOrderItemAssoc",
+      "type": "many",
+      "relEntityName": "OrderItemAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToOrderItemAssoc",
+      "type": "many",
+      "relEntityName": "OrderItemAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "toOrderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "toOrderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemAttribute",
+      "type": "many",
+      "relEntityName": "OrderItemAttribute",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemBilling",
+      "type": "many",
+      "relEntityName": "OrderItemBilling",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemChange",
+      "type": "many",
+      "relEntityName": "OrderItemChange",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemContactMech",
+      "type": "many",
+      "relEntityName": "OrderItemContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemGroupOrder",
+      "type": "many",
+      "relEntityName": "OrderItemGroupOrder",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemPriceInfo",
+      "type": "many",
+      "relEntityName": "OrderItemPriceInfo",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemRole",
+      "type": "many",
+      "relEntityName": "OrderItemRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemShipGroupAssoc",
+      "type": "many",
+      "relEntityName": "OrderItemShipGroupAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemShipGrpInvRes",
+      "type": "many",
+      "relEntityName": "OrderItemShipGrpInvRes",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "type": "many",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderRequirementCommitment",
+      "type": "many",
+      "relEntityName": "OrderRequirementCommitment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderShipment",
+      "type": "many",
+      "relEntityName": "OrderShipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderStatus",
+      "type": "many",
+      "relEntityName": "OrderStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderTerm",
+      "type": "many",
+      "relEntityName": "OrderTerm",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PicklistItem",
+      "type": "many",
+      "relEntityName": "PicklistItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductOrderItem",
+      "type": "many",
+      "relEntityName": "ProductOrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EngagementProductOrderItem",
+      "type": "many",
+      "relEntityName": "ProductOrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "engagementId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "engagementItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItem",
+      "type": "many",
+      "relEntityName": "ReturnItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "many",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Subscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SurveyResponse",
+      "type": "many",
+      "relEntityName": "SurveyResponse",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkOrderItemFulfillment",
+      "type": "many",
+      "relEntityName": "WorkOrderItemFulfillment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "orderId",
+    "orderItemSeqId"
+  ],
+  "isView": false
+}

@@ -1,0 +1,136 @@
+{
+  "name": "StatusValidChange",
+  "fields": [
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusIdTo",
+      "type": "id",
+      "col": "STATUS_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "conditionExpression",
+      "type": "long-varchar",
+      "col": "CONDITION_EXPRESSION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "transitionName",
+      "type": "name",
+      "col": "TRANSITION_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "MainStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "STATUS_CHG_MAIN",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ToStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "STATUS_CHG_TO",
+      "keymaps": [
+        {
+          "fieldName": "statusIdTo",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OldPicklistStatusHistory",
+      "type": "many",
+      "relEntityName": "OldPicklistStatusHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        },
+        {
+          "fieldName": "statusIdTo",
+          "relFieldName": "statusIdTo"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "statusId",
+    "statusIdTo"
+  ],
+  "isView": false
+}

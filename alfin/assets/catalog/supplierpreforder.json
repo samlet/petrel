@@ -1,0 +1,85 @@
+{
+  "name": "SupplierPrefOrder",
+  "fields": [
+    {
+      "name": "supplierPrefOrderId",
+      "type": "id",
+      "col": "SUPPLIER_PREF_ORDER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "SupplierProduct",
+      "type": "many",
+      "relEntityName": "SupplierProduct",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "supplierPrefOrderId",
+          "relFieldName": "supplierPrefOrderId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "supplierPrefOrderId"
+  ],
+  "isView": false
+}

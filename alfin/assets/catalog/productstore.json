@@ -1,0 +1,1434 @@
+{
+  "name": "ProductStore",
+  "fields": [
+    {
+      "name": "productStoreId",
+      "type": "id",
+      "col": "PRODUCT_STORE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "primaryStoreGroupId",
+      "type": "id",
+      "col": "PRIMARY_STORE_GROUP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "storeName",
+      "type": "name",
+      "col": "STORE_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "companyName",
+      "type": "name",
+      "col": "COMPANY_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "title",
+      "type": "name",
+      "col": "TITLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "subtitle",
+      "type": "description",
+      "col": "SUBTITLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "payToPartyId",
+      "type": "id",
+      "col": "PAY_TO_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "daysToCancelNonPay",
+      "type": "numeric",
+      "col": "DAYS_TO_CANCEL_NON_PAY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "manualAuthIsCapture",
+      "type": "indicator",
+      "col": "MANUAL_AUTH_IS_CAPTURE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "prorateShipping",
+      "type": "indicator",
+      "col": "PRORATE_SHIPPING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "prorateTaxes",
+      "type": "indicator",
+      "col": "PRORATE_TAXES",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "viewCartOnAdd",
+      "type": "indicator",
+      "col": "VIEW_CART_ON_ADD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoSaveCart",
+      "type": "indicator",
+      "col": "AUTO_SAVE_CART",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoApproveReviews",
+      "type": "indicator",
+      "col": "AUTO_APPROVE_REVIEWS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isDemoStore",
+      "type": "indicator",
+      "col": "IS_DEMO_STORE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isImmediatelyFulfilled",
+      "type": "indicator",
+      "col": "IS_IMMEDIATELY_FULFILLED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "inventoryFacilityId",
+      "type": "id",
+      "col": "INVENTORY_FACILITY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "oneInventoryFacility",
+      "type": "indicator",
+      "col": "ONE_INVENTORY_FACILITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "checkInventory",
+      "type": "indicator",
+      "col": "CHECK_INVENTORY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reserveInventory",
+      "type": "indicator",
+      "col": "RESERVE_INVENTORY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reserveOrderEnumId",
+      "type": "id",
+      "col": "RESERVE_ORDER_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "requireInventory",
+      "type": "indicator",
+      "col": "REQUIRE_INVENTORY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "balanceResOnOrderCreation",
+      "type": "indicator",
+      "col": "BALANCE_RES_ON_ORDER_CREATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "requirementMethodEnumId",
+      "type": "id",
+      "col": "REQUIREMENT_METHOD_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderNumberPrefix",
+      "type": "id-long",
+      "col": "ORDER_NUMBER_PREFIX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultLocaleString",
+      "type": "very-short",
+      "col": "DEFAULT_LOCALE_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultCurrencyUomId",
+      "type": "id",
+      "col": "DEFAULT_CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultTimeZoneString",
+      "type": "id-long",
+      "col": "DEFAULT_TIME_ZONE_STRING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultSalesChannelEnumId",
+      "type": "id",
+      "col": "DEFAULT_SALES_CHANNEL_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "allowPassword",
+      "type": "indicator",
+      "col": "ALLOW_PASSWORD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultPassword",
+      "type": "long-varchar",
+      "col": "DEFAULT_PASSWORD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "explodeOrderItems",
+      "type": "indicator",
+      "col": "EXPLODE_ORDER_ITEMS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "checkGcBalance",
+      "type": "indicator",
+      "col": "CHECK_GC_BALANCE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "retryFailedAuths",
+      "type": "indicator",
+      "col": "RETRY_FAILED_AUTHS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "headerApprovedStatus",
+      "type": "id",
+      "col": "HEADER_APPROVED_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "itemApprovedStatus",
+      "type": "id",
+      "col": "ITEM_APPROVED_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "digitalItemApprovedStatus",
+      "type": "id",
+      "col": "DIGITAL_ITEM_APPROVED_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "headerDeclinedStatus",
+      "type": "id",
+      "col": "HEADER_DECLINED_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "itemDeclinedStatus",
+      "type": "id",
+      "col": "ITEM_DECLINED_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "headerCancelStatus",
+      "type": "id",
+      "col": "HEADER_CANCEL_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "itemCancelStatus",
+      "type": "id",
+      "col": "ITEM_CANCEL_STATUS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "authDeclinedMessage",
+      "type": "long-varchar",
+      "col": "AUTH_DECLINED_MESSAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "authFraudMessage",
+      "type": "long-varchar",
+      "col": "AUTH_FRAUD_MESSAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "authErrorMessage",
+      "type": "long-varchar",
+      "col": "AUTH_ERROR_MESSAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "visualThemeId",
+      "type": "id",
+      "col": "VISUAL_THEME_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "storeCreditAccountEnumId",
+      "type": "id",
+      "col": "STORE_CREDIT_ACCOUNT_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "usePrimaryEmailUsername",
+      "type": "indicator",
+      "col": "USE_PRIMARY_EMAIL_USERNAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "requireCustomerRole",
+      "type": "indicator",
+      "col": "REQUIRE_CUSTOMER_ROLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoInvoiceDigitalItems",
+      "type": "indicator",
+      "col": "AUTO_INVOICE_DIGITAL_ITEMS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reqShipAddrForDigItems",
+      "type": "indicator",
+      "col": "REQ_SHIP_ADDR_FOR_DIG_ITEMS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "showCheckoutGiftOptions",
+      "type": "indicator",
+      "col": "SHOW_CHECKOUT_GIFT_OPTIONS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "selectPaymentTypePerItem",
+      "type": "indicator",
+      "col": "SELECT_PAYMENT_TYPE_PER_ITEM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "showPricesWithVatTax",
+      "type": "indicator",
+      "col": "SHOW_PRICES_WITH_VAT_TAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "showTaxIsExempt",
+      "type": "indicator",
+      "col": "SHOW_TAX_IS_EXEMPT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "vatTaxAuthGeoId",
+      "type": "id",
+      "col": "VAT_TAX_AUTH_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "vatTaxAuthPartyId",
+      "type": "id",
+      "col": "VAT_TAX_AUTH_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "enableAutoSuggestionList",
+      "type": "indicator",
+      "col": "ENABLE_AUTO_SUGGESTION_LIST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "enableDigProdUpload",
+      "type": "indicator",
+      "col": "ENABLE_DIG_PROD_UPLOAD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "prodSearchExcludeVariants",
+      "type": "indicator",
+      "col": "PROD_SEARCH_EXCLUDE_VARIANTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "digProdUploadCategoryId",
+      "type": "id",
+      "col": "DIG_PROD_UPLOAD_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoOrderCcTryExp",
+      "type": "indicator",
+      "col": "AUTO_ORDER_CC_TRY_EXP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoOrderCcTryOtherCards",
+      "type": "indicator",
+      "col": "AUTO_ORDER_CC_TRY_OTHER_CARDS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoOrderCcTryLaterNsf",
+      "type": "indicator",
+      "col": "AUTO_ORDER_CC_TRY_LATER_NSF",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoOrderCcTryLaterMax",
+      "type": "numeric",
+      "col": "AUTO_ORDER_CC_TRY_LATER_MAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "storeCreditValidDays",
+      "type": "numeric",
+      "col": "STORE_CREDIT_VALID_DAYS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoApproveInvoice",
+      "type": "indicator",
+      "col": "AUTO_APPROVE_INVOICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "autoApproveOrder",
+      "type": "indicator",
+      "col": "AUTO_APPROVE_ORDER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipIfCaptureFails",
+      "type": "indicator",
+      "col": "SHIP_IF_CAPTURE_FAILS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "setOwnerUponIssuance",
+      "type": "indicator",
+      "col": "SET_OWNER_UPON_ISSUANCE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reqReturnInventoryReceive",
+      "type": "indicator",
+      "col": "REQ_RETURN_INVENTORY_RECEIVE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "addToCartRemoveIncompat",
+      "type": "indicator",
+      "col": "ADD_TO_CART_REMOVE_INCOMPAT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "addToCartReplaceUpsell",
+      "type": "indicator",
+      "col": "ADD_TO_CART_REPLACE_UPSELL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "splitPayPrefPerShpGrp",
+      "type": "indicator",
+      "col": "SPLIT_PAY_PREF_PER_SHP_GRP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "managedByLot",
+      "type": "indicator",
+      "col": "MANAGED_BY_LOT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "showOutOfStockProducts",
+      "type": "indicator",
+      "col": "SHOW_OUT_OF_STOCK_PRODUCTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderDecimalQuantity",
+      "type": "indicator",
+      "col": "ORDER_DECIMAL_QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "allowComment",
+      "type": "indicator",
+      "col": "ALLOW_COMMENT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "allocateInventory",
+      "type": "indicator",
+      "col": "ALLOCATE_INVENTORY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "PrimaryProductStoreGroup",
+      "type": "one",
+      "relEntityName": "ProductStoreGroup",
+      "fkName": "PROD_STR_PRSTRGP",
+      "keymaps": [
+        {
+          "fieldName": "primaryStoreGroupId",
+          "relFieldName": "productStoreGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "one",
+      "relEntityName": "Facility",
+      "fkName": "PROD_STR_FACILITY",
+      "keymaps": [
+        {
+          "fieldName": "inventoryFacilityId",
+          "relFieldName": "facilityId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReserveOrderEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PROD_STR_RORDENUM",
+      "keymaps": [
+        {
+          "fieldName": "reserveOrderEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RequirementMethodEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PROD_STR_RQMTENUM",
+      "keymaps": [
+        {
+          "fieldName": "requirementMethodEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PROD_STR_PAYTOPTY",
+      "keymaps": [
+        {
+          "fieldName": "payToPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_STR_CURUOM",
+      "keymaps": [
+        {
+          "fieldName": "defaultCurrencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DefaultSalesChannelEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PROD_STR_SALECHN",
+      "keymaps": [
+        {
+          "fieldName": "defaultSalesChannelEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "HeaderApprovedStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PROD_STR_HAPSTS",
+      "keymaps": [
+        {
+          "fieldName": "headerApprovedStatus",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ItemApprovedStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PROD_STR_IAPSTS",
+      "keymaps": [
+        {
+          "fieldName": "itemApprovedStatus",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DigitalItemApprovedStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PROD_STR_DIAPSTS",
+      "keymaps": [
+        {
+          "fieldName": "digitalItemApprovedStatus",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "HeaderDeclinedStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PROD_STR_HDCSTS",
+      "keymaps": [
+        {
+          "fieldName": "headerDeclinedStatus",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ItemDeclinedStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PROD_STR_IDCSTS",
+      "keymaps": [
+        {
+          "fieldName": "itemDeclinedStatus",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "HeaderCancelStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PROD_STR_HCNSTS",
+      "keymaps": [
+        {
+          "fieldName": "headerCancelStatus",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ItemCancelStatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "PROD_STR_ICNSTS",
+      "keymaps": [
+        {
+          "fieldName": "itemCancelStatus",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "VatTaxAuthority",
+      "type": "one",
+      "relEntityName": "TaxAuthority",
+      "fkName": "PROD_STR_VATTXA",
+      "keymaps": [
+        {
+          "fieldName": "vatTaxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "vatTaxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StoreCreditAccountEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "PROD_STR_STRCRDACT",
+      "keymaps": [
+        {
+          "fieldName": "storeCreditAccountEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EbayConfig",
+      "type": "one-nofk",
+      "relEntityName": "EbayConfig",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EbayShippingMethod",
+      "type": "many",
+      "relEntityName": "EbayShippingMethod",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GitHubUser",
+      "type": "many",
+      "relEntityName": "GitHubUser",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItemTempRes",
+      "type": "many",
+      "relEntityName": "InventoryItemTempRes",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LinkedInUser",
+      "type": "many",
+      "relEntityName": "LinkedInUser",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OAuth2GitHub",
+      "type": "many",
+      "relEntityName": "OAuth2GitHub",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OAuth2LinkedIn",
+      "type": "many",
+      "relEntityName": "OAuth2LinkedIn",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyProfileDefault",
+      "type": "many",
+      "relEntityName": "PartyProfileDefault",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductReview",
+      "type": "many",
+      "relEntityName": "ProductReview",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreCatalog",
+      "type": "many",
+      "relEntityName": "ProductStoreCatalog",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreEmailSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreEmailSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreFacility",
+      "type": "many",
+      "relEntityName": "ProductStoreFacility",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreFinActSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreFinActSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreGroupMember",
+      "type": "many",
+      "relEntityName": "ProductStoreGroupMember",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreKeywordOvrd",
+      "type": "many",
+      "relEntityName": "ProductStoreKeywordOvrd",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStorePaymentSetting",
+      "type": "many",
+      "relEntityName": "ProductStorePaymentSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStorePromoAppl",
+      "type": "many",
+      "relEntityName": "ProductStorePromoAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreRole",
+      "type": "many",
+      "relEntityName": "ProductStoreRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreSurveyAppl",
+      "type": "many",
+      "relEntityName": "ProductStoreSurveyAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreTelecomSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreTelecomSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreVendorPayment",
+      "type": "many",
+      "relEntityName": "ProductStoreVendorPayment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreVendorShipment",
+      "type": "many",
+      "relEntityName": "ProductStoreVendorShipment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Quote",
+      "type": "many",
+      "relEntityName": "Quote",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SegmentGroup",
+      "type": "many",
+      "relEntityName": "SegmentGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShoppingList",
+      "type": "many",
+      "relEntityName": "ShoppingList",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxAuthorityRateProduct",
+      "type": "many",
+      "relEntityName": "TaxAuthorityRateProduct",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ThirdPartyLogin",
+      "type": "many",
+      "relEntityName": "ThirdPartyLogin",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebSite",
+      "type": "many",
+      "relEntityName": "WebSite",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productStoreId",
+          "relFieldName": "productStoreId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productStoreId"
+  ],
+  "isView": false
+}

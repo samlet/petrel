@@ -1,0 +1,160 @@
+{
+  "name": "ShipmentGatewayConfig",
+  "fields": [
+    {
+      "name": "shipmentGatewayConfigId",
+      "type": "id",
+      "col": "SHIPMENT_GATEWAY_CONFIG_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentGatewayConfTypeId",
+      "type": "id",
+      "col": "SHIPMENT_GATEWAY_CONF_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ShipmentGatewayConfigType",
+      "type": "one",
+      "relEntityName": "ShipmentGatewayConfigType",
+      "fkName": "SGC_SGCT",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfTypeId",
+          "relFieldName": "shipmentGatewayConfTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStoreShipmentMeth",
+      "type": "many",
+      "relEntityName": "ProductStoreShipmentMeth",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfigId",
+          "relFieldName": "shipmentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentGatewayDhl",
+      "type": "one-nofk",
+      "relEntityName": "ShipmentGatewayDhl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfigId",
+          "relFieldName": "shipmentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentGatewayFedex",
+      "type": "one-nofk",
+      "relEntityName": "ShipmentGatewayFedex",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfigId",
+          "relFieldName": "shipmentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentGatewayUps",
+      "type": "one-nofk",
+      "relEntityName": "ShipmentGatewayUps",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfigId",
+          "relFieldName": "shipmentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentGatewayUsps",
+      "type": "one-nofk",
+      "relEntityName": "ShipmentGatewayUsps",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfigId",
+          "relFieldName": "shipmentGatewayConfigId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "shipmentGatewayConfigId"
+  ],
+  "isView": false
+}

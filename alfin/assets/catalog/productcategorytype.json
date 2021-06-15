@@ -1,0 +1,144 @@
+{
+  "name": "ProductCategoryType",
+  "fields": [
+    {
+      "name": "productCategoryTypeId",
+      "type": "id",
+      "col": "PRODUCT_CATEGORY_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentProductCategoryType",
+      "type": "one",
+      "relEntityName": "ProductCategoryType",
+      "fkName": "PROD_CTGRY_TYPEPAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "productCategoryTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductCategory",
+      "type": "many",
+      "relEntityName": "ProductCategory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productCategoryTypeId",
+          "relFieldName": "productCategoryTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildProductCategoryType",
+      "type": "many",
+      "relEntityName": "ProductCategoryType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productCategoryTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCategoryTypeAttr",
+      "type": "many",
+      "relEntityName": "ProductCategoryTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productCategoryTypeId",
+          "relFieldName": "productCategoryTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productCategoryTypeId"
+  ],
+  "isView": false
+}

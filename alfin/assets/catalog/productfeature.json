@@ -1,0 +1,360 @@
+{
+  "name": "ProductFeature",
+  "fields": [
+    {
+      "name": "productFeatureId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productFeatureTypeId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productFeatureCategoryId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_CATEGORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "uomId",
+      "type": "id",
+      "col": "UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "numberSpecified",
+      "type": "fixed-point",
+      "col": "NUMBER_SPECIFIED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultAmount",
+      "type": "currency-amount",
+      "col": "DEFAULT_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultSequenceNum",
+      "type": "numeric",
+      "col": "DEFAULT_SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "abbrev",
+      "type": "id",
+      "col": "ABBREV",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "idCode",
+      "type": "id-long",
+      "col": "ID_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductFeatureCategory",
+      "type": "one",
+      "relEntityName": "ProductFeatureCategory",
+      "fkName": "PROD_FEAT_CATEGORY",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureCategoryId",
+          "relFieldName": "productFeatureCategoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductFeatureType",
+      "type": "one",
+      "relEntityName": "ProductFeatureType",
+      "fkName": "PROD_FEAT_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureTypeId",
+          "relFieldName": "productFeatureTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Uom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_FEAT_UOM",
+      "keymaps": [
+        {
+          "fieldName": "uomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CostComponent",
+      "type": "many",
+      "relEntityName": "CostComponent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DesiredFeature",
+      "type": "many",
+      "relEntityName": "DesiredFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceItem",
+      "type": "many",
+      "relEntityName": "InvoiceItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFeatureAppl",
+      "type": "many",
+      "relEntityName": "ProductFeatureAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFeatureApplAttr",
+      "type": "many",
+      "relEntityName": "ProductFeatureApplAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFeatureDataResource",
+      "type": "many",
+      "relEntityName": "ProductFeatureDataResource",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFeatureGroupAppl",
+      "type": "many",
+      "relEntityName": "ProductFeatureGroupAppl",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MainProductFeatureIactn",
+      "type": "many",
+      "relEntityName": "ProductFeatureIactn",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AssocProductFeatureIactn",
+      "type": "many",
+      "relEntityName": "ProductFeatureIactn",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductManufacturingRule",
+      "type": "many",
+      "relEntityName": "ProductManufacturingRule",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeature"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteItem",
+      "type": "many",
+      "relEntityName": "QuoteItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentItemFeature",
+      "type": "many",
+      "relEntityName": "ShipmentItemFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SupplierProductFeature",
+      "type": "many",
+      "relEntityName": "SupplierProductFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureId",
+          "relFieldName": "productFeatureId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productFeatureId"
+  ],
+  "isView": false
+}

@@ -1,0 +1,508 @@
+{
+  "name": "OrderPaymentPreference",
+  "fields": [
+    {
+      "name": "orderPaymentPreferenceId",
+      "type": "id",
+      "col": "ORDER_PAYMENT_PREFERENCE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipGroupSeqId",
+      "type": "id",
+      "col": "SHIP_GROUP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPricePurposeId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_PURPOSE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "paymentMethodTypeId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "paymentMethodId",
+      "type": "id",
+      "col": "PAYMENT_METHOD_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "finAccountId",
+      "type": "id",
+      "col": "FIN_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "securityCode",
+      "type": "long-varchar",
+      "col": "SECURITY_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "track2",
+      "type": "long-varchar",
+      "col": "TRACK2",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "presentFlag",
+      "type": "indicator",
+      "col": "PRESENT_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "swipedFlag",
+      "type": "indicator",
+      "col": "SWIPED_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "overflowFlag",
+      "type": "indicator",
+      "col": "OVERFLOW_FLAG",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "maxAmount",
+      "type": "currency-amount",
+      "col": "MAX_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "processAttempt",
+      "type": "numeric",
+      "col": "PROCESS_ATTEMPT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "billingPostalCode",
+      "type": "short-varchar",
+      "col": "BILLING_POSTAL_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "manualAuthCode",
+      "type": "short-varchar",
+      "col": "MANUAL_AUTH_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "manualRefNum",
+      "type": "short-varchar",
+      "col": "MANUAL_REF_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "statusId",
+      "type": "id",
+      "col": "STATUS_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "needsNsfRetry",
+      "type": "indicator",
+      "col": "NEEDS_NSF_RETRY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "ORDER_PMPRF_OHDR",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItem",
+      "type": "one-nofk",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemShipGroup",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPricePurpose",
+      "type": "one",
+      "relEntityName": "ProductPricePurpose",
+      "fkName": "ORDER_PMPRF_PPRP",
+      "keymaps": [
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentMethodType",
+      "type": "one",
+      "relEntityName": "PaymentMethodType",
+      "fkName": "ORDER_PMPRF_PMTP",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodTypeId",
+          "relFieldName": "paymentMethodTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PaymentMethod",
+      "type": "one",
+      "relEntityName": "PaymentMethod",
+      "fkName": "ORDER_PMPRF_PMETH",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FinAccount",
+      "type": "one",
+      "relEntityName": "FinAccount",
+      "fkName": "ORDER_PMPRF_FINACT",
+      "keymaps": [
+        {
+          "fieldName": "finAccountId",
+          "relFieldName": "finAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "StatusItem",
+      "type": "one",
+      "relEntityName": "StatusItem",
+      "fkName": "ORDER_PMPRF_STTS",
+      "keymaps": [
+        {
+          "fieldName": "statusId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "ORDER_PMPRF_USRL",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreditCard",
+      "type": "one-nofk",
+      "relEntityName": "CreditCard",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "EftAccount",
+      "type": "one-nofk",
+      "relEntityName": "EftAccount",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "GiftCard",
+      "type": "one-nofk",
+      "relEntityName": "GiftCard",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "paymentMethodId",
+          "relFieldName": "paymentMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderStatus",
+      "type": "many",
+      "relEntityName": "OrderStatus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderPaymentPreferenceId",
+          "relFieldName": "orderPaymentPreferenceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Payment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderPaymentPreferenceId",
+          "relFieldName": "paymentPreferenceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PaymentGatewayResponse",
+      "type": "many",
+      "relEntityName": "PaymentGatewayResponse",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderPaymentPreferenceId",
+          "relFieldName": "orderPaymentPreferenceId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnItemResponse",
+      "type": "many",
+      "relEntityName": "ReturnItemResponse",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderPaymentPreferenceId",
+          "relFieldName": "orderPaymentPreferenceId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "orderPaymentPreferenceId"
+  ],
+  "isView": false
+}

@@ -1,0 +1,144 @@
+{
+  "name": "FacilityType",
+  "fields": [
+    {
+      "name": "facilityTypeId",
+      "type": "id",
+      "col": "FACILITY_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentFacilityType",
+      "type": "one",
+      "relEntityName": "FacilityType",
+      "fkName": "FACILITY_TYPEPAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "facilityTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityTypeId",
+          "relFieldName": "facilityTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildFacilityType",
+      "type": "many",
+      "relEntityName": "FacilityType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityTypeAttr",
+      "type": "many",
+      "relEntityName": "FacilityTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityTypeId",
+          "relFieldName": "facilityTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "facilityTypeId"
+  ],
+  "isView": false
+}

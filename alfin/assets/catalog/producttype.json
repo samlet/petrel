@@ -1,0 +1,164 @@
+{
+  "name": "ProductType",
+  "fields": [
+    {
+      "name": "productTypeId",
+      "type": "id",
+      "col": "PRODUCT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isPhysical",
+      "type": "indicator",
+      "col": "IS_PHYSICAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isDigital",
+      "type": "indicator",
+      "col": "IS_DIGITAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentProductType",
+      "type": "one",
+      "relEntityName": "ProductType",
+      "fkName": "PROD_TYPE_PARENT",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "productTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Product",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productTypeId",
+          "relFieldName": "productTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildProductType",
+      "type": "many",
+      "relEntityName": "ProductType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductTypeAttr",
+      "type": "many",
+      "relEntityName": "ProductTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productTypeId",
+          "relFieldName": "productTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productTypeId"
+  ],
+  "isView": false
+}

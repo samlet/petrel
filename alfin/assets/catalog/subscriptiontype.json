@@ -1,0 +1,144 @@
+{
+  "name": "SubscriptionType",
+  "fields": [
+    {
+      "name": "subscriptionTypeId",
+      "type": "id",
+      "col": "SUBSCRIPTION_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentSubscriptionType",
+      "type": "one",
+      "relEntityName": "SubscriptionType",
+      "fkName": "SUBSC_TYPE_PARENT",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "subscriptionTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Subscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionTypeId",
+          "relFieldName": "subscriptionTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildSubscriptionType",
+      "type": "many",
+      "relEntityName": "SubscriptionType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SubscriptionTypeAttr",
+      "type": "many",
+      "relEntityName": "SubscriptionTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "subscriptionTypeId",
+          "relFieldName": "subscriptionTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "subscriptionTypeId"
+  ],
+  "isView": false
+}

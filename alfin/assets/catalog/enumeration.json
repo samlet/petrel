@@ -1,0 +1,1038 @@
+{
+  "name": "Enumeration",
+  "fields": [
+    {
+      "name": "enumId",
+      "type": "id",
+      "col": "ENUM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "enumTypeId",
+      "type": "id",
+      "col": "ENUM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "enumCode",
+      "type": "short-varchar",
+      "col": "ENUM_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "sequenceId",
+      "type": "id",
+      "col": "SEQUENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "EnumerationType",
+      "type": "one",
+      "relEntityName": "EnumerationType",
+      "fkName": "ENUM_TO_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "enumTypeId",
+          "relFieldName": "enumTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Plan Method Enum IdAllocationPlanItem",
+      "type": "many",
+      "relEntityName": "AllocationPlanItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "planMethodEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "reasonEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PrivilegeContent",
+      "type": "many",
+      "relEntityName": "Content",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "privilegeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentPurposeOperation",
+      "type": "many",
+      "relEntityName": "ContentPurposeOperation",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "privilegeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesChannelCustRequest",
+      "type": "many",
+      "relEntityName": "CustRequest",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "salesChannelEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EbayShippingMethod",
+      "type": "many",
+      "relEntityName": "EbayShippingMethod",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "methodTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmailTemplateSetting",
+      "type": "many",
+      "relEntityName": "EmailTemplateSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "emailType"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ExampleFeature",
+      "type": "many",
+      "relEntityName": "ExampleFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "featureSourceEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ImportStatusExcelImportHistory",
+      "type": "many",
+      "relEntityName": "ExcelImportHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "statusId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ThruReasonExcelImportHistory",
+      "type": "many",
+      "relEntityName": "ExcelImportHistory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "thruReasonId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TypeFacilityLocation",
+      "type": "many",
+      "relEntityName": "FacilityLocation",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "locationTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReasonFinAccountTrans",
+      "type": "many",
+      "relEntityName": "FinAccountTrans",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "reasonEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReplenishFinAccountType",
+      "type": "many",
+      "relEntityName": "FinAccountType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "replenishEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ClassFixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "classEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GeoPointTypeGeoPoint",
+      "type": "many",
+      "relEntityName": "GeoPoint",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "geoPointTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GiftCardFulfillment",
+      "type": "many",
+      "relEntityName": "GiftCardFulfillment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "typeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReasonInventoryItemDetail",
+      "type": "many",
+      "relEntityName": "InventoryItemDetail",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "reasonEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "JobInterview",
+      "type": "many",
+      "relEntityName": "JobInterview",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "gradeSecuredEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReasonJobManagerLock",
+      "type": "many",
+      "relEntityName": "JobManagerLock",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "reasonEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ExamTypeJobRequisition",
+      "type": "many",
+      "relEntityName": "JobRequisition",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "examTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "JobPostingTypeJobRequisition",
+      "type": "many",
+      "relEntityName": "JobRequisition",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "jobPostingTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RelationshipKeywordThesaurus",
+      "type": "many",
+      "relEntityName": "KeywordThesaurus",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "relationshipEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesChannelOrderHeader",
+      "type": "many",
+      "relEntityName": "OrderHeader",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "salesChannelEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemChange",
+      "type": "many",
+      "relEntityName": "OrderItemChange",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "changeTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReasonOrderItemChange",
+      "type": "many",
+      "relEntityName": "OrderItemChange",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "reasonEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderNotification",
+      "type": "many",
+      "relEntityName": "OrderNotification",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "emailType"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TaxFormPartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "taxFormId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CogsPartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "cogsMethodId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceSequencePartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "oldInvoiceSequenceEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteSequencePartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "oldQuoteSequenceEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderSequencePartyAcctgPreference",
+      "type": "many",
+      "relEntityName": "PartyAcctgPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "oldOrderSequenceEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ServiceTypePaymentGatewayResponse",
+      "type": "many",
+      "relEntityName": "PaymentGatewayResponse",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "paymentServiceTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TranCodePaymentGatewayResponse",
+      "type": "many",
+      "relEntityName": "PaymentGatewayResponse",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "transCodeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "EmploymentStatusPerson",
+      "type": "many",
+      "relEntityName": "Person",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "employmentStatusEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ResidenceStatusPerson",
+      "type": "many",
+      "relEntityName": "Person",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "residenceStatusEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MaritalStatusPerson",
+      "type": "many",
+      "relEntityName": "Person",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "maritalStatusEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PosTerminalInternTx",
+      "type": "many",
+      "relEntityName": "PosTerminalInternTx",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "reasonEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VirtualVariantMethodProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "virtualVariantMethodEnum"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RatingProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "ratingTypeEnum"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementMethodProduct",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "requirementMethodEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "LinkTypeProductCategoryLink",
+      "type": "many",
+      "relEntityName": "ProductCategoryLink",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "linkTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementMethodProductFacility",
+      "type": "many",
+      "relEntityName": "ProductFacility",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "requirementMethodEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductFacility",
+      "type": "many",
+      "relEntityName": "ProductFacility",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "replenishMethodEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductGeo",
+      "type": "many",
+      "relEntityName": "ProductGeo",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "productGeoEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductKeyword",
+      "type": "many",
+      "relEntityName": "ProductKeyword",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "keywordTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InputParamProductPriceCond",
+      "type": "many",
+      "relEntityName": "ProductPriceCond",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "inputParamEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OperatorProductPriceCond",
+      "type": "many",
+      "relEntityName": "ProductPriceCond",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "operatorEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ActionProductPromoAction",
+      "type": "many",
+      "relEntityName": "ProductPromoAction",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "productPromoActionEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApplProductPromoCategory",
+      "type": "many",
+      "relEntityName": "ProductPromoCategory",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "productPromoApplEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InputParamProductPromoCond",
+      "type": "many",
+      "relEntityName": "ProductPromoCond",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "inputParamEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OperatorProductPromoCond",
+      "type": "many",
+      "relEntityName": "ProductPromoCond",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "operatorEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ApplProductPromoProduct",
+      "type": "many",
+      "relEntityName": "ProductPromoProduct",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "productPromoApplEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReserveOrderProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "reserveOrderEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RequirementMethodProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "requirementMethodEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DefaultSalesChannelProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "defaultSalesChannelEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "StoreCreditAccountProductStore",
+      "type": "many",
+      "relEntityName": "ProductStore",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "storeCreditAccountEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreEmailSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreEmailSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "emailType"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReplenishMethodProductStoreFinActSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreFinActSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "replenishMethodEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreKeywordOvrd",
+      "type": "many",
+      "relEntityName": "ProductStoreKeywordOvrd",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "targetTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStorePaymentSetting",
+      "type": "many",
+      "relEntityName": "ProductStorePaymentSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "paymentServiceTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreTelecomSetting",
+      "type": "many",
+      "relEntityName": "ProductStoreTelecomSetting",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "telecomMsgTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CreditCardProductStoreVendorPayment",
+      "type": "many",
+      "relEntityName": "ProductStoreVendorPayment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "creditCardEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesChannelQuote",
+      "type": "many",
+      "relEntityName": "Quote",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "salesChannelEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TypeSalesOpportunity",
+      "type": "many",
+      "relEntityName": "SalesOpportunity",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "typeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TrackingCodeVisit",
+      "type": "many",
+      "relEntityName": "TrackingCodeVisit",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "sourceEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PurposeUomConversionDated",
+      "type": "many",
+      "relEntityName": "UomConversionDated",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "purposeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VisualThemeResource",
+      "type": "many",
+      "relEntityName": "VisualThemeResource",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "resourceTypeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ScopeWorkEffort",
+      "type": "many",
+      "relEntityName": "WorkEffort",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "scopeEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ExpectationWorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "expectationEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "DelegateReasonWorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "delegateReasonEnumId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkloadFeature",
+      "type": "many",
+      "relEntityName": "WorkloadFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "enumId",
+          "relFieldName": "featureSourceEnumId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "enumId"
+  ],
+  "isView": false
+}

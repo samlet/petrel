@@ -1,0 +1,131 @@
+{
+  "name": "ProdConfItemContentType",
+  "fields": [
+    {
+      "name": "confItemContentTypeId",
+      "type": "id",
+      "col": "CONF_ITEM_CONTENT_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentProdConfItemContentType",
+      "type": "one",
+      "relEntityName": "ProdConfItemContentType",
+      "fkName": "PCICT_TYP_PARENT",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "confItemContentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProdConfItemContent",
+      "type": "many",
+      "relEntityName": "ProdConfItemContent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "confItemContentTypeId",
+          "relFieldName": "confItemContentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildProdConfItemContentType",
+      "type": "many",
+      "relEntityName": "ProdConfItemContentType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "confItemContentTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "confItemContentTypeId"
+  ],
+  "isView": false
+}

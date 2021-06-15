@@ -1,0 +1,111 @@
+{
+  "name": "ProductPricePurpose",
+  "fields": [
+    {
+      "name": "productPricePurposeId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_PURPOSE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderPaymentPreference",
+      "type": "many",
+      "relEntityName": "OrderPaymentPreference",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPaymentMethodType",
+      "type": "many",
+      "relEntityName": "ProductPaymentMethodType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductPrice",
+      "type": "many",
+      "relEntityName": "ProductPrice",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productPricePurposeId"
+  ],
+  "isView": false
+}

@@ -1,0 +1,170 @@
+{
+  "name": "InventoryItemType",
+  "fields": [
+    {
+      "name": "inventoryItemTypeId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentInventoryItemType",
+      "type": "one",
+      "relEntityName": "InventoryItemType",
+      "fkName": "INV_ITEM_TYPPAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "inventoryItemTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "DefaultFacility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemTypeId",
+          "relFieldName": "defaultInventoryItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItem",
+      "type": "many",
+      "relEntityName": "InventoryItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemTypeId",
+          "relFieldName": "inventoryItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildInventoryItemType",
+      "type": "many",
+      "relEntityName": "InventoryItemType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InventoryItemTypeAttr",
+      "type": "many",
+      "relEntityName": "InventoryItemTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemTypeId",
+          "relFieldName": "inventoryItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Product",
+      "type": "many",
+      "relEntityName": "Product",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemTypeId",
+          "relFieldName": "inventoryItemTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "inventoryItemTypeId"
+  ],
+  "isView": false
+}

@@ -1,0 +1,443 @@
+{
+  "name": "ProductPrice",
+  "fields": [
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPriceTypeId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPricePurposeId",
+      "type": "id",
+      "col": "PRODUCT_PRICE_PURPOSE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "currencyUomId",
+      "type": "id",
+      "col": "CURRENCY_UOM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productStoreGroupId",
+      "type": "id",
+      "col": "PRODUCT_STORE_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "price",
+      "type": "currency-precise",
+      "col": "PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "termUomId",
+      "type": "id",
+      "col": "TERM_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "customPriceCalcService",
+      "type": "id",
+      "col": "CUSTOM_PRICE_CALC_SERVICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "priceWithoutTax",
+      "type": "currency-precise",
+      "col": "PRICE_WITHOUT_TAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "priceWithTax",
+      "type": "currency-precise",
+      "col": "PRICE_WITH_TAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxAmount",
+      "type": "currency-precise",
+      "col": "TAX_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxPercentage",
+      "type": "fixed-point",
+      "col": "TAX_PERCENTAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxAuthPartyId",
+      "type": "id",
+      "col": "TAX_AUTH_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxAuthGeoId",
+      "type": "id",
+      "col": "TAX_AUTH_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxInPrice",
+      "type": "indicator",
+      "col": "TAX_IN_PRICE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "Product",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "PROD_PRICE_PROD",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceType",
+      "type": "one",
+      "relEntityName": "ProductPriceType",
+      "fkName": "PROD_PRICE_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "productPriceTypeId",
+          "relFieldName": "productPriceTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPricePurpose",
+      "type": "one",
+      "relEntityName": "ProductPricePurpose",
+      "fkName": "PROD_PRICE_PURP",
+      "keymaps": [
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CurrencyUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_PRICE_CUOM",
+      "keymaps": [
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TermUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PROD_PRICE_TUOM",
+      "keymaps": [
+        {
+          "fieldName": "termUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductStoreGroup",
+      "type": "one",
+      "relEntityName": "ProductStoreGroup",
+      "fkName": "PROD_PRICE_PSTG",
+      "keymaps": [
+        {
+          "fieldName": "productStoreGroupId",
+          "relFieldName": "productStoreGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "PROD_PRICE_CMET",
+      "keymaps": [
+        {
+          "fieldName": "customPriceCalcService",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthorityParty",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "PROD_PRC_TAXPTY",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthorityGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "PROD_PRC_TAXGEO",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CreatedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRICE_CBUL",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "LastModifiedByUserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "PROD_PRICE_LMBUL",
+      "keymaps": [
+        {
+          "fieldName": "lastModifiedByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPriceChange",
+      "type": "many",
+      "relEntityName": "ProductPriceChange",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        },
+        {
+          "fieldName": "productPriceTypeId",
+          "relFieldName": "productPriceTypeId"
+        },
+        {
+          "fieldName": "productPricePurposeId",
+          "relFieldName": "productPricePurposeId"
+        },
+        {
+          "fieldName": "currencyUomId",
+          "relFieldName": "currencyUomId"
+        },
+        {
+          "fieldName": "productStoreGroupId",
+          "relFieldName": "productStoreGroupId"
+        },
+        {
+          "fieldName": "fromDate",
+          "relFieldName": "fromDate"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 6,
+  "pks": [
+    "productId",
+    "productPriceTypeId",
+    "productPricePurposeId",
+    "currencyUomId",
+    "productStoreGroupId",
+    "fromDate"
+  ],
+  "isView": false
+}

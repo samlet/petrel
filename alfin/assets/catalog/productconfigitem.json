@@ -1,0 +1,203 @@
+{
+  "name": "ProductConfigItem",
+  "fields": [
+    {
+      "name": "configItemId",
+      "type": "id",
+      "col": "CONFIG_ITEM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "configItemTypeId",
+      "type": "id",
+      "col": "CONFIG_ITEM_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "configItemName",
+      "type": "name",
+      "col": "CONFIG_ITEM_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "longDescription",
+      "type": "very-long",
+      "col": "LONG_DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "imageUrl",
+      "type": "url",
+      "col": "IMAGE_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProdConfItemContent",
+      "type": "many",
+      "relEntityName": "ProdConfItemContent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ConfigItemProductConfig",
+      "type": "many",
+      "relEntityName": "ProductConfig",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ConfigItemProductConfigConfig",
+      "type": "many",
+      "relEntityName": "ProductConfigConfig",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ConfigItemProductConfigOption",
+      "type": "many",
+      "relEntityName": "ProductConfigOption",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ConfigItemProductConfigOptionIactn",
+      "type": "many",
+      "relEntityName": "ProductConfigOptionIactn",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ConfigItemToProductConfigOptionIactn",
+      "type": "many",
+      "relEntityName": "ProductConfigOptionIactn",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ConfigItemProductConfigProduct",
+      "type": "many",
+      "relEntityName": "ProductConfigProduct",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "configItemId",
+          "relFieldName": "configItemId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "configItemId"
+  ],
+  "isView": false
+}

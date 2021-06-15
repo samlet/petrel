@@ -1,0 +1,661 @@
+{
+  "name": "OrderAdjustment",
+  "fields": [
+    {
+      "name": "orderAdjustmentId",
+      "type": "id",
+      "col": "ORDER_ADJUSTMENT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderAdjustmentTypeId",
+      "type": "id",
+      "col": "ORDER_ADJUSTMENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipGroupSeqId",
+      "type": "id",
+      "col": "SHIP_GROUP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "comments",
+      "type": "comment",
+      "col": "COMMENTS",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "amount",
+      "type": "currency-precise",
+      "col": "AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "recurringAmount",
+      "type": "currency-precise",
+      "col": "RECURRING_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "amountAlreadyIncluded",
+      "type": "currency-precise",
+      "col": "AMOUNT_ALREADY_INCLUDED",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPromoId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPromoRuleId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_RULE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productPromoActionSeqId",
+      "type": "id",
+      "col": "PRODUCT_PROMO_ACTION_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productFeatureId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "correspondingProductId",
+      "type": "id",
+      "col": "CORRESPONDING_PRODUCT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxAuthorityRateSeqId",
+      "type": "id",
+      "col": "TAX_AUTHORITY_RATE_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "sourceReferenceId",
+      "type": "id-long",
+      "col": "SOURCE_REFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "sourcePercentage",
+      "type": "fixed-point",
+      "col": "SOURCE_PERCENTAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "customerReferenceId",
+      "type": "id-long",
+      "col": "CUSTOMER_REFERENCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "primaryGeoId",
+      "type": "id",
+      "col": "PRIMARY_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "secondaryGeoId",
+      "type": "id",
+      "col": "SECONDARY_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "exemptAmount",
+      "type": "currency-amount",
+      "col": "EXEMPT_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxAuthGeoId",
+      "type": "id",
+      "col": "TAX_AUTH_GEO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "taxAuthPartyId",
+      "type": "id",
+      "col": "TAX_AUTH_PARTY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "overrideGlAccountId",
+      "type": "id",
+      "col": "OVERRIDE_GL_ACCOUNT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "includeInTax",
+      "type": "indicator",
+      "col": "INCLUDE_IN_TAX",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "includeInShipping",
+      "type": "indicator",
+      "col": "INCLUDE_IN_SHIPPING",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "isManual",
+      "type": "indicator",
+      "col": "IS_MANUAL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdDate",
+      "type": "date-time",
+      "col": "CREATED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "createdByUserLogin",
+      "type": "id-vlong",
+      "col": "CREATED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedDate",
+      "type": "date-time",
+      "col": "LAST_MODIFIED_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastModifiedByUserLogin",
+      "type": "id-vlong",
+      "col": "LAST_MODIFIED_BY_USER_LOGIN",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "originalAdjustmentId",
+      "type": "id",
+      "col": "ORIGINAL_ADJUSTMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderAdjustmentType",
+      "type": "one",
+      "relEntityName": "OrderAdjustmentType",
+      "fkName": "ORDER_ADJ_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "orderAdjustmentTypeId",
+          "relFieldName": "orderAdjustmentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderAdjustmentTypeAttr",
+      "type": "many",
+      "relEntityName": "OrderAdjustmentTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderAdjustmentTypeId",
+          "relFieldName": "orderAdjustmentTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "ORDER_ADJ_OHEAD",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "UserLogin",
+      "type": "one",
+      "relEntityName": "UserLogin",
+      "fkName": "ORDER_ADJ_USERL",
+      "keymaps": [
+        {
+          "fieldName": "createdByUserLogin",
+          "relFieldName": "userLoginId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItem",
+      "type": "one-nofk",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemShipGroup",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemShipGroupAssoc",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGroupAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPromo",
+      "type": "one",
+      "relEntityName": "ProductPromo",
+      "fkName": "ORDER_ADJ_PROMO",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPromoRule",
+      "type": "one-nofk",
+      "relEntityName": "ProductPromoRule",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        },
+        {
+          "fieldName": "productPromoRuleId",
+          "relFieldName": "productPromoRuleId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductPromoAction",
+      "type": "one-nofk",
+      "relEntityName": "ProductPromoAction",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productPromoId",
+          "relFieldName": "productPromoId"
+        },
+        {
+          "fieldName": "productPromoRuleId",
+          "relFieldName": "productPromoRuleId"
+        },
+        {
+          "fieldName": "productPromoActionSeqId",
+          "relFieldName": "productPromoActionSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PrimaryGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "ORDER_ADJ_PRGEO",
+      "keymaps": [
+        {
+          "fieldName": "primaryGeoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "SecondaryGeo",
+      "type": "one",
+      "relEntityName": "Geo",
+      "fkName": "ORDER_ADJ_SCGEO",
+      "keymaps": [
+        {
+          "fieldName": "secondaryGeoId",
+          "relFieldName": "geoId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthority",
+      "type": "one",
+      "relEntityName": "TaxAuthority",
+      "fkName": "ORDER_ADJ_TXA",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthGeoId",
+          "relFieldName": "taxAuthGeoId"
+        },
+        {
+          "fieldName": "taxAuthPartyId",
+          "relFieldName": "taxAuthPartyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OverrideGlAccount",
+      "type": "one",
+      "relEntityName": "GlAccount",
+      "fkName": "ORDER_ADJ_OGLA",
+      "keymaps": [
+        {
+          "fieldName": "overrideGlAccountId",
+          "relFieldName": "glAccountId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "TaxAuthorityRateProduct",
+      "type": "one",
+      "relEntityName": "TaxAuthorityRateProduct",
+      "fkName": "ORDER_ADJ_TARP",
+      "keymaps": [
+        {
+          "fieldName": "taxAuthorityRateSeqId",
+          "relFieldName": "taxAuthorityRateSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderAdjustment",
+      "type": "one-nofk",
+      "relEntityName": "OrderAdjustment",
+      "fkName": "ORDER_ADJ_OA",
+      "keymaps": [
+        {
+          "fieldName": "originalAdjustmentId",
+          "relFieldName": "orderAdjustmentId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderAdjustmentAttribute",
+      "type": "many",
+      "relEntityName": "OrderAdjustmentAttribute",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderAdjustmentId",
+          "relFieldName": "orderAdjustmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderAdjustmentBilling",
+      "type": "many",
+      "relEntityName": "OrderAdjustmentBilling",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderAdjustmentId",
+          "relFieldName": "orderAdjustmentId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ReturnAdjustment",
+      "type": "many",
+      "relEntityName": "ReturnAdjustment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderAdjustmentId",
+          "relFieldName": "orderAdjustmentId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "orderAdjustmentId"
+  ],
+  "isView": false
+}

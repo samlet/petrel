@@ -1,0 +1,263 @@
+{
+  "name": "ProductAssoc",
+  "fields": [
+    {
+      "name": "productId",
+      "type": "id",
+      "col": "PRODUCT_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productIdTo",
+      "type": "id",
+      "col": "PRODUCT_ID_TO",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "productAssocTypeId",
+      "type": "id",
+      "col": "PRODUCT_ASSOC_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fromDate",
+      "type": "date-time",
+      "col": "FROM_DATE",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "thruDate",
+      "type": "date-time",
+      "col": "THRU_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "sequenceNum",
+      "type": "numeric",
+      "col": "SEQUENCE_NUM",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reason",
+      "type": "long-varchar",
+      "col": "REASON",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantity",
+      "type": "fixed-point",
+      "col": "QUANTITY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "scrapFactor",
+      "type": "fixed-point",
+      "col": "SCRAP_FACTOR",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "instruction",
+      "type": "long-varchar",
+      "col": "INSTRUCTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "routingWorkEffortId",
+      "type": "id",
+      "col": "ROUTING_WORK_EFFORT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "estimateCalcMethod",
+      "type": "id",
+      "col": "ESTIMATE_CALC_METHOD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "recurrenceInfoId",
+      "type": "id",
+      "col": "RECURRENCE_INFO_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ProductAssocType",
+      "type": "one",
+      "relEntityName": "ProductAssocType",
+      "fkName": "PROD_ASSOC_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "productAssocTypeId",
+          "relFieldName": "productAssocTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "MainProduct",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "PROD_ASSOC_MPROD",
+      "keymaps": [
+        {
+          "fieldName": "productId",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AssocProduct",
+      "type": "one",
+      "relEntityName": "Product",
+      "fkName": "PROD_ASSOC_APROD",
+      "keymaps": [
+        {
+          "fieldName": "productIdTo",
+          "relFieldName": "productId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RoutingWorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "PROD_ASSOC_RTWE",
+      "keymaps": [
+        {
+          "fieldName": "routingWorkEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "CustomMethod",
+      "type": "one",
+      "relEntityName": "CustomMethod",
+      "fkName": "PROD_ASSOC_CUSM",
+      "keymaps": [
+        {
+          "fieldName": "estimateCalcMethod",
+          "relFieldName": "customMethodId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RecurrenceInfo",
+      "type": "one",
+      "relEntityName": "RecurrenceInfo",
+      "fkName": "PROD_ASSOC_RECINFO",
+      "keymaps": [
+        {
+          "fieldName": "recurrenceInfoId",
+          "relFieldName": "recurrenceInfoId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 4,
+  "pks": [
+    "productId",
+    "productIdTo",
+    "productAssocTypeId",
+    "fromDate"
+  ],
+  "isView": false
+}

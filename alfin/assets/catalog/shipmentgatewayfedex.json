@@ -1,0 +1,205 @@
+{
+  "name": "ShipmentGatewayFedex",
+  "fields": [
+    {
+      "name": "shipmentGatewayConfigId",
+      "type": "id",
+      "col": "SHIPMENT_GATEWAY_CONFIG_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "connectUrl",
+      "type": "value",
+      "col": "CONNECT_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "connectSoapUrl",
+      "type": "value",
+      "col": "CONNECT_SOAP_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "connectTimeout",
+      "type": "numeric",
+      "col": "CONNECT_TIMEOUT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accessAccountNbr",
+      "type": "value",
+      "col": "ACCESS_ACCOUNT_NBR",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accessMeterNumber",
+      "type": "value",
+      "col": "ACCESS_METER_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accessUserKey",
+      "type": "value",
+      "col": "ACCESS_USER_KEY",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accessUserPwd",
+      "type": "value",
+      "col": "ACCESS_USER_PWD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "labelImageType",
+      "type": "short-varchar",
+      "col": "LABEL_IMAGE_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultDropoffType",
+      "type": "value",
+      "col": "DEFAULT_DROPOFF_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultPackagingType",
+      "type": "value",
+      "col": "DEFAULT_PACKAGING_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "templateShipment",
+      "type": "value",
+      "col": "TEMPLATE_SHIPMENT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "templateSubscription",
+      "type": "value",
+      "col": "TEMPLATE_SUBSCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "rateEstimateTemplate",
+      "type": "value",
+      "col": "RATE_ESTIMATE_TEMPLATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ShipmentGatewayConfig",
+      "type": "one",
+      "relEntityName": "ShipmentGatewayConfig",
+      "fkName": "SGFED_SGC",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfigId",
+          "relFieldName": "shipmentGatewayConfigId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "shipmentGatewayConfigId"
+  ],
+  "isView": false
+}

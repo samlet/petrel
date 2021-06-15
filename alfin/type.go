@@ -182,7 +182,8 @@ func (t ModelField) EntFieldType() string {
 	case "very-short":
 		resultDef = f(`field.String("%s").MaxLen(10)`, t.VarName())
 	case "url":
-		resultDef = f(`field.JSON("%s", &url.URL{})`, t.VarName())
+		//resultDef = f(`field.JSON("%s", &url.URL{})`, t.VarName())
+		resultDef = f(`field.String("%s")`, t.VarName())
 	default:
 		resultDef = f(`field.String("%s")`, t.VarName())
 	}

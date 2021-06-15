@@ -1,0 +1,153 @@
+{
+  "name": "OrderRole",
+  "fields": [
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "partyId",
+      "type": "id",
+      "col": "PARTY_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "OrderHeader",
+      "type": "one",
+      "relEntityName": "OrderHeader",
+      "fkName": "ORDER_ROLE_OHDR",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Party",
+      "type": "one",
+      "relEntityName": "Party",
+      "fkName": "ORDER_ROLE_PARTY",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PartyRole",
+      "type": "one",
+      "relEntityName": "PartyRole",
+      "fkName": "ORDER_ROLE_PROLE",
+      "keymaps": [
+        {
+          "fieldName": "partyId",
+          "relFieldName": "partyId"
+        },
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "RoleType",
+      "type": "one-nofk",
+      "relEntityName": "RoleType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItem",
+      "type": "many",
+      "relEntityName": "OrderItem",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 3,
+  "pks": [
+    "orderId",
+    "partyId",
+    "roleTypeId"
+  ],
+  "isView": false
+}

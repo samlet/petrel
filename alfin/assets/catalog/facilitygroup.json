@@ -1,0 +1,193 @@
+{
+  "name": "FacilityGroup",
+  "fields": [
+    {
+      "name": "facilityGroupId",
+      "type": "id",
+      "col": "FACILITY_GROUP_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "facilityGroupTypeId",
+      "type": "id",
+      "col": "FACILITY_GROUP_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "primaryParentGroupId",
+      "type": "id",
+      "col": "PRIMARY_PARENT_GROUP_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "facilityGroupName",
+      "type": "name",
+      "col": "FACILITY_GROUP_NAME",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "FacilityGroupType",
+      "type": "one",
+      "relEntityName": "FacilityGroupType",
+      "fkName": "FACILITY_GP_TYPE",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupTypeId",
+          "relFieldName": "facilityGroupTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PrimaryParentFacilityGroup",
+      "type": "one",
+      "relEntityName": "FacilityGroup",
+      "fkName": "FACILITY_GP_PGRP",
+      "keymaps": [
+        {
+          "fieldName": "primaryParentGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "Facility",
+      "type": "many",
+      "relEntityName": "Facility",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupId",
+          "relFieldName": "primaryFacilityGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityGroupMember",
+      "type": "many",
+      "relEntityName": "FacilityGroupMember",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityGroupRole",
+      "type": "many",
+      "relEntityName": "FacilityGroupRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CurrentFacilityGroupRollup",
+      "type": "many",
+      "relEntityName": "FacilityGroupRollup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupId",
+          "relFieldName": "facilityGroupId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ParentFacilityGroupRollup",
+      "type": "many",
+      "relEntityName": "FacilityGroupRollup",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "facilityGroupId",
+          "relFieldName": "parentFacilityGroupId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "facilityGroupId"
+  ],
+  "isView": false
+}

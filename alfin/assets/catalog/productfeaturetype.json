@@ -1,0 +1,131 @@
+{
+  "name": "ProductFeatureType",
+  "fields": [
+    {
+      "name": "productFeatureTypeId",
+      "type": "id",
+      "col": "PRODUCT_FEATURE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentProductFeatureType",
+      "type": "one",
+      "relEntityName": "ProductFeatureType",
+      "fkName": "PROD_FEAT_TYPPAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "productFeatureTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ProductFeature",
+      "type": "many",
+      "relEntityName": "ProductFeature",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureTypeId",
+          "relFieldName": "productFeatureTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildProductFeatureType",
+      "type": "many",
+      "relEntityName": "ProductFeatureType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productFeatureTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productFeatureTypeId"
+  ],
+  "isView": false
+}

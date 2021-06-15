@@ -1,0 +1,444 @@
+{
+  "name": "InventoryItemDetail",
+  "fields": [
+    {
+      "name": "inventoryItemId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "inventoryItemDetailSeqId",
+      "type": "id",
+      "col": "INVENTORY_ITEM_DETAIL_SEQ_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "effectiveDate",
+      "type": "date-time",
+      "col": "EFFECTIVE_DATE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "quantityOnHandDiff",
+      "type": "fixed-point",
+      "col": "QUANTITY_ON_HAND_DIFF",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "availableToPromiseDiff",
+      "type": "fixed-point",
+      "col": "AVAILABLE_TO_PROMISE_DIFF",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accountingQuantityDiff",
+      "type": "fixed-point",
+      "col": "ACCOUNTING_QUANTITY_DIFF",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "unitCost",
+      "type": "fixed-point",
+      "col": "UNIT_COST",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderId",
+      "type": "id",
+      "col": "ORDER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "orderItemSeqId",
+      "type": "id",
+      "col": "ORDER_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipGroupSeqId",
+      "type": "id",
+      "col": "SHIP_GROUP_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentId",
+      "type": "id",
+      "col": "SHIPMENT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipmentItemSeqId",
+      "type": "id",
+      "col": "SHIPMENT_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "returnId",
+      "type": "id",
+      "col": "RETURN_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "returnItemSeqId",
+      "type": "id",
+      "col": "RETURN_ITEM_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "workEffortId",
+      "type": "id",
+      "col": "WORK_EFFORT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "fixedAssetId",
+      "type": "id",
+      "col": "FIXED_ASSET_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "maintHistSeqId",
+      "type": "id",
+      "col": "MAINT_HIST_SEQ_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "itemIssuanceId",
+      "type": "id",
+      "col": "ITEM_ISSUANCE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "receiptId",
+      "type": "id",
+      "col": "RECEIPT_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "physicalInventoryId",
+      "type": "id",
+      "col": "PHYSICAL_INVENTORY_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "reasonEnumId",
+      "type": "id",
+      "col": "REASON_ENUM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItem",
+      "type": "one",
+      "relEntityName": "InventoryItem",
+      "fkName": "INV_ITDTL_INVIT",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffort",
+      "type": "one",
+      "relEntityName": "WorkEffort",
+      "fkName": "INV_ITDTL_WEFF",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "OrderItemShipGrpInvRes",
+      "type": "one-nofk",
+      "relEntityName": "OrderItemShipGrpInvRes",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "orderId",
+          "relFieldName": "orderId"
+        },
+        {
+          "fieldName": "orderItemSeqId",
+          "relFieldName": "orderItemSeqId"
+        },
+        {
+          "fieldName": "shipGroupSeqId",
+          "relFieldName": "shipGroupSeqId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "FixedAssetMaint",
+      "type": "one",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "INV_ITDTL_FAMNT",
+      "keymaps": [
+        {
+          "fieldName": "fixedAssetId",
+          "relFieldName": "fixedAssetId"
+        },
+        {
+          "fieldName": "maintHistSeqId",
+          "relFieldName": "maintHistSeqId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ItemIssuance",
+      "type": "one",
+      "relEntityName": "ItemIssuance",
+      "fkName": "INV_ITDTL_ITMIS",
+      "keymaps": [
+        {
+          "fieldName": "itemIssuanceId",
+          "relFieldName": "itemIssuanceId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffortInventoryAssign",
+      "type": "one-nofk",
+      "relEntityName": "WorkEffortInventoryAssign",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "WorkEffortInventoryProduced",
+      "type": "one-nofk",
+      "relEntityName": "WorkEffortInventoryProduced",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "workEffortId",
+          "relFieldName": "workEffortId"
+        },
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ShipmentReceipt",
+      "type": "one",
+      "relEntityName": "ShipmentReceipt",
+      "fkName": "INV_ITDTL_SHRCT",
+      "keymaps": [
+        {
+          "fieldName": "receiptId",
+          "relFieldName": "receiptId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "PhysicalInventory",
+      "type": "one",
+      "relEntityName": "PhysicalInventory",
+      "fkName": "INV_ITDTL_PHINV",
+      "keymaps": [
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "ReasonEnumeration",
+      "type": "one",
+      "relEntityName": "Enumeration",
+      "fkName": "INV_ITDTL_REAS",
+      "keymaps": [
+        {
+          "fieldName": "reasonEnumId",
+          "relFieldName": "enumId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "InventoryItemVariance",
+      "type": "one-nofk",
+      "relEntityName": "InventoryItemVariance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "inventoryItemId",
+          "relFieldName": "inventoryItemId"
+        },
+        {
+          "fieldName": "physicalInventoryId",
+          "relFieldName": "physicalInventoryId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 2,
+  "pks": [
+    "inventoryItemId",
+    "inventoryItemDetailSeqId"
+  ],
+  "isView": false
+}

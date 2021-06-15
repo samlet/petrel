@@ -1,0 +1,98 @@
+{
+  "name": "VarianceReason",
+  "fields": [
+    {
+      "name": "varianceReasonId",
+      "type": "id",
+      "col": "VARIANCE_REASON_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "InventoryItemVariance",
+      "type": "many",
+      "relEntityName": "InventoryItemVariance",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "varianceReasonId",
+          "relFieldName": "varianceReasonId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "VarianceReasonGlAccount",
+      "type": "many",
+      "relEntityName": "VarianceReasonGlAccount",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "varianceReasonId",
+          "relFieldName": "varianceReasonId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "varianceReasonId"
+  ],
+  "isView": false
+}

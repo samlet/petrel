@@ -243,6 +243,7 @@ class MetaGenerator(object):
         pkg=os.path.basename(seed_path)
         self.asset_root=pkg
         print(".. write seeds.xml")
+        create_dir(self.asset_pkg_dir)
         write_to_file(f"{self.asset_pkg_dir}/seeds.xml", collector.get_merge_docs())
 
         self.gen_ents(pkg, all_types, pkg)

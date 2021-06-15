@@ -1,0 +1,807 @@
+{
+  "name": "RoleType",
+  "fields": [
+    {
+      "name": "roleTypeId",
+      "type": "id",
+      "col": "ROLE_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "parentTypeId",
+      "type": "id",
+      "col": "PARENT_TYPE_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "hasTable",
+      "type": "indicator",
+      "col": "HAS_TABLE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ParentRoleType",
+      "type": "one",
+      "relEntityName": "RoleType",
+      "fkName": "ROLE_TYPE_PAR",
+      "keymaps": [
+        {
+          "fieldName": "parentTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "AcctgTrans",
+      "type": "many",
+      "relEntityName": "AcctgTrans",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AcctgTransEntry",
+      "type": "many",
+      "relEntityName": "AcctgTransEntry",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromAgreement",
+      "type": "many",
+      "relEntityName": "Agreement",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToAgreement",
+      "type": "many",
+      "relEntityName": "Agreement",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "AgreementRole",
+      "type": "many",
+      "relEntityName": "AgreementRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "BillingAccountRole",
+      "type": "many",
+      "relEntityName": "BillingAccountRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToCommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromCommunicationEvent",
+      "type": "many",
+      "relEntityName": "CommunicationEvent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CommunicationEventRole",
+      "type": "many",
+      "relEntityName": "CommunicationEventRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentApproval",
+      "type": "many",
+      "relEntityName": "ContentApproval",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ContentPurposeOperation",
+      "type": "many",
+      "relEntityName": "ContentPurposeOperation",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "CustRequestParty",
+      "type": "many",
+      "relEntityName": "CustRequestParty",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityGroupRole",
+      "type": "many",
+      "relEntityName": "FacilityGroupRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FacilityParty",
+      "type": "many",
+      "relEntityName": "FacilityParty",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FinAccountRole",
+      "type": "many",
+      "relEntityName": "FinAccountRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAsset",
+      "type": "many",
+      "relEntityName": "FixedAsset",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountOrganization",
+      "type": "many",
+      "relEntityName": "GlAccountOrganization",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "GlAccountRole",
+      "type": "many",
+      "relEntityName": "GlAccountRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Invoice",
+      "type": "many",
+      "relEntityName": "Invoice",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "InvoiceRole",
+      "type": "many",
+      "relEntityName": "InvoiceRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "MarketingCampaignRole",
+      "type": "many",
+      "relEntityName": "MarketingCampaignRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderItemRole",
+      "type": "many",
+      "relEntityName": "OrderItemRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OrderRole",
+      "type": "many",
+      "relEntityName": "OrderRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyContactMech",
+      "type": "many",
+      "relEntityName": "PartyContactMech",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyFixedAssetAssignment",
+      "type": "many",
+      "relEntityName": "PartyFixedAssetAssignment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyGlAccount",
+      "type": "many",
+      "relEntityName": "PartyGlAccount",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyInvitationRoleAssoc",
+      "type": "many",
+      "relEntityName": "PartyInvitationRoleAssoc",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyNeed",
+      "type": "many",
+      "relEntityName": "PartyNeed",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FromPartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPartyRelationship",
+      "type": "many",
+      "relEntityName": "PartyRelationship",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ValidFromPartyRelationshipType",
+      "type": "many",
+      "relEntityName": "PartyRelationshipType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdValidFrom"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ValidToPartyRelationshipType",
+      "type": "many",
+      "relEntityName": "PartyRelationshipType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdValidTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PartyRole",
+      "type": "many",
+      "relEntityName": "PartyRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ToPayment",
+      "type": "many",
+      "relEntityName": "Payment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeIdTo"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "PicklistRole",
+      "type": "many",
+      "relEntityName": "PicklistRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProdCatalogRole",
+      "type": "many",
+      "relEntityName": "ProdCatalogRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductCategoryRole",
+      "type": "many",
+      "relEntityName": "ProductCategoryRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UseProductContent",
+      "type": "many",
+      "relEntityName": "ProductContent",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "useRoleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductRole",
+      "type": "many",
+      "relEntityName": "ProductRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreGroupRole",
+      "type": "many",
+      "relEntityName": "ProductStoreGroupRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductStoreRole",
+      "type": "many",
+      "relEntityName": "ProductStoreRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "UseProductSubscriptionResource",
+      "type": "many",
+      "relEntityName": "ProductSubscriptionResource",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "useRoleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "QuoteRole",
+      "type": "many",
+      "relEntityName": "QuoteRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ChildRoleType",
+      "type": "many",
+      "relEntityName": "RoleType",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "parentTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "RoleTypeAttr",
+      "type": "many",
+      "relEntityName": "RoleTypeAttr",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SalesOpportunityRole",
+      "type": "many",
+      "relEntityName": "SalesOpportunityRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "SegmentGroupRole",
+      "type": "many",
+      "relEntityName": "SegmentGroupRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ShipmentCostEstimate",
+      "type": "many",
+      "relEntityName": "ShipmentCostEstimate",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "Subscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "OriginatedFromSubscription",
+      "type": "many",
+      "relEntityName": "Subscription",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "originatedFromRoleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "TimesheetRole",
+      "type": "many",
+      "relEntityName": "TimesheetRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ValidContactMechRole",
+      "type": "many",
+      "relEntityName": "ValidContactMechRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WebSiteRole",
+      "type": "many",
+      "relEntityName": "WebSiteRole",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "WorkEffortPartyAssignment",
+      "type": "many",
+      "relEntityName": "WorkEffortPartyAssignment",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "roleTypeId",
+          "relFieldName": "roleTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "roleTypeId"
+  ],
+  "isView": false
+}

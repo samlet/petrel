@@ -1,0 +1,147 @@
+{
+  "name": "ProductMeterType",
+  "fields": [
+    {
+      "name": "productMeterTypeId",
+      "type": "id",
+      "col": "PRODUCT_METER_TYPE_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "description",
+      "type": "description",
+      "col": "DESCRIPTION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultUomId",
+      "type": "id",
+      "col": "DEFAULT_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "DefaultUom",
+      "type": "one",
+      "relEntityName": "Uom",
+      "fkName": "PRODMTRTP_DUOM",
+      "keymaps": [
+        {
+          "fieldName": "defaultUomId",
+          "relFieldName": "uomId"
+        }
+      ],
+      "autoRelation": false
+    },
+    {
+      "name": "IntervalFixedAssetMaint",
+      "type": "many",
+      "relEntityName": "FixedAssetMaint",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productMeterTypeId",
+          "relFieldName": "intervalMeterTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "FixedAssetMeter",
+      "type": "many",
+      "relEntityName": "FixedAssetMeter",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productMeterTypeId",
+          "relFieldName": "productMeterTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "IntervalProductMaint",
+      "type": "many",
+      "relEntityName": "ProductMaint",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productMeterTypeId",
+          "relFieldName": "intervalMeterTypeId"
+        }
+      ],
+      "autoRelation": true
+    },
+    {
+      "name": "ProductMeter",
+      "type": "many",
+      "relEntityName": "ProductMeter",
+      "fkName": "",
+      "keymaps": [
+        {
+          "fieldName": "productMeterTypeId",
+          "relFieldName": "productMeterTypeId"
+        }
+      ],
+      "autoRelation": true
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "productMeterTypeId"
+  ],
+  "isView": false
+}

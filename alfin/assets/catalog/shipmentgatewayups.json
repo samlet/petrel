@@ -1,0 +1,275 @@
+{
+  "name": "ShipmentGatewayUps",
+  "fields": [
+    {
+      "name": "shipmentGatewayConfigId",
+      "type": "id",
+      "col": "SHIPMENT_GATEWAY_CONFIG_ID",
+      "pk": true,
+      "notNull": true,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "connectUrl",
+      "type": "value",
+      "col": "CONNECT_URL",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "connectTimeout",
+      "type": "numeric",
+      "col": "CONNECT_TIMEOUT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipperNumber",
+      "type": "value",
+      "col": "SHIPPER_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "billShipperAccountNumber",
+      "type": "value",
+      "col": "BILL_SHIPPER_ACCOUNT_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accessLicenseNumber",
+      "type": "value",
+      "col": "ACCESS_LICENSE_NUMBER",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accessUserId",
+      "type": "value",
+      "col": "ACCESS_USER_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "accessPassword",
+      "type": "value",
+      "col": "ACCESS_PASSWORD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": true,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "saveCertInfo",
+      "type": "short-varchar",
+      "col": "SAVE_CERT_INFO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "saveCertPath",
+      "type": "value",
+      "col": "SAVE_CERT_PATH",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "shipperPickupType",
+      "type": "short-varchar",
+      "col": "SHIPPER_PICKUP_TYPE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "customerClassification",
+      "type": "short-varchar",
+      "col": "CUSTOMER_CLASSIFICATION",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "maxEstimateWeight",
+      "type": "fixed-point",
+      "col": "MAX_ESTIMATE_WEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "minEstimateWeight",
+      "type": "fixed-point",
+      "col": "MIN_ESTIMATE_WEIGHT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "codAllowCod",
+      "type": "value",
+      "col": "COD_ALLOW_COD",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "codSurchargeAmount",
+      "type": "fixed-point",
+      "col": "COD_SURCHARGE_AMOUNT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "codSurchargeCurrencyUomId",
+      "type": "short-varchar",
+      "col": "COD_SURCHARGE_CURRENCY_UOM_ID",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "codSurchargeApplyToPackage",
+      "type": "short-varchar",
+      "col": "COD_SURCHARGE_APPLY_TO_PACKAGE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "codFundsCode",
+      "type": "short-varchar",
+      "col": "COD_FUNDS_CODE",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultReturnLabelMemo",
+      "type": "value",
+      "col": "DEFAULT_RETURN_LABEL_MEMO",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "defaultReturnLabelSubject",
+      "type": "value",
+      "col": "DEFAULT_RETURN_LABEL_SUBJECT",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": false,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "lastUpdatedTxStamp",
+      "type": "date-time",
+      "col": "LAST_UPDATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdStamp",
+      "type": "date-time",
+      "col": "CREATED_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    },
+    {
+      "name": "createdTxStamp",
+      "type": "date-time",
+      "col": "CREATED_TX_STAMP",
+      "pk": false,
+      "notNull": false,
+      "encrypt": false,
+      "autoCreatedInternal": true,
+      "validators": []
+    }
+  ],
+  "relations": [
+    {
+      "name": "ShipmentGatewayConfig",
+      "type": "one",
+      "relEntityName": "ShipmentGatewayConfig",
+      "fkName": "SGUPS_SGC",
+      "keymaps": [
+        {
+          "fieldName": "shipmentGatewayConfigId",
+          "relFieldName": "shipmentGatewayConfigId"
+        }
+      ],
+      "autoRelation": false
+    }
+  ],
+  "pksSize": 1,
+  "pks": [
+    "shipmentGatewayConfigId"
+  ],
+  "isView": false
+}

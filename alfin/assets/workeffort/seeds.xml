@@ -1,0 +1,772 @@
+<entity-engine-xml>
+    <ContactMechPurposeType contactMechPurposeTypeId="SHIPPING_LOCATION" description="Shipping Destination Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="SHIP_ORIG_LOCATION" description="Shipping Origin Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="BILLING_LOCATION" description="Billing (AP) Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PAYMENT_LOCATION" description="Payment (AR) Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="GENERAL_LOCATION" description="General Correspondence Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PUR_RET_LOCATION" description="Purchase Return Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PRIMARY_LOCATION" description="Primary Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PREVIOUS_LOCATION" description="Previous Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_SHIPPING" description="Shipping Destination Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_SHIP_ORIG" description="Shipping Origin Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_BILLING" description="Billing (AP) Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_DID" description="Direct Inward Dialing Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_PAYMENT" description="Payment (AR) Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_HOME" description="Main Home Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_WORK" description="Main Work Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_WORK_SEC" description="Secondary Work Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="FAX_NUMBER" description="Main Fax Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="FAX_NUMBER_SEC" description="Secondary Fax Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="FAX_SHIPPING" description="Shipping Destination Fax Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="FAX_BILLING" description="Billing Destination Fax Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_MOBILE" description="Main Mobile Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_ASSISTANT" description="Assistant's Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PRIMARY_PHONE" description="Primary Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PHONE_QUICK" description="Quick Calls Phone Number" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="MARKETING_EMAIL" description="Primary Marketing Email Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PRIMARY_EMAIL" description="Primary Email Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="BILLING_EMAIL" description="Billing (AP) Email" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PAYMENT_EMAIL" description="Payment (AR) Email" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="OTHER_EMAIL" description="Other Email Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="SUPPORT_EMAIL" description="Support Email" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="ORDER_EMAIL" description="Order Notification Email Address" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="PRIMARY_WEB_URL" description="Primary Website URL" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="TWITTER_URL" description="Twitter Website URL" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="FACEBOOK_URL" description="Facebook Website URL" hasTable="N" />
+    <ContactMechPurposeType contactMechPurposeTypeId="LINKEDIN_URL" description="LinkedIn Website URL" hasTable="N" />
+
+    <ContactMechType contactMechTypeId="ELECTRONIC_ADDRESS" description="Electronic Address" hasTable="N" />
+    <ContactMechType contactMechTypeId="POSTAL_ADDRESS" description="Postal Address" hasTable="Y" />
+    <ContactMechType contactMechTypeId="TELECOM_NUMBER" description="Phone Number" hasTable="Y" />
+    <ContactMechType contactMechTypeId="EMAIL_ADDRESS" description="Email Address" hasTable="N" parentTypeId="ELECTRONIC_ADDRESS" />
+    <ContactMechType contactMechTypeId="IP_ADDRESS" description="Internet IP Address" hasTable="N" parentTypeId="ELECTRONIC_ADDRESS" />
+    <ContactMechType contactMechTypeId="DOMAIN_NAME" description="Internet Domain Name" hasTable="N" parentTypeId="ELECTRONIC_ADDRESS" />
+    <ContactMechType contactMechTypeId="WEB_ADDRESS" description="Web URL/Address" hasTable="N" parentTypeId="ELECTRONIC_ADDRESS" />
+    <ContactMechType contactMechTypeId="INTERNAL_PARTYID" description="Internal Note via partyId" hasTable="N" parentTypeId="ELECTRONIC_ADDRESS" />
+    <ContactMechType contactMechTypeId="FTP_ADDRESS" description="Ftp server connection" hasTable="Y" parentTypeId="ELECTRONIC_ADDRESS" />
+
+    <ContactMechTypePurpose contactMechPurposeTypeId="BILLING_EMAIL" contactMechTypeId="EMAIL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="MARKETING_EMAIL" contactMechTypeId="EMAIL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PAYMENT_EMAIL" contactMechTypeId="EMAIL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="ORDER_EMAIL" contactMechTypeId="EMAIL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="OTHER_EMAIL" contactMechTypeId="EMAIL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PRIMARY_EMAIL" contactMechTypeId="EMAIL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="SHIPPING_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="SHIP_ORIG_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="BILLING_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PAYMENT_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="GENERAL_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PUR_RET_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PRIMARY_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PREVIOUS_LOCATION" contactMechTypeId="POSTAL_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="FAX_NUMBER" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="FAX_NUMBER_SEC" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_DID" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_HOME" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_MOBILE" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_WORK" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_WORK_SEC" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_SHIPPING" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_SHIP_ORIG" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_BILLING" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_PAYMENT" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PRIMARY_PHONE" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_QUICK" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="FAX_SHIPPING" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="FAX_BILLING" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PHONE_ASSISTANT" contactMechTypeId="TELECOM_NUMBER" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="PRIMARY_WEB_URL" contactMechTypeId="WEB_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="TWITTER_URL" contactMechTypeId="WEB_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="FACEBOOK_URL" contactMechTypeId="WEB_ADDRESS" />
+    <ContactMechTypePurpose contactMechPurposeTypeId="LINKEDIN_URL" contactMechTypeId="WEB_ADDRESS" />
+    
+    
+    <CommunicationEventPrpTyp communicationEventPrpTypId="ACTIVITY_REQUEST" description="Activity Request" hasTable="N" />
+    <CommunicationEventPrpTyp communicationEventPrpTypId="CONFERENCE" description="Conference" hasTable="N" />
+    <CommunicationEventPrpTyp communicationEventPrpTypId="CUSTOMER_SERVICE_CAL" description="Customer Service Call" hasTable="N" />
+    <CommunicationEventPrpTyp communicationEventPrpTypId="INQUIRY" description="Inquiry" hasTable="N" />
+    <CommunicationEventPrpTyp communicationEventPrpTypId="MEETING" description="Meeting" hasTable="N" />
+    <CommunicationEventPrpTyp communicationEventPrpTypId="SALES_FOLLOW_UP" description="Sales Follow Up" hasTable="N" />
+    <CommunicationEventPrpTyp communicationEventPrpTypId="SEMINAR" description="Seminar" hasTable="N" />
+    <CommunicationEventPrpTyp communicationEventPrpTypId="SUPPORT_CALL" description="Support Call" hasTable="N" />
+    
+    <CommunicationEventType communicationEventTypeId="EMAIL_COMMUNICATION" contactMechTypeId="EMAIL_ADDRESS" description="Email" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="FACE_TO_FACE_COMMUNI" description="Face-To-Face" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="FAX_COMMUNICATION" contactMechTypeId="TELECOM_NUMBER" description="Fax" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="LETTER_CORRESPONDENC" contactMechTypeId="POSTAL_ADDRESS" description="Letter" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="PHONE_COMMUNICATION" contactMechTypeId="TELECOM_NUMBER" description="Phone" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="WEB_SITE_COMMUNICATI" contactMechTypeId="WEB_ADDRESS" description="Web Site" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="COMMENT_NOTE" contactMechTypeId="INTERNAL_PARTYID" description="Comment/Note" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="AUTO_EMAIL_COMM" contactMechTypeId="EMAIL_ADDRESS" description="Auto Email" hasTable="N" />
+    <CommunicationEventType communicationEventTypeId="FILE_TRANSFER_COMM" contactMechTypeId="FTP_ADDRESS" description="File transfer" hasTable="N" parentTypeId="" />
+
+    
+    <PartyContentType description="Internal Content" partyContentTypeId="INTERNAL" />
+    <PartyContentType description="User Defined Content" partyContentTypeId="USERDEF" />
+    <PartyContentType description="Logo Image URL" partyContentTypeId="LGOIMGURL" />
+    <PartyContentType description="Vendor Shipping Info" partyContentTypeId="VNDSHPINF" />
+
+    <EnumerationType description="Employment Status" enumTypeId="EMPLOY_STTS" hasTable="N" />
+    <Enumeration description="Full-time Employed" enumCode="FULLTIME" enumId="EMPS_FULLTIME" enumTypeId="EMPLOY_STTS" sequenceId="01" />
+    <Enumeration description="Part-time Employed" enumCode="PARTTIME" enumId="EMPS_PARTTIME" enumTypeId="EMPLOY_STTS" sequenceId="02" />
+    <Enumeration description="Self Employed" enumCode="SELF" enumId="EMPS_SELF" enumTypeId="EMPLOY_STTS" sequenceId="03" />
+    <Enumeration description="House-Person" enumCode="HOUSE" enumId="EMPS_HOUSE" enumTypeId="EMPLOY_STTS" sequenceId="04" />
+    <Enumeration description="Retired" enumCode="RETIRED" enumId="EMPS_RETIRED" enumTypeId="EMPLOY_STTS" sequenceId="05" />
+    <Enumeration description="Student" enumCode="STUDENT" enumId="EMPS_STUDENT" enumTypeId="EMPLOY_STTS" sequenceId="06" />
+    <Enumeration description="Unemployed" enumCode="UNEMP" enumId="EMPS_UNEMP" enumTypeId="EMPLOY_STTS" sequenceId="07" />
+
+    <EnumerationType description="Marital Status" enumTypeId="MARITAL_STATUS" />
+    <Enumeration description="Single" enumId="SINGLE" enumName="Single" enumTypeId="MARITAL_STATUS" sequenceId="01" />
+    <Enumeration description="Married" enumId="MARRIED" enumName="Married" enumTypeId="MARITAL_STATUS" sequenceId="02" />
+
+    <EnumerationType description="Residence Status" enumTypeId="PTY_RESID_STTS" hasTable="N" />
+    <Enumeration description="Own Home" enumCode="OWN" enumId="PRESS_OWN" enumTypeId="PTY_RESID_STTS" sequenceId="01" />
+    <Enumeration description="Private Tenant" enumCode="PVT_TENANT" enumId="PRESS_PVT_TENANT" enumTypeId="PTY_RESID_STTS" sequenceId="02" />
+    <Enumeration description="Public Tenant" enumCode="PUB_TENANT" enumId="PRESS_PUB_TENANT" enumTypeId="PTY_RESID_STTS" sequenceId="03" />
+    <Enumeration description="With Parents" enumCode="PARENTS" enumId="PRESS_PARENTS" enumTypeId="PTY_RESID_STTS" sequenceId="04" />
+
+    <EnumerationType description="Party Email Notification" enumTypeId="PARTY_EMAIL" hasTable="N" />
+    <Enumeration description="Party Registration Confirmation" enumCode="REGIS_CONFIRM" enumId="PARTY_REGIS_CONFIRM" enumTypeId="PARTY_EMAIL" sequenceId="01" />
+    <Enumeration description="Update Personal Info Confirmation" enumCode="UPDAT_CONFIRM" enumId="UPD_PRSNL_INF_CNFRM" enumTypeId="PARTY_EMAIL" sequenceId="02" />
+    <Enumeration description="Party Email Address Verification" enumCode="EMAIL_VERIFY" enumId="PRDS_EMAIL_VERIFY" enumTypeId="PARTY_EMAIL" sequenceId="03" />
+    <Enumeration description="Party Invitation" enumCode="INVITE_EMAIL" enumId="PRDS_PARTYINV_EMAIL" enumTypeId="PARTY_EMAIL" sequenceId="04" />
+    <Enumeration description="Contact-Us Notification" enumCode="CONT_EMAIL" enumId="CONT_NOTI_EMAIL" enumTypeId="PARTY_EMAIL" sequenceId="05" />
+    <Enumeration description="Account Activated Notification" enumCode="ACCOUNT_ACTIVATED" enumId="PRDS_CUST_ACTIVATED" enumTypeId="PARTY_EMAIL" sequenceId="06" />
+    <Enumeration description="Unsubscribe Contact List Notification" enumCode="UNSUB_CONT_EMAIL" enumId="UNSUB_CONT_LIST_NOTI" enumTypeId="PARTY_EMAIL" sequenceId="01" />
+    <Enumeration description="Subscribe Contact List Notification" enumCode="SUB_CONT_EMAIL" enumId="SUB_CONT_LIST_NOTI" enumTypeId="PARTY_EMAIL" sequenceId="02" />
+    <Enumeration description="Unsubscribe Contact List Verify" enumCode="UNSUB_CONT_VERIFY_EMAIL" enumId="UNSUB_CONT_LIST_VERI" enumTypeId="PARTY_EMAIL" sequenceId="03" />
+    <Enumeration description="Contact List E-mail Template" enumCode="CONT_EMAIL_TEMPLATE" enumId="CONT_EMAIL_TEMPLATE" enumTypeId="PARTY_EMAIL" sequenceId="04" />
+
+    
+    <RoleType description="Main Role" hasTable="N" roleTypeId="MAIN_ROLE" />
+
+    
+    <RoleType description="Account Lead" hasTable="N" roleTypeId="ACCOUNT_LEAD" />
+    <RoleType description="Administrator" hasTable="N" roleTypeId="ADMIN" />
+    <RoleType description="Agent" hasTable="N" roleTypeId="AGENT" />
+    <RoleType description="Automated Agent" hasTable="N" roleTypeId="AUTOMATED_AGENT_ROLE" />
+    <RoleType description="Calendar" hasTable="N" roleTypeId="CALENDAR_ROLE" />
+    <RoleType description="Client" hasTable="N" roleTypeId="CLIENT" />
+    <RoleType description="Communication Participant" hasTable="N" roleTypeId="COMMEVENT_ROLE" />
+    <RoleType description="Consumer" hasTable="N" roleTypeId="CONSUMER" />
+    <RoleType description="Contractor" hasTable="N" roleTypeId="CONTRACTOR" />
+    <RoleType description="Customer" hasTable="N" roleTypeId="CUSTOMER" />
+    <RoleType description="Distribution Channel" hasTable="N" roleTypeId="DISTRIBUTION_CHANNEL" />
+    <RoleType description="ISP" hasTable="N" roleTypeId="ISP" />
+    <RoleType description="Hosting Server" hasTable="N" roleTypeId="HOSTING_SERVER" />
+    <RoleType description="Manufacturer" hasTable="N" roleTypeId="MANUFACTURER" />
+    <RoleType description="Not Applicable" hasTable="N" roleTypeId="_NA_" />
+    <RoleType description="Organization" hasTable="N" parentTypeId="MAIN_ROLE" roleTypeId="ORGANIZATION_ROLE" />
+    <RoleType description="Owner" hasTable="N" roleTypeId="OWNER" />
+    <RoleType description="Prospect" hasTable="N" roleTypeId="PROSPECT" />
+    <RoleType description="Person" hasTable="N" roleTypeId="PERSON_ROLE" />
+    <RoleType description="Referrer" hasTable="N" roleTypeId="REFERRER" />
+    <RoleType description="Request Role" hasTable="N" roleTypeId="REQUEST_ROLE" />
+    <RoleType description="Request Manager" hasTable="N" parentTypeId="REQUEST_ROLE" roleTypeId="REQ_MANAGER" />
+    <RoleType description="Requesting Party" hasTable="N" parentTypeId="REQUEST_ROLE" roleTypeId="REQ_REQUESTER" />
+    <RoleType description="Request Taker" hasTable="N" parentTypeId="REQUEST_ROLE" roleTypeId="REQ_TAKER" />
+    <RoleType description="Request Respondent" hasTable="N" parentTypeId="REQUEST_ROLE" roleTypeId="REQ_RESPOND" />
+    <RoleType description="Sales Force Autm." hasTable="N" parentTypeId="MAIN_ROLE" roleTypeId="SFA_ROLE" />
+    <RoleType description="Shareholder" hasTable="N" roleTypeId="SHAREHOLDER" />
+    <RoleType description="Subscriber" hasTable="N" roleTypeId="SUBSCRIBER" />
+    <RoleType description="Vendor" hasTable="N" roleTypeId="VENDOR" />
+    <RoleType description="Visitor" hasTable="N" roleTypeId="VISITOR" />
+    <RoleType description="Web Master" hasTable="N" roleTypeId="WEB_MASTER" />
+    <RoleType description="Workflow" hasTable="N" roleTypeId="WORKFLOW_ROLE" />
+    <RoleType description="Accountant" hasTable="N" roleTypeId="ACCOUNTANT" />
+
+    
+    <RoleType description="Account" hasTable="N" parentTypeId="SFA_ROLE" roleTypeId="ACCOUNT" />
+    <RoleType description="Addressee" hasTable="N" parentTypeId="COMMEVENT_ROLE" roleTypeId="ADDRESSEE" />
+    <RoleType description="Association" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="ASSOCIATION" />
+    <RoleType description="Bill-From Vendor" hasTable="N" parentTypeId="VENDOR" roleTypeId="BILL_FROM_VENDOR" />
+    <RoleType description="Bill-To Customer" hasTable="N" parentTypeId="CUSTOMER" roleTypeId="BILL_TO_CUSTOMER" />
+    <RoleType description="Blind Copy" hasTable="N" parentTypeId="COMMEVENT_ROLE" roleTypeId="BCC" />
+    <RoleType description="Bulk Customer" hasTable="N" parentTypeId="CUSTOMER" roleTypeId="BULK_CUSTOMER" />
+    <RoleType description="Calendar Attendee" hasTable="N" parentTypeId="CALENDAR_ROLE" roleTypeId="CAL_ATTENDEE" />
+    <RoleType description="Calendar Delegate" hasTable="N" parentTypeId="CALENDAR_ROLE" roleTypeId="CAL_DELEGATE" />
+    <RoleType description="Calendar Host" hasTable="N" parentTypeId="CALENDAR_ROLE" roleTypeId="CAL_HOST" />
+    <RoleType description="Calendar Organizer" hasTable="N" parentTypeId="CALENDAR_ROLE" roleTypeId="CAL_ORGANIZER" />
+    <RoleType description="Calendar Owner" hasTable="N" parentTypeId="CALENDAR_ROLE" roleTypeId="CAL_OWNER" />
+    <RoleType description="Carrier" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="CARRIER" />
+    <RoleType description="Competitor" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="COMPETITOR" />
+    <RoleType description="Contact" hasTable="N" parentTypeId="SFA_ROLE" roleTypeId="CONTACT" />
+    <RoleType description="Carbon Copy" hasTable="N" parentTypeId="COMMEVENT_ROLE" roleTypeId="CC" />
+    <RoleType description="Originator" hasTable="N" parentTypeId="COMMEVENT_ROLE" roleTypeId="ORIGINATOR" />
+    <RoleType description="Distributor" hasTable="N" parentTypeId="DISTRIBUTION_CHANNEL" roleTypeId="DISTRIBUTOR" />
+    <RoleType description="Employee" hasTable="N" parentTypeId="PERSON_ROLE" roleTypeId="EMPLOYEE" />
+    <RoleType description="End-User Customer" hasTable="N" parentTypeId="CUSTOMER" roleTypeId="END_USER_CUSTOMER" />
+    <RoleType description="Household" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="HOUSEHOLD" />
+    <RoleType description="Internal Organization" hasTable="Y" parentTypeId="ORGANIZATION_ROLE" roleTypeId="INTERNAL_ORGANIZATIO" />
+    <RoleType description="Lead" hasTable="N" parentTypeId="SFA_ROLE" roleTypeId="LEAD" />
+    <RoleType description="Limited Administrator" hasTable="N" parentTypeId="ADMIN" roleTypeId="LTD_ADMIN" />
+    <RoleType description="Organization Unit" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="ORGANIZATION_UNIT" />
+    <RoleType description="Partner" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="PARTNER" />
+    <RoleType description="Placing Customer" hasTable="N" parentTypeId="CUSTOMER" roleTypeId="PLACING_CUSTOMER" />
+    <RoleType description="Regulatory Agency" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="REGULATORY_AGENCY" />
+    <RoleType description="Sales Representative" hasTable="N" parentTypeId="PERSON_ROLE" roleTypeId="SALES_REP" />
+    <RoleType description="Ship-From Vendor" hasTable="N" parentTypeId="VENDOR" roleTypeId="SHIP_FROM_VENDOR" />
+    <RoleType description="Ship-To Customer" hasTable="N" parentTypeId="CUSTOMER" roleTypeId="SHIP_TO_CUSTOMER" />
+    <RoleType description="Sponsor" hasTable="N" parentTypeId="PERSON_ROLE" roleTypeId="SPONSOR" />
+    <RoleType description="Spouse" hasTable="N" parentTypeId="PERSON_ROLE" roleTypeId="SPOUSE" />
+    <RoleType description="Supplier Agent" hasTable="N" parentTypeId="PERSON_ROLE" roleTypeId="SUPPLIER_AGENT" />
+    <RoleType description="Supplier" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="SUPPLIER" />
+    <RoleType description="Tax Authority" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="TAX_AUTHORITY" />
+    <RoleType description="Union" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="UNION" />
+    <RoleType description="Workflow Owner" hasTable="N" parentTypeId="WORKFLOW_ROLE" roleTypeId="WF_OWNER" />
+    <RoleType description="Government Agency" hasTable="N" parentTypeId="ORGANIZATION_ROLE" roleTypeId="GOV_AGENCY" />
+
+    
+    <RoleType description="Affiliate" hasTable="N" parentTypeId="SALES_REP" roleTypeId="AFFILIATE" />
+    <RoleType description="Buyer" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="BUYER" />
+    <RoleType description="Cashier" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="CASHIER" />
+    <RoleType description="Department" hasTable="N" parentTypeId="ORGANIZATION_UNIT" roleTypeId="DEPARTMENT" />
+    <RoleType description="Division" hasTable="N" parentTypeId="ORGANIZATION_UNIT" roleTypeId="DIVISION" />
+    <RoleType description="Family Member" hasTable="N" parentTypeId="PERSON_ROLE" roleTypeId="FAMILY_MEMBER" />
+    <RoleType description="Manager" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="MANAGER" />
+    <RoleType description="Order Clerk" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="ORDER_CLERK" />
+    <RoleType description="Other Internal" hasTable="N" parentTypeId="INTERNAL_ORGANIZATIO" roleTypeId="OTHER_INTERNAL_ORGAN" />
+    <RoleType description="Other Organization Unit" hasTable="N" parentTypeId="ORGANIZATION_UNIT" roleTypeId="OTHER_ORGANIZATION_U" />
+    <RoleType description="Parent Organization" hasTable="N" parentTypeId="ORGANIZATION_UNIT" roleTypeId="PARENT_ORGANIZATION" />
+    <RoleType description="Packer" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="PACKER" />
+    <RoleType description="Picker" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="PICKER" />
+    <RoleType description="Receiver" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="RECEIVER" />
+    <RoleType description="Shipment Clerk" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="SHIPMENT_CLERK" />
+    <RoleType description="Stocker" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="STOCKER" />
+    <RoleType description="Subsidiary" hasTable="N" parentTypeId="ORGANIZATION_UNIT" roleTypeId="SUBSIDIARY" />
+    <RoleType description="Worker" hasTable="N" parentTypeId="EMPLOYEE" roleTypeId="WORKER" />
+
+    <RoleType description="Email Administrator" hasTable="N" parentTypeId="PERSON_ROLE" roleTypeId="EMAIL_ADMIN" />
+
+    <PartyClassificationType description="EEOC (Equal Opportunity)" hasTable="N" partyClassificationTypeId="EEOC_CLASSIFICATION" />
+    <PartyClassificationType description="Minority" hasTable="N" partyClassificationTypeId="MINORITY_CLASSIFICAT" />
+    <PartyClassificationType description="Income" hasTable="N" partyClassificationTypeId="INCOME_CLASSIFICATIO" />
+    <PartyClassificationType description="Industry" hasTable="N" partyClassificationTypeId="INDUSTRY_CLASSIFICAT" />
+    <PartyClassificationType description="Organization" hasTable="N" partyClassificationTypeId="ORGANIZATION_CLASSIF" />
+    <PartyClassificationType description="Person" hasTable="N" partyClassificationTypeId="PERSON_CLASSIFICATIO" />
+    <PartyClassificationType description="Size" hasTable="N" partyClassificationTypeId="SIZE_CLASSIFICATION" />
+    <PartyClassificationType description="Trade" hasTable="N" partyClassificationTypeId="TRADE_CLASSIFICATION" />
+    <PartyClassificationType description="Wholesale" hasTable="N" parentTypeId="TRADE_CLASSIFICATION" partyClassificationTypeId="TRADE_WHOLE_CLASSIFI" />
+    <PartyClassificationType description="Retail" hasTable="N" parentTypeId="TRADE_CLASSIFICATION" partyClassificationTypeId="TRADE_RETAIL_CLASSIF" />
+    <PartyClassificationType description="Annual Revenue" hasTable="N" partyClassificationTypeId="ANNUAL_REVENUE" />
+    <PartyClassificationType description="Number of Employees" hasTable="N" partyClassificationTypeId="NUMBER_OF_EMPLOYEES" />
+    <PartyClassificationType description="Value Rating" hasTable="N" partyClassificationTypeId="VALUE_RATING" />
+    <PartyClassificationType description="SIC Code" hasTable="N" partyClassificationTypeId="SIC_CODE" />
+    <PartyClassificationType description="Ownership" hasTable="N" partyClassificationTypeId="OWNERSHIP" />
+
+    <PartyQualType description="Work experience" hasTable="N" partyQualTypeId="EXPERIENCE" />
+    <PartyQualType description="Certification" hasTable="N" partyQualTypeId="CERTIFICATION" />
+    <PartyQualType description="Degree" hasTable="N" partyQualTypeId="DEGREE" />
+
+    
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Agent" partyRelationshipTypeId="AGENT" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Child" partyRelationshipTypeId="CHILD" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Contact Relation" partyRelationshipTypeId="CONTACT_REL" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Lead Relation" partyRelationshipTypeId="LEAD_REL" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Lead Owned by" partyRelationshipTypeId="LEAD_OWNER" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Customer" partyRelationshipTypeId="CUSTOMER_REL" roleTypeIdValidFrom="CUSTOMER" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Distributor" partyRelationshipTypeId="DISTRIBUTION_CHANNEL" />
+    <PartyRelationshipType hasTable="Y" partyRelationshipName="Employee" partyRelationshipTypeId="EMPLOYMENT" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Friend" partyRelationshipTypeId="FRIEND" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Group Member" partyRelationshipTypeId="GROUP_ROLLUP" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Host Server Visitor" partyRelationshipTypeId="HOST_SERVER_VISITOR" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="ISP Visitor" partyRelationshipTypeId="VISITOR_ISP" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Manager" partyRelationshipTypeId="MANAGER" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Parent" partyRelationshipTypeId="PARENT" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Partner" partyRelationshipTypeId="PARTNERSHIP" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Sales Affiliate" partyRelationshipTypeId="SALES_AFFILIATE" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Spouse" partyRelationshipTypeId="SPOUSE" />
+    <PartyRelationshipType hasTable="Y" partyRelationshipName="Supplier" partyRelationshipTypeId="SUPPLIER_REL" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Web Master" partyRelationshipTypeId="WEB_MASTER_ASSIGNMEN" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Account owned by" partyRelationshipTypeId="ACCOUNT" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Assistant" partyRelationshipTypeId="ASSISTANT" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Owned by" partyRelationshipTypeId="OWNER" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Parent Account" partyRelationshipTypeId="PARENT_ACCOUNT" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Reports To" partyRelationshipTypeId="REPORTS_TO" />
+    <PartyRelationshipType hasTable="N" partyRelationshipName="Lead Owners/Managers" partyRelationshipTypeId="LEAD_OWN_GRP_MEMBER" />
+
+    <PartyType description="Automated Agent" hasTable="N" partyTypeId="AUTOMATED_AGENT" />
+    <PartyType description="Person" hasTable="Y" partyTypeId="PERSON" />
+    <PartyType description="Party Group" hasTable="Y" partyTypeId="PARTY_GROUP" />
+    <PartyType description="Informal Group" hasTable="N" parentTypeId="PARTY_GROUP" partyTypeId="INFORMAL_GROUP" />
+    <PartyType description="Family" hasTable="N" parentTypeId="INFORMAL_GROUP" partyTypeId="FAMILY" />
+    <PartyType description="Team" hasTable="N" parentTypeId="INFORMAL_GROUP" partyTypeId="TEAM" />
+    <PartyType description="Legal Organization" hasTable="N" parentTypeId="PARTY_GROUP" partyTypeId="LEGAL_ORGANIZATION" />
+    <PartyType description="Corporation" hasTable="N" parentTypeId="LEGAL_ORGANIZATION" partyTypeId="CORPORATION" />
+    <PartyType description="Government Agency" hasTable="N" parentTypeId="LEGAL_ORGANIZATION" partyTypeId="GOVERNMENT_AGENCY" />
+
+    <StatusType description="Party" hasTable="N" statusTypeId="PARTY_STATUS" />
+    <StatusItem description="Enabled" sequenceId="01" statusCode="ENABLED" statusId="PARTY_ENABLED" statusTypeId="PARTY_STATUS" />
+    <StatusItem description="Disabled" sequenceId="99" statusCode="DISABLED" statusId="PARTY_DISABLED" statusTypeId="PARTY_STATUS" />
+    <StatusValidChange statusId="PARTY_ENABLED" statusIdTo="PARTY_DISABLED" transitionName="Disable" />
+    <StatusValidChange statusId="PARTY_DISABLED" statusIdTo="PARTY_ENABLED" transitionName="Re-Enable" />
+    
+    <StatusType description="Case" hasTable="N" statusTypeId="CASE_STATUS" />
+
+    <StatusType description="Communication Event" hasTable="N" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Pending" sequenceId="01" statusCode="PENDING" statusId="COM_PENDING" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Entered" sequenceId="02" statusCode="ENTERED" statusId="COM_ENTERED" statusTypeId="COM_EVENT_STATUS" />
+    
+    <StatusItem description="In-Progress" sequenceId="05" statusCode="IN_PROGRESS" statusId="COM_IN_PROGRESS" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Unknown Party" sequenceId="07" statusCode="UNKNOWN_PARTY" statusId="COM_UNKNOWN_PARTY" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Closed" sequenceId="20" statusCode="COMPLETE" statusId="COM_COMPLETE" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Resolved" sequenceId="21" statusCode="RESOLVED" statusId="COM_RESOLVED" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Referred" sequenceId="22" statusCode="REFERRED" statusId="COM_REFERRED" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Bounced" sequenceId="50" statusCode="BOUNCED" statusId="COM_BOUNCED" statusTypeId="COM_EVENT_STATUS" />
+    <StatusItem description="Cancelled" sequenceId="99" statusCode="CANCELLED" statusId="COM_CANCELLED" statusTypeId="COM_EVENT_STATUS" />
+    <StatusValidChange statusId="COM_ENTERED" statusIdTo="COM_PENDING" transitionName="Set Pending, only visible to originator" />
+    <StatusValidChange statusId="COM_ENTERED" statusIdTo="COM_IN_PROGRESS" transitionName="Set In Progress, waiting to be send" />
+    <StatusValidChange statusId="COM_ENTERED" statusIdTo="COM_COMPLETE" transitionName="Complete" />
+    <StatusValidChange statusId="COM_PENDING" statusIdTo="COM_ENTERED" transitionName="Entered,visible to all participants" />
+    <StatusValidChange statusId="COM_PENDING" statusIdTo="COM_IN_PROGRESS" transitionName="Set In Progress, waiting to be send" />
+    <StatusValidChange statusId="COM_IN_PROGRESS" statusIdTo="COM_COMPLETE" transitionName="Complete" />
+    <StatusValidChange statusId="COM_IN_PROGRESS" statusIdTo="COM_BOUNCED" transitionName="Bounced" />
+    <StatusValidChange statusId="COM_COMPLETE" statusIdTo="COM_RESOLVED" transitionName="Resolve" />
+    <StatusValidChange statusId="COM_COMPLETE" statusIdTo="COM_REFERRED" transitionName="Refer" />
+    <StatusValidChange statusId="COM_COMPLETE" statusIdTo="COM_BOUNCED" transitionName="Bounced" />
+    <StatusValidChange statusId="COM_UNKNOWN_PARTY" statusIdTo="COM_COMPLETE" transitionName="Complete" />
+    <StatusValidChange statusId="COM_UNKNOWN_PARTY" statusIdTo="COM_ENTERED" transitionName="Corrected" />
+    <StatusValidChange statusId="COM_PENDING" statusIdTo="COM_COMPLETE" transitionName="Complete" />
+
+    <StatusValidChange statusId="COM_ENTERED" statusIdTo="COM_CANCELLED" transitionName="Cancel" />
+    <StatusValidChange statusId="COM_PENDING" statusIdTo="COM_CANCELLED" transitionName="Cancel" />
+    <StatusValidChange statusId="COM_IN_PROGRESS" statusIdTo="COM_CANCELLED" transitionName="Cancel" />
+    <StatusValidChange statusId="COM_COMPLETE" statusIdTo="COM_CANCELLED" transitionName="Cancel" />
+    <StatusValidChange statusId="COM_RESOLVED" statusIdTo="COM_CANCELLED" transitionName="Cancel" />
+    <StatusValidChange statusId="COM_REFERRED" statusIdTo="COM_CANCELLED" transitionName="Cancel" />
+    <StatusValidChange statusId="COM_UNKNOWN_PARTY" statusIdTo="COM_CANCELLED" transitionName="Cancel" />
+
+    <StatusType description="Communication Event Role" hasTable="N" parentTypeId="COM_EVENT_STATUS" statusTypeId="COM_EVENT_ROL_STATUS" />
+    <StatusItem description="Created" sequenceId="01" statusCode="ENTERED" statusId="COM_ROLE_CREATED" statusTypeId="COM_EVENT_ROL_STATUS" />
+    <StatusItem description="Read" sequenceId="02" statusCode="PENDING" statusId="COM_ROLE_READ" statusTypeId="COM_EVENT_ROL_STATUS" />
+    <StatusItem description="Closed" sequenceId="03" statusCode="READ" statusId="COM_ROLE_COMPLETED" statusTypeId="COM_EVENT_ROL_STATUS" />
+    <StatusValidChange statusId="COM_ROLE_CREATED" statusIdTo="COM_ROLE_READ" transitionName="Read" />
+    <StatusValidChange statusId="COM_ROLE_CREATED" statusIdTo="COM_ROLE_COMPLETED" transitionName="Completed" />
+    <StatusValidChange statusId="COM_ROLE_READ" statusIdTo="COM_ROLE_COMPLETED" transitionName="Completed" />
+
+    <StatusType description="Party Relationship" hasTable="N" statusTypeId="PARTY_REL_STATUS" />
+    <StatusItem description="Created" sequenceId="01" statusCode="CREATED" statusId="PARTYREL_CREATED" statusTypeId="PARTY_REL_STATUS" />
+    <StatusItem description="Expired" sequenceId="02" statusCode="EXPIRED" statusId="PARTYREL_EXPIRED" statusTypeId="PARTY_REL_STATUS" />
+    <StatusValidChange statusId="PARTYREL_CREATED" statusIdTo="PARTYREL_EXPIRED" transitionName="Expired" />
+    
+    <StatusType description="Party Invitation" hasTable="N" statusTypeId="PARTY_INV_STATUS" />
+    <StatusItem description="Invitation Sent" sequenceId="01" statusCode="SENT" statusId="PARTYINV_SENT" statusTypeId="PARTY_INV_STATUS" />
+    <StatusItem description="Invitation Pending" sequenceId="02" statusCode="PENDING" statusId="PARTYINV_PENDING" statusTypeId="PARTY_INV_STATUS" />
+    <StatusItem description="Invitation Accepted" sequenceId="05" statusCode="ACCEPTED" statusId="PARTYINV_ACCEPTED" statusTypeId="PARTY_INV_STATUS" />
+    <StatusItem description="Invitation Declined" sequenceId="06" statusCode="DECLINED" statusId="PARTYINV_DECLINED" statusTypeId="PARTY_INV_STATUS" />
+    <StatusItem description="Invitation Cancelled" sequenceId="10" statusCode="CANCELLED" statusId="PARTYINV_CANCELLED" statusTypeId="PARTY_INV_STATUS" />
+    <StatusValidChange statusId="PARTYINV_SENT" statusIdTo="PARTYINV_PENDING" transitionName="Pending" />
+    <StatusValidChange statusId="PARTYINV_SENT" statusIdTo="PARTYINV_ACCEPTED" transitionName="Accepted" />
+    <StatusValidChange statusId="PARTYINV_SENT" statusIdTo="PARTYINV_DECLINED" transitionName="Declined" />
+    <StatusValidChange statusId="PARTYINV_SENT" statusIdTo="PARTYINV_CANCELLED" transitionName="Cancelled" />
+    <StatusValidChange statusId="PARTYINV_PENDING" statusIdTo="PARTYINV_ACCEPTED" transitionName="Accepted" />
+    <StatusValidChange statusId="PARTYINV_PENDING" statusIdTo="PARTYINV_CANCELLED" transitionName="Cancelled" />
+
+    <TermType description="Financial" hasTable="N" termTypeId="FINANCIAL_TERM" />
+    <TermType description="Payment (net days)" hasTable="N" parentTypeId="FINANCIAL_TERM" termTypeId="FIN_PAYMENT_TERM" />
+    <TermType description="Payment net days, part 1" hasTable="N" parentTypeId="FIN_PAYMENT_TERM" termTypeId="FIN_PAY_NETDAYS_1" />
+    <TermType description="Payment net days, part 2" hasTable="N" parentTypeId="FIN_PAYMENT_TERM" termTypeId="FIN_PAY_NETDAYS_2" />
+    <TermType description="Payment net days, part 3" hasTable="N" parentTypeId="FIN_PAYMENT_TERM" termTypeId="FIN_PAY_NETDAYS_3" />
+    <TermType description="Payment (discounted if paid within specified days)" hasTable="N" parentTypeId="FINANCIAL_TERM" termTypeId="FIN_PAYMENT_DISC" />
+    <TermType description="Payment (due on specified day of month)" hasTable="N" parentTypeId="FINANCIAL_TERM" termTypeId="FIN_PAYMENT_FIXDAY" />
+    <TermType description="Late Fee (percent)" hasTable="N" parentTypeId="FINANCIAL_TERM" termTypeId="FIN_LATE_FEE_TERM" />
+    <TermType description="Penalty For Collection Agency" hasTable="N" parentTypeId="FINANCIAL_TERM" termTypeId="FIN_COLLECT_TERM" />
+    <TermType description="Non-Returnable Sales Item" hasTable="N" parentTypeId="FINANCIAL_TERM" termTypeId="FIN_NORTN_ITEM_TERM" />
+    <TermType description="Incentive" hasTable="N" termTypeId="INCENTIVE" />
+    <TermType description="Legal" hasTable="N" termTypeId="LEGAL_TERM" />
+    <TermType description="Threshold" hasTable="N" termTypeId="THRESHOLD" />
+    <TermType description="Clause For Renewal" hasTable="N" termTypeId="CLAUSE_FOR_RENEWAL" />
+    <TermType description="Agreement Termination" hasTable="N" termTypeId="AGREEMENT_TERMINATIO" />
+    <TermType description="Indemnification" hasTable="N" termTypeId="INDEMNIFICATION" />
+    <TermType description="Non-Compete" hasTable="N" termTypeId="NON_COMPETE" />
+    <TermType description="Exclusive Relationship" hasTable="N" termTypeId="EXCLUSIVE_RELATIONSH" />
+
+    <TermType description="Commission" hasTable="N" termTypeId="COMMISSION_TERM" />
+    <TermType description="Commission Term Fixed Per Unit" hasTable="N" parentTypeId="COMMISSION_TERM" termTypeId="FIN_COMM_FIXED" />
+    <TermType description="Commission Term Variable" hasTable="N" parentTypeId="COMMISSION_TERM" termTypeId="FIN_COMM_VARIABLE" />
+    <TermType description="Commission Term Minimum Per Unit" hasTable="N" parentTypeId="COMMISSION_TERM" termTypeId="FIN_COMM_MIN" />
+    <TermType description="Commission Term Maximum Per Unit" hasTable="N" parentTypeId="COMMISSION_TERM" termTypeId="FIN_COMM_MAX" />
+
+    <TermType description="Incoterm" hasTable="N" termTypeId="INCO_TERM" />
+
+    <TermType description="Incoterm 2020" parentTypeId="INCO_TERM" termTypeId="INCO_TERM_2020" />
+    <TermType description="Incoterm 2020 Ex Works" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_EXW" />
+    <TermType description="Incoterm 2020 Free Carrier" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_FCA" />
+    <TermType description="Incoterm 2020 Free Alongside Ship" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_FAS" />
+    <TermType description="Incoterm 2020 Free On Board" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_FOB" />
+    <TermType description="Incoterm 2020 Carriage Paid To" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_CPT" />
+    <TermType description="Incoterm 2020 Cost and Freight" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_CFR" />
+    <TermType description="Incoterm 2020 Cost, Insurance and Freight" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_CIF" />
+    <TermType description="Incoterm 2020 Carriage and Insurance Paid to" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_CIP" />
+    <TermType description="Incoterm 2020 Delivered at Place Unloaded" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_DPU" />
+    <TermType description="Incoterm 2020 Delivered at Place" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_DAP" />
+    <TermType description="Incoterm 2020 Delivered Duty Paid" parentTypeId="INCO_TERM_2020" termTypeId="INCO_TERM_2020_DDP" />
+
+    <TermType description="Incoterm 2010" parentTypeId="INCO_TERM" termTypeId="INCO_TERM_2010" />
+    <TermType description="Incoterm 2010 Ex Works" parentTypeId="INCO_TERM_2010" termTypeId="EXW" />
+    <TermType description="Incoterm 2010 Free Carrier" parentTypeId="INCO_TERM_2010" termTypeId="FCA" />
+    <TermType description="Incoterm 2010 Free Alongside Ship" parentTypeId="INCO_TERM_2010" termTypeId="FAS" />
+    <TermType description="Incoterm 2010 Free On Board" parentTypeId="INCO_TERM_2010" termTypeId="FOB" />
+    <TermType description="Incoterm 2010 Cost and Freight" parentTypeId="INCO_TERM_2010" termTypeId="CFR" />
+    <TermType description="Incoterm 2010 Cost, Insurance and Freight" parentTypeId="INCO_TERM_2010" termTypeId="CIF" />
+    <TermType description="Incoterm 2010 Carriage Paid To" parentTypeId="INCO_TERM_2010" termTypeId="CPT" />
+    <TermType description="Incoterm 2010 Carriage and Insurance Paid to" parentTypeId="INCO_TERM_2010" termTypeId="CIP" />
+    <TermType description="Incoterm 2010 Delivered Duty Paid" parentTypeId="INCO_TERM_2010" termTypeId="DDP" />
+
+    <TermType description="Incoterm 2000" parentTypeId="INCO_TERM" termTypeId="INCO_TERM_2000" />
+    <TermType description="Incoterm 2000 Delivered At Frontier" parentTypeId="INCO_TERM_2000" termTypeId="DAF" />
+    <TermType description="Incoterm 2000 Delivered Ex Ship" parentTypeId="INCO_TERM_2000" termTypeId="DES" />
+    <TermType description="Incoterm 2000 Delivered Ex Quay" parentTypeId="INCO_TERM_2000" termTypeId="DEQ" />
+    <TermType description="Incoterm 2000 Delivered Duty Unpaid" parentTypeId="INCO_TERM_2000" termTypeId="DDU" />
+
+    <TermType description="Purchasing" termTypeId="PURCHASING" />
+    <TermType description="Vendor Customer ID" parentTypeId="PURCHASING" termTypeId="PURCH_VENDOR_ID" />
+    <TermType description="Preferred Freight" parentTypeId="PURCHASING" termTypeId="PURCH_FREIGHT" />
+
+    <TermType description="Other" hasTable="N" termTypeId="OTHER_TERM" />
+
+    
+    <UserPreference userLoginId="_NA_" userPrefGroupTypeId="GLOBAL_PREFERENCES" userPrefTypeId="ORGANIZATION_PARTY" userPrefValue="DEFAULT" />
+
+    <EnumerationType description="User preference groups" enumTypeId="USER_PREF_GROUPS" hasTable="N" />
+    <EnumerationType description="Global preferences" enumTypeId="GLOBAL_PREFERENCES" hasTable="N" parentTypeId="USER_PREF_GROUPS" />
+    <Enumeration description="Organization party" enumId="ORGANIZATION_PARTY" enumTypeId="GLOBAL_PREFERENCES" sequenceId="01" />
+    <Enumeration description="Visual Theme" enumId="VISUAL_THEME" enumTypeId="GLOBAL_PREFERENCES" sequenceId="02" />
+
+    <PartyIdentificationType description="Original ID in the system where this record was imported from" partyIdentificationTypeId="PARTY_IMPORT" />
+
+    
+    <SecurityPermission description="View operations in the Party Manager." permissionId="PARTYMGR_VIEW" />
+    <SecurityPermission description="Create operations in the Party Manager." permissionId="PARTYMGR_CREATE" />
+    <SecurityPermission description="Update operations in the Party Manager." permissionId="PARTYMGR_UPDATE" />
+    <SecurityPermission description="Delete operations in the Party Manager." permissionId="PARTYMGR_DELETE" />
+    <SecurityPermission description="ALL operations in the Party Manager." permissionId="PARTYMGR_ADMIN" />
+    <SecurityPermission description="Create notes in the Party Manager." permissionId="PARTYMGR_NOTE" />
+    <SecurityPermission description="Update party status in the Party Manager." permissionId="PARTYMGR_STS_UPDATE" />
+    <SecurityPermission description="Update PartyGroup or Person detail information." permissionId="PARTYMGR_GRP_UPDATE" />
+    <SecurityPermission description="Create party relationships in the Party Manager." permissionId="PARTYMGR_REL_CREATE" />
+    <SecurityPermission description="Update party relationships in the Party Manager." permissionId="PARTYMGR_REL_UPDATE" />
+    <SecurityPermission description="Delete party relationships in the Party Manager." permissionId="PARTYMGR_REL_DELETE" />
+    <SecurityPermission description="Create party roles in the Party Manager." permissionId="PARTYMGR_ROLE_CREATE" />
+    <SecurityPermission description="Delete party roles in the Party Manager." permissionId="PARTYMGR_ROLE_DELETE" />
+    <SecurityPermission description="Create party contact mechs in the Party Manager." permissionId="PARTYMGR_PCM_CREATE" />
+    <SecurityPermission description="Update party contact mechs in the Party Manager." permissionId="PARTYMGR_PCM_UPDATE" />
+    <SecurityPermission description="Delete party contact mechs in the Party Manager." permissionId="PARTYMGR_PCM_DELETE" />
+    <SecurityPermission description="Create party to data source relations." permissionId="PARTYMGR_SRC_CREATE" />
+    <SecurityPermission description="Create party quals in the Party Manager." permissionId="PARTYMGR_QAL_CREATE" />
+    <SecurityPermission description="Update party quals in the Party Manager." permissionId="PARTYMGR_QAL_UPDATE" />
+    <SecurityPermission description="Delete party quals in the Party Manager." permissionId="PARTYMGR_QAL_DELETE" />
+    <SecurityPermission description="Create communication event, any from/to party." permissionId="PARTYMGR_CME_CREATE" />
+    <SecurityPermission description="Update communication event, any from/to party." permissionId="PARTYMGR_CME_UPDATE" />
+    <SecurityPermission description="Delete communication event, any from/to party." permissionId="PARTYMGR_CME_DELETE" />
+    <SecurityPermission description="Can create Email communication events for logged-in user." permissionId="PARTYMGR_CME-EMAIL_CREATE" />
+    <SecurityPermission description="Can update Email communication events for logged-in user." permissionId="PARTYMGR_CME-EMAIL_UPDATE" />
+    <SecurityPermission description="Can delete Email communication events for logged-in user." permissionId="PARTYMGR_CME-EMAIL_DELETE" />
+    <SecurityPermission description="Can create Internal note communication event for logged-in user." permissionId="PARTYMGR_CME-NOTE_CREATE" />
+
+    
+    <SecurityPermission description="View operations in the Security Management Screens." permissionId="SECURITY_VIEW" />
+    <SecurityPermission description="Create operations in the Security Management Screens." permissionId="SECURITY_CREATE" />
+    <SecurityPermission description="Update operations in the Security Management Screens." permissionId="SECURITY_UPDATE" />
+    <SecurityPermission description="Delete operations in the Security Management Screens." permissionId="SECURITY_DELETE" />
+    <SecurityPermission description="ALL operations in the Security Management Screens." permissionId="SECURITY_ADMIN" />
+
+    
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="SUPER" permissionId="PARTYMGR_ADMIN" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="SUPER" permissionId="SECURITY_ADMIN" />
+
+<Party partyId="DemoEmployee" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="Demo" lastName="Employee" partyId="DemoEmployee" />
+    <UserLogin partyId="DemoEmployee" userLoginId="DemoEmployee" />
+    <PartyRole partyId="DemoEmployee" roleTypeId="EMPLOYEE" />
+    <PartyRole partyId="DemoEmployee" roleTypeId="PROVIDER_ANALYST" />
+    <PartyStatus partyId="DemoEmployee" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <PartyContactMech contactMechId="9020" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9001" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9023" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee" roleTypeId="EMPLOYEE" />
+    <PartyRole partyId="DemoEmployee" roleTypeId="PROJECT_TEAM" />
+    <UserLoginSecurityGroup fromDate="2000-01-01 00:00:00.0" groupId="PROJECTADMIN" userLoginId="DemoEmployee" />
+
+    
+    <Party partyId="DemoEmployee1" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="Peter" lastName="Manager" partyId="DemoEmployee1" />
+    <UserLogin partyId="DemoEmployee1" userLoginId="DemoEmployee1" />
+    <PartyRole partyId="DemoEmployee1" roleTypeId="EMPLOYEE" />
+    <PartyRole partyId="DemoEmployee1" roleTypeId="PROVIDER_MANAGER" />
+    <PartyStatus partyId="DemoEmployee1" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <PartyContactMech contactMechId="9020" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee1" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9001" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee1" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9023" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee1" roleTypeId="EMPLOYEE" />
+    <PartyRole partyId="DemoEmployee1" roleTypeId="PROJECT_TEAM" />
+    <UserLoginSecurityGroup fromDate="2000-01-01 00:00:00.0" groupId="PROJECTADMIN" userLoginId="DemoEmployee1" />
+
+    
+    <Party partyId="DemoEmployee2" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="Jo" lastName="Analist1" partyId="DemoEmployee2" />
+    <UserLogin partyId="DemoEmployee2" userLoginId="DemoEmployee2" />
+    <PartyRole partyId="DemoEmployee2" roleTypeId="PROVIDER_ANALYST" />
+    <PartyRole partyId="DemoEmployee2" roleTypeId="EMPLOYEE" />
+    <PartyStatus partyId="DemoEmployee2" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <PartyContactMech contactMechId="9020" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee2" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9001" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee2" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9023" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee2" roleTypeId="EMPLOYEE" />
+    <PartyRole partyId="DemoEmployee2" roleTypeId="PROJECT_TEAM" />
+    <UserLoginSecurityGroup fromDate="2000-01-01 00:00:00.0" groupId="PROJECTUSER" userLoginId="DemoEmployee2" />
+
+    
+    <Party partyId="DemoEmployee3" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="Tom" lastName="Analist2" partyId="DemoEmployee3" />
+    <UserLogin partyId="DemoEmployee3" userLoginId="DemoEmployee3" />
+    <PartyRole partyId="DemoEmployee3" roleTypeId="PROVIDER_ANALYST" />
+    <PartyRole partyId="DemoEmployee3" roleTypeId="EMPLOYEE" />
+    <PartyStatus partyId="DemoEmployee3" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <PartyContactMech contactMechId="9020" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee3" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9001" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee3" roleTypeId="EMPLOYEE" />
+    <PartyContactMech contactMechId="9023" fromDate="2000-01-01 10:01:48.933" partyId="DemoEmployee3" roleTypeId="EMPLOYEE" />
+    <PartyRole partyId="DemoEmployee3" roleTypeId="PROJECT_TEAM" />
+    <UserLoginSecurityGroup fromDate="2000-01-01 00:00:00.0" groupId="PROJECTUSER" userLoginId="DemoEmployee3" />
+
+    
+    <Party partyId="DemoCustomer1" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="ManagerP1" lastName="Customer 1" partyId="DemoCustomer1" />
+    <UserLogin partyId="DemoCustomer1" userLoginId="DemoCustomer1" />
+    <PartyRole partyId="DemoCustomer1" roleTypeId="CUSTOMER" />
+    <PartyRole partyId="DemoCustomer1" roleTypeId="CLIENT_MANAGER" />
+    <PartyStatus partyId="DemoCustomer1" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <PartyContactMech contactMechId="9020" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer1" roleTypeId="CUSTOMER" />
+    <PartyContactMech contactMechId="9001" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer1" roleTypeId="CUSTOMER" />
+    <PartyContactMech contactMechId="9023" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer1" roleTypeId="CUSTOMER" />
+    <PartyRole partyId="DemoCustomer1" roleTypeId="PROJECT_TEAM" />
+    <UserLoginSecurityGroup fromDate="2000-01-01 00:00:00.0" groupId="PROJECTUSER" userLoginId="DemoCustomer1" />
+
+    
+    <Party partyId="DemoCustomer2" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="ManagerP2" lastName="Customer 2" partyId="DemoCustomer2" />
+    <UserLogin partyId="DemoCustomer2" userLoginId="DemoCustomer2" />
+    <PartyRole partyId="DemoCustomer2" roleTypeId="CUSTOMER" />
+    <PartyRole partyId="DemoCustomer2" roleTypeId="CLIENT_MANAGER" />
+    <PartyStatus partyId="DemoCustomer2" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <PartyContactMech contactMechId="9020" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer2" roleTypeId="CUSTOMER" />
+    <PartyContactMech contactMechId="9001" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer2" roleTypeId="CUSTOMER" />
+    <PartyContactMech contactMechId="9023" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer2" roleTypeId="CUSTOMER" />
+    <PartyRole partyId="DemoCustomer2" roleTypeId="PROJECT_TEAM" />
+    <UserLoginSecurityGroup fromDate="2000-01-01 00:00:00.0" groupId="PROJECTUSER" userLoginId="DemoCustomer2" />
+
+    
+    <Party partyId="DemoCustomer3" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="Billing" lastName="Customer 3" partyId="DemoCustomer3" />
+    <UserLogin partyId="DemoCustomer3" userLoginId="DemoCustomer3" />
+    <PartyRole partyId="DemoCustomer3" roleTypeId="CUSTOMER" />
+    <PartyRole partyId="DemoCustomer3" roleTypeId="CLIENT_BILLING" />
+    <PartyStatus partyId="DemoCustomer3" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <PartyContactMech contactMechId="9020" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer3" roleTypeId="CUSTOMER" />
+    <PartyContactMech contactMechId="9001" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer3" roleTypeId="CUSTOMER" />
+    <PartyContactMech contactMechId="9023" fromDate="2000-01-01 10:01:48.933" partyId="DemoCustomer3" roleTypeId="CUSTOMER" />
+    <PartyRole partyId="DemoCustomer3" roleTypeId="PROJECT_TEAM" />
+    <UserLoginSecurityGroup fromDate="2000-01-01 00:00:00.0" groupId="PROJECTUSER" userLoginId="DemoCustomer3" />
+
+    
+    <PartyRole partyId="admin" roleTypeId="PROJECT_TEAM" />
+    <PartyRole partyId="admin" roleTypeId="PROVIDER_MANAGER" />
+
+    
+    
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="PROJECTMGR_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="PROJECTMGR_ROLE_TIMESHEET_CREATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="VIEWADMIN" permissionId="PROJECTMGR_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="VIEWADMIN" permissionId="PROJECTMGR_ROLE_TIMESHEET_CREATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="BIZADMIN" permissionId="PROJECTMGR_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="BIZADMIN" permissionId="PROJECTMGR_ROLE_TIMESHEET_CREATE" />
+
+    
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 15:07:52.901" revisionNumber="1" scopeEnumId="WES_PRIVATE" workEffortId="9000" workEffortName="Demo Project1 Cust1" workEffortTypeId="PROJECT" />
+    <WorkEffortPartyAssignment fromDate="2009-04-05 20:27:52.818" partyId="Company" roleTypeId="INTERNAL_ORGANIZATIO" workEffortId="9000" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="admin" roleTypeId="PROVIDER_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9000" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoCustomer1" roleTypeId="CLIENT_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9000" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoCustomer3" roleTypeId="CLIENT_BILLING" statusId="PAS_ASSIGNED" workEffortId="9000" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoEmployee1" roleTypeId="PROVIDER_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9000" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoEmployee2" roleTypeId="PROVIDER_ANALYST" statusId="PAS_ASSIGNED" workEffortId="9000" />
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:14.226" revisionNumber="1" sequenceNum="1" workEffortId="9001" workEffortName="phase1" workEffortParentId="9000" workEffortTypeId="PHASE" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-05 00:00:00.0" estimatedStartDate="2007-12-03 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:21.831" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="1" workEffortId="9002" workEffortName="task1" workEffortParentId="9001" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="16.0" skillTypeId="9000" workEffortId="9002" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-16 00:00:00.0" estimatedStartDate="2007-12-05 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:29.453" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="2" workEffortId="9003" workEffortName="task2" workEffortParentId="9001" workEffortTypeId="TASK" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="admin" roleTypeId="PROVIDER_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9002" />
+    <WorkEffortSkillStandard estimatedDuration="24.0" skillTypeId="9000" workEffortId="9003" />
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:35.939" revisionNumber="1" sequenceNum="2" workEffortId="9004" workEffortName="phase2" workEffortParentId="9000" workEffortTypeId="PHASE" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-17 00:00:00.0" estimatedStartDate="2007-12-16 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:50.84" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="1" workEffortId="9005" workEffortName="task3" workEffortParentId="9004" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="32.0" skillTypeId="9000" workEffortId="9005" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-20 00:00:00.0" estimatedStartDate="2007-12-18 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:58.857" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="2" workEffortId="9006" workEffortName="task4" workEffortParentId="9004" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="40.0" skillTypeId="9000" workEffortId="9006" />
+
+    
+    <WorkEffortAssoc fromDate="2000-01-01 00:00:00.0" sequenceNum="0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="9002" workEffortIdTo="9003" />
+    <WorkEffortAssoc fromDate="2000-01-01 00:00:00.0" sequenceNum="0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="9003" workEffortIdTo="9005" />
+    <WorkEffortAssoc fromDate="2000-01-01 00:00:00.0" sequenceNum="0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="9005" workEffortIdTo="9006" />
+
+    
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 15:07:52.911" revisionNumber="1" scopeEnumId="WES_PRIVATE" workEffortId="9100" workEffortName="Demo Project2 Cust 2" workEffortTypeId="PROJECT" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="admin" roleTypeId="PROVIDER_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9100" />
+    <WorkEffortPartyAssignment fromDate="2009-04-05 20:27:52.818" partyId="Company" roleTypeId="INTERNAL_ORGANIZATIO" workEffortId="9100" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoCustomer2" roleTypeId="CLIENT_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9100" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoCustomer3" roleTypeId="CLIENT_BILLING" statusId="PAS_ASSIGNED" workEffortId="9100" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoEmployee1" roleTypeId="PROVIDER_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9100" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoEmployee3" roleTypeId="PROVIDER_ANALYST" statusId="PAS_ASSIGNED" workEffortId="9100" />
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:14.226" revisionNumber="1" sequenceNum="1" workEffortId="9101" workEffortName="phase1" workEffortParentId="9100" workEffortTypeId="PHASE" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-05 00:00:00.0" estimatedStartDate="2007-12-03 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:21.831" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="1" workEffortId="9102" workEffortName="task1" workEffortParentId="9101" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="16.0" skillTypeId="9000" workEffortId="9102" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-16 00:00:00.0" estimatedStartDate="2007-12-05 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:29.453" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="2" workEffortId="9103" workEffortName="task2" workEffortParentId="9101" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="24.0" skillTypeId="9000" workEffortId="9103" />
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:35.939" revisionNumber="1" sequenceNum="2" workEffortId="9104" workEffortName="phase2" workEffortParentId="9100" workEffortTypeId="PHASE" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-17 00:00:00.0" estimatedStartDate="2007-12-16 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:50.84" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="1" workEffortId="9105" workEffortName="task3" workEffortParentId="9104" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="32.0" skillTypeId="9000" workEffortId="9105" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-20 00:00:00.0" estimatedStartDate="2007-12-18 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:58.857" revisionNumber="1" scopeEnumId="WES_PRIVATE" sequenceNum="2" workEffortId="9106" workEffortName="task4" workEffortParentId="9104" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="40.0" skillTypeId="9000" workEffortId="9106" />
+
+    
+    <WorkEffortAssoc fromDate="2000-01-01 00:00:00.0" sequenceNum="0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="9102" workEffortIdTo="9103" />
+    <WorkEffortAssoc fromDate="2000-01-01 00:00:00.0" sequenceNum="0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="9103" workEffortIdTo="9105" />
+    <WorkEffortAssoc fromDate="2000-01-01 00:00:00.0" sequenceNum="0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="9105" workEffortIdTo="9106" />
+
+    <PartyRole partyId="DemoCustCompany" roleTypeId="CLIENT_BILLING" />
+
+    
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 15:07:52.911" revisionNumber="1" scopeEnumId="WES_PRIVATE" workEffortId="9200" workEffortName="Demo Project3 DemoCustomerCompany" workEffortTypeId="PROJECT" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoEmployee3" roleTypeId="PROVIDER_ANALYST" statusId="PAS_ASSIGNED" workEffortId="9200" />
+    <WorkEffortPartyAssignment fromDate="2009-04-05 20:27:52.818" partyId="Company" roleTypeId="INTERNAL_ORGANIZATIO" workEffortId="9200" />
+    <WorkEffortPartyAssignment fromDate="2009-04-05 20:27:52.893" partyId="DemoCustCompany" roleTypeId="CLIENT_BILLING" workEffortId="9200" />
+    <WorkEffortPartyAssignment fromDate="2007-12-14 16:45:21.831" partyId="DemoEmployee1" roleTypeId="PROVIDER_MANAGER" statusId="PAS_ASSIGNED" workEffortId="9200" />
+    <WorkEffort currentStatusId="_NA_" lastStatusUpdate="2007-12-14 16:45:14.226" revisionNumber="1" workEffortId="9201" workEffortName="phase1" workEffortParentId="9200" workEffortTypeId="PHASE" />
+    <WorkEffort currentStatusId="PTS_CREATED" estimatedCompletionDate="2007-12-05 00:00:00.0" estimatedStartDate="2007-12-03 00:00:00.0" lastStatusUpdate="2007-12-14 16:45:21.831" revisionNumber="1" scopeEnumId="WES_PRIVATE" workEffortId="9202" workEffortName="task1" workEffortParentId="9201" workEffortTypeId="TASK" />
+    <WorkEffortSkillStandard estimatedDuration="16.0" skillTypeId="9000" workEffortId="9202" />
+
+<RoleType description="Project Team" hasTable="N" roleTypeId="PROJECT_TEAM" />
+    <RoleType description="Client Manager" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="CLIENT_MANAGER" />
+    <RoleType description="Client Analyst" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="CLIENT_ANALYST" />
+    <RoleType description="Client Billing" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="CLIENT_BILLING" />
+    <RoleType description="Provider Manager" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="PROVIDER_MANAGER" />
+    <RoleType description="Provider Accounting" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="PROVIDER_ACCOUNTING" />
+    <RoleType description="Provider Analyst" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="PROVIDER_ANALYST" />
+    <RoleType description="Provider Validator" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="PROVIDER_VALIDATOR" />
+    <RoleType description="Provider Func. Impl" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="PROVIDER_FUNCTIONAL" />
+    <RoleType description="Provider Tester" hasTable="N" parentTypeId="PROJECT_TEAM" roleTypeId="PROVIDER_TESTER" />
+
+    
+    <WorkEffortType description="Template" workEffortTypeId="TEMPLATE" />
+    <WorkEffortType description="Project Template" parentTypeId="TEMPLATE" workEffortTypeId="PROJECT_TEMPLATE" />
+    <WorkEffortType description="Project Phase Template" parentTypeId="TEMPLATE" workEffortTypeId="PHASE_TEMPLATE" />
+    <WorkEffortType description="Project Task Template" parentTypeId="TEMPLATE" workEffortTypeId="TASK_TEMPLATE" />
+
+    
+    <SkillType description="Java/Groovy/BSH" skillTypeId="9000" />
+    <SkillType description="Mini Language" skillTypeId="9001" />
+    <SkillType description="HTML/FTL" skillTypeId="9002" />
+    <SkillType description="Javascript/Dojo" skillTypeId="9003" />
+    <SkillType description="Screens/Forms" skillTypeId="9004" />
+    <SkillType description="OFBiz Installation" skillTypeId="9005" />
+    <SkillType description="Not Applicable" skillTypeId="_NA_" />
+
+    <StatusType description="Project" hasTable="N" statusTypeId="PROJECT" />
+    <StatusType description="Project status" hasTable="N" parentTypeId="PROJECT" statusTypeId="PROJECT_STATUS" />
+    <StatusType description="Project Task" hasTable="N" parentTypeId="PROJECT" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusType description="Project Assignment" hasTable="N" parentTypeId="PROJECT" statusTypeId="PROJECT_ASSGN_STATUS" />
+
+    
+    <StatusItem description="Assigned" sequenceId="01" statusCode="ASSIGNED" statusId="PAS_ASSIGNED" statusTypeId="PROJECT_ASSGN_STATUS" />
+    <StatusItem description="Completed" sequenceId="02" statusCode="COMPLETED" statusId="PAS_COMPLETED" statusTypeId="PROJECT_ASSGN_STATUS" />
+    <StatusValidChange statusId="PAS_ASSIGNED" statusIdTo="PAS_COMPLETED" transitionName="Assignment Complete" />
+
+    
+    <StatusItem description="Created" sequenceId="01" statusCode="CREATED" statusId="PTS_CREATED" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusItem description="Unassigned" sequenceId="02" statusCode="CREATED" statusId="PTS_CREATED_UA" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusItem description="Assigned" sequenceId="03" statusCode="CREATED" statusId="PTS_CREATED_AS" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusItem description="In Progress" sequenceId="04" statusCode="CREATED" statusId="PTS_CREATED_IP" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusItem description="Completed" sequenceId="05" statusCode="COMPLETED" statusId="PTS_COMPLETED" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusItem description="On Hold" sequenceId="07" statusCode="ON_HOLD" statusId="PTS_ON_HOLD" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusItem description="Cancelled" sequenceId="09" statusCode="CANCELLED" statusId="PTS_CANCELLED" statusTypeId="PROJECT_TASK_STATUS" />
+    <StatusValidChange statusId="PTS_CREATED" statusIdTo="PTS_COMPLETED" transitionName="Task Complete" />
+    <StatusValidChange statusId="PTS_CREATED" statusIdTo="PTS_ON_HOLD" transitionName="Task On Hold" />
+    <StatusValidChange statusId="PTS_CREATED" statusIdTo="PTS_CANCELLED" transitionName="Task On Hold" />
+    <StatusValidChange statusId="PTS_ON_HOLD" statusIdTo="PTS_CREATED" transitionName="Activated" />
+
+    
+    <StatusItem description="Active" sequenceId="01" statusCode="ACTIVE" statusId="PRJ_ACTIVE" statusTypeId="PROJECT_STATUS" />
+    <StatusItem description="Closed" sequenceId="09" statusCode="CLOSED" statusId="PRJ_CLOSED" statusTypeId="PROJECT_STATUS" />
+    <StatusValidChange statusId="PRJ_ACTIVE" statusIdTo="PRJ_CLOSED" transitionName="Close project" />
+    
+    <StatusValidChange statusId="_NA_" statusIdTo="PRJ_CLOSED" transitionName="Close project" />
+
+<SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FULLADMIN" permissionId="WORKEFFORTMGR_ADMIN" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="WORKEFFORTMGR_CREATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="WORKEFFORTMGR_DELETE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="WORKEFFORTMGR_UPDATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="WORKEFFORTMGR_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="WORKEFFORTMGR_ROLE_CREATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="WORKEFFORTMGR_ROLE_UPDATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="FLEXADMIN" permissionId="WORKEFFORTMGR_ROLE_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="VIEWADMIN" permissionId="WORKEFFORTMGR_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="BIZADMIN" permissionId="WORKEFFORTMGR_ADMIN" />
+
+    <SecurityGroup description="WorkEffort user group; all limited workeffort permissions." groupId="WORKEFFORT_USER" groupName="WorkEffort User" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="WORKEFFORT_USER" permissionId="WORKEFFORTMGR_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="WORKEFFORT_USER" permissionId="WORKEFFORTMGR_ROLE_VIEW" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="WORKEFFORT_USER" permissionId="WORKEFFORTMGR_ROLE_CREATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="WORKEFFORT_USER" permissionId="WORKEFFORTMGR_ROLE_UPDATE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="WORKEFFORT_USER" permissionId="WORKEFFORTMGR_ROLE_DELETE" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="WORKEFFORT_USER" permissionId="OFBTOOLS_VIEW" />
+
+    <SecurityGroup description="WorkEffort Admin group, has all workeffort permissions." groupId="WORKEFFORTADMIN" groupName="WorkEffort Admin" />
+    <SecurityGroupPermission fromDate="2001-05-13 12:00:00.0" groupId="WORKEFFORTADMIN" permissionId="WORKEFFORTMGR_ADMIN" />
+
+    
+    <TemporalExpression description="First Monday of Each Month" tempExprId="STAFF_MTG" tempExprTypeId="INTERSECTION" />
+    <TemporalExpressionAssoc fromTempExprId="STAFF_MTG" toTempExprId="1ST_MONDAY_IN_MONTH" />
+    <TemporalExpressionAssoc fromTempExprId="STAFF_MTG" toTempExprId="MINUTE_00" />
+    <TemporalExpressionAssoc fromTempExprId="STAFF_MTG" toTempExprId="HOUR_10" />
+    <WorkEffort currentStatusId="CAL_TENTATIVE" description="Staff Meeting" estimatedMilliSeconds="3600000" estimatedStartDate="2008-01-01 00:00:00.0" lastStatusUpdate="2008-01-01 00:00:00.0" scopeEnumId="WES_PUBLIC" tempExprId="STAFF_MTG" workEffortId="STAFF_MTG" workEffortName="Staff Meeting" workEffortTypeId="MEETING" />
+    <FixedAsset fixedAssetId="DEMO_PROJECTOR" fixedAssetName="Overhead Projector" fixedAssetTypeId="EQUIPMENT" purchaseCost="2000" purchaseCostUomId="USD" />
+    <WorkEffortFixedAssetAssign availabilityStatusId="WEFA_IN_USE" fixedAssetId="DEMO_PROJECTOR" fromDate="2008-01-01 00:00:00.0" statusId="FA_ASGN_REQUESTED" workEffortId="STAFF_MTG" />
+
+    <Party partyId="WorkEffortUser" partyTypeId="PERSON" statusId="PARTY_ENABLED" />
+    <Person firstName="WorkEffort" lastName="User" partyId="WorkEffortUser" />
+    <PartyStatus partyId="WorkEffortUser" statusDate="2001-01-01 12:00:00.0" statusId="PARTY_ENABLED" />
+    <UserLogin currentPassword="{SHA}47b56994cbc2b6d10aa1be30f70165adb305a41a" partyId="WorkEffortUser" userLoginId="WorkEffortUser" />
+    <UserLoginSecurityGroup fromDate="2011-01-01 00:00:00.0" groupId="WORKEFFORT_USER" userLoginId="WorkEffortUser" />
+
+    <PartyRole partyId="admin" roleTypeId="CAL_OWNER" />
+    <PartyRole partyId="admin" roleTypeId="CAL_ATTENDEE" />
+
+    
+    <WorkEffort currentStatusId="CAL_CANCELLED" description="Demo Project 1 Customer 1" scopeEnumId="WES_PUBLIC" workEffortId="CALENDAR_PUB_DEMO" workEffortName="iCalendar Publish Demonstration" workEffortTypeId="PUBLISH_PROPS" />
+    <WorkEffortPartyAssignment fromDate="2008-01-01 00:00:00.0" partyId="admin" roleTypeId="CAL_OWNER" statusId="PRTYASGN_ASSIGNED" workEffortId="CALENDAR_PUB_DEMO" />
+    <WorkEffortAssoc fromDate="2008-01-01 00:00:00.0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="CALENDAR_PUB_DEMO" workEffortIdTo="STAFF_MTG" />
+
+    
+    <Party partyId="DemoEmployee1" statusId="PARTY_ENABLED" />
+    <Party partyId="DemoEmployee2" statusId="PARTY_ENABLED" />
+    <Party partyId="DemoEmployee3" statusId="PARTY_ENABLED" />
+
+    <PartyRole partyId="DemoEmployee1" roleTypeId="CAL_OWNER" />
+    <PartyRole partyId="DemoEmployee2" roleTypeId="CAL_ATTENDEE" />
+    <PartyRole partyId="DemoEmployee3" roleTypeId="CAL_ATTENDEE" />
+
+    <WorkEffort currentStatusId="CAL_CANCELLED" description="Demo Project 1 Customer 1" scopeEnumId="WES_PRIVATE" workEffortId="PROJECT_PUB_DEMO" workEffortName="Project iCalendar Publish Demonstration" workEffortTypeId="PUBLISH_PROPS" />
+    <WorkEffortPartyAssignment fromDate="2008-01-01 00:00:00.0" partyId="DemoEmployee1" roleTypeId="CAL_OWNER" statusId="PRTYASGN_ASSIGNED" workEffortId="PROJECT_PUB_DEMO" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="DemoEmployee1" roleTypeId="CAL_OWNER" statusId="PRTYASGN_ASSIGNED" workEffortId="STAFF_MTG" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="DemoEmployee2" roleTypeId="CAL_ATTENDEE" statusId="PRTYASGN_ASSIGNED" workEffortId="STAFF_MTG" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="DemoEmployee3" roleTypeId="CAL_ATTENDEE" statusId="PRTYASGN_ASSIGNED" workEffortId="STAFF_MTG" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="admin" roleTypeId="CAL_ATTENDEE" statusId="PRTYASGN_ASSIGNED" workEffortId="STAFF_MTG" />
+    
+    <WorkEffort currentStatusId="CAL_TENTATIVE" description="Staff Meeting" estimatedCompletionDate="2009-06-12 10:00:00.0" estimatedStartDate="2009-06-12 09:00:00.0" lastStatusUpdate="2008-01-01 00:00:00.0" scopeEnumId="WES_PRIVATE" workEffortId="OneOffMeeting" workEffortName="One off Meeting june 12" workEffortTypeId="MEETING" />
+    <WorkEffortAssoc fromDate="2008-01-01 00:00:00.0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="PROJECT_PUB_DEMO" workEffortIdTo="OneOffMeeting" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="DemoEmployee1" roleTypeId="CAL_OWNER" statusId="PRTYASGN_ASSIGNED" workEffortId="OneOffMeeting" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="DemoEmployee2" roleTypeId="CAL_ATTENDEE" statusId="PRTYASGN_ASSIGNED" workEffortId="OneOffMeeting" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="admin" roleTypeId="CAL_ATTENDEE" statusId="PRTYASGN_ASSIGNED" workEffortId="OneOffMeeting" />
+    
+    <WorkEffort currentStatusId="CAL_TENTATIVE" description="The birthday i should never forget" estimatedCompletionDate="2009-06-29 23:00:00.0" estimatedStartDate="2009-06-29 00:00:00.0" lastStatusUpdate="2008-01-01 00:00:00.0" scopeEnumId="WES_PRIVATE" workEffortId="PrivateDemoEmployee1" workEffortName="My Wifes birthday june 29" workEffortTypeId="MEETING" />
+    <WorkEffortAssoc fromDate="2008-01-01 00:00:00.0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="PROJECT_PUB_DEMO" workEffortIdTo="PrivateDemoEmployee1" />
+    <WorkEffortPartyAssignment availabilityStatusId="WEPA_AV_BUSY" fromDate="2008-01-01 00:00:00.0" partyId="DemoEmployee1" roleTypeId="CAL_OWNER" statusId="PRTYASGN_ASSIGNED" workEffortId="PrivateDemoEmployee1" />
+    
+    <WorkEffort currentStatusId="CAL_TENTATIVE" description="General Party" estimatedCompletionDate="2009-06-17 23:00:00.0" estimatedStartDate="2009-06-17 19:00:00.0" lastStatusUpdate="2008-01-01 00:00:00.0" locationDesc="Tom's Banquet Hall" scopeEnumId="WES_PUBLIC" workEffortId="PublicEvent" workEffortName="The general company party june 17" workEffortTypeId="MEETING" />
+    <WorkEffortAssoc fromDate="2008-01-01 00:00:00.0" workEffortAssocTypeId="WORK_EFF_DEPENDENCY" workEffortIdFrom="PROJECT_PUB_DEMO" workEffortIdTo="PublicEvent" />
+
+</entity-engine-xml>

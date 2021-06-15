@@ -67,7 +67,8 @@ func (t SeedProcessor) ProcessElements(doc *etree.Document, elements []*etree.El
 		pk := ent.Pks[0]
 		fmt.Println("Tag:", element.Tag, element.SelectAttrValue(pk, ""))
 		pkString := GetStringRef(ent, element)
-		t.WriteLine("%s.Create().SetStringRef(\"%s\").", element.Tag,
+		t.WriteLine(`var err error`)
+		t.WriteLine("c, err = client.%s.Create().SetStringRef(\"%s\").", element.Tag,
 			pkString)
 		for _, fld := range ent.NormalFields() {
 			att := element.SelectAttr(fld.Name)
@@ -110,6 +111,9 @@ func (t SeedProcessor) ProcessElements(doc *etree.Document, elements []*etree.El
 		}
 
 		t.WriteLine("\t  Save(ctx)")
+		t.WriteLine(`if err != nil {
+	log.Fatalf("fail to create %s: %%v", err)
+}`, pkString)
 	}
 }
 
@@ -166,10 +170,15 @@ func (t SeedProcessor) queryElements(doc *etree.Document, edge *ModelRelation, k
 			code := fmt.Sprintf("\t  %s%s(%s).\n",
 				prefix,
 				strcase.ToCamel(edge.Name),
-				stringRef)
+				quoteRef(entName, stringRef))
 			t.Buffer.WriteString(code)
 		}
 	}
+}
+
+func quoteRef(entName string, stringRef string) interface{} {
+	return fmt.Sprintf("EntityRef(ctx, \"%s\", \"%s\").(*ent.%s)",
+		entName, stringRef, entName)
 }
 
 func (t SeedProcessor) GetElements(doc *etree.Document, entName string, keys []string, values []string) []*etree.Element {

@@ -17,13 +17,29 @@ def keymaps(rel):
              }
             for k in rel.getKeyMaps()]
 
+class XmlCollector(object):
+    def __init__(self):
+        self.xml_data=None
 
-def collect_types(seed_path:str, f:str):
-    xml_path=join(seed_path, f)
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
-    ent_types=set([c.tag for c in root])
-    return ent_types
+    def collect_types(self, seed_path:str, f:str):
+        xml_path=join(seed_path, f)
+        tree = ET.parse(xml_path)
+        root = tree.getroot()
+
+        # add root to doc-tree
+        if self.xml_data is None:
+            self.xml_data = root
+        else:
+            self.xml_data.extend(root)
+
+        ent_types=set([c.tag for c in root])
+        return ent_types
+
+    def get_merge_docs(self) -> str:
+        from xml.etree import ElementTree
+        if self.xml_data is not None:
+            return(ElementTree.tostring(self.xml_data).decode('utf-8'))
+        return ""
 
 def collect_data(seed_path, f):
     rs=[]
@@ -111,9 +127,10 @@ class MetaGenerator(object):
     def collect_entity_types(self, seed_path):
         onlyfiles = [f for f in listdir(seed_path) if isfile(join(seed_path, f))]
         all_types = set([])
+        collector=XmlCollector()
         for f in onlyfiles:
             if f.endswith('.xml'):
-                types = collect_types(seed_path, f)
+                types = collector.collect_types(seed_path, f)
                 print(f"{f} contains {len(types)}")
                 all_types.update(types)
         sets = [t for t in all_types if t not in [
@@ -196,14 +213,19 @@ class MetaGenerator(object):
                     "entities": {ent: ent.lower() + ".json" for ent in all_ents},
                     "edges": edges,
                     }
-        write_to_file(f"{self.asset_dir}/{self.asset_root}/meta.json",
+        write_to_file(f"{self.asset_pkg_dir}/meta.json",
                       json.dumps(pkg_meta, indent=2))
-        write_to_file(f"{self.asset_dir}/{self.asset_root}/meta.yaml",
+        write_to_file(f"{self.asset_pkg_dir}/meta.yaml",
                       yaml.dump(pkg_meta))
+
+    @property
+    def asset_pkg_dir(self):
+        return f"{self.asset_dir}/{self.asset_root}"
 
     def gen_case(self, seed_path:str):
         """
         $ python meta_generator.py gen_case ./assets/cases/purchaseorder
+        $ python meta_generator.py gen_case ./assets/cases/workeffort
         :param seed_path:
         :return:
         """
@@ -214,9 +236,15 @@ class MetaGenerator(object):
         # seed_path="./assets/cases/purchaseorder"
         onlyfiles = [f for f in listdir(seed_path) if isfile(join(seed_path, f)) and f.endswith('.xml')]
         all_types=set()
+        collector=XmlCollector()
         for f in onlyfiles:
-            all_types.update(collect_types(seed_path, f))
+            all_types.update(collector.collect_types(seed_path, f))
+
         pkg=os.path.basename(seed_path)
+        self.asset_root=pkg
+        print(".. write seeds.xml")
+        write_to_file(f"{self.asset_pkg_dir}/seeds.xml", collector.get_merge_docs())
+
         self.gen_ents(pkg, all_types, pkg)
 
 metagen=MetaGenerator()

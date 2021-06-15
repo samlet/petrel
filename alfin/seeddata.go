@@ -19,6 +19,13 @@ const (
 	SeedsKey
 )
 
+type SeedGenPhrase int
+
+const (
+	CreatePhrase SeedGenPhrase = iota
+	UpdatePhrase
+)
+
 type SeedElements struct {
 	elements map[string]interface{}
 }
@@ -45,16 +52,20 @@ func (t *SeedElements) Size() int {
 }
 
 type SeedProcessor struct {
-	MetaMan *MetaManipulate
+	MetaMan       *MetaManipulate
 	Buffer        *strings.Builder
 	WriteRelation bool
+	Trace         bool
+	Phrase        SeedGenPhrase
 }
 
 func NewSeedProcessor(MetaMan *MetaManipulate, writeRelation bool) *SeedProcessor {
 	return &SeedProcessor{
-		MetaMan: MetaMan,
-		Buffer: new(strings.Builder),
-		WriteRelation: writeRelation}
+		MetaMan:       MetaMan,
+		Buffer:        new(strings.Builder),
+		WriteRelation: writeRelation,
+		Phrase:        CreatePhrase,
+	}
 }
 
 func (t SeedProcessor) Write(format string, a ...interface{}) {
@@ -64,51 +75,122 @@ func (t SeedProcessor) WriteLine(format string, a ...interface{}) {
 	t.Buffer.WriteString(fmt.Sprintf(format, a...) + "\n")
 }
 
+func (t SeedProcessor) WriteFileHeader(pkg string) {
+	t.WriteLine(`package seedcreators
+
+import (
+	"context"
+	cachecomp "github.com/samlet/petrel/alfin/cache"
+	"github.com/samlet/petrel/alfin/modules/%s/ent"
+	"log"
+)`, pkg)
+}
+
+func (t SeedProcessor) WriteFunctionHeader(ent *ModelEntity) {
+	switch t.Phrase {
+	case CreatePhrase:
+		t.WriteLine(`func Create%s(ctx context.Context) error {
+	client := ent.FromContext(ctx)
+	cache := cachecomp.FromContext(ctx)
+
+	var err error
+	var c *ent.%s
+`, ent.Name, ent.Name)
+
+	case UpdatePhrase:
+		t.WriteLine(`func Update%s(ctx context.Context) error {
+	cache := cachecomp.FromContext(ctx)
+
+	var err error
+	var c *ent.%s
+`, ent.Name, ent.Name)
+	}
+}
+
+func (t SeedProcessor) WriteFunctionFooter() {
+	t.WriteLine(`return nil
+}`)
+}
+
+func (t SeedProcessor) Printf(format string, a ...interface{}) {
+	if t.Trace {
+		fmt.Printf(format, a...)
+	}
+}
+
+func (t SeedProcessor) Println(a ...interface{}) {
+	if t.Trace {
+		fmt.Println(a...)
+	}
+}
+func (t SeedProcessor) Print(a ...interface{}) {
+	if t.Trace {
+		fmt.Print(a...)
+	}
+}
+
+func (t *SeedProcessor) TraceOn() {
+	t.Trace = true
+}
+
 func (t SeedProcessor) ProcessElements(doc *etree.Document, elements []*etree.Element, ent *ModelEntity) {
 	for _, element := range elements {
 		pk := ent.Pks[0]
-		fmt.Println("Tag:", element.Tag, element.SelectAttrValue(pk, ""))
+		t.Println("Tag:", element.Tag, element.SelectAttrValue(pk, ""))
 		pkString := GetStringRef(ent, element)
 		//t.WriteLine(`var err error`)
-		t.WriteLine("c, err := client.%s.Create().SetStringRef(\"%s\").", element.Tag,
-			pkString)
+		switch t.Phrase {
+		case CreatePhrase:
+			t.WriteLine("c, err = client.%s.Create().SetStringRef(\"%s\").",
+				element.Tag,
+				pkString)
+		case UpdatePhrase:
+			t.WriteLine(`c=cache.Get("%s").(*ent.%s)
+			c, err=c.Update().`,
+				pkString,
+				element.Tag,
+			)
+		default:
+			log.Fatal("Cannot process phrase", t.Phrase)
+		}
+
 		for _, fld := range ent.NormalFields() {
 			att := element.SelectAttr(fld.Name)
 			if att != nil {
-				fmt.Printf("\t[f] %s = %s\n", fld.Name, att.Value)
+				t.Printf("\t[f] %s = %s\n", fld.Name, att.Value)
 				code := fmt.Sprintf("\t  Set%s(%s).\n", strcase.ToCamel(fld.Name),
 					fld.QuoteValue(att.Value))
 				t.Buffer.WriteString(code)
-				print(code)
+				t.Print(code)
 			} else {
-				fmt.Println("\tabsent", fld.Name)
+				t.Println("\tabsent", fld.Name)
 			}
 		}
 		for _, edge := range ent.Edges() {
 			att := element.SelectAttr(edge.FieldName())
 			if att != nil {
-				fmt.Printf("\t[r] %s(%s) = %s\n", edge.Name, edge.Keys(), att.Value)
+				t.Printf("\t[r] %s(%s) = %s\n", edge.Name, edge.Keys(), att.Value)
 				if edge.Type == "many" {
 					code := fmt.Sprintf("\t  Add%s(%s).\n", strcase.ToCamel(edge.Name),
 						strings.ToLower(att.Value)+"_"+strings.ToLower(edge.RelEntityName))
 
-					print(code)
+					t.Print(code)
 					t.relatedQuery(edge, element, doc)
 				} else if edge.Type == "one" {
 					if edge.BackrefType == "many" {
-						fmt.Println("\t  * backref-type = many")
+						t.Println("\t  * backref-type = many")
 					}
 					code := fmt.Sprintf("\t  Set%s(%s).\n", strcase.ToCamel(edge.Name),
 						strings.ToLower(att.Value)+"_"+strings.ToLower(edge.RelEntityName))
 
-					print(code)
+					t.Print(code)
 					t.relatedQuery(edge, element, doc)
 
 				} else {
-					fmt.Println("\t  skip one-nofk")
+					t.Println("\t  skip one-nofk")
 				}
 			} else {
-				fmt.Println("\tabsent", edge.Name)
+				t.Println("\tabsent", edge.Name)
 			}
 		}
 
@@ -116,21 +198,23 @@ func (t SeedProcessor) ProcessElements(doc *etree.Document, elements []*etree.El
 		t.WriteLine(`if err != nil {
 	log.Printf("fail to create %s: %%v", err)
 	return err
-}`, pkString)
+}
+cache.Put("%s", c)
+`, pkString, pkString)
 	}
 }
 
 func GetStringRef(ent *ModelEntity, element *etree.Element) string {
 	var pkValues []string
 	for _, pk := range ent.Pks {
-		val:=element.SelectAttrValue(pk, "")
-		fld:=ent.GetField(pk)
-		if fld.IsDateTime(){
-			intval,err:=ToSecs(val)
+		val := element.SelectAttrValue(pk, "")
+		fld := ent.GetField(pk)
+		if fld.IsDateTime() {
+			intval, err := ToSecs(val)
 			if err != nil {
 				log.Fatalf(" fail: %v", err)
 			}
-			val=strconv.FormatInt(intval,10)
+			val = strconv.FormatInt(intval, 10)
 		}
 		pkValues = append(pkValues, val)
 	}
@@ -153,35 +237,34 @@ var (
 )
 
 func (t SeedProcessor) queryElements(doc *etree.Document, edge *ModelRelation, keys []string, values []string) {
-	entName:=edge.RelEntityName
+	entName := edge.RelEntityName
 	// "//OrderRole[@partyId='DemoSupplier'][@orderId='DEMO10091']"
 	var sb strings.Builder
 	for i := 0; i < len(keys); i++ {
 		sb.WriteString(fmt.Sprintf("[@%s='%s']", keys[i], values[i]))
 	}
-	entModel:=t.MetaMan.MustEntity(entName)
+	entModel := t.MetaMan.MustEntity(entName)
 	for n, element := range doc.FindElements("//" + entName + sb.String()) {
-		stringRef:=GetStringRef(entModel, element)
-		fmt.Printf("\t\t%s %s %s (%s)\n", SerialNumbers[n],
+		stringRef := GetStringRef(entModel, element)
+		t.Printf("\t\t%s %s %s (%s)\n", SerialNumbers[n],
 			element.Tag,
 			element.SelectAttrValue(keys[0], ""),
 			stringRef,
 		)
 		for _, att := range element.Attr {
-			fmt.Println("\t\t\t-", att.Key, att.Value)
+			t.Println("\t\t\t-", att.Key, att.Value)
 		}
 
 		// codegen
 		if t.WriteRelation {
-			var prefix string
-			if edge.Type=="many"{
-				prefix="Add"
-			}else{
-				prefix="Set"
+			var procName string
+			if edge.Type == "many" {
+				procName = entModel.AdderName()
+			} else {
+				procName = "Set" + strcase.ToCamel(edge.Name)
 			}
-			code := fmt.Sprintf("\t  %s%s(%s).\n",
-				prefix,
-				strcase.ToCamel(edge.Name),
+			code := fmt.Sprintf("\t  %s(%s).\n",
+				procName,
 				quoteRef(entName, stringRef))
 			t.Buffer.WriteString(code)
 		}

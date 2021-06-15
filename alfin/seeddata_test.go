@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/beevik/etree"
+	"github.com/iancoleman/strcase"
 	"github.com/samlet/petrel/alfin/modules/workload"
 	"github.com/samlet/petrel/alfin/modules/workload/ent"
 	"log"
@@ -196,8 +197,8 @@ func newWorkloadType(ctx context.Context, node *etree.Element) (*ent.WorkloadTyp
 
 func TestXmlSeedFiles(t *testing.T) {
 	pkg:="workeffort"
-	entName := "Party"
-	//entName:="Person"
+	//entName := "Party"
+	entName:="Person"
 
 	xmlSeedFile:=filepath.Join("assets", pkg, "seeds.xml")
 	doc := etree.NewDocument()
@@ -216,8 +217,31 @@ func TestXmlSeedFiles(t *testing.T) {
 	seedProc:=NewSeedProcessor(mani,true)
 	elements:=seedProc.GetElementsByArgs(doc, entName, "partyId", "DemoCustomer3")
 
+	seedProc.WriteFunctionHeader(model)
 	seedProc.ProcessElements(doc, elements, model)
+	seedProc.WriteFunctionFooter()
+
 	println("-------------------")
 	println(seedProc.Buffer.String())
 
 }
+
+func TestAdderName(t *testing.T) {
+	pkg:="workeffort"
+	entName:="WorkEffort"
+	mani, err := NewManipulateWithPackage(pkg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	model := mani.MustEntity(entName)
+	println(model.PluralName(), strcase.ToCamel(model.PluralName()))
+}
+
+func TestSeedGen(t *testing.T) {
+	pkg:="workeffort"
+
+	seedgen:=NewSeedGen(pkg, "Person")
+	seedgen.Generate()
+}
+

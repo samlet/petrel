@@ -115,6 +115,10 @@ func (t ModelEntity) PluralName() string {
 	return PluralizeTypeName(t.Name)
 }
 
+func (t ModelEntity) AdderName() string{
+	return "Add"+strcase.ToCamel(t.PluralName())
+}
+
 func (t ModelEntity) GetField(fld string) *ModelField {
 	for _, f := range t.Fields {
 		if f.Name==fld{
@@ -183,8 +187,10 @@ func (t ModelField) EntFieldType() string {
 func (t ModelField) QuoteValue(v string) string {
 	switch t.Type {
 	case "currency-amount", "currency-precise", "fixed-point", "floating-point",
-		"integer", "numeric":
+		"integer", "numeric", "time":
 		return v
+	case "date-time", "date":
+		return fmt.Sprintf("ParseDateTime(\"%s\")", v)
 	default:
 		return "\"" + v + "\""
 	}

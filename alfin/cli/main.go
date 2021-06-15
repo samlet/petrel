@@ -20,6 +20,7 @@ $ just cli meta --show-fields workeffort WorkEffort
 $ just cli meta --all-ents workeffort
 $ just cli seed-trace workeffort Party partyId DemoCustomer3
 $ just cli seed-trace --no-rel workeffort Person partyId DemoCustomer3
+$ just cli seed-gen workeffort Party
 */
 
 type Globals struct {
@@ -42,6 +43,7 @@ type CLI struct {
 	Meta      MetaCmd      `cmd help:"Show meta-info"`
 	SeedTypes SeedTypesCmd `cmd help:"Generate seed types"`
 	SeedTrace SeedTraceCmd `cmd help:"Trace a seed record"`
+	SeedGen   SeedGenCmd   `cmd help:"Generate seed creator and updater"`
 }
 
 type VersionFlag string
@@ -205,4 +207,14 @@ func (cmd *SeedTraceCmd) Run(globals *Globals) error {
 	println("-------------------")
 	println(seedProc.Buffer.String())
 	return nil
+}
+
+type SeedGenCmd struct {
+	Pkg string `arg required`
+	Ent string `arg required`
+}
+
+func (cmd *SeedGenCmd) Run(globals *Globals) error {
+	seedgen := alfin.NewSeedGen(cmd.Pkg, cmd.Ent)
+	return seedgen.Generate()
 }

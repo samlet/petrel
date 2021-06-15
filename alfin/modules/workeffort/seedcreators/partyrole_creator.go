@@ -9,7 +9,7 @@ import (
 )
 
 func CreatePartyRole(ctx context.Context) error {
-	log.Println("creator", common.Version)
+	log.Println("PartyRole creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 

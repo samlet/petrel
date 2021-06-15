@@ -9,7 +9,7 @@ import (
 )
 
 func CreateStatusItem(ctx context.Context) error {
-	log.Println("creator", common.Version)
+	log.Println("StatusItem creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 

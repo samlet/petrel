@@ -92,13 +92,13 @@ func (t SeedProcessor) WriteFunctionHeader(ent *ModelEntity) {
 	switch t.Phrase {
 	case CreatePhrase:
 		t.WriteLine(`func Create%s(ctx context.Context) error {
-	log.Println("creator", common.Version)
+	log.Println("%s creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
 	var c *ent.%s
-`, ent.Name, ent.Name)
+`, ent.Name, ent.Name, ent.Name)
 
 	case UpdatePhrase:
 		t.WriteLine(`func Update%s(ctx context.Context) error {

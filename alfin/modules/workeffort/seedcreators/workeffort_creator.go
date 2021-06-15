@@ -9,7 +9,7 @@ import (
 )
 
 func CreateWorkEffort(ctx context.Context) error {
-	log.Println("creator", common.Version)
+	log.Println("WorkEffort creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 

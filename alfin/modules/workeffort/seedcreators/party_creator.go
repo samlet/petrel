@@ -3,11 +3,13 @@ package seedcreators
 import (
 	"context"
 	cachecomp "github.com/samlet/petrel/alfin/cache"
+	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
 )
 
 func CreateParty(ctx context.Context) error {
+	log.Println("Party creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 

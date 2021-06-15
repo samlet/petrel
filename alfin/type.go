@@ -202,8 +202,19 @@ func (t ModelField) QuoteValue(v string) string {
 		return v
 	case "date-time", "date":
 		return fmt.Sprintf("common.ParseDateTime(\"%s\")", v)
+	case "indicator":
+		return "\"" +indicatorValue(v)+ "\""
 	default:
 		return "\"" + v + "\""
+	}
+}
+
+func indicatorValue(val string) string {
+	switch val {
+	case "Y": return "Yes"
+	case "N": return "No"
+	default:
+		return "Unknown"
 	}
 }
 

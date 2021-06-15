@@ -213,10 +213,14 @@ func (cmd *SeedTraceCmd) Run(globals *Globals) error {
 type SeedGenCmd struct {
 	OnlyCreator bool `help:"Only generate creators" default:"false"`
 	Pkg string `arg required`
-	Ent string `arg required`
+	Ent string `arg optional`
 }
 
 func (cmd *SeedGenCmd) Run(globals *Globals) error {
-	seedgen := alfin.NewSeedGen(cmd.Pkg, cmd.Ent)
-	return seedgen.Generate(cmd.OnlyCreator)
+	if cmd.Ent==""{
+		return alfin.GeneratePackage(cmd.Pkg)
+	}else {
+		seedgen := alfin.NewSeedGen(cmd.Pkg, cmd.Ent)
+		return seedgen.Generate(cmd.OnlyCreator)
+	}
 }

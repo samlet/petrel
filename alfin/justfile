@@ -32,3 +32,11 @@ onlygen mod:
 
 cli +FLAGS='':
     go run cli/main.go {{FLAGS}} || true
+
+fmt pkg:
+	go fmt modules/{{pkg}}/seedcreators/*.go
+
+seed-gen pkg:
+	go run cli/main.go seed-gen {{pkg}}
+	go fmt modules/{{pkg}}/seedcreators/*.go
+

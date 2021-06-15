@@ -3,11 +3,13 @@ package seedcreators
 import (
 	"context"
 	cachecomp "github.com/samlet/petrel/alfin/cache"
+	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
 )
 
 func UpdateParty(ctx context.Context) error {
+	log.Println("updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error

@@ -32,6 +32,5 @@ func LoadSeedData() {
 	if err := CreateWorkEffort(ctx); err != nil {
 		log.Fatal(err)
 	}
+
 }
-
-

@@ -1,4 +1,4 @@
-package alfin
+package common
 
 import (
 	"github.com/araddon/dateparse"

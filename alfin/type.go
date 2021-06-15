@@ -139,6 +139,14 @@ func (t ModelField) IsDateTime() bool{
 	return false
 }
 
+func (t ModelField) SetterName() string{
+	name:= "Set"+strcase.ToCamel(t.Name)
+	if strings.HasSuffix(name, "Id"){
+		name=strings.TrimRight(name, "Id")+"ID"
+	}
+	return name
+}
+
 func (t ModelField) EntFieldType() string {
 	f := fmt.Sprintf
 	var resultDef string
@@ -186,11 +194,13 @@ func (t ModelField) EntFieldType() string {
 
 func (t ModelField) QuoteValue(v string) string {
 	switch t.Type {
+	case "id":
+		return fmt.Sprintf("common.ParseId(\"%s\")", v)
 	case "currency-amount", "currency-precise", "fixed-point", "floating-point",
 		"integer", "numeric", "time":
 		return v
 	case "date-time", "date":
-		return fmt.Sprintf("ParseDateTime(\"%s\")", v)
+		return fmt.Sprintf("common.ParseDateTime(\"%s\")", v)
 	default:
 		return "\"" + v + "\""
 	}

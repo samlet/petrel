@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/beevik/etree"
 	"github.com/iancoleman/strcase"
+	"github.com/samlet/petrel/alfin/common"
 	"log"
 	"strconv"
 	"strings"
@@ -82,6 +83,7 @@ import (
 	"context"
 	cachecomp "github.com/samlet/petrel/alfin/cache"
 	"github.com/samlet/petrel/alfin/modules/%s/ent"
+	"github.com/samlet/petrel/alfin/common"
 	"log"
 )`, pkg)
 }
@@ -90,6 +92,7 @@ func (t SeedProcessor) WriteFunctionHeader(ent *ModelEntity) {
 	switch t.Phrase {
 	case CreatePhrase:
 		t.WriteLine(`func Create%s(ctx context.Context) error {
+	log.Println("creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 
@@ -99,6 +102,7 @@ func (t SeedProcessor) WriteFunctionHeader(ent *ModelEntity) {
 
 	case UpdatePhrase:
 		t.WriteLine(`func Update%s(ctx context.Context) error {
+	log.Println("updater", common.Version)
 	cache := cachecomp.FromContext(ctx)
 
 	var err error
@@ -158,7 +162,7 @@ func (t SeedProcessor) ProcessElements(doc *etree.Document, elements []*etree.El
 			att := element.SelectAttr(fld.Name)
 			if att != nil {
 				t.Printf("\t[f] %s = %s\n", fld.Name, att.Value)
-				code := fmt.Sprintf("\t  Set%s(%s).\n", strcase.ToCamel(fld.Name),
+				code := fmt.Sprintf("\t  %s(%s).\n", fld.SetterName(),
 					fld.QuoteValue(att.Value))
 				t.Buffer.WriteString(code)
 				t.Print(code)
@@ -210,7 +214,7 @@ func GetStringRef(ent *ModelEntity, element *etree.Element) string {
 		val := element.SelectAttrValue(pk, "")
 		fld := ent.GetField(pk)
 		if fld.IsDateTime() {
-			intval, err := ToSecs(val)
+			intval, err := common.ToSecs(val)
 			if err != nil {
 				log.Fatalf(" fail: %v", err)
 			}
@@ -232,9 +236,9 @@ func (t SeedProcessor) relatedQuery(edge *ModelRelation, element *etree.Element,
 	t.queryElements(doc, edge, keys, values)
 }
 
-var (
-	SerialNumbers = []string{"❶", "❷", "❸", "❹", "❺", "❻", "❼", "❽", "❾", "❿"}
-)
+//var (
+//	SerialNumbers = []string{"❶", "❷", "❸", "❹", "❺", "❻", "❼", "❽", "❾", "❿"}
+//)
 
 func (t SeedProcessor) queryElements(doc *etree.Document, edge *ModelRelation, keys []string, values []string) {
 	entName := edge.RelEntityName
@@ -246,7 +250,7 @@ func (t SeedProcessor) queryElements(doc *etree.Document, edge *ModelRelation, k
 	entModel := t.MetaMan.MustEntity(entName)
 	for n, element := range doc.FindElements("//" + entName + sb.String()) {
 		stringRef := GetStringRef(entModel, element)
-		t.Printf("\t\t%s %s %s (%s)\n", SerialNumbers[n],
+		t.Printf("\t\t%d. %s %s (%s)\n", n,
 			element.Tag,
 			element.SelectAttrValue(keys[0], ""),
 			stringRef,

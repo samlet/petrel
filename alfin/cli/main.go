@@ -21,6 +21,7 @@ $ just cli meta --all-ents workeffort
 $ just cli seed-trace workeffort Party partyId DemoCustomer3
 $ just cli seed-trace --no-rel workeffort Person partyId DemoCustomer3
 $ just cli seed-gen workeffort Party
+$ just cli seed-gen --only-creator workeffort StatusItem
 */
 
 type Globals struct {
@@ -210,11 +211,12 @@ func (cmd *SeedTraceCmd) Run(globals *Globals) error {
 }
 
 type SeedGenCmd struct {
+	OnlyCreator bool `help:"Only generate creators" default:"false"`
 	Pkg string `arg required`
 	Ent string `arg required`
 }
 
 func (cmd *SeedGenCmd) Run(globals *Globals) error {
 	seedgen := alfin.NewSeedGen(cmd.Pkg, cmd.Ent)
-	return seedgen.Generate()
+	return seedgen.Generate(cmd.OnlyCreator)
 }

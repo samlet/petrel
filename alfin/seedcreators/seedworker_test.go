@@ -1,4 +1,4 @@
-package alfin
+package seedcreators
 
 import "testing"
 

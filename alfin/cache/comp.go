@@ -12,6 +12,6 @@ func FromContext(ctx context.Context) Cache {
 
 // NewContext returns a new context with the given Client attached.
 func NewContext(parent context.Context) context.Context {
-	return context.WithValue(parent, cacheCtxKey{},NewLRU(10000))
+	return context.WithValue(parent, cacheCtxKey{}, NewLRU(10000))
 }
 

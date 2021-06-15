@@ -36,14 +36,16 @@ func NewSeedGen(pkg string, entName string) *SeedGen {
 	return &SeedGen{mani,doc,pkg,entName}
 }
 
-func (t SeedGen) Generate() error {
+func (t SeedGen) Generate(onlyCreator bool) error {
 	err := t.seedCreator()
 	if err != nil {
 		return err
 	}
-	err = t.seedUpdater()
-	if err != nil {
-		return err
+	if !onlyCreator {
+		err = t.seedUpdater()
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

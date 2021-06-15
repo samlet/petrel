@@ -1,11 +1,10 @@
-package alfin
+package seedcreators
 
 import (
 	"context"
 	_ "github.com/mattn/go-sqlite3"
 	cachecomp "github.com/samlet/petrel/alfin/cache"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
-	"github.com/samlet/petrel/alfin/seedcreators"
 	"log"
 )
 
@@ -26,7 +25,10 @@ func LoadSeedData() {
 	}
 
 	// Creators
-	if err := seedcreators.CreatePerson(ctx); err != nil {
+	if err := CreatePerson(ctx); err != nil {
+		log.Fatal(err)
+	}
+	if err := CreateWorkEffort(ctx); err != nil {
 		log.Fatal(err)
 	}
 }

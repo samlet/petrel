@@ -195,7 +195,11 @@ func newWorkloadType(ctx context.Context, node *etree.Element) (*ent.WorkloadTyp
 }
 
 func TestXmlSeedFiles(t *testing.T) {
-	xmlSeedFile:=filepath.Join("assets", "workeffort", "seeds.xml")
+	pkg:="workeffort"
+	entName := "Party"
+	//entName:="Person"
+
+	xmlSeedFile:=filepath.Join("assets", pkg, "seeds.xml")
 	doc := etree.NewDocument()
 	if err := doc.ReadFromFile(xmlSeedFile); err != nil {
 		panic(err)
@@ -203,17 +207,13 @@ func TestXmlSeedFiles(t *testing.T) {
 	root := doc.SelectElement("entity-engine-xml")
 	log.Println("ROOT element:", root.Tag)
 
-	// ...
-	entName := "Party"
-	//entName:="Person"
-	mani, err := NewManipulateWithPackage("workeffort")
+	mani, err := NewManipulateWithPackage(pkg)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 
 	model := mani.MustEntity(entName)
 	seedProc:=NewSeedProcessor(mani,true)
-	//seedProc:=NewSeedProcessor(false)
 	elements:=seedProc.GetElementsByArgs(doc, entName, "partyId", "DemoCustomer3")
 
 	seedProc.ProcessElements(doc, elements, model)

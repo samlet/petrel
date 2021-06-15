@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/beevik/etree"
 	"github.com/samlet/petrel/alfin"
 	log "github.com/sirupsen/logrus"
 	"github.com/xlab/treeprint"
@@ -17,6 +18,8 @@ import (
 $ just cli -l debug meta workeffort WorkEffort
 $ just cli meta --show-fields workeffort WorkEffort
 $ just cli meta --all-ents workeffort
+$ just cli seed-trace workeffort Party partyId DemoCustomer3
+$ just cli seed-trace --no-rel workeffort Person partyId DemoCustomer3
 */
 
 type Globals struct {
@@ -34,10 +37,11 @@ type Globals struct {
 
 type CLI struct {
 	Globals
-	Attach AttachCmd `cmd help:"Attach local standard input, output, and error streams to a running container"`
-	Run    RunCmd    `cmd help:"Run a command"`
-	Meta   MetaCmd   `cmd help:"Show meta-info"`
+	Attach    AttachCmd    `cmd help:"Attach local standard input, output, and error streams to a running container"`
+	Run       RunCmd       `cmd help:"Run a command"`
+	Meta      MetaCmd      `cmd help:"Show meta-info"`
 	SeedTypes SeedTypesCmd `cmd help:"Generate seed types"`
+	SeedTrace SeedTraceCmd `cmd help:"Trace a seed record"`
 }
 
 type VersionFlag string
@@ -49,7 +53,6 @@ func (v VersionFlag) BeforeApply(app *kong.Kong, vars kong.Vars) error {
 	app.Exit(0)
 	return nil
 }
-
 
 func main() {
 	cli := CLI{
@@ -69,7 +72,7 @@ func main() {
 			"version": "0.0.1",
 		})
 
-	lvl,err:=log.ParseLevel(cli.LogLevel)
+	lvl, err := log.ParseLevel(cli.LogLevel)
 	if err != nil {
 		log.Fatalf("parse log level fail: %v", err)
 	}
@@ -103,10 +106,10 @@ func (cmd *RunCmd) Run(globals *Globals) error {
 }
 
 type MetaCmd struct {
-	ShowFields bool `help:"Show fields" default:"false"`
-	AllEnts bool `help:"Show all entity meta" default:"false"`
-	Pkg string `arg required`
-	Ent string `arg optional`
+	ShowFields bool   `help:"Show fields" default:"false"`
+	AllEnts    bool   `help:"Show all entity meta" default:"false"`
+	Pkg        string `arg required`
+	Ent        string `arg optional`
 }
 
 func (cmd *MetaCmd) Run(globals *Globals) error {
@@ -120,11 +123,11 @@ func (cmd *MetaCmd) Run(globals *Globals) error {
 		for _, ent := range mani.Entities().Entities {
 			alfin.DisplayEntInfo(ent, tree, cmd.ShowFields)
 		}
-	}else {
-		if len(cmd.Ent)!=0 {
+	} else {
+		if len(cmd.Ent) != 0 {
 			ent := mani.MustEntity(cmd.Ent)
 			alfin.DisplayEntInfo(ent, tree, cmd.ShowFields)
-		}else{
+		} else {
 			return fmt.Errorf("specify a entity")
 		}
 	}
@@ -139,23 +142,23 @@ type SeedTypesCmd struct {
 }
 
 func (cmd *SeedTypesCmd) Run(globals *Globals) error {
-	tmpl:="templates/seed_schema.tmpl"
-	header:=`package seedtypes
+	tmpl := "templates/seed_schema.tmpl"
+	header := `package seedtypes
 import "github.com/samlet/petrel/services"
 `
 
-	mani, err:=alfin.NewManipulateWithPackage(cmd.Pkg)
+	mani, err := alfin.NewManipulateWithPackage(cmd.Pkg)
 	if err != nil {
 		panic(err)
 	}
 
-	for _,ent := range mani.Entities().Entities {
-		filePath:=strings.ToLower(ent.Name)+".go"
+	for _, ent := range mani.Entities().Entities {
+		filePath := strings.ToLower(ent.Name) + ".go"
 		f, err := os.Create(filepath.Join("seedtypes", filePath))
 		if err != nil {
 			log.Fatalf("create file fail: %v", err)
 		}
-		_, err=f.WriteString(header)
+		_, err = f.WriteString(header)
 		if err != nil {
 			log.Fatalf("write header fail: %v", err)
 		}
@@ -166,5 +169,40 @@ import "github.com/samlet/petrel/services"
 		f.Close()
 	}
 
+	return nil
+}
+
+type SeedTraceCmd struct {
+	NoRel bool   `help:"Not show relations" default:"false"`
+	Pkg   string `arg required help:"asset package"`
+	Ent   string `arg required`
+	Pk    string `arg required`
+	PkVal string `arg required`
+}
+
+func (cmd *SeedTraceCmd) Run(globals *Globals) error {
+	pkg := cmd.Pkg
+	entName := cmd.Ent
+
+	xmlSeedFile := filepath.Join("assets", pkg, "seeds.xml")
+	doc := etree.NewDocument()
+	if err := doc.ReadFromFile(xmlSeedFile); err != nil {
+		panic(err)
+	}
+	root := doc.SelectElement("entity-engine-xml")
+	log.Println("ROOT element:", root.Tag)
+
+	mani, err := alfin.NewManipulateWithPackage(pkg)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	model := mani.MustEntity(entName)
+	seedProc := alfin.NewSeedProcessor(mani, !cmd.NoRel)
+	elements := seedProc.GetElementsByArgs(doc, entName, cmd.Pk, cmd.PkVal)
+
+	seedProc.ProcessElements(doc, elements, model)
+	println("-------------------")
+	println(seedProc.Buffer.String())
 	return nil
 }

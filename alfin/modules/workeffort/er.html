@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+		<div class="mermaid" id="er-diagram">
+erDiagram
+    CommunicationEventPrpTyp {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        communicationeventprptypDOTHasTable has_table
+        string description
+    }
+    CommunicationEventType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        communicationeventtypeDOTHasTable has_table
+        string description
+    }
+    ContactMechPurposeType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        int parent_type_id
+        contactmechpurposetypeDOTHasTable has_table
+        string description
+    }
+    ContactMechType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        contactmechtypeDOTHasTable has_table
+        string description
+    }
+    ContactMechTypePurpose {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+    }
+    Enumeration {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string enum_code
+        int sequence_id
+        string description
+    }
+    EnumerationType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        enumerationtypeDOTHasTable has_table
+        string description
+    }
+    FixedAsset {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        int fixed_asset_type_id
+        int instance_of_product_id
+        string fixed_asset_name
+        int acquire_order_id
+        int acquire_order_item_seq_id
+        timeDOTTime date_acquired
+        timeDOTTime date_last_serviced
+        timeDOTTime date_next_service
+        timeDOTTime expected_end_of_life
+        timeDOTTime actual_end_of_life
+        float64 production_capacity
+        int uom_id
+        int calendar_id
+        string serial_number
+        int located_at_facility_id
+        int located_at_location_seq_id
+        float64 salvage_value
+        float64 depreciation
+        float64 purchase_cost
+        int purchase_cost_uom_id
+    }
+    Party {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        int external_id
+        int preferred_currency_uom_id
+        string description
+        timeDOTTime created_date
+        timeDOTTime last_modified_date
+        int data_source_id
+        partyDOTIsUnread is_unread
+    }
+    PartyClassificationType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        partyclassificationtypeDOTHasTable has_table
+        string description
+    }
+    PartyContactMech {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        int contact_mech_id
+        timeDOTTime from_date
+        timeDOTTime thru_date
+        partycontactmechDOTAllowSolicitation allow_solicitation
+        string extension
+        partycontactmechDOTVerified verified
+        string comments
+        int years_with_contact_mech
+        int months_with_contact_mech
+    }
+    PartyContentType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string description
+    }
+    PartyIdentificationType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        partyidentificationtypeDOTHasTable has_table
+        string description
+    }
+    PartyQualType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        partyqualtypeDOTHasTable has_table
+        string description
+    }
+    PartyRelationshipType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        partyrelationshiptypeDOTHasTable has_table
+        string party_relationship_name
+        string description
+    }
+    PartyRole {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+    }
+    PartyStatus {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        timeDOTTime status_date
+    }
+    PartyType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        partytypeDOTHasTable has_table
+        string description
+    }
+    Person {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string salutation
+        string first_name
+        string middle_name
+        string last_name
+        string personal_title
+        string suffix
+        string nickname
+        string first_name_local
+        string middle_name_local
+        string last_name_local
+        string other_local
+        int member_id
+        personDOTGender gender
+        timeDOTTime birth_date
+        timeDOTTime deceased_date
+        float64 height
+        float64 weight
+        string mothers_maiden_name
+        personDOTOldMaritalStatus old_marital_status
+        string social_security_number
+        string passport_number
+        timeDOTTime passport_expire_date
+        float64 total_years_work_experience
+        string comments
+        string occupation
+        int years_with_employer
+        int months_with_employer
+        personDOTExistingCustomer existing_customer
+        string card_id
+    }
+    RoleType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        roletypeDOTHasTable has_table
+        string description
+    }
+    SecurityGroup {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string group_name
+        string description
+    }
+    SecurityGroupPermission {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        timeDOTTime from_date
+        timeDOTTime thru_date
+    }
+    SecurityPermission {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string description
+    }
+    SkillType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        skilltypeDOTHasTable has_table
+        string description
+    }
+    StatusItem {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string status_code
+        int sequence_id
+        string description
+    }
+    StatusType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        statustypeDOTHasTable has_table
+        string description
+    }
+    StatusValidChange {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string condition_expression
+        string transition_name
+    }
+    TemporalExpression {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        int temp_expr_type_id
+        string description
+        timeDOTTime date_1
+        timeDOTTime date_2
+        int integer_1
+        int integer_2
+        int string_1
+        int string_2
+    }
+    TemporalExpressionAssoc {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        int expr_assoc_type
+    }
+    TermType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        termtypeDOTHasTable has_table
+        string description
+    }
+    UserLogin {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string current_password
+        string password_hint
+        userloginDOTIsSystem is_system
+        userloginDOTEnabled enabled
+        userloginDOTHasLoggedOut has_logged_out
+        userloginDOTRequirePasswordChange require_password_change
+        int last_currency_uom
+        string last_locale
+        string last_time_zone
+        timeDOTTime disabled_date_time
+        int successive_failed_logins
+        string external_auth_id
+        string user_ldap_dn
+        string disabled_by
+    }
+    UserLoginSecurityGroup {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        timeDOTTime from_date
+        timeDOTTime thru_date
+    }
+    UserPreference {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        string user_pref_type_id
+        string user_pref_group_type_id
+        string user_pref_value
+        string user_pref_data_type
+    }
+    WorkEffort {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        timeDOTTime last_status_update
+        int work_effort_purpose_type_id
+        int priority
+        int percent_complete
+        string work_effort_name
+        int show_as_enum_id
+        workeffortDOTSendNotificationEmail send_notification_email
+        string description
+        string location_desc
+        timeDOTTime estimated_start_date
+        timeDOTTime estimated_completion_date
+        timeDOTTime actual_start_date
+        timeDOTTime actual_completion_date
+        float64 estimated_milli_seconds
+        float64 estimated_setup_millis
+        int estimate_calc_method
+        float64 actual_milli_seconds
+        float64 actual_setup_millis
+        float64 total_milli_seconds_allowed
+        float64 total_money_allowed
+        int money_uom_id
+        string special_terms
+        int time_transparency
+        string universal_id
+        string source_reference_id
+        int facility_id
+        string info_url
+        int recurrence_info_id
+        int runtime_data_id
+        int note_id
+        string service_loader_name
+        float64 quantity_to_produce
+        float64 quantity_produced
+        float64 quantity_rejected
+        float64 reserv_persons
+        float64 reserv_2_nd_pp_perc
+        float64 reserv_nth_pp_perc
+        int accommodation_map_id
+        int accommodation_spot_id
+        int revision_number
+        timeDOTTime created_date
+        string created_by_user_login
+        timeDOTTime last_modified_date
+        string last_modified_by_user_login
+        int sequence_num
+    }
+    WorkEffortAssoc {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        int work_effort_assoc_type_id
+        int sequence_num
+        timeDOTTime from_date
+        timeDOTTime thru_date
+    }
+    WorkEffortFixedAssetAssign {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        timeDOTTime from_date
+        timeDOTTime thru_date
+        float64 allocated_cost
+        string comments
+    }
+    WorkEffortPartyAssignment {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        timeDOTTime from_date
+        timeDOTTime thru_date
+        timeDOTTime status_date_time
+        int facility_id
+        string comments
+        workeffortpartyassignmentDOTMustRsvp must_rsvp
+    }
+    WorkEffortSkillStandard {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        float64 estimated_num_people
+        float64 estimated_duration
+        float64 estimated_cost
+    }
+    WorkEffortType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string string_ref
+        workefforttypeDOTHasTable has_table
+        string description
+    }
+    	CommunicationEventPrpTyp |o--o{ CommunicationEventPrpTyp : "children/parent"
+    	CommunicationEventPrpTyp }o--o{ CommunicationEventPrpTyp : "child_communication_event_prp_typs"
+    	CommunicationEventType |o--o{ CommunicationEventType : "children/parent"
+    	CommunicationEventType }o--o{ CommunicationEventType : "child_communication_event_types"
+    	ContactMechPurposeType |o--o{ ContactMechTypePurpose : "contact_mech_type_purposes/contact_mech_purpose_type"
+    	ContactMechType |o--o{ ContactMechType : "children/parent"
+    	ContactMechType |o--o{ CommunicationEventType : "contac_mech_type_communication_event_types/contac_mech_type_contact_mech_type"
+    	ContactMechType }o--o{ ContactMechType : "child_contact_mech_types"
+    	ContactMechType |o--o{ ContactMechTypePurpose : "contact_mech_type_purposes/contact_mech_type"
+    	Enumeration |o--o{ FixedAsset : "class_fixed_assets/class_enumeration"
+    	Enumeration |o--o{ Person : "employment_status_people/employment_status_enumeration"
+    	Enumeration |o--o{ Person : "residence_status_people/residence_status_enumeration"
+    	Enumeration |o--o{ Person : "marital_status_people/marital_status_enumeration"
+    	Enumeration |o--o{ WorkEffort : "scope_work_efforts/scope_enumeration"
+    	Enumeration |o--o{ WorkEffortPartyAssignment : "expectation_work_effort_party_assignments/expectation_enumeration"
+    	Enumeration |o--o{ WorkEffortPartyAssignment : "delegate_reason_work_effort_party_assignments/delegate_reason_enumeration"
+    	EnumerationType |o--o{ EnumerationType : "children/parent"
+    	EnumerationType |o--o{ Enumeration : "enumerations/enumeration_type"
+    	EnumerationType }o--o{ EnumerationType : "child_enumeration_types"
+    	FixedAsset |o--o{ FixedAsset : "children/parent"
+    	FixedAsset }o--o{ FixedAsset : "child_fixed_assets"
+    	FixedAsset |o--o{ WorkEffort : "work_efforts/fixed_asset"
+    	FixedAsset |o--o{ WorkEffortFixedAssetAssign : "work_effort_fixed_asset_assigns/fixed_asset"
+    	Party |o--o{ FixedAsset : "fixed_assets/party"
+    	Party |o--o{ PartyContactMech : "party_contact_meches/party"
+    	Party |o--o{ PartyRole : "party_roles/party"
+    	Party |o--o{ PartyStatus : "party_statuses/party"
+    	Party |o--o| Person : "person/party"
+    	Party |o--o{ UserLogin : "user_logins/party"
+    	Party |o--o{ WorkEffortPartyAssignment : "work_effort_party_assignments/party"
+    	PartyClassificationType |o--o{ PartyClassificationType : "children/parent"
+    	PartyClassificationType }o--o{ PartyClassificationType : "child_party_classification_types"
+    	PartyContentType |o--o{ PartyContentType : "children/parent"
+    	PartyContentType }o--o{ PartyContentType : "child_party_content_types"
+    	PartyIdentificationType |o--o{ PartyIdentificationType : "children/parent"
+    	PartyIdentificationType }o--o{ PartyIdentificationType : "child_party_identification_types"
+    	PartyQualType |o--o{ PartyQualType : "children/parent"
+    	PartyQualType }o--o{ PartyQualType : "child_party_qual_types"
+    	PartyRelationshipType |o--o{ PartyRelationshipType : "children/parent"
+    	PartyRelationshipType }o--o{ PartyRelationshipType : "child_party_relationship_types"
+    	PartyRole |o--o{ FixedAsset : "fixed_assets/party_role"
+    	PartyRole |o--o{ PartyContactMech : "party_contact_meches/party_role"
+    	PartyRole |o--o{ WorkEffortPartyAssignment : "work_effort_party_assignments/party_role"
+    	PartyType |o--o{ PartyType : "children/parent"
+    	PartyType }o--o{ PartyType : "sibling_party_types"
+    	PartyType |o--o{ Party : "parties/party_type"
+    	PartyType }o--o{ PartyType : "child_party_types"
+    	Person |o--o{ PartyContactMech : "party_contact_meches/person"
+    	Person |o--o{ UserLogin : "user_logins/person"
+    	RoleType |o--o{ RoleType : "children/parent"
+    	RoleType |o--o{ FixedAsset : "fixed_assets/role_type"
+    	RoleType |o--o{ PartyContactMech : "party_contact_meches/role_type"
+    	RoleType |o--o{ PartyRelationshipType : "valid_from_party_relationship_types/valid_from_role_type"
+    	RoleType |o--o{ PartyRelationshipType : "valid_to_party_relationship_types/valid_to_role_type"
+    	RoleType |o--o{ PartyRole : "party_roles/role_type"
+    	RoleType }o--o{ RoleType : "child_role_types"
+    	RoleType |o--o{ WorkEffortPartyAssignment : "work_effort_party_assignments/role_type"
+    	SecurityGroup |o--o{ SecurityGroupPermission : "security_group_permissions/security_group"
+    	SecurityGroup |o--o{ UserLoginSecurityGroup : "user_login_security_groups/security_group"
+    	SecurityPermission |o--o{ SecurityGroupPermission : "security_group_permissions/security_permission"
+    	SkillType |o--o{ SkillType : "children/parent"
+    	SkillType }o--o{ SkillType : "child_skill_types"
+    	SkillType |o--o{ WorkEffortSkillStandard : "work_effort_skill_standards/skill_type"
+    	StatusItem |o--o{ Party : "parties/status_item"
+    	StatusItem |o--o{ PartyStatus : "party_statuses/status_item"
+    	StatusItem |o--o{ StatusValidChange : "main_status_valid_changes/main_status_item"
+    	StatusItem |o--o{ StatusValidChange : "to_status_valid_changes/to_status_item"
+    	StatusItem |o--o{ WorkEffort : "current_work_efforts/current_status_item"
+    	StatusItem |o--o{ WorkEffortFixedAssetAssign : "work_effort_fixed_asset_assigns/status_item"
+    	StatusItem |o--o{ WorkEffortFixedAssetAssign : "availability_work_effort_fixed_asset_assigns/availability_status_item"
+    	StatusItem |o--o{ WorkEffortPartyAssignment : "assignment_work_effort_party_assignments/assignment_status_item"
+    	StatusItem |o--o{ WorkEffortPartyAssignment : "availability_work_effort_party_assignments/availability_status_item"
+    	StatusType |o--o{ StatusType : "children/parent"
+    	StatusType |o--o{ StatusItem : "status_items/status_type"
+    	StatusType }o--o{ StatusType : "child_status_types"
+    	TemporalExpression |o--o{ TemporalExpressionAssoc : "from_temporal_expression_assocs/from_temporal_expression"
+    	TemporalExpression |o--o{ TemporalExpressionAssoc : "to_temporal_expression_assocs/to_temporal_expression"
+    	TemporalExpression |o--o{ WorkEffort : "work_efforts/temporal_expression"
+    	TermType |o--o{ TermType : "children/parent"
+    	TermType }o--o{ TermType : "child_term_types"
+    	UserLogin |o--o{ Party : "created_by_parties/created_by_user_login"
+    	UserLogin |o--o{ Party : "last_modified_by_parties/last_modified_by_user_login"
+    	UserLogin |o--o{ PartyStatus : "change_by_party_statuses/change_by_user_login"
+    	UserLogin |o--o{ UserLoginSecurityGroup : "user_login_security_groups/user_login"
+    	UserLogin |o--o{ UserPreference : "user_preferences/user_login"
+    	UserLogin |o--o{ WorkEffortPartyAssignment : "assigned_by_work_effort_party_assignments/assigned_by_user_login"
+    	UserLoginSecurityGroup |o--o{ SecurityGroupPermission : "security_group_permissions"
+    	WorkEffort |o--o{ WorkEffort : "children/parent"
+    	WorkEffort }o--o{ WorkEffort : "child_work_efforts"
+    	WorkEffort |o--o{ WorkEffortAssoc : "from_work_effort_assocs/from_work_effort"
+    	WorkEffort |o--o{ WorkEffortAssoc : "to_work_effort_assocs/to_work_effort"
+    	WorkEffort |o--o{ WorkEffortFixedAssetAssign : "work_effort_fixed_asset_assigns/work_effort"
+    	WorkEffort |o--o{ WorkEffortPartyAssignment : "work_effort_party_assignments/work_effort"
+    	WorkEffort |o--o{ WorkEffortSkillStandard : "work_effort_skill_standards/work_effort"
+    	WorkEffortType |o--o{ WorkEffortType : "children/parent"
+    	WorkEffortType |o--o{ WorkEffort : "work_efforts/work_effort_type"
+    	WorkEffortType }o--o{ WorkEffortType : "child_work_effort_types"
+		</div>
+	<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+	<script>
+		mermaid.mermaidAPI.initialize({
+			startOnLoad: true,
+		});
+		var observer = new MutationObserver((event) => {
+			document.querySelectorAll('text[id^=entity]').forEach(text => {
+				text.textContent = text.textContent.replace('DOT', '.');
+				text.textContent = text.textContent.replace('STAR', '*');
+				text.textContent = text.textContent.replace('LBRACK', '[');
+				text.textContent = text.textContent.replace('RBRACK', ']');
+			});
+			observer.disconnect();
+		});
+		observer.observe(document.getElementById('er-diagram'), { attributes: true, childList: true });
+	</script>
+</body>
+</html>

@@ -1,3 +1,6 @@
 gen:
 	go generate ./ent
+er:
+	go run tool/main.go run
+
 

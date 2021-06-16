@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+    <div class="mermaid" id="er-diagram">
+        erDiagram
+            Asset {
+            int id
+                timeDOTTime create_time
+                timeDOTTime update_time
+                string string_ref
+                string model
+                timeDOTTime registered_at
+            }
+            WorkloadPkg {
+            int id
+                string name
+            }
+                    WorkloadPkg |o--o{ Asset : "assets/pkg"
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+<script>
+    mermaid.mermaidAPI.initialize({
+        startOnLoad: true,
+    });
+    var observer = new MutationObserver((event) => {
+        document.querySelectorAll('text[id^=entity]').forEach(text => {
+            text.textContent = text.textContent.replace('DOT', '.');
+            text.textContent = text.textContent.replace('STAR', '*');
+            text.textContent = text.textContent.replace('LBRACK', '[');
+            text.textContent = text.textContent.replace('RBRACK', ']');
+        });
+        observer.disconnect();
+    });
+    observer.observe(document.getElementById('er-diagram'), { attributes: true, childList: true });
+</script>
+</body>
+</html>

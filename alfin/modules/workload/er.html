@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+</head>
+<body>
+		<div class="mermaid" id="er-diagram">
+erDiagram
+    Workload {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        int status_id
+        string workload_name
+        string description
+        string long_description
+        string comments
+        int workload_size
+        timeDOTTime workload_date
+        timeDOTTime another_date
+        string another_text
+    }
+    WorkloadFeature {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        int feature_source_enum_id
+        string description
+    }
+    WorkloadFeatureAppl {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        timeDOTTime from_date
+        timeDOTTime thru_date
+        int sequence_num
+    }
+    WorkloadFeatureApplType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string description
+    }
+    WorkloadItem {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        int workload_item_seq_id
+        string description
+        float64 amount
+        int amount_uom_id
+    }
+    WorkloadStatus {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        timeDOTTime status_date
+        timeDOTTime status_end_date
+        string change_by_user_login_id
+        int status_id
+    }
+    WorkloadType {
+        int id
+        timeDOTTime create_time
+        timeDOTTime update_time
+        string description
+    }
+    	Workload |o--o{ WorkloadFeatureAppl : "workload_feature_appls/workload"
+    	Workload |o--o{ WorkloadItem : "workload_items/workload"
+    	Workload |o--o{ WorkloadStatus : "workload_statuses/workload"
+    	WorkloadFeature |o--o{ WorkloadFeatureAppl : "workload_feature_appls/workload_feature"
+    	WorkloadFeatureApplType |o--o{ WorkloadFeatureApplType : "children/parent"
+    	WorkloadFeatureApplType |o--o{ WorkloadFeatureAppl : "workload_feature_appls/workload_feature_appl_type"
+    	WorkloadType |o--o{ WorkloadType : "children/parent"
+    	WorkloadType |o--o{ Workload : "workloads/workload_type"
+		</div>
+	<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+	<script>
+		mermaid.mermaidAPI.initialize({
+			startOnLoad: true,
+		});
+		var observer = new MutationObserver((event) => {
+			document.querySelectorAll('text[id^=entity]').forEach(text => {
+				text.textContent = text.textContent.replace('DOT', '.');
+				text.textContent = text.textContent.replace('STAR', '*');
+				text.textContent = text.textContent.replace('LBRACK', '[');
+				text.textContent = text.textContent.replace('RBRACK', ']');
+			});
+			observer.disconnect();
+		});
+		observer.observe(document.getElementById('er-diagram'), { attributes: true, childList: true });
+	</script>
+</body>
+</html>

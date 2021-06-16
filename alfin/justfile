@@ -36,6 +36,7 @@ cli +FLAGS='':
 fmt pkg:
 	go fmt modules/{{pkg}}/seedcreators/*.go
 
+# generate creators and updaters
 seed-gen pkg:
 	go run cli/main.go seed-gen {{pkg}}
 	go fmt modules/{{pkg}}/seedcreators/*.go

@@ -16,6 +16,7 @@ import (
 
 /**
 $ just cli run loader
+$ just cli --host=local,remote,http://192.168.0.1 run opts
 $ just cli -l debug meta workeffort WorkEffort
 $ just cli meta --show-fields workeffort WorkEffort
 $ just cli meta --all-ents workeffort
@@ -107,8 +108,10 @@ type RunCmd struct {
 
 func (cmd *RunCmd) Run(globals *Globals) error {
 	switch cmd.Arg {
-	case "loader":
-		//seedcreators.LoadSeeds(true)
+	//case "loader":
+	//seedcreators.LoadSeeds(true)
+	case "opts":
+		fmt.Printf("hosts: %s\n", globals.Host)
 	default:
 		println("Unknown command", cmd.Arg)
 	}
@@ -218,15 +221,15 @@ func (cmd *SeedTraceCmd) Run(globals *Globals) error {
 }
 
 type SeedGenCmd struct {
-	OnlyCreator bool `help:"Only generate creators" default:"false"`
-	Pkg string `arg required`
-	Ent string `arg optional`
+	OnlyCreator bool   `help:"Only generate creators" default:"false"`
+	Pkg         string `arg required`
+	Ent         string `arg optional`
 }
 
 func (cmd *SeedGenCmd) Run(globals *Globals) error {
-	if cmd.Ent==""{
+	if cmd.Ent == "" {
 		return alfin.GeneratePackage(cmd.Pkg)
-	}else {
+	} else {
 		seedgen := alfin.NewSeedGen(cmd.Pkg, cmd.Ent)
 		return seedgen.Generate(cmd.OnlyCreator)
 	}

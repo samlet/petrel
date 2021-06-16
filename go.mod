@@ -14,6 +14,8 @@ require (
 	github.com/antchfx/htmlquery v1.2.3
 	github.com/apache/thrift v0.0.0-20160514152517-9549b25c7758 // indirect
 	github.com/araddon/dateparse v0.0.0-20210429162001-6b43995a97de // indirect
+	github.com/araddon/gou v0.0.0-20190110011759-c797efecbb61 // indirect
+	github.com/araddon/qlbridge v0.0.2 // indirect
 	github.com/beevik/etree v1.1.0 // indirect
 	github.com/bmizerany/perks v0.0.0-20141205001514-d9a9656a3a4b // indirect
 	github.com/bwmarrin/snowflake v0.3.0
@@ -51,7 +53,7 @@ require (
 	github.com/mattn/go-sqlite3 v1.14.7
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/olivere/elastic/v7 v7.0.24
-	github.com/pborman/uuid v0.0.0-20180906182336-adf5a7427709
+	github.com/pborman/uuid v1.2.0
 	github.com/prashantv/protectmem v0.0.0-20171002184600-e20412882b3a // indirect
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/samuel/go-thrift v0.0.0-20190219015601-e8b6b52668fe // indirect

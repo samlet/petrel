@@ -114,13 +114,6 @@ func StringRef(v string) predicate.InventoryItemDetail {
 	})
 }
 
-// InventoryItemID applies equality check predicate on the "inventory_item_id" field. It's identical to InventoryItemIDEQ.
-func InventoryItemID(v int) predicate.InventoryItemDetail {
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldInventoryItemID), v))
-	})
-}
-
 // InventoryItemDetailSeqID applies equality check predicate on the "inventory_item_detail_seq_id" field. It's identical to InventoryItemDetailSeqIDEQ.
 func InventoryItemDetailSeqID(v int) predicate.InventoryItemDetail {
 	return predicate.InventoryItemDetail(func(s *sql.Selector) {
@@ -528,82 +521,6 @@ func StringRefEqualFold(v string) predicate.InventoryItemDetail {
 func StringRefContainsFold(v string) predicate.InventoryItemDetail {
 	return predicate.InventoryItemDetail(func(s *sql.Selector) {
 		s.Where(sql.ContainsFold(s.C(FieldStringRef), v))
-	})
-}
-
-// InventoryItemIDEQ applies the EQ predicate on the "inventory_item_id" field.
-func InventoryItemIDEQ(v int) predicate.InventoryItemDetail {
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		s.Where(sql.EQ(s.C(FieldInventoryItemID), v))
-	})
-}
-
-// InventoryItemIDNEQ applies the NEQ predicate on the "inventory_item_id" field.
-func InventoryItemIDNEQ(v int) predicate.InventoryItemDetail {
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		s.Where(sql.NEQ(s.C(FieldInventoryItemID), v))
-	})
-}
-
-// InventoryItemIDIn applies the In predicate on the "inventory_item_id" field.
-func InventoryItemIDIn(vs ...int) predicate.InventoryItemDetail {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.In(s.C(FieldInventoryItemID), v...))
-	})
-}
-
-// InventoryItemIDNotIn applies the NotIn predicate on the "inventory_item_id" field.
-func InventoryItemIDNotIn(vs ...int) predicate.InventoryItemDetail {
-	v := make([]interface{}, len(vs))
-	for i := range v {
-		v[i] = vs[i]
-	}
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		// if not arguments were provided, append the FALSE constants,
-		// since we can't apply "IN ()". This will make this predicate falsy.
-		if len(v) == 0 {
-			s.Where(sql.False())
-			return
-		}
-		s.Where(sql.NotIn(s.C(FieldInventoryItemID), v...))
-	})
-}
-
-// InventoryItemIDGT applies the GT predicate on the "inventory_item_id" field.
-func InventoryItemIDGT(v int) predicate.InventoryItemDetail {
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		s.Where(sql.GT(s.C(FieldInventoryItemID), v))
-	})
-}
-
-// InventoryItemIDGTE applies the GTE predicate on the "inventory_item_id" field.
-func InventoryItemIDGTE(v int) predicate.InventoryItemDetail {
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		s.Where(sql.GTE(s.C(FieldInventoryItemID), v))
-	})
-}
-
-// InventoryItemIDLT applies the LT predicate on the "inventory_item_id" field.
-func InventoryItemIDLT(v int) predicate.InventoryItemDetail {
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		s.Where(sql.LT(s.C(FieldInventoryItemID), v))
-	})
-}
-
-// InventoryItemIDLTE applies the LTE predicate on the "inventory_item_id" field.
-func InventoryItemIDLTE(v int) predicate.InventoryItemDetail {
-	return predicate.InventoryItemDetail(func(s *sql.Selector) {
-		s.Where(sql.LTE(s.C(FieldInventoryItemID), v))
 	})
 }
 

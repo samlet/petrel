@@ -9716,8 +9716,6 @@ type InventoryItemDetailMutation struct {
 	create_time                        *time.Time
 	update_time                        *time.Time
 	string_ref                         *string
-	inventory_item_id                  *int
-	addinventory_item_id               *int
 	inventory_item_detail_seq_id       *int
 	addinventory_item_detail_seq_id    *int
 	effective_date                     *time.Time
@@ -9962,62 +9960,6 @@ func (m *InventoryItemDetailMutation) StringRefCleared() bool {
 func (m *InventoryItemDetailMutation) ResetStringRef() {
 	m.string_ref = nil
 	delete(m.clearedFields, inventoryitemdetail.FieldStringRef)
-}
-
-// SetInventoryItemID sets the "inventory_item_id" field.
-func (m *InventoryItemDetailMutation) SetInventoryItemID(i int) {
-	m.inventory_item_id = &i
-	m.addinventory_item_id = nil
-}
-
-// InventoryItemID returns the value of the "inventory_item_id" field in the mutation.
-func (m *InventoryItemDetailMutation) InventoryItemID() (r int, exists bool) {
-	v := m.inventory_item_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// OldInventoryItemID returns the old "inventory_item_id" field's value of the InventoryItemDetail entity.
-// If the InventoryItemDetail object wasn't provided to the builder, the object is fetched from the database.
-// An error is returned if the mutation operation is not UpdateOne, or the database query fails.
-func (m *InventoryItemDetailMutation) OldInventoryItemID(ctx context.Context) (v int, err error) {
-	if !m.op.Is(OpUpdateOne) {
-		return v, fmt.Errorf("OldInventoryItemID is only allowed on UpdateOne operations")
-	}
-	if m.id == nil || m.oldValue == nil {
-		return v, fmt.Errorf("OldInventoryItemID requires an ID field in the mutation")
-	}
-	oldValue, err := m.oldValue(ctx)
-	if err != nil {
-		return v, fmt.Errorf("querying old value for OldInventoryItemID: %w", err)
-	}
-	return oldValue.InventoryItemID, nil
-}
-
-// AddInventoryItemID adds i to the "inventory_item_id" field.
-func (m *InventoryItemDetailMutation) AddInventoryItemID(i int) {
-	if m.addinventory_item_id != nil {
-		*m.addinventory_item_id += i
-	} else {
-		m.addinventory_item_id = &i
-	}
-}
-
-// AddedInventoryItemID returns the value that was added to the "inventory_item_id" field in this mutation.
-func (m *InventoryItemDetailMutation) AddedInventoryItemID() (r int, exists bool) {
-	v := m.addinventory_item_id
-	if v == nil {
-		return
-	}
-	return *v, true
-}
-
-// ResetInventoryItemID resets all changes to the "inventory_item_id" field.
-func (m *InventoryItemDetailMutation) ResetInventoryItemID() {
-	m.inventory_item_id = nil
-	m.addinventory_item_id = nil
 }
 
 // SetInventoryItemDetailSeqID sets the "inventory_item_detail_seq_id" field.
@@ -11386,7 +11328,7 @@ func (m *InventoryItemDetailMutation) Type() string {
 // order to get all numeric fields that were incremented/decremented, call
 // AddedFields().
 func (m *InventoryItemDetailMutation) Fields() []string {
-	fields := make([]string, 0, 23)
+	fields := make([]string, 0, 22)
 	if m.create_time != nil {
 		fields = append(fields, inventoryitemdetail.FieldCreateTime)
 	}
@@ -11395,9 +11337,6 @@ func (m *InventoryItemDetailMutation) Fields() []string {
 	}
 	if m.string_ref != nil {
 		fields = append(fields, inventoryitemdetail.FieldStringRef)
-	}
-	if m.inventory_item_id != nil {
-		fields = append(fields, inventoryitemdetail.FieldInventoryItemID)
 	}
 	if m.inventory_item_detail_seq_id != nil {
 		fields = append(fields, inventoryitemdetail.FieldInventoryItemDetailSeqID)
@@ -11470,8 +11409,6 @@ func (m *InventoryItemDetailMutation) Field(name string) (ent.Value, bool) {
 		return m.UpdateTime()
 	case inventoryitemdetail.FieldStringRef:
 		return m.StringRef()
-	case inventoryitemdetail.FieldInventoryItemID:
-		return m.InventoryItemID()
 	case inventoryitemdetail.FieldInventoryItemDetailSeqID:
 		return m.InventoryItemDetailSeqID()
 	case inventoryitemdetail.FieldEffectiveDate:
@@ -11525,8 +11462,6 @@ func (m *InventoryItemDetailMutation) OldField(ctx context.Context, name string)
 		return m.OldUpdateTime(ctx)
 	case inventoryitemdetail.FieldStringRef:
 		return m.OldStringRef(ctx)
-	case inventoryitemdetail.FieldInventoryItemID:
-		return m.OldInventoryItemID(ctx)
 	case inventoryitemdetail.FieldInventoryItemDetailSeqID:
 		return m.OldInventoryItemDetailSeqID(ctx)
 	case inventoryitemdetail.FieldEffectiveDate:
@@ -11594,13 +11529,6 @@ func (m *InventoryItemDetailMutation) SetField(name string, value ent.Value) err
 			return fmt.Errorf("unexpected type %T for field %s", value, name)
 		}
 		m.SetStringRef(v)
-		return nil
-	case inventoryitemdetail.FieldInventoryItemID:
-		v, ok := value.(int)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.SetInventoryItemID(v)
 		return nil
 	case inventoryitemdetail.FieldInventoryItemDetailSeqID:
 		v, ok := value.(int)
@@ -11743,9 +11671,6 @@ func (m *InventoryItemDetailMutation) SetField(name string, value ent.Value) err
 // this mutation.
 func (m *InventoryItemDetailMutation) AddedFields() []string {
 	var fields []string
-	if m.addinventory_item_id != nil {
-		fields = append(fields, inventoryitemdetail.FieldInventoryItemID)
-	}
 	if m.addinventory_item_detail_seq_id != nil {
 		fields = append(fields, inventoryitemdetail.FieldInventoryItemDetailSeqID)
 	}
@@ -11805,8 +11730,6 @@ func (m *InventoryItemDetailMutation) AddedFields() []string {
 // was not set, or was not defined in the schema.
 func (m *InventoryItemDetailMutation) AddedField(name string) (ent.Value, bool) {
 	switch name {
-	case inventoryitemdetail.FieldInventoryItemID:
-		return m.AddedInventoryItemID()
 	case inventoryitemdetail.FieldInventoryItemDetailSeqID:
 		return m.AddedInventoryItemDetailSeqID()
 	case inventoryitemdetail.FieldQuantityOnHandDiff:
@@ -11850,13 +11773,6 @@ func (m *InventoryItemDetailMutation) AddedField(name string) (ent.Value, bool) 
 // type.
 func (m *InventoryItemDetailMutation) AddField(name string, value ent.Value) error {
 	switch name {
-	case inventoryitemdetail.FieldInventoryItemID:
-		v, ok := value.(int)
-		if !ok {
-			return fmt.Errorf("unexpected type %T for field %s", value, name)
-		}
-		m.AddInventoryItemID(v)
-		return nil
 	case inventoryitemdetail.FieldInventoryItemDetailSeqID:
 		v, ok := value.(int)
 		if !ok {
@@ -12128,9 +12044,6 @@ func (m *InventoryItemDetailMutation) ResetField(name string) error {
 		return nil
 	case inventoryitemdetail.FieldStringRef:
 		m.ResetStringRef()
-		return nil
-	case inventoryitemdetail.FieldInventoryItemID:
-		m.ResetInventoryItemID()
 		return nil
 	case inventoryitemdetail.FieldInventoryItemDetailSeqID:
 		m.ResetInventoryItemDetailSeqID()

@@ -280,7 +280,6 @@ var (
 		{Name: "create_time", Type: field.TypeTime},
 		{Name: "update_time", Type: field.TypeTime},
 		{Name: "string_ref", Type: field.TypeString, Nullable: true},
-		{Name: "inventory_item_id", Type: field.TypeInt},
 		{Name: "inventory_item_detail_seq_id", Type: field.TypeInt},
 		{Name: "effective_date", Type: field.TypeTime, Nullable: true},
 		{Name: "quantity_on_hand_diff", Type: field.TypeFloat64, Nullable: true},
@@ -311,13 +310,13 @@ var (
 		ForeignKeys: []*schema.ForeignKey{
 			{
 				Symbol:     "inventory_item_details_enumerations_reason_inventory_item_details",
-				Columns:    []*schema.Column{InventoryItemDetailsColumns[24]},
+				Columns:    []*schema.Column{InventoryItemDetailsColumns[23]},
 				RefColumns: []*schema.Column{EnumerationsColumns[0]},
 				OnDelete:   schema.SetNull,
 			},
 			{
 				Symbol:     "inventory_item_details_order_item_ship_grp_inv_res_inventory_item_details",
-				Columns:    []*schema.Column{InventoryItemDetailsColumns[25]},
+				Columns:    []*schema.Column{InventoryItemDetailsColumns[24]},
 				RefColumns: []*schema.Column{OrderItemShipGrpInvResColumns[0]},
 				OnDelete:   schema.SetNull,
 			},

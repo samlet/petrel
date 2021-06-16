@@ -274,7 +274,7 @@ func init() {
 	// inventoryitemdetail.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
 	inventoryitemdetail.UpdateDefaultUpdateTime = inventoryitemdetailDescUpdateTime.UpdateDefault.(func() time.Time)
 	// inventoryitemdetailDescEffectiveDate is the schema descriptor for effective_date field.
-	inventoryitemdetailDescEffectiveDate := inventoryitemdetailFields[2].Descriptor()
+	inventoryitemdetailDescEffectiveDate := inventoryitemdetailFields[1].Descriptor()
 	// inventoryitemdetail.DefaultEffectiveDate holds the default value on creation for the effective_date field.
 	inventoryitemdetail.DefaultEffectiveDate = inventoryitemdetailDescEffectiveDate.Default.(func() time.Time)
 	inventoryitemtypeMixin := schema.InventoryItemType{}.Mixin()

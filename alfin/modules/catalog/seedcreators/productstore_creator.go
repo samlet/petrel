@@ -9,7 +9,7 @@ import (
 )
 
 func CreateProductStore(ctx context.Context) error {
-	log.Println("creator", common.Version)
+	log.Println("ProductStore creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 

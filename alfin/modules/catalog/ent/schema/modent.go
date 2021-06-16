@@ -12,13 +12,13 @@ import (
 	"time"
 )
 
-type ProductCategoryType struct {
+type RoleType struct {
 	ent.Schema
 }
 
-// Fields of the ProductCategoryType.
-// Unique-Indexes: productCategoryTypeId
-func (ProductCategoryType) Fields() []ent.Field {
+// Fields of the RoleType.
+// Unique-Indexes: roleTypeId
+func (RoleType) Fields() []ent.Field {
 	return []ent.Field{
 		field.Enum("has_table").
 			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
@@ -27,7 +27,7 @@ func (ProductCategoryType) Fields() []ent.Field {
 }
 
 //* entproto annotations ??
-func (ProductCategoryType) Mixin() []ent.Mixin {
+func (RoleType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -39,49 +39,105 @@ func (ProductCategoryType) Mixin() []ent.Mixin {
 /*
  */
 
-func (ProductCategoryType) Annotations() []schema.Annotation {
+func (RoleType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ProductCategoryType.
-//  one: ParentProductCategoryType
-//  many: ProductCategory
-//  many: ChildProductCategoryType
-//  many: ProductCategoryTypeAttr
-func (ProductCategoryType) Edges() []ent.Edge {
+// Edges of the RoleType.
+//  one: ParentRoleType
+//  many: AcctgTrans
+//  many: AcctgTransEntry
+//  many: FromAgreement
+//  many: ToAgreement
+//  many: AgreementRole
+//  many: BillingAccountRole
+//  many: ToCommunicationEvent
+//  many: FromCommunicationEvent
+//  many: CommunicationEventRole
+//  many: ContentApproval
+//  many: ContentPurposeOperation
+//  many: CustRequestParty
+//  many: FacilityGroupRole
+//  many: FacilityParty
+//  many: FinAccountRole
+//  many: FixedAsset
+//  many: GlAccountOrganization
+//  many: GlAccountRole
+//  many: Invoice
+//  many: InvoiceRole
+//  many: MarketingCampaignRole
+//  many: OrderItemRole
+//  many: OrderRole
+//  many: PartyContactMech
+//  many: PartyFixedAssetAssignment
+//  many: PartyGlAccount
+//  many: PartyInvitationRoleAssoc
+//  many: PartyNeed
+//  many: FromPartyRelationship
+//  many: ToPartyRelationship
+//  many: ValidFromPartyRelationshipType
+//  many: ValidToPartyRelationshipType
+//  many: PartyRole
+//  many: ToPayment
+//  many: PicklistRole
+//  many: ProdCatalogRole
+//  many: ProductCategoryRole
+//  many: UseProductContent
+//  many: ProductRole
+//  many: ProductStoreGroupRole
+//  many: ProductStoreRole
+//  many: UseProductSubscriptionResource
+//  many: QuoteRole
+//  many: ChildRoleType
+//  many: RoleTypeAttr
+//  many: SalesOpportunityRole
+//  many: SegmentGroupRole
+//  many: ShipmentCostEstimate
+//  many: Subscription
+//  many: OriginatedFromSubscription
+//  many: TimesheetRole
+//  many: ValidContactMechRole
+//  many: WebSiteRole
+//  many: WorkEffortPartyAssignment
+func (RoleType) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("children", ProductCategoryType.Type).
+		edge.To("children", RoleType.Type).
 			From("parent").
 			// Bind the "parentTypeId" field to this edge.
 			// Field("parent_type_id").
 			Unique().Annotations(entproto.Field(4)),
 		// m2o
-		edge.To("product_categories", ProductCategory.Type).
-			Annotations(entproto.Field(5)),
+		edge.To("order_roles", OrderRole.Type).
+			Annotations(entproto.Field(27)),
 		// m2o
-		edge.To("child_product_category_types", ProductCategoryType.Type).
-			Annotations(entproto.Field(6)),
+		edge.To("child_role_types", RoleType.Type).
+			Annotations(entproto.Field(48)),
 	}
 }
 
-type ProductMeterType struct {
+type ProductReview struct {
 	ent.Schema
 }
 
-// Fields of the ProductMeterType.
-// Unique-Indexes: productMeterTypeId
-func (ProductMeterType) Fields() []ent.Field {
+// Fields of the ProductReview.
+// Unique-Indexes: productReviewId
+func (ProductReview) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-		field.Int("default_uom_id").Optional().Annotations(entproto.Field(4)),
+		field.String("user_login_id").Optional().Annotations(entproto.Field(2)),
+		field.Enum("posted_anonymous").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(3)),
+		field.Time("posted_date_time").
+			Default(time.Now).Optional().Annotations(entproto.Field(4)),
+		field.Float("product_rating").Optional().Annotations(entproto.Field(5)),
+		field.String("product_review").Optional().Annotations(entproto.Field(6)),
 	}
 }
 
 //* entproto annotations ??
-func (ProductMeterType) Mixin() []ent.Mixin {
+func (ProductReview) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -93,21 +149,622 @@ func (ProductMeterType) Mixin() []ent.Mixin {
 /*
  */
 
-func (ProductMeterType) Annotations() []schema.Annotation {
+func (ProductReview) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ProductMeterType.
-//  one: DefaultUom
-//  many: IntervalFixedAssetMaint
-//  many: FixedAssetMeter
-//  many: IntervalProductMaint
-//  many: ProductMeter
-func (ProductMeterType) Edges() []ent.Edge {
+// Edges of the ProductReview.
+//  one: ProductStore
+//  one: Product
+//  one: UserLogin
+//  one: StatusItem
+func (ProductReview) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("product_store", ProductStore.Type).Ref("product_reviews").
+			// Bind the "productStoreId" field to this edge.
+			// Field("product_store_id").
+			Unique().Annotations(entproto.Field(7)),
+		// o2m
+		edge.From("product", Product.Type).Ref("product_reviews").
+			// Bind the "productId" field to this edge.
+			// Field("product_id").
+			Unique().Annotations(entproto.Field(8)),
+		// o2m
+		edge.From("status_item", StatusItem.Type).Ref("product_reviews").
+			// Bind the "statusId" field to this edge.
+			// Field("status_id").
+			Unique().Annotations(entproto.Field(10)),
+	}
+}
+
+type ProductFeatureType struct {
+	ent.Schema
+}
+
+// Fields of the ProductFeatureType.
+// Unique-Indexes: productFeatureTypeId
+func (ProductFeatureType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductFeatureType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductFeatureType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductFeatureType.
+//  one: ParentProductFeatureType
+//  many: ProductFeature
+//  many: ChildProductFeatureType
+func (ProductFeatureType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductFeatureType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("product_features", ProductFeature.Type).
+			Annotations(entproto.Field(5)),
+		// m2o
+		edge.To("child_product_feature_types", ProductFeatureType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type VarianceReason struct {
+	ent.Schema
+}
+
+// Fields of the VarianceReason.
+// Unique-Indexes: varianceReasonId
+func (VarianceReason) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (VarianceReason) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (VarianceReason) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the VarianceReason.
+//  many: InventoryItemVariance
+//  many: VarianceReasonGlAccount
+func (VarianceReason) Edges() []ent.Edge {
 	return []ent.Edge{}
+}
+
+type StatusValidChange struct {
+	ent.Schema
+}
+
+// Fields of the StatusValidChange.
+// Unique-Indexes: statusId, statusIdTo
+func (StatusValidChange) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("condition_expression").Optional().Annotations(entproto.Field(2)),
+		field.String("transition_name").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (StatusValidChange) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+func (StatusValidChange) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("status_id", "status_id_to").
+            Unique(),
+    }
+}
+
+*/
+
+func (StatusValidChange) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the StatusValidChange.
+//  one: MainStatusItem
+//  one: ToStatusItem
+//  many: OldPicklistStatusHistory
+func (StatusValidChange) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("main_status_item", StatusItem.Type).Ref("main_status_valid_changes").
+			// Bind the "statusId" field to this edge.
+			// Field("status_id").
+			Unique().Annotations(entproto.Field(4)),
+		// o2m
+		edge.From("to_status_item", StatusItem.Type).Ref("to_status_valid_changes").
+			// Bind the "statusIdTo" field to this edge.
+			// Field("status_id_to").
+			Unique().Annotations(entproto.Field(5)),
+	}
+}
+
+type OrderRole struct {
+	ent.Schema
+}
+
+// Fields of the OrderRole.
+// Unique-Indexes: orderId, partyId, roleTypeId
+func (OrderRole) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("party_id").Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (OrderRole) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+func (OrderRole) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("order_id", "party_id", "role_type_id").
+            Unique(),
+    }
+}
+
+*/
+
+func (OrderRole) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the OrderRole.
+//  one: OrderHeader
+//  one: Party
+//  one: PartyRole
+//  one-nofk: RoleType
+//  many: OrderItem
+func (OrderRole) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("order_header", OrderHeader.Type).Ref("order_roles").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(3)),
+		// o2m
+		edge.From("role_type", RoleType.Type).Ref("order_roles").
+			// Bind the "roleTypeId" field to this edge.
+			// Field("role_type_id").
+			Unique().Annotations(entproto.Field(6)),
+		// m2o
+		edge.To("order_items", OrderItem.Type).
+			Annotations(entproto.Field(7)),
+	}
+}
+
+type GoodIdentificationType struct {
+	ent.Schema
+}
+
+// Fields of the GoodIdentificationType.
+// Unique-Indexes: goodIdentificationTypeId
+func (GoodIdentificationType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (GoodIdentificationType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (GoodIdentificationType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the GoodIdentificationType.
+//  one: ParentGoodIdentificationType
+//  many: GoodIdentification
+//  many: ChildGoodIdentificationType
+func (GoodIdentificationType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", GoodIdentificationType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_good_identification_types", GoodIdentificationType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type ProductType struct {
+	ent.Schema
+}
+
+// Fields of the ProductType.
+// Unique-Indexes: productTypeId
+func (ProductType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("is_physical").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.Enum("is_digital").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(3)),
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(4)),
+		field.String("description").Optional().Annotations(entproto.Field(5)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductType.
+//  one: ParentProductType
+//  many: Product
+//  many: ChildProductType
+//  many: ProductTypeAttr
+func (ProductType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(6)),
+		// m2o
+		edge.To("products", Product.Type).
+			Annotations(entproto.Field(7)),
+		// m2o
+		edge.To("child_product_types", ProductType.Type).
+			Annotations(entproto.Field(8)),
+	}
+}
+
+type ContentAssocType struct {
+	ent.Schema
+}
+
+// Fields of the ContentAssocType.
+// Unique-Indexes: contentAssocTypeId
+func (ContentAssocType) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (ContentAssocType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ContentAssocType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ContentAssocType.
+//  many: ContentAssoc
+func (ContentAssocType) Edges() []ent.Edge {
+	return []ent.Edge{}
+}
+
+type CustomMethod struct {
+	ent.Schema
+}
+
+// Fields of the CustomMethod.
+// Unique-Indexes: customMethodId
+func (CustomMethod) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("custom_method_name").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (CustomMethod) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (CustomMethod) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the CustomMethod.
+//  one: CustomMethodType
+//  many: Content
+//  many: CostComponentCalc
+//  many: FixedAssetDepMethod
+//  many: InvoicePartyAcctgPreference
+//  many: QuotePartyAcctgPreference
+//  many: OrderPartyAcctgPreference
+//  many: ProductAssoc
+//  many: ProductPrice
+//  many: ProductPromoAction
+//  many: ProductPromoCond
+//  many: ProductStorePaymentSetting
+//  many: ProductStoreShipmentMeth
+//  many: ProductStoreTelecomSetting
+//  many: uomCustomMethodUomConversion
+//  many: uomCustomMethodUomConversionDated
+//  many: WorkEffort
+func (CustomMethod) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("custom_method_type", CustomMethodType.Type).Ref("custom_methods").
+			// Bind the "customMethodTypeId" field to this edge.
+			// Field("custom_method_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("product_assocs", ProductAssoc.Type).
+			Annotations(entproto.Field(11)),
+		// m2o
+		edge.To("product_prices", ProductPrice.Type).
+			Annotations(entproto.Field(12)),
+	}
+}
+
+type StatusType struct {
+	ent.Schema
+}
+
+// Fields of the StatusType.
+// Unique-Indexes: statusTypeId
+func (StatusType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (StatusType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (StatusType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the StatusType.
+//  one: ParentStatusType
+//  many: StatusItem
+//  many: ChildStatusType
+func (StatusType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", StatusType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("status_items", StatusItem.Type).
+			Annotations(entproto.Field(5)),
+		// m2o
+		edge.To("child_status_types", StatusType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type ProductPrice struct {
+	ent.Schema
+}
+
+// Fields of the ProductPrice.
+// Unique-Indexes: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
+func (ProductPrice) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("currency_uom_id").Annotations(entproto.Field(2)),
+		field.Time("from_date").
+			Default(time.Now).Annotations(entproto.Field(3)),
+		field.Time("thru_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(4)),
+		field.Float("price").Optional().Annotations(entproto.Field(5)),
+		field.Int("term_uom_id").Optional().Annotations(entproto.Field(6)),
+		field.Float("price_without_tax").Optional().Annotations(entproto.Field(7)),
+		field.Float("price_with_tax").Optional().Annotations(entproto.Field(8)),
+		field.Float("tax_amount").Optional().Annotations(entproto.Field(9)),
+		field.Float("tax_percentage").Optional().Annotations(entproto.Field(10)),
+		field.Int("tax_auth_party_id").Optional().Annotations(entproto.Field(11)),
+		field.Int("tax_auth_geo_id").Optional().Annotations(entproto.Field(12)),
+		field.Enum("tax_in_price").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(13)),
+		field.Time("created_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(14)),
+		field.String("created_by_user_login").Optional().Annotations(entproto.Field(15)),
+		field.Time("last_modified_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(16)),
+		field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(17)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductPrice) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+func (ProductPrice) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("product_id", "product_price_type_id", "product_price_purpose_id", "currency_uom_id", "product_store_group_id", "from_date").
+            Unique(),
+    }
+}
+
+*/
+
+func (ProductPrice) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductPrice.
+//  one: Product
+//  one: ProductPriceType
+//  one: ProductPricePurpose
+//  one: CurrencyUom
+//  one: TermUom
+//  one: ProductStoreGroup
+//  one: CustomMethod
+//  one: TaxAuthorityParty
+//  one: TaxAuthorityGeo
+//  one: CreatedByUserLogin
+//  one: LastModifiedByUserLogin
+//  many: ProductPriceChange
+func (ProductPrice) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("product", Product.Type).Ref("product_prices").
+			// Bind the "productId" field to this edge.
+			// Field("product_id").
+			Unique().Annotations(entproto.Field(18)),
+		// o2m
+		edge.From("product_price_type", ProductPriceType.Type).Ref("product_prices").
+			// Bind the "productPriceTypeId" field to this edge.
+			// Field("product_price_type_id").
+			Unique().Annotations(entproto.Field(19)),
+		// o2m
+		edge.From("product_price_purpose", ProductPricePurpose.Type).Ref("product_prices").
+			// Bind the "productPricePurposeId" field to this edge.
+			// Field("product_price_purpose_id").
+			Unique().Annotations(entproto.Field(20)),
+		// o2m
+		edge.From("product_store_group", ProductStoreGroup.Type).Ref("product_prices").
+			// Bind the "productStoreGroupId" field to this edge.
+			// Field("product_store_group_id").
+			Unique().Annotations(entproto.Field(23)),
+		// o2m
+		edge.From("custom_method", CustomMethod.Type).Ref("product_prices").
+			// Bind the "customPriceCalcService" field to this edge.
+			// Field("custom_price_calc_service").
+			Unique().Annotations(entproto.Field(24)),
+	}
 }
 
 type ProdCatalogCategoryType struct {
@@ -159,54 +816,21 @@ func (ProdCatalogCategoryType) Edges() []ent.Edge {
 	}
 }
 
-type OrderAdjustment struct {
+type ProductMeterType struct {
 	ent.Schema
 }
 
-// Fields of the OrderAdjustment.
-// Unique-Indexes: orderAdjustmentId
-func (OrderAdjustment) Fields() []ent.Field {
+// Fields of the ProductMeterType.
+// Unique-Indexes: productMeterTypeId
+func (ProductMeterType) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int("order_adjustment_type_id").Optional().Annotations(entproto.Field(3)),
-		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(4)),
-		field.Int("ship_group_seq_id").Optional().Annotations(entproto.Field(5)),
-		field.String("comments").Optional().Annotations(entproto.Field(6)),
-		field.String("description").Optional().Annotations(entproto.Field(7)),
-		field.Float("amount").Optional().Annotations(entproto.Field(8)),
-		field.Float("recurring_amount").Optional().Annotations(entproto.Field(9)),
-		field.Float("amount_already_included").Optional().Annotations(entproto.Field(10)),
-		field.Int("product_promo_id").Optional().Annotations(entproto.Field(11)),
-		field.Int("product_promo_rule_id").Optional().Annotations(entproto.Field(12)),
-		field.Int("product_promo_action_seq_id").Optional().Annotations(entproto.Field(13)),
-		field.Int("product_feature_id").Optional().Annotations(entproto.Field(14)),
-		field.Int("corresponding_product_id").Optional().Annotations(entproto.Field(15)),
-		field.Int("tax_authority_rate_seq_id").Optional().Annotations(entproto.Field(16)),
-		field.String("source_reference_id").MaxLen(32).Optional().Annotations(entproto.Field(17)),
-		field.Float("source_percentage").Optional().Annotations(entproto.Field(18)),
-		field.String("customer_reference_id").MaxLen(32).Optional().Annotations(entproto.Field(19)),
-		field.Int("primary_geo_id").Optional().Annotations(entproto.Field(20)),
-		field.Int("secondary_geo_id").Optional().Annotations(entproto.Field(21)),
-		field.Float("exempt_amount").Optional().Annotations(entproto.Field(22)),
-		field.Int("tax_auth_geo_id").Optional().Annotations(entproto.Field(23)),
-		field.Int("tax_auth_party_id").Optional().Annotations(entproto.Field(24)),
-		field.Int("override_gl_account_id").Optional().Annotations(entproto.Field(25)),
-		field.Enum("include_in_tax").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(26)),
-		field.Enum("include_in_shipping").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(27)),
-		field.Enum("is_manual").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(28)),
-		field.Time("created_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(29)),
-		field.String("created_by_user_login").Optional().Annotations(entproto.Field(30)),
-		field.Time("last_modified_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(31)),
-		field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(32)),
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+		field.Int("default_uom_id").Optional().Annotations(entproto.Field(3)),
 	}
 }
 
 //* entproto annotations ??
-func (OrderAdjustment) Mixin() []ent.Mixin {
+func (ProductMeterType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -218,149 +842,43 @@ func (OrderAdjustment) Mixin() []ent.Mixin {
 /*
  */
 
-func (OrderAdjustment) Annotations() []schema.Annotation {
+func (ProductMeterType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the OrderAdjustment.
-//  one: OrderAdjustmentType
-//  many: OrderAdjustmentTypeAttr
-//  one: OrderHeader
-//  one: UserLogin
-//  one-nofk: OrderItem
-//  one-nofk: OrderItemShipGroup
-//  one-nofk: OrderItemShipGroupAssoc
-//  one: ProductPromo
-//  one-nofk: ProductPromoRule
-//  one-nofk: ProductPromoAction
-//  one: PrimaryGeo
-//  one: SecondaryGeo
-//  one: TaxAuthority
-//  one: OverrideGlAccount
-//  one: TaxAuthorityRateProduct
-//  one-nofk: OrderAdjustment
-//  many: OrderAdjustmentAttribute
-//  many: OrderAdjustmentBilling
-//  many: ReturnAdjustment
-func (OrderAdjustment) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_adjustments").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(35)),
-		// o2m
-		edge.From("order_item", OrderItem.Type).Ref("order_adjustments").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(37)),
-		// o2m
-		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_adjustments").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(38)),
-		// o2m
-		edge.From("order_item_ship_group_assoc", OrderItemShipGroupAssoc.Type).Ref("order_adjustments").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(39)),
-		edge.To("children", OrderAdjustment.Type).
-			From("parent").
-			// Bind the "originalAdjustmentId" field to this edge.
-			// Field("original_adjustment_id").
-			Unique().Annotations(entproto.Field(48)),
-	}
+// Edges of the ProductMeterType.
+//  one: DefaultUom
+//  many: IntervalFixedAssetMaint
+//  many: FixedAssetMeter
+//  many: IntervalProductMaint
+//  many: ProductMeter
+func (ProductMeterType) Edges() []ent.Edge {
+	return []ent.Edge{}
 }
 
-type ProductStoreGroup struct {
+type ShipmentGatewayUsps struct {
 	ent.Schema
 }
 
-// Fields of the ProductStoreGroup.
-// Unique-Indexes: productStoreGroupId
-func (ProductStoreGroup) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("product_store_group_type_id").Optional().Annotations(entproto.Field(2)),
-		field.String("product_store_group_name").Optional().Annotations(entproto.Field(3)),
-		field.String("description").Optional().Annotations(entproto.Field(4)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductStoreGroup) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductStoreGroup) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductStoreGroup.
-//  one: ProductStoreGroupType
-//  one: PrimaryParentProductStoreGroup
-//  many: ProductPrice
-//  many: PrimaryProductStore
-//  many: ProductStoreGroupMember
-//  many: ProductStoreGroupRole
-//  many: CurrentProductStoreGroupRollup
-//  many: ParentProductStoreGroupRollup
-//  many: VendorProduct
-func (ProductStoreGroup) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductStoreGroup.Type).
-			From("parent").
-			// Bind the "primaryParentGroupId" field to this edge.
-			// Field("primary_parent_group_id").
-			Unique().Annotations(entproto.Field(6)),
-		// m2o
-		edge.To("product_prices", ProductPrice.Type).
-			Annotations(entproto.Field(7)),
-		// m2o
-		edge.To("primary_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(8)),
-	}
-}
-
-type ShipmentGatewayFedex struct {
-	ent.Schema
-}
-
-// Fields of the ShipmentGatewayFedex.
+// Fields of the ShipmentGatewayUsps.
 // Unique-Indexes: shipmentGatewayConfigId
-func (ShipmentGatewayFedex) Fields() []ent.Field {
+func (ShipmentGatewayUsps) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("connect_url").Optional().Annotations(entproto.Field(2)),
-		field.String("connect_soap_url").Optional().Annotations(entproto.Field(3)),
+		field.String("connect_url_labels").Optional().Annotations(entproto.Field(3)),
 		field.Int("connect_timeout").Optional().Annotations(entproto.Field(4)),
-		field.String("access_account_nbr").Optional().Annotations(entproto.Field(5)),
-		field.String("access_meter_number").Optional().Annotations(entproto.Field(6)),
-		field.String("access_user_key").Optional().Annotations(entproto.Field(7)),
-		field.String("access_user_pwd").Optional().Annotations(entproto.Field(8)),
-		field.String("label_image_type").Optional().Annotations(entproto.Field(9)),
-		field.String("default_dropoff_type").Optional().Annotations(entproto.Field(10)),
-		field.String("default_packaging_type").Optional().Annotations(entproto.Field(11)),
-		field.String("template_shipment").Optional().Annotations(entproto.Field(12)),
-		field.String("template_subscription").Optional().Annotations(entproto.Field(13)),
-		field.String("rate_estimate_template").Optional().Annotations(entproto.Field(14)),
+		field.String("access_user_id").Optional().Annotations(entproto.Field(5)),
+		field.String("access_password").Optional().Annotations(entproto.Field(6)),
+		field.Int("max_estimate_weight").Optional().Annotations(entproto.Field(7)),
+		field.String("test").Optional().Annotations(entproto.Field(8)),
 	}
 }
 
 //* entproto annotations ??
-func (ShipmentGatewayFedex) Mixin() []ent.Mixin {
+func (ShipmentGatewayUsps) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -372,23 +890,360 @@ func (ShipmentGatewayFedex) Mixin() []ent.Mixin {
 /*
  */
 
-func (ShipmentGatewayFedex) Annotations() []schema.Annotation {
+func (ShipmentGatewayUsps) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ShipmentGatewayFedex.
+// Edges of the ShipmentGatewayUsps.
 //  one: ShipmentGatewayConfig
-func (ShipmentGatewayFedex) Edges() []ent.Edge {
+func (ShipmentGatewayUsps) Edges() []ent.Edge {
 	return []ent.Edge{
 		// o2o (nofk)
 		edge.From("shipment_gateway_config", ShipmentGatewayConfig.Type).
-			Ref("shipment_gateway_fedex").
+			Ref("shipment_gateway_usps").
 			// Bind the "shipmentGatewayConfigId" field to this edge.
 			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(15)),
+			Unique().Annotations(entproto.Field(9)),
+	}
+}
+
+type OrderContactMech struct {
+	ent.Schema
+}
+
+// Fields of the OrderContactMech.
+// Unique-Indexes: orderId, contactMechPurposeTypeId, contactMechId
+func (OrderContactMech) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("contact_mech_purpose_type_id").Annotations(entproto.Field(2)),
+		field.Int("contact_mech_id").Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (OrderContactMech) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+func (OrderContactMech) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("order_id", "contact_mech_purpose_type_id", "contact_mech_id").
+            Unique(),
+    }
+}
+
+*/
+
+func (OrderContactMech) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the OrderContactMech.
+//  one: OrderHeader
+//  one: ContactMech
+//  one: ContactMechPurposeType
+func (OrderContactMech) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("order_header", OrderHeader.Type).Ref("order_contact_meches").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(4)),
+	}
+}
+
+type ShipmentGatewayConfig struct {
+	ent.Schema
+}
+
+// Fields of the ShipmentGatewayConfig.
+// Unique-Indexes: shipmentGatewayConfigId
+func (ShipmentGatewayConfig) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (ShipmentGatewayConfig) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ShipmentGatewayConfig) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ShipmentGatewayConfig.
+//  one: ShipmentGatewayConfigType
+//  many: ProductStoreShipmentMeth
+//  one-nofk: ShipmentGatewayDhl
+//  one-nofk: ShipmentGatewayFedex
+//  one-nofk: ShipmentGatewayUps
+//  one-nofk: ShipmentGatewayUsps
+func (ShipmentGatewayConfig) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("shipment_gateway_config_type", ShipmentGatewayConfigType.Type).Ref("shipment_gateway_configs").
+			// Bind the "shipmentGatewayConfTypeId" field to this edge.
+			// Field("shipment_gateway_conf_type_id").
+			Unique().Annotations(entproto.Field(3)),
+		// o2o
+		edge.To("shipment_gateway_dhl", ShipmentGatewayDhl.Type).
+			// Bind the "shipmentGatewayConfigId" field to this edge.
+			// Field("shipment_gateway_config_id").
+			Unique().Annotations(entproto.Field(5)),
+		// o2o
+		edge.To("shipment_gateway_fedex", ShipmentGatewayFedex.Type).
+			// Bind the "shipmentGatewayConfigId" field to this edge.
+			// Field("shipment_gateway_config_id").
+			Unique().Annotations(entproto.Field(6)),
+		// o2o
+		edge.To("shipment_gateway_ups", ShipmentGatewayUps.Type).
+			// Bind the "shipmentGatewayConfigId" field to this edge.
+			// Field("shipment_gateway_config_id").
+			Unique().Annotations(entproto.Field(7)),
+		// o2o
+		edge.To("shipment_gateway_usps", ShipmentGatewayUsps.Type).
+			// Bind the "shipmentGatewayConfigId" field to this edge.
+			// Field("shipment_gateway_config_id").
+			Unique().Annotations(entproto.Field(8)),
+	}
+}
+
+type ProductFeatureIactnType struct {
+	ent.Schema
+}
+
+// Fields of the ProductFeatureIactnType.
+// Unique-Indexes: productFeatureIactnTypeId
+func (ProductFeatureIactnType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductFeatureIactnType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductFeatureIactnType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductFeatureIactnType.
+//  one: ParentProductFeatureIactnType
+//  many: ProductFeatureIactn
+//  many: ChildProductFeatureIactnType
+func (ProductFeatureIactnType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductFeatureIactnType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_product_feature_iactn_types", ProductFeatureIactnType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type ProductPriceType struct {
+	ent.Schema
+}
+
+// Fields of the ProductPriceType.
+// Unique-Indexes: productPriceTypeId
+func (ProductPriceType) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductPriceType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductPriceType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductPriceType.
+//  many: ProductFeaturePrice
+//  many: ProductPrice
+func (ProductPriceType) Edges() []ent.Edge {
+	return []ent.Edge{
+		// m2o
+		edge.To("product_prices", ProductPrice.Type).
+			Annotations(entproto.Field(4)),
+	}
+}
+
+type FacilityGroupType struct {
+	ent.Schema
+}
+
+// Fields of the FacilityGroupType.
+// Unique-Indexes: facilityGroupTypeId
+func (FacilityGroupType) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (FacilityGroupType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (FacilityGroupType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the FacilityGroupType.
+//  many: FacilityGroup
+func (FacilityGroupType) Edges() []ent.Edge {
+	return []ent.Edge{
+		// m2o
+		edge.To("facility_groups", FacilityGroup.Type).
+			Annotations(entproto.Field(3)),
+	}
+}
+
+type OrderItemShipGroupAssoc struct {
+	ent.Schema
+}
+
+// Fields of the OrderItemShipGroupAssoc.
+// Unique-Indexes: orderId, orderItemSeqId, shipGroupSeqId
+func (OrderItemShipGroupAssoc) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("order_item_seq_id").Annotations(entproto.Field(2)),
+		field.Int("ship_group_seq_id").Annotations(entproto.Field(3)),
+		field.Float("quantity").Optional().Annotations(entproto.Field(4)),
+		field.Float("cancel_quantity").Optional().Annotations(entproto.Field(5)),
+	}
+}
+
+//* entproto annotations ??
+func (OrderItemShipGroupAssoc) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+func (OrderItemShipGroupAssoc) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("order_id", "order_item_seq_id", "ship_group_seq_id").
+            Unique(),
+    }
+}
+
+*/
+
+func (OrderItemShipGroupAssoc) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the OrderItemShipGroupAssoc.
+//  one: OrderHeader
+//  one: OrderItem
+//  one: OrderItemShipGroup
+//  many: OrderAdjustment
+//  many: FromOrderItemAssoc
+//  many: ToOrderItemAssoc
+//  many: OrderItemShipGrpInvRes
+//  many: OrderShipment
+//  many: WorkOrderItemFulfillment
+func (OrderItemShipGroupAssoc) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("order_header", OrderHeader.Type).Ref("order_item_ship_group_assocs").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(6)),
+		// o2m
+		edge.From("order_item", OrderItem.Type).Ref("order_item_ship_group_assocs").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(7)),
+		// o2m
+		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_item_ship_group_assocs").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(8)),
+		// m2o
+		edge.To("order_adjustments", OrderAdjustment.Type).
+			Annotations(entproto.Field(9)),
+		// m2o
+		edge.To("order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.Type).
+			Annotations(entproto.Field(12)),
 	}
 }
 
@@ -443,22 +1298,22 @@ func (ProdConfItemContentType) Edges() []ent.Edge {
 	}
 }
 
-type Enumeration struct {
+type CustomMethodType struct {
 	ent.Schema
 }
 
-// Fields of the Enumeration.
-// Unique-Indexes: enumId
-func (Enumeration) Fields() []ent.Field {
+// Fields of the CustomMethodType.
+// Unique-Indexes: customMethodTypeId
+func (CustomMethodType) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("enum_code").Optional().Annotations(entproto.Field(2)),
-		field.Int("sequence_id").Optional().Annotations(entproto.Field(3)),
-		field.String("description").Optional().Annotations(entproto.Field(4)),
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
 	}
 }
 
 //* entproto annotations ??
-func (Enumeration) Mixin() []ent.Mixin {
+func (CustomMethodType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -470,120 +1325,30 @@ func (Enumeration) Mixin() []ent.Mixin {
 /*
  */
 
-func (Enumeration) Annotations() []schema.Annotation {
+func (CustomMethodType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the Enumeration.
-//  one: EnumerationType
-//  many: Plan Method Enum IdAllocationPlanItem
-//  many: CommunicationEvent
-//  many: PrivilegeContent
-//  many: ContentPurposeOperation
-//  many: SalesChannelCustRequest
-//  many: EbayShippingMethod
-//  many: EmailTemplateSetting
-//  many: ExampleFeature
-//  many: ImportStatusExcelImportHistory
-//  many: ThruReasonExcelImportHistory
-//  many: TypeFacilityLocation
-//  many: ReasonFinAccountTrans
-//  many: ReplenishFinAccountType
-//  many: ClassFixedAsset
-//  many: GeoPointTypeGeoPoint
-//  many: GiftCardFulfillment
-//  many: ReasonInventoryItemDetail
-//  many: JobInterview
-//  many: ReasonJobManagerLock
-//  many: ExamTypeJobRequisition
-//  many: JobPostingTypeJobRequisition
-//  many: RelationshipKeywordThesaurus
-//  many: SalesChannelOrderHeader
-//  many: OrderItemChange
-//  many: ReasonOrderItemChange
-//  many: OrderNotification
-//  many: TaxFormPartyAcctgPreference
-//  many: CogsPartyAcctgPreference
-//  many: InvoiceSequencePartyAcctgPreference
-//  many: QuoteSequencePartyAcctgPreference
-//  many: OrderSequencePartyAcctgPreference
-//  many: ServiceTypePaymentGatewayResponse
-//  many: TranCodePaymentGatewayResponse
-//  many: EmploymentStatusPerson
-//  many: ResidenceStatusPerson
-//  many: MaritalStatusPerson
-//  many: PosTerminalInternTx
-//  many: VirtualVariantMethodProduct
-//  many: RatingProduct
-//  many: RequirementMethodProduct
-//  many: LinkTypeProductCategoryLink
-//  many: RequirementMethodProductFacility
-//  many: ProductFacility
-//  many: ProductGeo
-//  many: ProductKeyword
-//  many: InputParamProductPriceCond
-//  many: OperatorProductPriceCond
-//  many: ActionProductPromoAction
-//  many: ApplProductPromoCategory
-//  many: InputParamProductPromoCond
-//  many: OperatorProductPromoCond
-//  many: ApplProductPromoProduct
-//  many: ReserveOrderProductStore
-//  many: RequirementMethodProductStore
-//  many: DefaultSalesChannelProductStore
-//  many: StoreCreditAccountProductStore
-//  many: ProductStoreEmailSetting
-//  many: ReplenishMethodProductStoreFinActSetting
-//  many: ProductStoreKeywordOvrd
-//  many: ProductStorePaymentSetting
-//  many: ProductStoreTelecomSetting
-//  many: CreditCardProductStoreVendorPayment
-//  many: SalesChannelQuote
-//  many: TypeSalesOpportunity
-//  many: TrackingCodeVisit
-//  many: PurposeUomConversionDated
-//  many: VisualThemeResource
-//  many: ScopeWorkEffort
-//  many: ExpectationWorkEffortPartyAssignment
-//  many: DelegateReasonWorkEffortPartyAssignment
-//  many: WorkloadFeature
-func (Enumeration) Edges() []ent.Edge {
+// Edges of the CustomMethodType.
+//  one: ParentCustomMethodType
+//  many: CustomMethod
+//  many: ChildCustomMethodType
+func (CustomMethodType) Edges() []ent.Edge {
 	return []ent.Edge{
-		// o2m
-		edge.From("enumeration_type", EnumerationType.Type).Ref("enumerations").
-			// Bind the "enumTypeId" field to this edge.
-			// Field("enum_type_id").
-			Unique().Annotations(entproto.Field(5)),
+		edge.To("children", CustomMethodType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
 		// m2o
-		edge.To("reason_inventory_item_details", InventoryItemDetail.Type).
-			Annotations(entproto.Field(22)),
+		edge.To("custom_methods", CustomMethod.Type).
+			Annotations(entproto.Field(5)),
 		// m2o
-		edge.To("sales_channel_order_headers", OrderHeader.Type).
-			Annotations(entproto.Field(28)),
-		// m2o
-		edge.To("virtual_variant_method_products", Product.Type).
-			Annotations(entproto.Field(43)),
-		// m2o
-		edge.To("rating_products", Product.Type).
-			Annotations(entproto.Field(44)),
-		// m2o
-		edge.To("requirement_method_products", Product.Type).
-			Annotations(entproto.Field(45)),
-		// m2o
-		edge.To("reserve_order_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(58)),
-		// m2o
-		edge.To("requirement_method_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(59)),
-		// m2o
-		edge.To("default_sales_channel_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(60)),
-		// m2o
-		edge.To("store_credit_account_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(61)),
+		edge.To("child_custom_method_types", CustomMethodType.Type).
+			Annotations(entproto.Field(6)),
 	}
 }
 
@@ -595,7 +1360,7 @@ type ProductPriceActionType struct {
 // Unique-Indexes: productPriceActionTypeId
 func (ProductPriceActionType) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
+		field.String("description").Optional().Annotations(entproto.Field(2)),
 	}
 }
 
@@ -625,20 +1390,22 @@ func (ProductPriceActionType) Edges() []ent.Edge {
 	return []ent.Edge{}
 }
 
-type VarianceReason struct {
+type ShipmentType struct {
 	ent.Schema
 }
 
-// Fields of the VarianceReason.
-// Unique-Indexes: varianceReasonId
-func (VarianceReason) Fields() []ent.Field {
+// Fields of the ShipmentType.
+// Unique-Indexes: shipmentTypeId
+func (ShipmentType) Fields() []ent.Field {
 	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
 		field.String("description").Optional().Annotations(entproto.Field(3)),
 	}
 }
 
 //* entproto annotations ??
-func (VarianceReason) Mixin() []ent.Mixin {
+func (ShipmentType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -650,18 +1417,386 @@ func (VarianceReason) Mixin() []ent.Mixin {
 /*
  */
 
-func (VarianceReason) Annotations() []schema.Annotation {
+func (ShipmentType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the VarianceReason.
-//  many: InventoryItemVariance
-//  many: VarianceReasonGlAccount
-func (VarianceReason) Edges() []ent.Edge {
-	return []ent.Edge{}
+// Edges of the ShipmentType.
+//  one: ParentShipmentType
+//  many: Shipment
+//  many: ChildShipmentType
+//  many: ShipmentTypeAttr
+func (ShipmentType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ShipmentType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_shipment_types", ShipmentType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type StatusItem struct {
+	ent.Schema
+}
+
+// Fields of the StatusItem.
+// Unique-Indexes: statusId
+func (StatusItem) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("status_code").Optional().Annotations(entproto.Field(2)),
+		field.Int("sequence_id").Optional().Annotations(entproto.Field(3)),
+		field.String("description").Optional().Annotations(entproto.Field(4)),
+	}
+}
+
+//* entproto annotations ??
+func (StatusItem) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (StatusItem) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the StatusItem.
+//  one: StatusType
+//  many: AcctgTrans
+//  many: AcctgTransEntry
+//  many: Status IdAllocationPlanHeader
+//  many: Plan Item Status IdAllocationPlanItem
+//  many: BudgetStatus
+//  many: CommunicationEvent
+//  many: CommunicationEventRole
+//  many: ContactListCommStatus
+//  many: ContactListParty
+//  many: Content
+//  many: ApprovalContentApproval
+//  many: ContentPurposeOperation
+//  many: CustRequest
+//  many: CustRequestItem
+//  many: CustRequestStatus
+//  many: DataResource
+//  many: EmplLeave
+//  many: EmplPosition
+//  many: EmploymentApp
+//  many: Example
+//  many: ExampleStatus
+//  many: FinAccountStatus
+//  many: FinAccountTrans
+//  many: FixedAssetMaint
+//  many: GlReconciliation
+//  many: InventoryItem
+//  many: InventoryItemStatus
+//  many: InventoryTransfer
+//  many: Invoice
+//  many: InvoiceStatus
+//  many: JobSandbox
+//  many: MarketingCampaign
+//  many: OldPicklistStatusHistory
+//  many: ToOldPicklistStatusHistory
+//  many: OrderDeliverySchedule
+//  many: OrderHeader
+//  many: SyncOrderHeader
+//  many: OrderItem
+//  many: SyncOrderItem
+//  many: OrderPaymentPreference
+//  many: OrderStatus
+//  many: Party
+//  many: PartyFixedAssetAssignment
+//  many: PartyInvitation
+//  many: PartyQual
+//  many: VerificationPartyQual
+//  many: PartyRelationship
+//  many: PartyStatus
+//  many: Payment
+//  many: Picklist
+//  many: PicklistItem
+//  many: PicklistStatus
+//  many: ToPicklistStatus
+//  many: PosTerminalLog
+//  many: ProductGroupOrder
+//  many: ProductKeyword
+//  many: ProductReview
+//  many: HeaderApprovedProductStore
+//  many: ItemApprovedProductStore
+//  many: DigitalItemApprovedProductStore
+//  many: HeaderDeclinedProductStore
+//  many: ItemDeclinedProductStore
+//  many: HeaderCancelProductStore
+//  many: ItemCancelProductStore
+//  many: Quote
+//  many: Requirement
+//  many: RequirementStatus
+//  many: ReturnHeader
+//  many: ReturnItem
+//  many: InventoryReturnItem
+//  many: ReturnStatus
+//  many: Shipment
+//  many: CarrierServiceShipmentRouteSegment
+//  many: ShipmentStatus
+//  many: MainStatusValidChange
+//  many: ToStatusValidChange
+//  many: SurveyResponse
+//  many: TestingStatus
+//  many: Timesheet
+//  many: UnemploymentClaim
+//  many: CurrentWorkEffort
+//  many: WorkEffortFixedAssetAssign
+//  many: AvailabilityWorkEffortFixedAssetAssign
+//  many: WorkEffortGoodStandard
+//  many: WorkEffortInventoryAssign
+//  many: AssignmentWorkEffortPartyAssignment
+//  many: AvailabilityWorkEffortPartyAssignment
+//  many: WorkEffortReview
+//  many: WorkEffortStatus
+//  many: Workload
+//  many: WorkloadStatus
+func (StatusItem) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("status_type", StatusType.Type).Ref("status_items").
+			// Bind the "statusTypeId" field to this edge.
+			// Field("status_type_id").
+			Unique().Annotations(entproto.Field(5)),
+		// m2o
+		edge.To("order_headers", OrderHeader.Type).
+			Annotations(entproto.Field(41)),
+		// m2o
+		edge.To("sync_order_headers", OrderHeader.Type).
+			Annotations(entproto.Field(42)),
+		// m2o
+		edge.To("order_items", OrderItem.Type).
+			Annotations(entproto.Field(43)),
+		// m2o
+		edge.To("sync_order_items", OrderItem.Type).
+			Annotations(entproto.Field(44)),
+		// m2o
+		edge.To("order_payment_preferences", OrderPaymentPreference.Type).
+			Annotations(entproto.Field(45)),
+		// m2o
+		edge.To("order_statuses", OrderStatus.Type).
+			Annotations(entproto.Field(46)),
+		// m2o
+		edge.To("product_reviews", ProductReview.Type).
+			Annotations(entproto.Field(62)),
+		// m2o
+		edge.To("header_approved_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(63)),
+		// m2o
+		edge.To("item_approved_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(64)),
+		// m2o
+		edge.To("digital_item_approved_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(65)),
+		// m2o
+		edge.To("header_declined_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(66)),
+		// m2o
+		edge.To("item_declined_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(67)),
+		// m2o
+		edge.To("header_cancel_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(68)),
+		// m2o
+		edge.To("item_cancel_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(69)),
+		// m2o
+		edge.To("main_status_valid_changes", StatusValidChange.Type).
+			Annotations(entproto.Field(80)),
+		// m2o
+		edge.To("to_status_valid_changes", StatusValidChange.Type).
+			Annotations(entproto.Field(81)),
+	}
+}
+
+type ProductFeatureApplType struct {
+	ent.Schema
+}
+
+// Fields of the ProductFeatureApplType.
+// Unique-Indexes: productFeatureApplTypeId
+func (ProductFeatureApplType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductFeatureApplType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductFeatureApplType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductFeatureApplType.
+//  one: ParentProductFeatureApplType
+//  many: ProductFeatureAppl
+//  many: ChildProductFeatureApplType
+func (ProductFeatureApplType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductFeatureApplType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_product_feature_appl_types", ProductFeatureApplType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type InventoryItemType struct {
+	ent.Schema
+}
+
+// Fields of the InventoryItemType.
+// Unique-Indexes: inventoryItemTypeId
+func (InventoryItemType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (InventoryItemType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (InventoryItemType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the InventoryItemType.
+//  one: ParentInventoryItemType
+//  many: DefaultFacility
+//  many: InventoryItem
+//  many: ChildInventoryItemType
+//  many: InventoryItemTypeAttr
+//  many: Product
+func (InventoryItemType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", InventoryItemType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_inventory_item_types", InventoryItemType.Type).
+			Annotations(entproto.Field(7)),
+		// m2o
+		edge.To("products", Product.Type).
+			Annotations(entproto.Field(9)),
+	}
+}
+
+type ShipmentGatewayUps struct {
+	ent.Schema
+}
+
+// Fields of the ShipmentGatewayUps.
+// Unique-Indexes: shipmentGatewayConfigId
+func (ShipmentGatewayUps) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("connect_url").Optional().Annotations(entproto.Field(2)),
+		field.Int("connect_timeout").Optional().Annotations(entproto.Field(3)),
+		field.String("shipper_number").Optional().Annotations(entproto.Field(4)),
+		field.String("bill_shipper_account_number").Optional().Annotations(entproto.Field(5)),
+		field.String("access_license_number").Optional().Annotations(entproto.Field(6)),
+		field.String("access_user_id").Optional().Annotations(entproto.Field(7)),
+		field.String("access_password").Optional().Annotations(entproto.Field(8)),
+		field.String("save_cert_info").Optional().Annotations(entproto.Field(9)),
+		field.String("save_cert_path").Optional().Annotations(entproto.Field(10)),
+		field.String("shipper_pickup_type").Optional().Annotations(entproto.Field(11)),
+		field.String("customer_classification").Optional().Annotations(entproto.Field(12)),
+		field.Float("max_estimate_weight").Optional().Annotations(entproto.Field(13)),
+		field.Float("min_estimate_weight").Optional().Annotations(entproto.Field(14)),
+		field.String("cod_allow_cod").Optional().Annotations(entproto.Field(15)),
+		field.Float("cod_surcharge_amount").Optional().Annotations(entproto.Field(16)),
+		field.String("cod_surcharge_currency_uom_id").Optional().Annotations(entproto.Field(17)),
+		field.String("cod_surcharge_apply_to_package").Optional().Annotations(entproto.Field(18)),
+		field.String("cod_funds_code").Optional().Annotations(entproto.Field(19)),
+		field.String("default_return_label_memo").Optional().Annotations(entproto.Field(20)),
+		field.String("default_return_label_subject").Optional().Annotations(entproto.Field(21)),
+	}
+}
+
+//* entproto annotations ??
+func (ShipmentGatewayUps) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ShipmentGatewayUps) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ShipmentGatewayUps.
+//  one: ShipmentGatewayConfig
+func (ShipmentGatewayUps) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2o (nofk)
+		edge.From("shipment_gateway_config", ShipmentGatewayConfig.Type).
+			Ref("shipment_gateway_ups").
+			// Bind the "shipmentGatewayConfigId" field to this edge.
+			// Field("shipment_gateway_config_id").
+			Unique().Annotations(entproto.Field(22)),
+	}
 }
 
 type ProductStore struct {
@@ -922,6 +2057,104 @@ func (ProductStore) Edges() []ent.Edge {
 	}
 }
 
+type SupplierPrefOrder struct {
+	ent.Schema
+}
+
+// Fields of the SupplierPrefOrder.
+// Unique-Indexes: supplierPrefOrderId
+func (SupplierPrefOrder) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (SupplierPrefOrder) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (SupplierPrefOrder) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the SupplierPrefOrder.
+//  many: SupplierProduct
+func (SupplierPrefOrder) Edges() []ent.Edge {
+	return []ent.Edge{}
+}
+
+type ProductStoreGroup struct {
+	ent.Schema
+}
+
+// Fields of the ProductStoreGroup.
+// Unique-Indexes: productStoreGroupId
+func (ProductStoreGroup) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("product_store_group_type_id").Optional().Annotations(entproto.Field(2)),
+		field.String("product_store_group_name").Optional().Annotations(entproto.Field(3)),
+		field.String("description").Optional().Annotations(entproto.Field(4)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductStoreGroup) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductStoreGroup) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductStoreGroup.
+//  one: ProductStoreGroupType
+//  one: PrimaryParentProductStoreGroup
+//  many: ProductPrice
+//  many: PrimaryProductStore
+//  many: ProductStoreGroupMember
+//  many: ProductStoreGroupRole
+//  many: CurrentProductStoreGroupRollup
+//  many: ParentProductStoreGroupRollup
+//  many: VendorProduct
+func (ProductStoreGroup) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductStoreGroup.Type).
+			From("parent").
+			// Bind the "primaryParentGroupId" field to this edge.
+			// Field("primary_parent_group_id").
+			Unique().Annotations(entproto.Field(6)),
+		// m2o
+		edge.To("product_prices", ProductPrice.Type).
+			Annotations(entproto.Field(7)),
+		// m2o
+		edge.To("primary_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(8)),
+	}
+}
+
 type ProductAssocType struct {
 	ent.Schema
 }
@@ -976,28 +2209,44 @@ func (ProductAssocType) Edges() []ent.Edge {
 	}
 }
 
-type ProductCategory struct {
+type OrderItemShipGroup struct {
 	ent.Schema
 }
 
-// Fields of the ProductCategory.
-// Unique-Indexes: productCategoryId
-func (ProductCategory) Fields() []ent.Field {
+// Fields of the OrderItemShipGroup.
+// Unique-Indexes: orderId, shipGroupSeqId
+func (OrderItemShipGroup) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("category_name").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-		field.String("long_description").Optional().Annotations(entproto.Field(4)),
-		field.String("category_image_url").Optional().Annotations(entproto.Field(5)),
-		field.String("link_one_image_url").Optional().Annotations(entproto.Field(6)),
-		field.String("link_two_image_url").Optional().Annotations(entproto.Field(7)),
-		field.String("detail_screen").Optional().Annotations(entproto.Field(8)),
-		field.Enum("show_in_select").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(9)),
+		field.Int("ship_group_seq_id").Annotations(entproto.Field(2)),
+		field.Int("shipment_method_type_id").Optional().Annotations(entproto.Field(3)),
+		field.Int("supplier_party_id").Optional().Annotations(entproto.Field(4)),
+		field.Int("supplier_agreement_id").Optional().Annotations(entproto.Field(5)),
+		field.Int("vendor_party_id").Optional().Annotations(entproto.Field(6)),
+		field.Int("carrier_party_id").Optional().Annotations(entproto.Field(7)),
+		field.Int("carrier_role_type_id").Optional().Annotations(entproto.Field(8)),
+		field.Int("facility_id").Optional().Annotations(entproto.Field(9)),
+		field.Int("contact_mech_id").Optional().Annotations(entproto.Field(10)),
+		field.Int("telecom_contact_mech_id").Optional().Annotations(entproto.Field(11)),
+		field.String("tracking_number").Optional().Annotations(entproto.Field(12)),
+		field.String("shipping_instructions").Optional().Annotations(entproto.Field(13)),
+		field.Enum("may_split").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(14)),
+		field.String("gift_message").Optional().Annotations(entproto.Field(15)),
+		field.Enum("is_gift").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(16)),
+		field.Time("ship_after_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(17)),
+		field.Time("ship_by_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(18)),
+		field.Time("estimated_ship_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(19)),
+		field.Time("estimated_delivery_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(20)),
 	}
 }
 
 //* entproto annotations ??
-func (ProductCategory) Mixin() []ent.Mixin {
+func (OrderItemShipGroup) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -1007,68 +2256,74 @@ func (ProductCategory) Mixin() []ent.Mixin {
 //*/
 
 /*
- */
+func (OrderItemShipGroup) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("order_id", "ship_group_seq_id").
+            Unique(),
+    }
+}
 
-func (ProductCategory) Annotations() []schema.Annotation {
+*/
+
+func (OrderItemShipGroup) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ProductCategory.
-//  one: ProductCategoryType
-//  many: ProductCategoryTypeAttr
-//  one: PrimaryParentProductCategory
-//  many: PrimaryChildProductCategory
-//  many: MarketInterest
-//  many: PartyNeed
-//  many: ProdCatalogCategory
-//  many: PrimaryProduct
-//  many: ProductCategoryAttribute
-//  many: ProductCategoryContent
-//  many: ProductCategoryGlAccount
-//  many: ProductCategoryLink
-//  many: ProductCategoryMember
-//  many: ProductCategoryRole
-//  many: CurrentProductCategoryRollup
-//  many: ParentProductCategoryRollup
-//  many: ProductFeatureCatGrpAppl
-//  many: ProductFeatureCategoryAppl
-//  many: ProductPromoCategory
-//  many: ProductStoreSurveyAppl
-//  many: SalesForecastDetail
-//  many: Subscription
-//  many: TaxAuthorityCategory
-//  many: TaxAuthorityRateProduct
-func (ProductCategory) Edges() []ent.Edge {
+// Edges of the OrderItemShipGroup.
+//  one: OrderHeader
+//  one: SupplierParty
+//  one: SupplierAgreement
+//  one: VendorParty
+//  one: CarrierShipmentMethod
+//  one: CarrierParty
+//  one: CarrierPartyRole
+//  one: Facility
+//  one: ShipmentMethodType
+//  one: ContactMech
+//  one: PostalAddress
+//  one: TelecomContactMech
+//  one: TelecomTelecomNumber
+//  many: OrderAdjustment
+//  many: FromOrderItemAssoc
+//  many: ToOrderItemAssoc
+//  many: OrderItemShipGroupAssoc
+//  many: OrderItemShipGrpInvRes
+//  many: OrderPaymentPreference
+//  many: PrimaryPicklistBin
+//  many: PicklistItem
+//  many: PrimaryShipment
+func (OrderItemShipGroup) Edges() []ent.Edge {
 	return []ent.Edge{
 		// o2m
-		edge.From("product_category_type", ProductCategoryType.Type).Ref("product_categories").
-			// Bind the "productCategoryTypeId" field to this edge.
-			// Field("product_category_type_id").
-			Unique().Annotations(entproto.Field(10)),
-		edge.To("children", ProductCategory.Type).
-			From("parent").
-			// Bind the "primaryParentCategoryId" field to this edge.
-			// Field("primary_parent_category_id").
-			Unique().Annotations(entproto.Field(12)),
+		edge.From("order_header", OrderHeader.Type).Ref("order_item_ship_groups").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(21)),
 		// m2o
-		edge.To("primary_child_product_categories", ProductCategory.Type).
-			Annotations(entproto.Field(13)),
+		edge.To("order_adjustments", OrderAdjustment.Type).
+			Annotations(entproto.Field(34)),
 		// m2o
-		edge.To("primary_products", Product.Type).
-			Annotations(entproto.Field(17)),
+		edge.To("order_item_ship_group_assocs", OrderItemShipGroupAssoc.Type).
+			Annotations(entproto.Field(37)),
+		// m2o
+		edge.To("order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.Type).
+			Annotations(entproto.Field(38)),
+		// m2o
+		edge.To("order_payment_preferences", OrderPaymentPreference.Type).
+			Annotations(entproto.Field(39)),
 	}
 }
 
-type StatusType struct {
+type FacilityType struct {
 	ent.Schema
 }
 
-// Fields of the StatusType.
-// Unique-Indexes: statusTypeId
-func (StatusType) Fields() []ent.Field {
+// Fields of the FacilityType.
+// Unique-Indexes: facilityTypeId
+func (FacilityType) Fields() []ent.Field {
 	return []ent.Field{
 		field.Enum("has_table").
 			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
@@ -1077,7 +2332,7 @@ func (StatusType) Fields() []ent.Field {
 }
 
 //* entproto annotations ??
-func (StatusType) Mixin() []ent.Mixin {
+func (FacilityType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -1089,49 +2344,92 @@ func (StatusType) Mixin() []ent.Mixin {
 /*
  */
 
-func (StatusType) Annotations() []schema.Annotation {
+func (FacilityType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the StatusType.
-//  one: ParentStatusType
-//  many: StatusItem
-//  many: ChildStatusType
-func (StatusType) Edges() []ent.Edge {
+// Edges of the FacilityType.
+//  one: ParentFacilityType
+//  many: Facility
+//  many: ChildFacilityType
+//  many: FacilityTypeAttr
+func (FacilityType) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("children", StatusType.Type).
+		edge.To("children", FacilityType.Type).
 			From("parent").
 			// Bind the "parentTypeId" field to this edge.
 			// Field("parent_type_id").
 			Unique().Annotations(entproto.Field(4)),
 		// m2o
-		edge.To("status_items", StatusItem.Type).
+		edge.To("child_facility_types", FacilityType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type ProductPricePurpose struct {
+	ent.Schema
+}
+
+// Fields of the ProductPricePurpose.
+// Unique-Indexes: productPricePurposeId
+func (ProductPricePurpose) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductPricePurpose) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductPricePurpose) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductPricePurpose.
+//  many: OrderPaymentPreference
+//  many: ProductPaymentMethodType
+//  many: ProductPrice
+func (ProductPricePurpose) Edges() []ent.Edge {
+	return []ent.Edge{
+		// m2o
+		edge.To("order_payment_preferences", OrderPaymentPreference.Type).
+			Annotations(entproto.Field(3)),
+		// m2o
+		edge.To("product_prices", ProductPrice.Type).
 			Annotations(entproto.Field(5)),
-		// m2o
-		edge.To("child_status_types", StatusType.Type).
-			Annotations(entproto.Field(6)),
 	}
 }
 
-type ProductCategoryContentType struct {
+type RejectionReason struct {
 	ent.Schema
 }
 
-// Fields of the ProductCategoryContentType.
-// Unique-Indexes: prodCatContentTypeId
-func (ProductCategoryContentType) Fields() []ent.Field {
+// Fields of the RejectionReason.
+// Unique-Indexes: rejectionId
+func (RejectionReason) Fields() []ent.Field {
 	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
+		field.String("description").Optional().Annotations(entproto.Field(2)),
 	}
 }
 
 //* entproto annotations ??
-func (ProductCategoryContentType) Mixin() []ent.Mixin {
+func (RejectionReason) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -1143,175 +2441,17 @@ func (ProductCategoryContentType) Mixin() []ent.Mixin {
 /*
  */
 
-func (ProductCategoryContentType) Annotations() []schema.Annotation {
+func (RejectionReason) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ProductCategoryContentType.
-//  one: ParentProductCategoryContentType
-//  many: ProductCategoryContent
-//  many: ChildProductCategoryContentType
-func (ProductCategoryContentType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductCategoryContentType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_product_category_content_types", ProductCategoryContentType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type GoodIdentificationType struct {
-	ent.Schema
-}
-
-// Fields of the GoodIdentificationType.
-// Unique-Indexes: goodIdentificationTypeId
-func (GoodIdentificationType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (GoodIdentificationType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (GoodIdentificationType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the GoodIdentificationType.
-//  one: ParentGoodIdentificationType
-//  many: GoodIdentification
-//  many: ChildGoodIdentificationType
-func (GoodIdentificationType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", GoodIdentificationType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_good_identification_types", GoodIdentificationType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type ShipmentContactMechType struct {
-	ent.Schema
-}
-
-// Fields of the ShipmentContactMechType.
-// Unique-Indexes: shipmentContactMechTypeId
-func (ShipmentContactMechType) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ShipmentContactMechType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ShipmentContactMechType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ShipmentContactMechType.
-//  many: ShipmentContactMech
-func (ShipmentContactMechType) Edges() []ent.Edge {
+// Edges of the RejectionReason.
+//  many: ShipmentReceipt
+func (RejectionReason) Edges() []ent.Edge {
 	return []ent.Edge{}
-}
-
-type ShipmentGatewayConfigType struct {
-	ent.Schema
-}
-
-// Fields of the ShipmentGatewayConfigType.
-// Unique-Indexes: shipmentGatewayConfTypeId
-func (ShipmentGatewayConfigType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ShipmentGatewayConfigType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ShipmentGatewayConfigType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ShipmentGatewayConfigType.
-//  one: ParentShipmentGatewayConfigType
-//  many: SiblingShipmentGatewayConfigType
-//  many: ShipmentGatewayConfig
-//  many: ChildShipmentGatewayConfigType
-func (ShipmentGatewayConfigType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ShipmentGatewayConfigType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("sibling_shipment_gateway_config_types", ShipmentGatewayConfigType.Type).
-			Annotations(entproto.Field(5)),
-		// m2o
-		edge.To("shipment_gateway_configs", ShipmentGatewayConfig.Type).
-			Annotations(entproto.Field(6)),
-		// m2o
-		edge.To("child_shipment_gateway_config_types", ShipmentGatewayConfigType.Type).
-			Annotations(entproto.Field(7)),
-	}
 }
 
 type OrderHeader struct {
@@ -1492,13 +2632,13 @@ func (OrderHeader) Edges() []ent.Edge {
 	}
 }
 
-type ShipmentType struct {
+type ContentType struct {
 	ent.Schema
 }
 
-// Fields of the ShipmentType.
-// Unique-Indexes: shipmentTypeId
-func (ShipmentType) Fields() []ent.Field {
+// Fields of the ContentType.
+// Unique-Indexes: contentTypeId
+func (ContentType) Fields() []ent.Field {
 	return []ent.Field{
 		field.Enum("has_table").
 			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
@@ -1507,7 +2647,7 @@ func (ShipmentType) Fields() []ent.Field {
 }
 
 //* entproto annotations ??
-func (ShipmentType) Mixin() []ent.Mixin {
+func (ContentType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -1519,64 +2659,47 @@ func (ShipmentType) Mixin() []ent.Mixin {
 /*
  */
 
-func (ShipmentType) Annotations() []schema.Annotation {
+func (ContentType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ShipmentType.
-//  one: ParentShipmentType
-//  many: Shipment
-//  many: ChildShipmentType
-//  many: ShipmentTypeAttr
-func (ShipmentType) Edges() []ent.Edge {
+// Edges of the ContentType.
+//  one: ParentContentType
+//  many: Content
+//  many: ChildContentType
+//  many: ContentTypeAttr
+func (ContentType) Edges() []ent.Edge {
 	return []ent.Edge{
-		edge.To("children", ShipmentType.Type).
+		edge.To("children", ContentType.Type).
 			From("parent").
 			// Bind the "parentTypeId" field to this edge.
 			// Field("parent_type_id").
 			Unique().Annotations(entproto.Field(4)),
 		// m2o
-		edge.To("child_shipment_types", ShipmentType.Type).
+		edge.To("child_content_types", ContentType.Type).
 			Annotations(entproto.Field(6)),
 	}
 }
 
-type ShipmentGatewayUps struct {
+type ShipmentGatewayConfigType struct {
 	ent.Schema
 }
 
-// Fields of the ShipmentGatewayUps.
-// Unique-Indexes: shipmentGatewayConfigId
-func (ShipmentGatewayUps) Fields() []ent.Field {
+// Fields of the ShipmentGatewayConfigType.
+// Unique-Indexes: shipmentGatewayConfTypeId
+func (ShipmentGatewayConfigType) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("connect_url").Optional().Annotations(entproto.Field(2)),
-		field.Int("connect_timeout").Optional().Annotations(entproto.Field(3)),
-		field.String("shipper_number").Optional().Annotations(entproto.Field(4)),
-		field.String("bill_shipper_account_number").Optional().Annotations(entproto.Field(5)),
-		field.String("access_license_number").Optional().Annotations(entproto.Field(6)),
-		field.String("access_user_id").Optional().Annotations(entproto.Field(7)),
-		field.String("access_password").Optional().Annotations(entproto.Field(8)),
-		field.String("save_cert_info").Optional().Annotations(entproto.Field(9)),
-		field.String("save_cert_path").Optional().Annotations(entproto.Field(10)),
-		field.String("shipper_pickup_type").Optional().Annotations(entproto.Field(11)),
-		field.String("customer_classification").Optional().Annotations(entproto.Field(12)),
-		field.Float("max_estimate_weight").Optional().Annotations(entproto.Field(13)),
-		field.Float("min_estimate_weight").Optional().Annotations(entproto.Field(14)),
-		field.String("cod_allow_cod").Optional().Annotations(entproto.Field(15)),
-		field.Float("cod_surcharge_amount").Optional().Annotations(entproto.Field(16)),
-		field.String("cod_surcharge_currency_uom_id").Optional().Annotations(entproto.Field(17)),
-		field.String("cod_surcharge_apply_to_package").Optional().Annotations(entproto.Field(18)),
-		field.String("cod_funds_code").Optional().Annotations(entproto.Field(19)),
-		field.String("default_return_label_memo").Optional().Annotations(entproto.Field(20)),
-		field.String("default_return_label_subject").Optional().Annotations(entproto.Field(21)),
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
 	}
 }
 
 //* entproto annotations ??
-func (ShipmentGatewayUps) Mixin() []ent.Mixin {
+func (ShipmentGatewayConfigType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -1588,41 +2711,53 @@ func (ShipmentGatewayUps) Mixin() []ent.Mixin {
 /*
  */
 
-func (ShipmentGatewayUps) Annotations() []schema.Annotation {
+func (ShipmentGatewayConfigType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ShipmentGatewayUps.
-//  one: ShipmentGatewayConfig
-func (ShipmentGatewayUps) Edges() []ent.Edge {
+// Edges of the ShipmentGatewayConfigType.
+//  one: ParentShipmentGatewayConfigType
+//  many: SiblingShipmentGatewayConfigType
+//  many: ShipmentGatewayConfig
+//  many: ChildShipmentGatewayConfigType
+func (ShipmentGatewayConfigType) Edges() []ent.Edge {
 	return []ent.Edge{
-		// o2o (nofk)
-		edge.From("shipment_gateway_config", ShipmentGatewayConfig.Type).
-			Ref("shipment_gateway_ups").
-			// Bind the "shipmentGatewayConfigId" field to this edge.
-			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(22)),
+		edge.To("children", ShipmentGatewayConfigType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("sibling_shipment_gateway_config_types", ShipmentGatewayConfigType.Type).
+			Annotations(entproto.Field(5)),
+		// m2o
+		edge.To("shipment_gateway_configs", ShipmentGatewayConfig.Type).
+			Annotations(entproto.Field(6)),
+		// m2o
+		edge.To("child_shipment_gateway_config_types", ShipmentGatewayConfigType.Type).
+			Annotations(entproto.Field(7)),
 	}
 }
 
-type StatusValidChange struct {
+type ProductContentType struct {
 	ent.Schema
 }
 
-// Fields of the StatusValidChange.
-// Unique-Indexes: statusId, statusIdTo
-func (StatusValidChange) Fields() []ent.Field {
+// Fields of the ProductContentType.
+// Unique-Indexes: productContentTypeId
+func (ProductContentType) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("condition_expression").Optional().Annotations(entproto.Field(2)),
-		field.String("transition_name").Optional().Annotations(entproto.Field(3)),
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
 	}
 }
 
 //* entproto annotations ??
-func (StatusValidChange) Mixin() []ent.Mixin {
+func (ProductContentType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -1632,463 +2767,97 @@ func (StatusValidChange) Mixin() []ent.Mixin {
 //*/
 
 /*
-func (StatusValidChange) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("status_id", "status_id_to").
-            Unique(),
-    }
-}
+ */
 
-*/
-
-func (StatusValidChange) Annotations() []schema.Annotation {
+func (ProductContentType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the StatusValidChange.
-//  one: MainStatusItem
-//  one: ToStatusItem
-//  many: OldPicklistStatusHistory
-func (StatusValidChange) Edges() []ent.Edge {
+// Edges of the ProductContentType.
+//  one: ParentProductContentType
+//  many: ProductContent
+//  many: ChildProductContentType
+//  many: ProductPromoContent
+func (ProductContentType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductContentType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_product_content_types", ProductContentType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type OrderStatus struct {
+	ent.Schema
+}
+
+// Fields of the OrderStatus.
+// Unique-Indexes: orderStatusId
+func (OrderStatus) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(2)),
+		field.Time("status_datetime").
+			Default(time.Now).Optional().Annotations(entproto.Field(3)),
+		field.String("status_user_login").Optional().Annotations(entproto.Field(4)),
+		field.String("change_reason").Optional().Annotations(entproto.Field(5)),
+	}
+}
+
+//* entproto annotations ??
+func (OrderStatus) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (OrderStatus) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the OrderStatus.
+//  one: StatusItem
+//  one: OrderHeader
+//  one-nofk: OrderItem
+//  one-nofk: OrderPaymentPreference
+//  one: UserLogin
+func (OrderStatus) Edges() []ent.Edge {
 	return []ent.Edge{
 		// o2m
-		edge.From("main_status_item", StatusItem.Type).Ref("main_status_valid_changes").
+		edge.From("status_item", StatusItem.Type).Ref("order_statuses").
 			// Bind the "statusId" field to this edge.
 			// Field("status_id").
-			Unique().Annotations(entproto.Field(4)),
+			Unique().Annotations(entproto.Field(6)),
 		// o2m
-		edge.From("to_status_item", StatusItem.Type).Ref("to_status_valid_changes").
-			// Bind the "statusIdTo" field to this edge.
-			// Field("status_id_to").
-			Unique().Annotations(entproto.Field(5)),
-	}
-}
-
-type ProductPriceType struct {
-	ent.Schema
-}
-
-// Fields of the ProductPriceType.
-// Unique-Indexes: productPriceTypeId
-func (ProductPriceType) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(2)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductPriceType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductPriceType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductPriceType.
-//  many: ProductFeaturePrice
-//  many: ProductPrice
-func (ProductPriceType) Edges() []ent.Edge {
-	return []ent.Edge{
-		// m2o
-		edge.To("product_prices", ProductPrice.Type).
-			Annotations(entproto.Field(4)),
-	}
-}
-
-type OrderItemShipGroup struct {
-	ent.Schema
-}
-
-// Fields of the OrderItemShipGroup.
-// Unique-Indexes: orderId, shipGroupSeqId
-func (OrderItemShipGroup) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("ship_group_seq_id").Annotations(entproto.Field(2)),
-		field.Int("shipment_method_type_id").Optional().Annotations(entproto.Field(3)),
-		field.Int("supplier_party_id").Optional().Annotations(entproto.Field(4)),
-		field.Int("supplier_agreement_id").Optional().Annotations(entproto.Field(5)),
-		field.Int("vendor_party_id").Optional().Annotations(entproto.Field(6)),
-		field.Int("carrier_party_id").Optional().Annotations(entproto.Field(7)),
-		field.Int("carrier_role_type_id").Optional().Annotations(entproto.Field(8)),
-		field.Int("facility_id").Optional().Annotations(entproto.Field(9)),
-		field.Int("contact_mech_id").Optional().Annotations(entproto.Field(10)),
-		field.Int("telecom_contact_mech_id").Optional().Annotations(entproto.Field(11)),
-		field.String("tracking_number").Optional().Annotations(entproto.Field(12)),
-		field.String("shipping_instructions").Optional().Annotations(entproto.Field(13)),
-		field.Enum("may_split").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(14)),
-		field.String("gift_message").Optional().Annotations(entproto.Field(15)),
-		field.Enum("is_gift").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(16)),
-		field.Time("ship_after_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(17)),
-		field.Time("ship_by_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(18)),
-		field.Time("estimated_ship_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(19)),
-		field.Time("estimated_delivery_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(20)),
-	}
-}
-
-//* entproto annotations ??
-func (OrderItemShipGroup) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
-func (OrderItemShipGroup) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("order_id", "ship_group_seq_id").
-            Unique(),
-    }
-}
-
-*/
-
-func (OrderItemShipGroup) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the OrderItemShipGroup.
-//  one: OrderHeader
-//  one: SupplierParty
-//  one: SupplierAgreement
-//  one: VendorParty
-//  one: CarrierShipmentMethod
-//  one: CarrierParty
-//  one: CarrierPartyRole
-//  one: Facility
-//  one: ShipmentMethodType
-//  one: ContactMech
-//  one: PostalAddress
-//  one: TelecomContactMech
-//  one: TelecomTelecomNumber
-//  many: OrderAdjustment
-//  many: FromOrderItemAssoc
-//  many: ToOrderItemAssoc
-//  many: OrderItemShipGroupAssoc
-//  many: OrderItemShipGrpInvRes
-//  many: OrderPaymentPreference
-//  many: PrimaryPicklistBin
-//  many: PicklistItem
-//  many: PrimaryShipment
-func (OrderItemShipGroup) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_item_ship_groups").
+		edge.From("order_header", OrderHeader.Type).Ref("order_statuses").
 			// Bind the "orderId" field to this edge.
 			// Field("order_id").
-			Unique().Annotations(entproto.Field(21)),
-		// m2o
-		edge.To("order_adjustments", OrderAdjustment.Type).
-			Annotations(entproto.Field(34)),
-		// m2o
-		edge.To("order_item_ship_group_assocs", OrderItemShipGroupAssoc.Type).
-			Annotations(entproto.Field(37)),
-		// m2o
-		edge.To("order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.Type).
-			Annotations(entproto.Field(38)),
-		// m2o
-		edge.To("order_payment_preferences", OrderPaymentPreference.Type).
-			Annotations(entproto.Field(39)),
-	}
-}
-
-type ProductPricePurpose struct {
-	ent.Schema
-}
-
-// Fields of the ProductPricePurpose.
-// Unique-Indexes: productPricePurposeId
-func (ProductPricePurpose) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(2)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductPricePurpose) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductPricePurpose) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductPricePurpose.
-//  many: OrderPaymentPreference
-//  many: ProductPaymentMethodType
-//  many: ProductPrice
-func (ProductPricePurpose) Edges() []ent.Edge {
-	return []ent.Edge{
-		// m2o
-		edge.To("order_payment_preferences", OrderPaymentPreference.Type).
-			Annotations(entproto.Field(3)),
-		// m2o
-		edge.To("product_prices", ProductPrice.Type).
-			Annotations(entproto.Field(5)),
-	}
-}
-
-type StatusItem struct {
-	ent.Schema
-}
-
-// Fields of the StatusItem.
-// Unique-Indexes: statusId
-func (StatusItem) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("status_code").Optional().Annotations(entproto.Field(2)),
-		field.Int("sequence_id").Optional().Annotations(entproto.Field(3)),
-		field.String("description").Optional().Annotations(entproto.Field(4)),
-	}
-}
-
-//* entproto annotations ??
-func (StatusItem) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (StatusItem) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the StatusItem.
-//  one: StatusType
-//  many: AcctgTrans
-//  many: AcctgTransEntry
-//  many: Status IdAllocationPlanHeader
-//  many: Plan Item Status IdAllocationPlanItem
-//  many: BudgetStatus
-//  many: CommunicationEvent
-//  many: CommunicationEventRole
-//  many: ContactListCommStatus
-//  many: ContactListParty
-//  many: Content
-//  many: ApprovalContentApproval
-//  many: ContentPurposeOperation
-//  many: CustRequest
-//  many: CustRequestItem
-//  many: CustRequestStatus
-//  many: DataResource
-//  many: EmplLeave
-//  many: EmplPosition
-//  many: EmploymentApp
-//  many: Example
-//  many: ExampleStatus
-//  many: FinAccountStatus
-//  many: FinAccountTrans
-//  many: FixedAssetMaint
-//  many: GlReconciliation
-//  many: InventoryItem
-//  many: InventoryItemStatus
-//  many: InventoryTransfer
-//  many: Invoice
-//  many: InvoiceStatus
-//  many: JobSandbox
-//  many: MarketingCampaign
-//  many: OldPicklistStatusHistory
-//  many: ToOldPicklistStatusHistory
-//  many: OrderDeliverySchedule
-//  many: OrderHeader
-//  many: SyncOrderHeader
-//  many: OrderItem
-//  many: SyncOrderItem
-//  many: OrderPaymentPreference
-//  many: OrderStatus
-//  many: Party
-//  many: PartyFixedAssetAssignment
-//  many: PartyInvitation
-//  many: PartyQual
-//  many: VerificationPartyQual
-//  many: PartyRelationship
-//  many: PartyStatus
-//  many: Payment
-//  many: Picklist
-//  many: PicklistItem
-//  many: PicklistStatus
-//  many: ToPicklistStatus
-//  many: PosTerminalLog
-//  many: ProductGroupOrder
-//  many: ProductKeyword
-//  many: ProductReview
-//  many: HeaderApprovedProductStore
-//  many: ItemApprovedProductStore
-//  many: DigitalItemApprovedProductStore
-//  many: HeaderDeclinedProductStore
-//  many: ItemDeclinedProductStore
-//  many: HeaderCancelProductStore
-//  many: ItemCancelProductStore
-//  many: Quote
-//  many: Requirement
-//  many: RequirementStatus
-//  many: ReturnHeader
-//  many: ReturnItem
-//  many: InventoryReturnItem
-//  many: ReturnStatus
-//  many: Shipment
-//  many: CarrierServiceShipmentRouteSegment
-//  many: ShipmentStatus
-//  many: MainStatusValidChange
-//  many: ToStatusValidChange
-//  many: SurveyResponse
-//  many: TestingStatus
-//  many: Timesheet
-//  many: UnemploymentClaim
-//  many: CurrentWorkEffort
-//  many: WorkEffortFixedAssetAssign
-//  many: AvailabilityWorkEffortFixedAssetAssign
-//  many: WorkEffortGoodStandard
-//  many: WorkEffortInventoryAssign
-//  many: AssignmentWorkEffortPartyAssignment
-//  many: AvailabilityWorkEffortPartyAssignment
-//  many: WorkEffortReview
-//  many: WorkEffortStatus
-//  many: Workload
-//  many: WorkloadStatus
-func (StatusItem) Edges() []ent.Edge {
-	return []ent.Edge{
+			Unique().Annotations(entproto.Field(7)),
 		// o2m
-		edge.From("status_type", StatusType.Type).Ref("status_items").
-			// Bind the "statusTypeId" field to this edge.
-			// Field("status_type_id").
-			Unique().Annotations(entproto.Field(5)),
-		// m2o
-		edge.To("order_headers", OrderHeader.Type).
-			Annotations(entproto.Field(41)),
-		// m2o
-		edge.To("sync_order_headers", OrderHeader.Type).
-			Annotations(entproto.Field(42)),
-		// m2o
-		edge.To("order_items", OrderItem.Type).
-			Annotations(entproto.Field(43)),
-		// m2o
-		edge.To("sync_order_items", OrderItem.Type).
-			Annotations(entproto.Field(44)),
-		// m2o
-		edge.To("order_payment_preferences", OrderPaymentPreference.Type).
-			Annotations(entproto.Field(45)),
-		// m2o
-		edge.To("order_statuses", OrderStatus.Type).
-			Annotations(entproto.Field(46)),
-		// m2o
-		edge.To("product_reviews", ProductReview.Type).
-			Annotations(entproto.Field(62)),
-		// m2o
-		edge.To("header_approved_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(63)),
-		// m2o
-		edge.To("item_approved_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(64)),
-		// m2o
-		edge.To("digital_item_approved_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(65)),
-		// m2o
-		edge.To("header_declined_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(66)),
-		// m2o
-		edge.To("item_declined_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(67)),
-		// m2o
-		edge.To("header_cancel_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(68)),
-		// m2o
-		edge.To("item_cancel_product_stores", ProductStore.Type).
-			Annotations(entproto.Field(69)),
-		// m2o
-		edge.To("main_status_valid_changes", StatusValidChange.Type).
-			Annotations(entproto.Field(80)),
-		// m2o
-		edge.To("to_status_valid_changes", StatusValidChange.Type).
-			Annotations(entproto.Field(81)),
-	}
-}
-
-type FacilityGroupType struct {
-	ent.Schema
-}
-
-// Fields of the FacilityGroupType.
-// Unique-Indexes: facilityGroupTypeId
-func (FacilityGroupType) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(2)),
-	}
-}
-
-//* entproto annotations ??
-func (FacilityGroupType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (FacilityGroupType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the FacilityGroupType.
-//  many: FacilityGroup
-func (FacilityGroupType) Edges() []ent.Edge {
-	return []ent.Edge{
-		// m2o
-		edge.To("facility_groups", FacilityGroup.Type).
-			Annotations(entproto.Field(3)),
+		edge.From("order_item", OrderItem.Type).Ref("order_statuses").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(8)),
+		// o2m
+		edge.From("order_payment_preference", OrderPaymentPreference.Type).Ref("order_statuses").
+			// Bind the "orderPaymentPreferenceId" field to this edge.
+			// Field("order_payment_preference_id").
+			Unique().Annotations(entproto.Field(9)),
 	}
 }
 
@@ -2146,1049 +2915,6 @@ func (EnumerationType) Edges() []ent.Edge {
 	}
 }
 
-type InventoryItemType struct {
-	ent.Schema
-}
-
-// Fields of the InventoryItemType.
-// Unique-Indexes: inventoryItemTypeId
-func (InventoryItemType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (InventoryItemType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (InventoryItemType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the InventoryItemType.
-//  one: ParentInventoryItemType
-//  many: DefaultFacility
-//  many: InventoryItem
-//  many: ChildInventoryItemType
-//  many: InventoryItemTypeAttr
-//  many: Product
-func (InventoryItemType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", InventoryItemType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_inventory_item_types", InventoryItemType.Type).
-			Annotations(entproto.Field(7)),
-		// m2o
-		edge.To("products", Product.Type).
-			Annotations(entproto.Field(9)),
-	}
-}
-
-type ProductPrice struct {
-	ent.Schema
-}
-
-// Fields of the ProductPrice.
-// Unique-Indexes: productId, productPriceTypeId, productPricePurposeId, currencyUomId, productStoreGroupId, fromDate
-func (ProductPrice) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("currency_uom_id").Annotations(entproto.Field(2)),
-		field.Time("from_date").
-			Default(time.Now).Annotations(entproto.Field(3)),
-		field.Time("thru_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(4)),
-		field.Float("price").Optional().Annotations(entproto.Field(5)),
-		field.Int("term_uom_id").Optional().Annotations(entproto.Field(6)),
-		field.Float("price_without_tax").Optional().Annotations(entproto.Field(7)),
-		field.Float("price_with_tax").Optional().Annotations(entproto.Field(8)),
-		field.Float("tax_amount").Optional().Annotations(entproto.Field(9)),
-		field.Float("tax_percentage").Optional().Annotations(entproto.Field(10)),
-		field.Int("tax_auth_party_id").Optional().Annotations(entproto.Field(11)),
-		field.Int("tax_auth_geo_id").Optional().Annotations(entproto.Field(12)),
-		field.Enum("tax_in_price").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(13)),
-		field.Time("created_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(14)),
-		field.String("created_by_user_login").Optional().Annotations(entproto.Field(15)),
-		field.Time("last_modified_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(16)),
-		field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(17)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductPrice) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
-func (ProductPrice) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("product_id", "product_price_type_id", "product_price_purpose_id", "currency_uom_id", "product_store_group_id", "from_date").
-            Unique(),
-    }
-}
-
-*/
-
-func (ProductPrice) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductPrice.
-//  one: Product
-//  one: ProductPriceType
-//  one: ProductPricePurpose
-//  one: CurrencyUom
-//  one: TermUom
-//  one: ProductStoreGroup
-//  one: CustomMethod
-//  one: TaxAuthorityParty
-//  one: TaxAuthorityGeo
-//  one: CreatedByUserLogin
-//  one: LastModifiedByUserLogin
-//  many: ProductPriceChange
-func (ProductPrice) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("product", Product.Type).Ref("product_prices").
-			// Bind the "productId" field to this edge.
-			// Field("product_id").
-			Unique().Annotations(entproto.Field(18)),
-		// o2m
-		edge.From("product_price_type", ProductPriceType.Type).Ref("product_prices").
-			// Bind the "productPriceTypeId" field to this edge.
-			// Field("product_price_type_id").
-			Unique().Annotations(entproto.Field(19)),
-		// o2m
-		edge.From("product_price_purpose", ProductPricePurpose.Type).Ref("product_prices").
-			// Bind the "productPricePurposeId" field to this edge.
-			// Field("product_price_purpose_id").
-			Unique().Annotations(entproto.Field(20)),
-		// o2m
-		edge.From("product_store_group", ProductStoreGroup.Type).Ref("product_prices").
-			// Bind the "productStoreGroupId" field to this edge.
-			// Field("product_store_group_id").
-			Unique().Annotations(entproto.Field(23)),
-		// o2m
-		edge.From("custom_method", CustomMethod.Type).Ref("product_prices").
-			// Bind the "customPriceCalcService" field to this edge.
-			// Field("custom_price_calc_service").
-			Unique().Annotations(entproto.Field(24)),
-	}
-}
-
-type ProductFeature struct {
-	ent.Schema
-}
-
-// Fields of the ProductFeature.
-// Unique-Indexes: productFeatureId
-func (ProductFeature) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-		field.Int("uom_id").Optional().Annotations(entproto.Field(4)),
-		field.Float("number_specified").Optional().Annotations(entproto.Field(5)),
-		field.Float("default_amount").Optional().Annotations(entproto.Field(6)),
-		field.Int("default_sequence_num").Optional().Annotations(entproto.Field(7)),
-		field.Int("abbrev").Optional().Annotations(entproto.Field(8)),
-		field.String("id_code").MaxLen(32).Optional().Annotations(entproto.Field(9)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductFeature) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductFeature) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductFeature.
-//  one: ProductFeatureCategory
-//  one: ProductFeatureType
-//  one: Uom
-//  many: CostComponent
-//  many: DesiredFeature
-//  many: InvoiceItem
-//  many: ProductFeatureAppl
-//  many: ProductFeatureApplAttr
-//  many: ProductFeatureDataResource
-//  many: ProductFeatureGroupAppl
-//  many: MainProductFeatureIactn
-//  many: AssocProductFeatureIactn
-//  many: ProductManufacturingRule
-//  many: QuoteItem
-//  many: ShipmentItemFeature
-//  many: SupplierProductFeature
-func (ProductFeature) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("product_feature_category", ProductFeatureCategory.Type).Ref("product_features").
-			// Bind the "productFeatureCategoryId" field to this edge.
-			// Field("product_feature_category_id").
-			Unique().Annotations(entproto.Field(10)),
-		// o2m
-		edge.From("product_feature_type", ProductFeatureType.Type).Ref("product_features").
-			// Bind the "productFeatureTypeId" field to this edge.
-			// Field("product_feature_type_id").
-			Unique().Annotations(entproto.Field(11)),
-	}
-}
-
-type ShipmentGatewayConfig struct {
-	ent.Schema
-}
-
-// Fields of the ShipmentGatewayConfig.
-// Unique-Indexes: shipmentGatewayConfigId
-func (ShipmentGatewayConfig) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(2)),
-	}
-}
-
-//* entproto annotations ??
-func (ShipmentGatewayConfig) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ShipmentGatewayConfig) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ShipmentGatewayConfig.
-//  one: ShipmentGatewayConfigType
-//  many: ProductStoreShipmentMeth
-//  one-nofk: ShipmentGatewayDhl
-//  one-nofk: ShipmentGatewayFedex
-//  one-nofk: ShipmentGatewayUps
-//  one-nofk: ShipmentGatewayUsps
-func (ShipmentGatewayConfig) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("shipment_gateway_config_type", ShipmentGatewayConfigType.Type).Ref("shipment_gateway_configs").
-			// Bind the "shipmentGatewayConfTypeId" field to this edge.
-			// Field("shipment_gateway_conf_type_id").
-			Unique().Annotations(entproto.Field(3)),
-		// o2o
-		edge.To("shipment_gateway_dhl", ShipmentGatewayDhl.Type).
-			// Bind the "shipmentGatewayConfigId" field to this edge.
-			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(5)),
-		// o2o
-		edge.To("shipment_gateway_fedex", ShipmentGatewayFedex.Type).
-			// Bind the "shipmentGatewayConfigId" field to this edge.
-			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(6)),
-		// o2o
-		edge.To("shipment_gateway_ups", ShipmentGatewayUps.Type).
-			// Bind the "shipmentGatewayConfigId" field to this edge.
-			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(7)),
-		// o2o
-		edge.To("shipment_gateway_usps", ShipmentGatewayUsps.Type).
-			// Bind the "shipmentGatewayConfigId" field to this edge.
-			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(8)),
-	}
-}
-
-type ProductContentType struct {
-	ent.Schema
-}
-
-// Fields of the ProductContentType.
-// Unique-Indexes: productContentTypeId
-func (ProductContentType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductContentType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductContentType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductContentType.
-//  one: ParentProductContentType
-//  many: ProductContent
-//  many: ChildProductContentType
-//  many: ProductPromoContent
-func (ProductContentType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductContentType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_product_content_types", ProductContentType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type CustomMethod struct {
-	ent.Schema
-}
-
-// Fields of the CustomMethod.
-// Unique-Indexes: customMethodId
-func (CustomMethod) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("custom_method_name").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (CustomMethod) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (CustomMethod) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the CustomMethod.
-//  one: CustomMethodType
-//  many: Content
-//  many: CostComponentCalc
-//  many: FixedAssetDepMethod
-//  many: InvoicePartyAcctgPreference
-//  many: QuotePartyAcctgPreference
-//  many: OrderPartyAcctgPreference
-//  many: ProductAssoc
-//  many: ProductPrice
-//  many: ProductPromoAction
-//  many: ProductPromoCond
-//  many: ProductStorePaymentSetting
-//  many: ProductStoreShipmentMeth
-//  many: ProductStoreTelecomSetting
-//  many: uomCustomMethodUomConversion
-//  many: uomCustomMethodUomConversionDated
-//  many: WorkEffort
-func (CustomMethod) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("custom_method_type", CustomMethodType.Type).Ref("custom_methods").
-			// Bind the "customMethodTypeId" field to this edge.
-			// Field("custom_method_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("product_assocs", ProductAssoc.Type).
-			Annotations(entproto.Field(11)),
-		// m2o
-		edge.To("product_prices", ProductPrice.Type).
-			Annotations(entproto.Field(12)),
-	}
-}
-
-type CustomMethodType struct {
-	ent.Schema
-}
-
-// Fields of the CustomMethodType.
-// Unique-Indexes: customMethodTypeId
-func (CustomMethodType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (CustomMethodType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (CustomMethodType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the CustomMethodType.
-//  one: ParentCustomMethodType
-//  many: CustomMethod
-//  many: ChildCustomMethodType
-func (CustomMethodType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", CustomMethodType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("custom_methods", CustomMethod.Type).
-			Annotations(entproto.Field(5)),
-		// m2o
-		edge.To("child_custom_method_types", CustomMethodType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type SupplierPrefOrder struct {
-	ent.Schema
-}
-
-// Fields of the SupplierPrefOrder.
-// Unique-Indexes: supplierPrefOrderId
-func (SupplierPrefOrder) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (SupplierPrefOrder) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (SupplierPrefOrder) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the SupplierPrefOrder.
-//  many: SupplierProduct
-func (SupplierPrefOrder) Edges() []ent.Edge {
-	return []ent.Edge{}
-}
-
-type ProductFeatureType struct {
-	ent.Schema
-}
-
-// Fields of the ProductFeatureType.
-// Unique-Indexes: productFeatureTypeId
-func (ProductFeatureType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductFeatureType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductFeatureType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductFeatureType.
-//  one: ParentProductFeatureType
-//  many: ProductFeature
-//  many: ChildProductFeatureType
-func (ProductFeatureType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductFeatureType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("product_features", ProductFeature.Type).
-			Annotations(entproto.Field(5)),
-		// m2o
-		edge.To("child_product_feature_types", ProductFeatureType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type ShipmentGatewayUsps struct {
-	ent.Schema
-}
-
-// Fields of the ShipmentGatewayUsps.
-// Unique-Indexes: shipmentGatewayConfigId
-func (ShipmentGatewayUsps) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("connect_url").Optional().Annotations(entproto.Field(2)),
-		field.String("connect_url_labels").Optional().Annotations(entproto.Field(3)),
-		field.Int("connect_timeout").Optional().Annotations(entproto.Field(4)),
-		field.String("access_user_id").Optional().Annotations(entproto.Field(5)),
-		field.String("access_password").Optional().Annotations(entproto.Field(6)),
-		field.Int("max_estimate_weight").Optional().Annotations(entproto.Field(7)),
-		field.String("test").Optional().Annotations(entproto.Field(8)),
-	}
-}
-
-//* entproto annotations ??
-func (ShipmentGatewayUsps) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ShipmentGatewayUsps) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ShipmentGatewayUsps.
-//  one: ShipmentGatewayConfig
-func (ShipmentGatewayUsps) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2o (nofk)
-		edge.From("shipment_gateway_config", ShipmentGatewayConfig.Type).
-			Ref("shipment_gateway_usps").
-			// Bind the "shipmentGatewayConfigId" field to this edge.
-			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(9)),
-	}
-}
-
-type OrderPaymentPreference struct {
-	ent.Schema
-}
-
-// Fields of the OrderPaymentPreference.
-// Unique-Indexes: orderPaymentPreferenceId
-func (OrderPaymentPreference) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(2)),
-		field.Int("ship_group_seq_id").Optional().Annotations(entproto.Field(3)),
-		field.Int("payment_method_type_id").Optional().Annotations(entproto.Field(4)),
-		field.Int("payment_method_id").Optional().Annotations(entproto.Field(5)),
-		field.Int("fin_account_id").Optional().Annotations(entproto.Field(6)),
-		field.String("security_code").Optional().Annotations(entproto.Field(7)),
-		field.String("track_2").Optional().Annotations(entproto.Field(8)),
-		field.Enum("present_flag").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(9)),
-		field.Enum("swiped_flag").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(10)),
-		field.Enum("overflow_flag").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(11)),
-		field.Float("max_amount").Optional().Annotations(entproto.Field(12)),
-		field.Int("process_attempt").Optional().Annotations(entproto.Field(13)),
-		field.String("billing_postal_code").Optional().Annotations(entproto.Field(14)),
-		field.String("manual_auth_code").Optional().Annotations(entproto.Field(15)),
-		field.String("manual_ref_num").Optional().Annotations(entproto.Field(16)),
-		field.Enum("needs_nsf_retry").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(17)),
-		field.Time("created_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(18)),
-		field.String("created_by_user_login").Optional().Annotations(entproto.Field(19)),
-		field.Time("last_modified_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(20)),
-		field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(21)),
-	}
-}
-
-//* entproto annotations ??
-func (OrderPaymentPreference) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (OrderPaymentPreference) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the OrderPaymentPreference.
-//  one: OrderHeader
-//  one-nofk: OrderItem
-//  one-nofk: OrderItemShipGroup
-//  one: ProductPricePurpose
-//  one: PaymentMethodType
-//  one: PaymentMethod
-//  one: FinAccount
-//  one: StatusItem
-//  one: UserLogin
-//  one-nofk: CreditCard
-//  one-nofk: EftAccount
-//  one-nofk: GiftCard
-//  many: OrderStatus
-//  many: Payment
-//  many: PaymentGatewayResponse
-//  many: ReturnItemResponse
-func (OrderPaymentPreference) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_payment_preferences").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(22)),
-		// o2m
-		edge.From("order_item", OrderItem.Type).Ref("order_payment_preferences").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(23)),
-		// o2m
-		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_payment_preferences").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(24)),
-		// o2m
-		edge.From("product_price_purpose", ProductPricePurpose.Type).Ref("order_payment_preferences").
-			// Bind the "productPricePurposeId" field to this edge.
-			// Field("product_price_purpose_id").
-			Unique().Annotations(entproto.Field(25)),
-		// o2m
-		edge.From("status_item", StatusItem.Type).Ref("order_payment_preferences").
-			// Bind the "statusId" field to this edge.
-			// Field("status_id").
-			Unique().Annotations(entproto.Field(29)),
-		// m2o
-		edge.To("order_statuses", OrderStatus.Type).
-			Annotations(entproto.Field(34)),
-	}
-}
-
-type QuantityBreakType struct {
-	ent.Schema
-}
-
-// Fields of the QuantityBreakType.
-// Unique-Indexes: quantityBreakTypeId
-func (QuantityBreakType) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (QuantityBreakType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (QuantityBreakType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the QuantityBreakType.
-//  many: QuantityBreak
-func (QuantityBreakType) Edges() []ent.Edge {
-	return []ent.Edge{}
-}
-
-type FacilityGroup struct {
-	ent.Schema
-}
-
-// Fields of the FacilityGroup.
-// Unique-Indexes: facilityGroupId
-func (FacilityGroup) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("facility_group_name").Optional().Annotations(entproto.Field(3)),
-		field.String("description").Optional().Annotations(entproto.Field(4)),
-	}
-}
-
-//* entproto annotations ??
-func (FacilityGroup) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (FacilityGroup) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the FacilityGroup.
-//  one: FacilityGroupType
-//  one: PrimaryParentFacilityGroup
-//  many: Facility
-//  many: FacilityGroupMember
-//  many: FacilityGroupRole
-//  many: CurrentFacilityGroupRollup
-//  many: ParentFacilityGroupRollup
-func (FacilityGroup) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("facility_group_type", FacilityGroupType.Type).Ref("facility_groups").
-			// Bind the "facilityGroupTypeId" field to this edge.
-			// Field("facility_group_type_id").
-			Unique().Annotations(entproto.Field(5)),
-		edge.To("children", FacilityGroup.Type).
-			From("parent").
-			// Bind the "primaryParentGroupId" field to this edge.
-			// Field("primary_parent_group_id").
-			Unique().Annotations(entproto.Field(6)),
-	}
-}
-
-type CostComponentType struct {
-	ent.Schema
-}
-
-// Fields of the CostComponentType.
-// Unique-Indexes: costComponentTypeId
-func (CostComponentType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (CostComponentType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (CostComponentType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the CostComponentType.
-//  one: ParentCostComponentType
-//  many: CostComponent
-//  many: ChildCostComponentType
-//  many: CostComponentTypeAttr
-//  many: ProductCostComponentCalc
-//  many: WorkEffortCostCalc
-func (CostComponentType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", CostComponentType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_cost_component_types", CostComponentType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type SubscriptionType struct {
-	ent.Schema
-}
-
-// Fields of the SubscriptionType.
-// Unique-Indexes: subscriptionTypeId
-func (SubscriptionType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (SubscriptionType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (SubscriptionType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the SubscriptionType.
-//  one: ParentSubscriptionType
-//  many: Subscription
-//  many: ChildSubscriptionType
-//  many: SubscriptionTypeAttr
-func (SubscriptionType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", SubscriptionType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_subscription_types", SubscriptionType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type ProductType struct {
-	ent.Schema
-}
-
-// Fields of the ProductType.
-// Unique-Indexes: productTypeId
-func (ProductType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("is_physical").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.Enum("is_digital").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(3)),
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(4)),
-		field.String("description").Optional().Annotations(entproto.Field(5)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductType.
-//  one: ParentProductType
-//  many: Product
-//  many: ChildProductType
-//  many: ProductTypeAttr
-func (ProductType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(6)),
-		// m2o
-		edge.To("products", Product.Type).
-			Annotations(entproto.Field(7)),
-		// m2o
-		edge.To("child_product_types", ProductType.Type).
-			Annotations(entproto.Field(8)),
-	}
-}
-
-type OrderRole struct {
-	ent.Schema
-}
-
-// Fields of the OrderRole.
-// Unique-Indexes: orderId, partyId, roleTypeId
-func (OrderRole) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("party_id").Annotations(entproto.Field(2)),
-	}
-}
-
-//* entproto annotations ??
-func (OrderRole) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
-func (OrderRole) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("order_id", "party_id", "role_type_id").
-            Unique(),
-    }
-}
-
-*/
-
-func (OrderRole) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the OrderRole.
-//  one: OrderHeader
-//  one: Party
-//  one: PartyRole
-//  one-nofk: RoleType
-//  many: OrderItem
-func (OrderRole) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_roles").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(3)),
-		// o2m
-		edge.From("role_type", RoleType.Type).Ref("order_roles").
-			// Bind the "roleTypeId" field to this edge.
-			// Field("role_type_id").
-			Unique().Annotations(entproto.Field(6)),
-		// m2o
-		edge.To("order_items", OrderItem.Type).
-			Annotations(entproto.Field(7)),
-	}
-}
-
 type FacilityAssocType struct {
 	ent.Schema
 }
@@ -3197,7 +2923,7 @@ type FacilityAssocType struct {
 // Unique-Indexes: facilityAssocTypeId
 func (FacilityAssocType) Fields() []ent.Field {
 	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
+		field.String("description").Optional().Annotations(entproto.Field(2)),
 	}
 }
 
@@ -3225,56 +2951,6 @@ func (FacilityAssocType) Annotations() []schema.Annotation {
 //  many: ProductFacilityAssoc
 func (FacilityAssocType) Edges() []ent.Edge {
 	return []ent.Edge{}
-}
-
-type ProductMaintType struct {
-	ent.Schema
-}
-
-// Fields of the ProductMaintType.
-// Unique-Indexes: productMaintTypeId
-func (ProductMaintType) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(2)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductMaintType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductMaintType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductMaintType.
-//  one: ParentProductMaintType
-//  many: FixedAssetMaint
-//  many: ProductMaint
-//  many: ChildProductMaintType
-func (ProductMaintType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductMaintType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(3)),
-		// m2o
-		edge.To("child_product_maint_types", ProductMaintType.Type).
-			Annotations(entproto.Field(6)),
-	}
 }
 
 type OrderItem struct {
@@ -3462,661 +3138,20 @@ func (OrderItem) Edges() []ent.Edge {
 	}
 }
 
-type OrderItemShipGroupAssoc struct {
+type QuantityBreakType struct {
 	ent.Schema
 }
 
-// Fields of the OrderItemShipGroupAssoc.
-// Unique-Indexes: orderId, orderItemSeqId, shipGroupSeqId
-func (OrderItemShipGroupAssoc) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("order_item_seq_id").Annotations(entproto.Field(2)),
-		field.Int("ship_group_seq_id").Annotations(entproto.Field(3)),
-		field.Float("quantity").Optional().Annotations(entproto.Field(4)),
-		field.Float("cancel_quantity").Optional().Annotations(entproto.Field(5)),
-	}
-}
-
-//* entproto annotations ??
-func (OrderItemShipGroupAssoc) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
-func (OrderItemShipGroupAssoc) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("order_id", "order_item_seq_id", "ship_group_seq_id").
-            Unique(),
-    }
-}
-
-*/
-
-func (OrderItemShipGroupAssoc) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the OrderItemShipGroupAssoc.
-//  one: OrderHeader
-//  one: OrderItem
-//  one: OrderItemShipGroup
-//  many: OrderAdjustment
-//  many: FromOrderItemAssoc
-//  many: ToOrderItemAssoc
-//  many: OrderItemShipGrpInvRes
-//  many: OrderShipment
-//  many: WorkOrderItemFulfillment
-func (OrderItemShipGroupAssoc) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_item_ship_group_assocs").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(6)),
-		// o2m
-		edge.From("order_item", OrderItem.Type).Ref("order_item_ship_group_assocs").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(7)),
-		// o2m
-		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_item_ship_group_assocs").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(8)),
-		// m2o
-		edge.To("order_adjustments", OrderAdjustment.Type).
-			Annotations(entproto.Field(9)),
-		// m2o
-		edge.To("order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.Type).
-			Annotations(entproto.Field(12)),
-	}
-}
-
-type ProductReview struct {
-	ent.Schema
-}
-
-// Fields of the ProductReview.
-// Unique-Indexes: productReviewId
-func (ProductReview) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("user_login_id").Optional().Annotations(entproto.Field(3)),
-		field.Enum("posted_anonymous").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(4)),
-		field.Time("posted_date_time").
-			Default(time.Now).Optional().Annotations(entproto.Field(5)),
-		field.Float("product_rating").Optional().Annotations(entproto.Field(6)),
-		field.String("product_review").Optional().Annotations(entproto.Field(7)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductReview) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductReview) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductReview.
-//  one: ProductStore
-//  one: Product
-//  one: UserLogin
-//  one: StatusItem
-func (ProductReview) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("product_store", ProductStore.Type).Ref("product_reviews").
-			// Bind the "productStoreId" field to this edge.
-			// Field("product_store_id").
-			Unique().Annotations(entproto.Field(8)),
-		// o2m
-		edge.From("product", Product.Type).Ref("product_reviews").
-			// Bind the "productId" field to this edge.
-			// Field("product_id").
-			Unique().Annotations(entproto.Field(9)),
-		// o2m
-		edge.From("status_item", StatusItem.Type).Ref("product_reviews").
-			// Bind the "statusId" field to this edge.
-			// Field("status_id").
-			Unique().Annotations(entproto.Field(11)),
-	}
-}
-
-type ContentType struct {
-	ent.Schema
-}
-
-// Fields of the ContentType.
-// Unique-Indexes: contentTypeId
-func (ContentType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ContentType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ContentType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ContentType.
-//  one: ParentContentType
-//  many: Content
-//  many: ChildContentType
-//  many: ContentTypeAttr
-func (ContentType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ContentType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_content_types", ContentType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type ProductFeatureIactnType struct {
-	ent.Schema
-}
-
-// Fields of the ProductFeatureIactnType.
-// Unique-Indexes: productFeatureIactnTypeId
-func (ProductFeatureIactnType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductFeatureIactnType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductFeatureIactnType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductFeatureIactnType.
-//  one: ParentProductFeatureIactnType
-//  many: ProductFeatureIactn
-//  many: ChildProductFeatureIactnType
-func (ProductFeatureIactnType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductFeatureIactnType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_product_feature_iactn_types", ProductFeatureIactnType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type FacilityType struct {
-	ent.Schema
-}
-
-// Fields of the FacilityType.
-// Unique-Indexes: facilityTypeId
-func (FacilityType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (FacilityType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (FacilityType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the FacilityType.
-//  one: ParentFacilityType
-//  many: Facility
-//  many: ChildFacilityType
-//  many: FacilityTypeAttr
-func (FacilityType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", FacilityType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_facility_types", FacilityType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type RoleType struct {
-	ent.Schema
-}
-
-// Fields of the RoleType.
-// Unique-Indexes: roleTypeId
-func (RoleType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (RoleType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (RoleType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the RoleType.
-//  one: ParentRoleType
-//  many: AcctgTrans
-//  many: AcctgTransEntry
-//  many: FromAgreement
-//  many: ToAgreement
-//  many: AgreementRole
-//  many: BillingAccountRole
-//  many: ToCommunicationEvent
-//  many: FromCommunicationEvent
-//  many: CommunicationEventRole
-//  many: ContentApproval
-//  many: ContentPurposeOperation
-//  many: CustRequestParty
-//  many: FacilityGroupRole
-//  many: FacilityParty
-//  many: FinAccountRole
-//  many: FixedAsset
-//  many: GlAccountOrganization
-//  many: GlAccountRole
-//  many: Invoice
-//  many: InvoiceRole
-//  many: MarketingCampaignRole
-//  many: OrderItemRole
-//  many: OrderRole
-//  many: PartyContactMech
-//  many: PartyFixedAssetAssignment
-//  many: PartyGlAccount
-//  many: PartyInvitationRoleAssoc
-//  many: PartyNeed
-//  many: FromPartyRelationship
-//  many: ToPartyRelationship
-//  many: ValidFromPartyRelationshipType
-//  many: ValidToPartyRelationshipType
-//  many: PartyRole
-//  many: ToPayment
-//  many: PicklistRole
-//  many: ProdCatalogRole
-//  many: ProductCategoryRole
-//  many: UseProductContent
-//  many: ProductRole
-//  many: ProductStoreGroupRole
-//  many: ProductStoreRole
-//  many: UseProductSubscriptionResource
-//  many: QuoteRole
-//  many: ChildRoleType
-//  many: RoleTypeAttr
-//  many: SalesOpportunityRole
-//  many: SegmentGroupRole
-//  many: ShipmentCostEstimate
-//  many: Subscription
-//  many: OriginatedFromSubscription
-//  many: TimesheetRole
-//  many: ValidContactMechRole
-//  many: WebSiteRole
-//  many: WorkEffortPartyAssignment
-func (RoleType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", RoleType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("order_roles", OrderRole.Type).
-			Annotations(entproto.Field(27)),
-		// m2o
-		edge.To("child_role_types", RoleType.Type).
-			Annotations(entproto.Field(48)),
-	}
-}
-
-type RejectionReason struct {
-	ent.Schema
-}
-
-// Fields of the RejectionReason.
-// Unique-Indexes: rejectionId
-func (RejectionReason) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (RejectionReason) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (RejectionReason) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the RejectionReason.
-//  many: ShipmentReceipt
-func (RejectionReason) Edges() []ent.Edge {
-	return []ent.Edge{}
-}
-
-type ProductConfigItem struct {
-	ent.Schema
-}
-
-// Fields of the ProductConfigItem.
-// Unique-Indexes: configItemId
-func (ProductConfigItem) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("config_item_type_id").Optional().Annotations(entproto.Field(3)),
-		field.String("config_item_name").Optional().Annotations(entproto.Field(4)),
-		field.String("description").Optional().Annotations(entproto.Field(5)),
-		field.String("long_description").Optional().Annotations(entproto.Field(6)),
-		field.String("image_url").Optional().Annotations(entproto.Field(7)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductConfigItem) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductConfigItem) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductConfigItem.
-//  many: ProdConfItemContent
-//  many: ConfigItemProductConfig
-//  many: ConfigItemProductConfigConfig
-//  many: ConfigItemProductConfigOption
-//  many: ConfigItemProductConfigOptionIactn
-//  many: ConfigItemToProductConfigOptionIactn
-//  many: ConfigItemProductConfigProduct
-func (ProductConfigItem) Edges() []ent.Edge {
-	return []ent.Edge{}
-}
-
-type InventoryItemDetail struct {
-	ent.Schema
-}
-
-// Fields of the InventoryItemDetail.
-// Unique-Indexes: inventoryItemId, inventoryItemDetailSeqId
-func (InventoryItemDetail) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("inventory_item_id").Annotations(entproto.Field(2)),
-		field.Int("inventory_item_detail_seq_id").Annotations(entproto.Field(3)),
-		field.Time("effective_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(4)),
-		field.Float("quantity_on_hand_diff").Optional().Annotations(entproto.Field(5)),
-		field.Float("available_to_promise_diff").Optional().Annotations(entproto.Field(6)),
-		field.Float("accounting_quantity_diff").Optional().Annotations(entproto.Field(7)),
-		field.Float("unit_cost").Optional().Annotations(entproto.Field(8)),
-		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(9)),
-		field.Int("ship_group_seq_id").Optional().Annotations(entproto.Field(10)),
-		field.Int("shipment_id").Optional().Annotations(entproto.Field(11)),
-		field.Int("shipment_item_seq_id").Optional().Annotations(entproto.Field(12)),
-		field.Int("return_id").Optional().Annotations(entproto.Field(13)),
-		field.Int("return_item_seq_id").Optional().Annotations(entproto.Field(14)),
-		field.Int("work_effort_id").Optional().Annotations(entproto.Field(15)),
-		field.Int("fixed_asset_id").Optional().Annotations(entproto.Field(16)),
-		field.Int("maint_hist_seq_id").Optional().Annotations(entproto.Field(17)),
-		field.Int("item_issuance_id").Optional().Annotations(entproto.Field(18)),
-		field.Int("receipt_id").Optional().Annotations(entproto.Field(19)),
-		field.Int("physical_inventory_id").Optional().Annotations(entproto.Field(20)),
-		field.String("description").Optional().Annotations(entproto.Field(21)),
-	}
-}
-
-//* entproto annotations ??
-func (InventoryItemDetail) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
-func (InventoryItemDetail) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("inventory_item_id", "inventory_item_detail_seq_id").
-            Unique(),
-    }
-}
-
-*/
-
-func (InventoryItemDetail) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the InventoryItemDetail.
-//  one: InventoryItem
-//  one: WorkEffort
-//  one-nofk: OrderItemShipGrpInvRes
-//  one: FixedAssetMaint
-//  one: ItemIssuance
-//  one-nofk: WorkEffortInventoryAssign
-//  one-nofk: WorkEffortInventoryProduced
-//  one: ShipmentReceipt
-//  one: PhysicalInventory
-//  one: ReasonEnumeration
-//  one-nofk: InventoryItemVariance
-func (InventoryItemDetail) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.Type).Ref("inventory_item_details").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(24)),
-		// o2m
-		edge.From("reason_enumeration", Enumeration.Type).Ref("reason_inventory_item_details").
-			// Bind the "reasonEnumId" field to this edge.
-			// Field("reason_enum_id").
-			Unique().Annotations(entproto.Field(31)),
-	}
-}
-
-type OrderStatus struct {
-	ent.Schema
-}
-
-// Fields of the OrderStatus.
-// Unique-Indexes: orderStatusId
-func (OrderStatus) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(3)),
-		field.Time("status_datetime").
-			Default(time.Now).Optional().Annotations(entproto.Field(4)),
-		field.String("status_user_login").Optional().Annotations(entproto.Field(5)),
-		field.String("change_reason").Optional().Annotations(entproto.Field(6)),
-	}
-}
-
-//* entproto annotations ??
-func (OrderStatus) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (OrderStatus) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the OrderStatus.
-//  one: StatusItem
-//  one: OrderHeader
-//  one-nofk: OrderItem
-//  one-nofk: OrderPaymentPreference
-//  one: UserLogin
-func (OrderStatus) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("status_item", StatusItem.Type).Ref("order_statuses").
-			// Bind the "statusId" field to this edge.
-			// Field("status_id").
-			Unique().Annotations(entproto.Field(7)),
-		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_statuses").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(8)),
-		// o2m
-		edge.From("order_item", OrderItem.Type).Ref("order_statuses").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(9)),
-		// o2m
-		edge.From("order_payment_preference", OrderPaymentPreference.Type).Ref("order_statuses").
-			// Bind the "orderPaymentPreferenceId" field to this edge.
-			// Field("order_payment_preference_id").
-			Unique().Annotations(entproto.Field(10)),
-	}
-}
-
-type ProductFeatureCategory struct {
-	ent.Schema
-}
-
-// Fields of the ProductFeatureCategory.
-// Unique-Indexes: productFeatureCategoryId
-func (ProductFeatureCategory) Fields() []ent.Field {
+// Fields of the QuantityBreakType.
+// Unique-Indexes: quantityBreakTypeId
+func (QuantityBreakType) Fields() []ent.Field {
 	return []ent.Field{
 		field.String("description").Optional().Annotations(entproto.Field(2)),
 	}
 }
 
 //* entproto annotations ??
-func (ProductFeatureCategory) Mixin() []ent.Mixin {
+func (QuantityBreakType) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -4128,66 +3163,58 @@ func (ProductFeatureCategory) Mixin() []ent.Mixin {
 /*
  */
 
-func (ProductFeatureCategory) Annotations() []schema.Annotation {
+func (QuantityBreakType) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the ProductFeatureCategory.
-//  one: ParentProductFeatureCategory
-//  many: ProductFeature
-//  many: ChildProductFeatureCategory
-//  many: ProductFeatureCategoryAppl
-func (ProductFeatureCategory) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductFeatureCategory.Type).
-			From("parent").
-			// Bind the "parentCategoryId" field to this edge.
-			// Field("parent_category_id").
-			Unique().Annotations(entproto.Field(3)),
-		// m2o
-		edge.To("product_features", ProductFeature.Type).
-			Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_product_feature_categories", ProductFeatureCategory.Type).
-			Annotations(entproto.Field(5)),
-	}
+// Edges of the QuantityBreakType.
+//  many: QuantityBreak
+func (QuantityBreakType) Edges() []ent.Edge {
+	return []ent.Edge{}
 }
 
-type OrderItemShipGrpInvRes struct {
+type OrderPaymentPreference struct {
 	ent.Schema
 }
 
-// Fields of the OrderItemShipGrpInvRes.
-// Unique-Indexes: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
-func (OrderItemShipGrpInvRes) Fields() []ent.Field {
+// Fields of the OrderPaymentPreference.
+// Unique-Indexes: orderPaymentPreferenceId
+func (OrderPaymentPreference) Fields() []ent.Field {
 	return []ent.Field{
-		field.Int("ship_group_seq_id").Annotations(entproto.Field(2)),
-		field.Int("order_item_seq_id").Annotations(entproto.Field(3)),
-		field.Int("inventory_item_id").Annotations(entproto.Field(4)),
-		field.Int("reserve_order_enum_id").Optional().Annotations(entproto.Field(5)),
-		field.Float("quantity").Optional().Annotations(entproto.Field(6)),
-		field.Float("quantity_not_available").Optional().Annotations(entproto.Field(7)),
-		field.Time("reserved_datetime").
-			Default(time.Now).Optional().Annotations(entproto.Field(8)),
-		field.Time("created_datetime").
-			Default(time.Now).Optional().Annotations(entproto.Field(9)),
-		field.Time("promised_datetime").
-			Default(time.Now).Optional().Annotations(entproto.Field(10)),
-		field.Time("current_promised_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(11)),
-		field.Enum("priority").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(12)),
-		field.Int("sequence_id").Optional().Annotations(entproto.Field(13)),
-		field.Time("old_pick_start_date").
-			Default(time.Now).Optional().Annotations(entproto.Field(14)),
+		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(2)),
+		field.Int("ship_group_seq_id").Optional().Annotations(entproto.Field(3)),
+		field.Int("payment_method_type_id").Optional().Annotations(entproto.Field(4)),
+		field.Int("payment_method_id").Optional().Annotations(entproto.Field(5)),
+		field.Int("fin_account_id").Optional().Annotations(entproto.Field(6)),
+		field.String("security_code").Optional().Annotations(entproto.Field(7)),
+		field.String("track_2").Optional().Annotations(entproto.Field(8)),
+		field.Enum("present_flag").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(9)),
+		field.Enum("swiped_flag").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(10)),
+		field.Enum("overflow_flag").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(11)),
+		field.Float("max_amount").Optional().Annotations(entproto.Field(12)),
+		field.Int("process_attempt").Optional().Annotations(entproto.Field(13)),
+		field.String("billing_postal_code").Optional().Annotations(entproto.Field(14)),
+		field.String("manual_auth_code").Optional().Annotations(entproto.Field(15)),
+		field.String("manual_ref_num").Optional().Annotations(entproto.Field(16)),
+		field.Enum("needs_nsf_retry").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(17)),
+		field.Time("created_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(18)),
+		field.String("created_by_user_login").Optional().Annotations(entproto.Field(19)),
+		field.Time("last_modified_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(20)),
+		field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(21)),
 	}
 }
 
 //* entproto annotations ??
-func (OrderItemShipGrpInvRes) Mixin() []ent.Mixin {
+func (OrderPaymentPreference) Mixin() []ent.Mixin {
 	return []ent.Mixin{
 		mixin.Time{},
 		schemamixins.StringRefMixin{},
@@ -4197,56 +3224,132 @@ func (OrderItemShipGrpInvRes) Mixin() []ent.Mixin {
 //*/
 
 /*
-func (OrderItemShipGrpInvRes) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("order_id", "ship_group_seq_id", "order_item_seq_id", "inventory_item_id").
-            Unique(),
-    }
-}
+ */
 
-*/
-
-func (OrderItemShipGrpInvRes) Annotations() []schema.Annotation {
+func (OrderPaymentPreference) Annotations() []schema.Annotation {
 	return []schema.Annotation{
 		entproto.Message(),
 		entproto.Service(), // also generate a gRPC service definition
 	}
 }
 
-// Edges of the OrderItemShipGrpInvRes.
-//  one-nofk: OrderHeader
-//  one: OrderItem
+// Edges of the OrderPaymentPreference.
+//  one: OrderHeader
+//  one-nofk: OrderItem
 //  one-nofk: OrderItemShipGroup
-//  one-nofk: OrderItemShipGroupAssoc
-//  one: InventoryItem
-//  many: InventoryItemDetail
-//  many: ItemIssuance
-//  many: PicklistItem
-func (OrderItemShipGrpInvRes) Edges() []ent.Edge {
+//  one: ProductPricePurpose
+//  one: PaymentMethodType
+//  one: PaymentMethod
+//  one: FinAccount
+//  one: StatusItem
+//  one: UserLogin
+//  one-nofk: CreditCard
+//  one-nofk: EftAccount
+//  one-nofk: GiftCard
+//  many: OrderStatus
+//  many: Payment
+//  many: PaymentGatewayResponse
+//  many: ReturnItemResponse
+func (OrderPaymentPreference) Edges() []ent.Edge {
 	return []ent.Edge{
 		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_item_ship_grp_inv_res").
+		edge.From("order_header", OrderHeader.Type).Ref("order_payment_preferences").
 			// Bind the "orderId" field to this edge.
 			// Field("order_id").
-			Unique().Annotations(entproto.Field(15)),
+			Unique().Annotations(entproto.Field(22)),
 		// o2m
-		edge.From("order_item", OrderItem.Type).Ref("order_item_ship_grp_inv_res").
+		edge.From("order_item", OrderItem.Type).Ref("order_payment_preferences").
 			// Bind the "orderId" field to this edge.
 			// Field("order_id").
-			Unique().Annotations(entproto.Field(16)),
+			Unique().Annotations(entproto.Field(23)),
 		// o2m
-		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_item_ship_grp_inv_res").
+		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_payment_preferences").
 			// Bind the "orderId" field to this edge.
 			// Field("order_id").
-			Unique().Annotations(entproto.Field(17)),
+			Unique().Annotations(entproto.Field(24)),
 		// o2m
-		edge.From("order_item_ship_group_assoc", OrderItemShipGroupAssoc.Type).Ref("order_item_ship_grp_inv_res").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(18)),
+		edge.From("product_price_purpose", ProductPricePurpose.Type).Ref("order_payment_preferences").
+			// Bind the "productPricePurposeId" field to this edge.
+			// Field("product_price_purpose_id").
+			Unique().Annotations(entproto.Field(25)),
+		// o2m
+		edge.From("status_item", StatusItem.Type).Ref("order_payment_preferences").
+			// Bind the "statusId" field to this edge.
+			// Field("status_id").
+			Unique().Annotations(entproto.Field(29)),
 		// m2o
-		edge.To("inventory_item_details", InventoryItemDetail.Type).
-			Annotations(entproto.Field(20)),
+		edge.To("order_statuses", OrderStatus.Type).
+			Annotations(entproto.Field(34)),
+	}
+}
+
+type ProductFeature struct {
+	ent.Schema
+}
+
+// Fields of the ProductFeature.
+// Unique-Indexes: productFeatureId
+func (ProductFeature) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+		field.Int("uom_id").Optional().Annotations(entproto.Field(3)),
+		field.Float("number_specified").Optional().Annotations(entproto.Field(4)),
+		field.Float("default_amount").Optional().Annotations(entproto.Field(5)),
+		field.Int("default_sequence_num").Optional().Annotations(entproto.Field(6)),
+		field.Int("abbrev").Optional().Annotations(entproto.Field(7)),
+		field.String("id_code").MaxLen(32).Optional().Annotations(entproto.Field(8)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductFeature) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductFeature) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductFeature.
+//  one: ProductFeatureCategory
+//  one: ProductFeatureType
+//  one: Uom
+//  many: CostComponent
+//  many: DesiredFeature
+//  many: InvoiceItem
+//  many: ProductFeatureAppl
+//  many: ProductFeatureApplAttr
+//  many: ProductFeatureDataResource
+//  many: ProductFeatureGroupAppl
+//  many: MainProductFeatureIactn
+//  many: AssocProductFeatureIactn
+//  many: ProductManufacturingRule
+//  many: QuoteItem
+//  many: ShipmentItemFeature
+//  many: SupplierProductFeature
+func (ProductFeature) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("product_feature_category", ProductFeatureCategory.Type).Ref("product_features").
+			// Bind the "productFeatureCategoryId" field to this edge.
+			// Field("product_feature_category_id").
+			Unique().Annotations(entproto.Field(9)),
+		// o2m
+		edge.From("product_feature_type", ProductFeatureType.Type).Ref("product_features").
+			// Bind the "productFeatureTypeId" field to this edge.
+			// Field("product_feature_type_id").
+			Unique().Annotations(entproto.Field(10)),
 	}
 }
 
@@ -4496,6 +3599,1099 @@ func (Product) Edges() []ent.Edge {
 	}
 }
 
+type Enumeration struct {
+	ent.Schema
+}
+
+// Fields of the Enumeration.
+// Unique-Indexes: enumId
+func (Enumeration) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("enum_code").Optional().Annotations(entproto.Field(2)),
+		field.Int("sequence_id").Optional().Annotations(entproto.Field(3)),
+		field.String("description").Optional().Annotations(entproto.Field(4)),
+	}
+}
+
+//* entproto annotations ??
+func (Enumeration) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (Enumeration) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the Enumeration.
+//  one: EnumerationType
+//  many: Plan Method Enum IdAllocationPlanItem
+//  many: CommunicationEvent
+//  many: PrivilegeContent
+//  many: ContentPurposeOperation
+//  many: SalesChannelCustRequest
+//  many: EbayShippingMethod
+//  many: EmailTemplateSetting
+//  many: ExampleFeature
+//  many: ImportStatusExcelImportHistory
+//  many: ThruReasonExcelImportHistory
+//  many: TypeFacilityLocation
+//  many: ReasonFinAccountTrans
+//  many: ReplenishFinAccountType
+//  many: ClassFixedAsset
+//  many: GeoPointTypeGeoPoint
+//  many: GiftCardFulfillment
+//  many: ReasonInventoryItemDetail
+//  many: JobInterview
+//  many: ReasonJobManagerLock
+//  many: ExamTypeJobRequisition
+//  many: JobPostingTypeJobRequisition
+//  many: RelationshipKeywordThesaurus
+//  many: SalesChannelOrderHeader
+//  many: OrderItemChange
+//  many: ReasonOrderItemChange
+//  many: OrderNotification
+//  many: TaxFormPartyAcctgPreference
+//  many: CogsPartyAcctgPreference
+//  many: InvoiceSequencePartyAcctgPreference
+//  many: QuoteSequencePartyAcctgPreference
+//  many: OrderSequencePartyAcctgPreference
+//  many: ServiceTypePaymentGatewayResponse
+//  many: TranCodePaymentGatewayResponse
+//  many: EmploymentStatusPerson
+//  many: ResidenceStatusPerson
+//  many: MaritalStatusPerson
+//  many: PosTerminalInternTx
+//  many: VirtualVariantMethodProduct
+//  many: RatingProduct
+//  many: RequirementMethodProduct
+//  many: LinkTypeProductCategoryLink
+//  many: RequirementMethodProductFacility
+//  many: ProductFacility
+//  many: ProductGeo
+//  many: ProductKeyword
+//  many: InputParamProductPriceCond
+//  many: OperatorProductPriceCond
+//  many: ActionProductPromoAction
+//  many: ApplProductPromoCategory
+//  many: InputParamProductPromoCond
+//  many: OperatorProductPromoCond
+//  many: ApplProductPromoProduct
+//  many: ReserveOrderProductStore
+//  many: RequirementMethodProductStore
+//  many: DefaultSalesChannelProductStore
+//  many: StoreCreditAccountProductStore
+//  many: ProductStoreEmailSetting
+//  many: ReplenishMethodProductStoreFinActSetting
+//  many: ProductStoreKeywordOvrd
+//  many: ProductStorePaymentSetting
+//  many: ProductStoreTelecomSetting
+//  many: CreditCardProductStoreVendorPayment
+//  many: SalesChannelQuote
+//  many: TypeSalesOpportunity
+//  many: TrackingCodeVisit
+//  many: PurposeUomConversionDated
+//  many: VisualThemeResource
+//  many: ScopeWorkEffort
+//  many: ExpectationWorkEffortPartyAssignment
+//  many: DelegateReasonWorkEffortPartyAssignment
+//  many: WorkloadFeature
+func (Enumeration) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("enumeration_type", EnumerationType.Type).Ref("enumerations").
+			// Bind the "enumTypeId" field to this edge.
+			// Field("enum_type_id").
+			Unique().Annotations(entproto.Field(5)),
+		// m2o
+		edge.To("reason_inventory_item_details", InventoryItemDetail.Type).
+			Annotations(entproto.Field(22)),
+		// m2o
+		edge.To("sales_channel_order_headers", OrderHeader.Type).
+			Annotations(entproto.Field(28)),
+		// m2o
+		edge.To("virtual_variant_method_products", Product.Type).
+			Annotations(entproto.Field(43)),
+		// m2o
+		edge.To("rating_products", Product.Type).
+			Annotations(entproto.Field(44)),
+		// m2o
+		edge.To("requirement_method_products", Product.Type).
+			Annotations(entproto.Field(45)),
+		// m2o
+		edge.To("reserve_order_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(58)),
+		// m2o
+		edge.To("requirement_method_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(59)),
+		// m2o
+		edge.To("default_sales_channel_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(60)),
+		// m2o
+		edge.To("store_credit_account_product_stores", ProductStore.Type).
+			Annotations(entproto.Field(61)),
+	}
+}
+
+type ProductCategoryType struct {
+	ent.Schema
+}
+
+// Fields of the ProductCategoryType.
+// Unique-Indexes: productCategoryTypeId
+func (ProductCategoryType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductCategoryType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductCategoryType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductCategoryType.
+//  one: ParentProductCategoryType
+//  many: ProductCategory
+//  many: ChildProductCategoryType
+//  many: ProductCategoryTypeAttr
+func (ProductCategoryType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductCategoryType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("product_categories", ProductCategory.Type).
+			Annotations(entproto.Field(5)),
+		// m2o
+		edge.To("child_product_category_types", ProductCategoryType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type ShipmentContactMechType struct {
+	ent.Schema
+}
+
+// Fields of the ShipmentContactMechType.
+// Unique-Indexes: shipmentContactMechTypeId
+func (ShipmentContactMechType) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (ShipmentContactMechType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ShipmentContactMechType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ShipmentContactMechType.
+//  many: ShipmentContactMech
+func (ShipmentContactMechType) Edges() []ent.Edge {
+	return []ent.Edge{}
+}
+
+type ProductMaintType struct {
+	ent.Schema
+}
+
+// Fields of the ProductMaintType.
+// Unique-Indexes: productMaintTypeId
+func (ProductMaintType) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductMaintType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductMaintType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductMaintType.
+//  one: ParentProductMaintType
+//  many: FixedAssetMaint
+//  many: ProductMaint
+//  many: ChildProductMaintType
+func (ProductMaintType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductMaintType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(3)),
+		// m2o
+		edge.To("child_product_maint_types", ProductMaintType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type ProductCategoryContentType struct {
+	ent.Schema
+}
+
+// Fields of the ProductCategoryContentType.
+// Unique-Indexes: prodCatContentTypeId
+func (ProductCategoryContentType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductCategoryContentType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductCategoryContentType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductCategoryContentType.
+//  one: ParentProductCategoryContentType
+//  many: ProductCategoryContent
+//  many: ChildProductCategoryContentType
+func (ProductCategoryContentType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductCategoryContentType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_product_category_content_types", ProductCategoryContentType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type OrderAdjustment struct {
+	ent.Schema
+}
+
+// Fields of the OrderAdjustment.
+// Unique-Indexes: orderAdjustmentId
+func (OrderAdjustment) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("order_adjustment_type_id").Optional().Annotations(entproto.Field(2)),
+		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(3)),
+		field.Int("ship_group_seq_id").Optional().Annotations(entproto.Field(4)),
+		field.String("comments").Optional().Annotations(entproto.Field(5)),
+		field.String("description").Optional().Annotations(entproto.Field(6)),
+		field.Float("amount").Optional().Annotations(entproto.Field(7)),
+		field.Float("recurring_amount").Optional().Annotations(entproto.Field(8)),
+		field.Float("amount_already_included").Optional().Annotations(entproto.Field(9)),
+		field.Int("product_promo_id").Optional().Annotations(entproto.Field(10)),
+		field.Int("product_promo_rule_id").Optional().Annotations(entproto.Field(11)),
+		field.Int("product_promo_action_seq_id").Optional().Annotations(entproto.Field(12)),
+		field.Int("product_feature_id").Optional().Annotations(entproto.Field(13)),
+		field.Int("corresponding_product_id").Optional().Annotations(entproto.Field(14)),
+		field.Int("tax_authority_rate_seq_id").Optional().Annotations(entproto.Field(15)),
+		field.String("source_reference_id").MaxLen(32).Optional().Annotations(entproto.Field(16)),
+		field.Float("source_percentage").Optional().Annotations(entproto.Field(17)),
+		field.String("customer_reference_id").MaxLen(32).Optional().Annotations(entproto.Field(18)),
+		field.Int("primary_geo_id").Optional().Annotations(entproto.Field(19)),
+		field.Int("secondary_geo_id").Optional().Annotations(entproto.Field(20)),
+		field.Float("exempt_amount").Optional().Annotations(entproto.Field(21)),
+		field.Int("tax_auth_geo_id").Optional().Annotations(entproto.Field(22)),
+		field.Int("tax_auth_party_id").Optional().Annotations(entproto.Field(23)),
+		field.Int("override_gl_account_id").Optional().Annotations(entproto.Field(24)),
+		field.Enum("include_in_tax").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(25)),
+		field.Enum("include_in_shipping").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(26)),
+		field.Enum("is_manual").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(27)),
+		field.Time("created_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(28)),
+		field.String("created_by_user_login").Optional().Annotations(entproto.Field(29)),
+		field.Time("last_modified_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(30)),
+		field.String("last_modified_by_user_login").Optional().Annotations(entproto.Field(31)),
+	}
+}
+
+//* entproto annotations ??
+func (OrderAdjustment) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (OrderAdjustment) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the OrderAdjustment.
+//  one: OrderAdjustmentType
+//  many: OrderAdjustmentTypeAttr
+//  one: OrderHeader
+//  one: UserLogin
+//  one-nofk: OrderItem
+//  one-nofk: OrderItemShipGroup
+//  one-nofk: OrderItemShipGroupAssoc
+//  one: ProductPromo
+//  one-nofk: ProductPromoRule
+//  one-nofk: ProductPromoAction
+//  one: PrimaryGeo
+//  one: SecondaryGeo
+//  one: TaxAuthority
+//  one: OverrideGlAccount
+//  one: TaxAuthorityRateProduct
+//  one-nofk: OrderAdjustment
+//  many: OrderAdjustmentAttribute
+//  many: OrderAdjustmentBilling
+//  many: ReturnAdjustment
+func (OrderAdjustment) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("order_header", OrderHeader.Type).Ref("order_adjustments").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(34)),
+		// o2m
+		edge.From("order_item", OrderItem.Type).Ref("order_adjustments").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(36)),
+		// o2m
+		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_adjustments").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(37)),
+		// o2m
+		edge.From("order_item_ship_group_assoc", OrderItemShipGroupAssoc.Type).Ref("order_adjustments").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(38)),
+		edge.To("children", OrderAdjustment.Type).
+			From("parent").
+			// Bind the "originalAdjustmentId" field to this edge.
+			// Field("original_adjustment_id").
+			Unique().Annotations(entproto.Field(47)),
+	}
+}
+
+type FacilityGroup struct {
+	ent.Schema
+}
+
+// Fields of the FacilityGroup.
+// Unique-Indexes: facilityGroupId
+func (FacilityGroup) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("facility_group_name").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (FacilityGroup) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (FacilityGroup) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the FacilityGroup.
+//  one: FacilityGroupType
+//  one: PrimaryParentFacilityGroup
+//  many: Facility
+//  many: FacilityGroupMember
+//  many: FacilityGroupRole
+//  many: CurrentFacilityGroupRollup
+//  many: ParentFacilityGroupRollup
+func (FacilityGroup) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("facility_group_type", FacilityGroupType.Type).Ref("facility_groups").
+			// Bind the "facilityGroupTypeId" field to this edge.
+			// Field("facility_group_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		edge.To("children", FacilityGroup.Type).
+			From("parent").
+			// Bind the "primaryParentGroupId" field to this edge.
+			// Field("primary_parent_group_id").
+			Unique().Annotations(entproto.Field(5)),
+	}
+}
+
+type OrderItemShipGrpInvRes struct {
+	ent.Schema
+}
+
+// Fields of the OrderItemShipGrpInvRes.
+// Unique-Indexes: orderId, shipGroupSeqId, orderItemSeqId, inventoryItemId
+func (OrderItemShipGrpInvRes) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("ship_group_seq_id").Annotations(entproto.Field(2)),
+		field.Int("order_item_seq_id").Annotations(entproto.Field(3)),
+		field.Int("inventory_item_id").Annotations(entproto.Field(4)),
+		field.Int("reserve_order_enum_id").Optional().Annotations(entproto.Field(5)),
+		field.Float("quantity").Optional().Annotations(entproto.Field(6)),
+		field.Float("quantity_not_available").Optional().Annotations(entproto.Field(7)),
+		field.Time("reserved_datetime").
+			Default(time.Now).Optional().Annotations(entproto.Field(8)),
+		field.Time("created_datetime").
+			Default(time.Now).Optional().Annotations(entproto.Field(9)),
+		field.Time("promised_datetime").
+			Default(time.Now).Optional().Annotations(entproto.Field(10)),
+		field.Time("current_promised_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(11)),
+		field.Enum("priority").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(12)),
+		field.Int("sequence_id").Optional().Annotations(entproto.Field(13)),
+		field.Time("old_pick_start_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(14)),
+	}
+}
+
+//* entproto annotations ??
+func (OrderItemShipGrpInvRes) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+func (OrderItemShipGrpInvRes) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("order_id", "ship_group_seq_id", "order_item_seq_id", "inventory_item_id").
+            Unique(),
+    }
+}
+
+*/
+
+func (OrderItemShipGrpInvRes) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the OrderItemShipGrpInvRes.
+//  one-nofk: OrderHeader
+//  one: OrderItem
+//  one-nofk: OrderItemShipGroup
+//  one-nofk: OrderItemShipGroupAssoc
+//  one: InventoryItem
+//  many: InventoryItemDetail
+//  many: ItemIssuance
+//  many: PicklistItem
+func (OrderItemShipGrpInvRes) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("order_header", OrderHeader.Type).Ref("order_item_ship_grp_inv_res").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(15)),
+		// o2m
+		edge.From("order_item", OrderItem.Type).Ref("order_item_ship_grp_inv_res").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(16)),
+		// o2m
+		edge.From("order_item_ship_group", OrderItemShipGroup.Type).Ref("order_item_ship_grp_inv_res").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(17)),
+		// o2m
+		edge.From("order_item_ship_group_assoc", OrderItemShipGroupAssoc.Type).Ref("order_item_ship_grp_inv_res").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(18)),
+		// m2o
+		edge.To("inventory_item_details", InventoryItemDetail.Type).
+			Annotations(entproto.Field(20)),
+	}
+}
+
+type ShipmentGatewayFedex struct {
+	ent.Schema
+}
+
+// Fields of the ShipmentGatewayFedex.
+// Unique-Indexes: shipmentGatewayConfigId
+func (ShipmentGatewayFedex) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("connect_url").Optional().Annotations(entproto.Field(2)),
+		field.String("connect_soap_url").Optional().Annotations(entproto.Field(3)),
+		field.Int("connect_timeout").Optional().Annotations(entproto.Field(4)),
+		field.String("access_account_nbr").Optional().Annotations(entproto.Field(5)),
+		field.String("access_meter_number").Optional().Annotations(entproto.Field(6)),
+		field.String("access_user_key").Optional().Annotations(entproto.Field(7)),
+		field.String("access_user_pwd").Optional().Annotations(entproto.Field(8)),
+		field.String("label_image_type").Optional().Annotations(entproto.Field(9)),
+		field.String("default_dropoff_type").Optional().Annotations(entproto.Field(10)),
+		field.String("default_packaging_type").Optional().Annotations(entproto.Field(11)),
+		field.String("template_shipment").Optional().Annotations(entproto.Field(12)),
+		field.String("template_subscription").Optional().Annotations(entproto.Field(13)),
+		field.String("rate_estimate_template").Optional().Annotations(entproto.Field(14)),
+	}
+}
+
+//* entproto annotations ??
+func (ShipmentGatewayFedex) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ShipmentGatewayFedex) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ShipmentGatewayFedex.
+//  one: ShipmentGatewayConfig
+func (ShipmentGatewayFedex) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2o (nofk)
+		edge.From("shipment_gateway_config", ShipmentGatewayConfig.Type).
+			Ref("shipment_gateway_fedex").
+			// Bind the "shipmentGatewayConfigId" field to this edge.
+			// Field("shipment_gateway_config_id").
+			Unique().Annotations(entproto.Field(15)),
+	}
+}
+
+type ProductCategory struct {
+	ent.Schema
+}
+
+// Fields of the ProductCategory.
+// Unique-Indexes: productCategoryId
+func (ProductCategory) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("category_name").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+		field.String("long_description").Optional().Annotations(entproto.Field(4)),
+		field.String("category_image_url").Optional().Annotations(entproto.Field(5)),
+		field.String("link_one_image_url").Optional().Annotations(entproto.Field(6)),
+		field.String("link_two_image_url").Optional().Annotations(entproto.Field(7)),
+		field.String("detail_screen").Optional().Annotations(entproto.Field(8)),
+		field.Enum("show_in_select").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(9)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductCategory) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductCategory) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductCategory.
+//  one: ProductCategoryType
+//  many: ProductCategoryTypeAttr
+//  one: PrimaryParentProductCategory
+//  many: PrimaryChildProductCategory
+//  many: MarketInterest
+//  many: PartyNeed
+//  many: ProdCatalogCategory
+//  many: PrimaryProduct
+//  many: ProductCategoryAttribute
+//  many: ProductCategoryContent
+//  many: ProductCategoryGlAccount
+//  many: ProductCategoryLink
+//  many: ProductCategoryMember
+//  many: ProductCategoryRole
+//  many: CurrentProductCategoryRollup
+//  many: ParentProductCategoryRollup
+//  many: ProductFeatureCatGrpAppl
+//  many: ProductFeatureCategoryAppl
+//  many: ProductPromoCategory
+//  many: ProductStoreSurveyAppl
+//  many: SalesForecastDetail
+//  many: Subscription
+//  many: TaxAuthorityCategory
+//  many: TaxAuthorityRateProduct
+func (ProductCategory) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("product_category_type", ProductCategoryType.Type).Ref("product_categories").
+			// Bind the "productCategoryTypeId" field to this edge.
+			// Field("product_category_type_id").
+			Unique().Annotations(entproto.Field(10)),
+		edge.To("children", ProductCategory.Type).
+			From("parent").
+			// Bind the "primaryParentCategoryId" field to this edge.
+			// Field("primary_parent_category_id").
+			Unique().Annotations(entproto.Field(12)),
+		// m2o
+		edge.To("primary_child_product_categories", ProductCategory.Type).
+			Annotations(entproto.Field(13)),
+		// m2o
+		edge.To("primary_products", Product.Type).
+			Annotations(entproto.Field(17)),
+	}
+}
+
+type CostComponentType struct {
+	ent.Schema
+}
+
+// Fields of the CostComponentType.
+// Unique-Indexes: costComponentTypeId
+func (CostComponentType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (CostComponentType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (CostComponentType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the CostComponentType.
+//  one: ParentCostComponentType
+//  many: CostComponent
+//  many: ChildCostComponentType
+//  many: CostComponentTypeAttr
+//  many: ProductCostComponentCalc
+//  many: WorkEffortCostCalc
+func (CostComponentType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", CostComponentType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_cost_component_types", CostComponentType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type SubscriptionType struct {
+	ent.Schema
+}
+
+// Fields of the SubscriptionType.
+// Unique-Indexes: subscriptionTypeId
+func (SubscriptionType) Fields() []ent.Field {
+	return []ent.Field{
+		field.Enum("has_table").
+			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
+		field.String("description").Optional().Annotations(entproto.Field(3)),
+	}
+}
+
+//* entproto annotations ??
+func (SubscriptionType) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (SubscriptionType) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the SubscriptionType.
+//  one: ParentSubscriptionType
+//  many: Subscription
+//  many: ChildSubscriptionType
+//  many: SubscriptionTypeAttr
+func (SubscriptionType) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", SubscriptionType.Type).
+			From("parent").
+			// Bind the "parentTypeId" field to this edge.
+			// Field("parent_type_id").
+			Unique().Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_subscription_types", SubscriptionType.Type).
+			Annotations(entproto.Field(6)),
+	}
+}
+
+type InventoryItemDetail struct {
+	ent.Schema
+}
+
+// Fields of the InventoryItemDetail.
+// Unique-Indexes: inventoryItemId, inventoryItemDetailSeqId
+func (InventoryItemDetail) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("inventory_item_detail_seq_id").Annotations(entproto.Field(2)),
+		field.Time("effective_date").
+			Default(time.Now).Optional().Annotations(entproto.Field(3)),
+		field.Float("quantity_on_hand_diff").Optional().Annotations(entproto.Field(4)),
+		field.Float("available_to_promise_diff").Optional().Annotations(entproto.Field(5)),
+		field.Float("accounting_quantity_diff").Optional().Annotations(entproto.Field(6)),
+		field.Float("unit_cost").Optional().Annotations(entproto.Field(7)),
+		field.Int("order_item_seq_id").Optional().Annotations(entproto.Field(8)),
+		field.Int("ship_group_seq_id").Optional().Annotations(entproto.Field(9)),
+		field.Int("shipment_id").Optional().Annotations(entproto.Field(10)),
+		field.Int("shipment_item_seq_id").Optional().Annotations(entproto.Field(11)),
+		field.Int("return_id").Optional().Annotations(entproto.Field(12)),
+		field.Int("return_item_seq_id").Optional().Annotations(entproto.Field(13)),
+		field.Int("work_effort_id").Optional().Annotations(entproto.Field(14)),
+		field.Int("fixed_asset_id").Optional().Annotations(entproto.Field(15)),
+		field.Int("maint_hist_seq_id").Optional().Annotations(entproto.Field(16)),
+		field.Int("item_issuance_id").Optional().Annotations(entproto.Field(17)),
+		field.Int("receipt_id").Optional().Annotations(entproto.Field(18)),
+		field.Int("physical_inventory_id").Optional().Annotations(entproto.Field(19)),
+		field.String("description").Optional().Annotations(entproto.Field(20)),
+	}
+}
+
+//* entproto annotations ??
+func (InventoryItemDetail) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+func (InventoryItemDetail) Indexes() []ent.Index {
+    return []ent.Index{
+        index.Fields("inventory_item_id", "inventory_item_detail_seq_id").
+            Unique(),
+    }
+}
+
+*/
+
+func (InventoryItemDetail) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the InventoryItemDetail.
+//  one: InventoryItem
+//  one: WorkEffort
+//  one-nofk: OrderItemShipGrpInvRes
+//  one: FixedAssetMaint
+//  one: ItemIssuance
+//  one-nofk: WorkEffortInventoryAssign
+//  one-nofk: WorkEffortInventoryProduced
+//  one: ShipmentReceipt
+//  one: PhysicalInventory
+//  one: ReasonEnumeration
+//  one-nofk: InventoryItemVariance
+func (InventoryItemDetail) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2m
+		edge.From("order_item_ship_grp_inv_res", OrderItemShipGrpInvRes.Type).Ref("inventory_item_details").
+			// Bind the "orderId" field to this edge.
+			// Field("order_id").
+			Unique().Annotations(entproto.Field(23)),
+		// o2m
+		edge.From("reason_enumeration", Enumeration.Type).Ref("reason_inventory_item_details").
+			// Bind the "reasonEnumId" field to this edge.
+			// Field("reason_enum_id").
+			Unique().Annotations(entproto.Field(30)),
+	}
+}
+
+type ShipmentGatewayDhl struct {
+	ent.Schema
+}
+
+// Fields of the ShipmentGatewayDhl.
+// Unique-Indexes: shipmentGatewayConfigId
+func (ShipmentGatewayDhl) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("connect_url").Optional().Annotations(entproto.Field(2)),
+		field.Int("connect_timeout").Optional().Annotations(entproto.Field(3)),
+		field.String("head_version").Optional().Annotations(entproto.Field(4)),
+		field.String("head_action").Optional().Annotations(entproto.Field(5)),
+		field.String("access_user_id").Optional().Annotations(entproto.Field(6)),
+		field.String("access_password").Optional().Annotations(entproto.Field(7)),
+		field.String("access_account_nbr").Optional().Annotations(entproto.Field(8)),
+		field.String("access_shipping_key").Optional().Annotations(entproto.Field(9)),
+		field.String("label_image_format").Optional().Annotations(entproto.Field(10)),
+		field.String("rate_estimate_template").Optional().Annotations(entproto.Field(11)),
+	}
+}
+
+//* entproto annotations ??
+func (ShipmentGatewayDhl) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ShipmentGatewayDhl) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ShipmentGatewayDhl.
+//  one: ShipmentGatewayConfig
+func (ShipmentGatewayDhl) Edges() []ent.Edge {
+	return []ent.Edge{
+		// o2o (nofk)
+		edge.From("shipment_gateway_config", ShipmentGatewayConfig.Type).
+			Ref("shipment_gateway_dhl").
+			// Bind the "shipmentGatewayConfigId" field to this edge.
+			// Field("shipment_gateway_config_id").
+			Unique().Annotations(entproto.Field(12)),
+	}
+}
+
+type ProductFeatureCategory struct {
+	ent.Schema
+}
+
+// Fields of the ProductFeatureCategory.
+// Unique-Indexes: productFeatureCategoryId
+func (ProductFeatureCategory) Fields() []ent.Field {
+	return []ent.Field{
+		field.String("description").Optional().Annotations(entproto.Field(2)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductFeatureCategory) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductFeatureCategory) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductFeatureCategory.
+//  one: ParentProductFeatureCategory
+//  many: ProductFeature
+//  many: ChildProductFeatureCategory
+//  many: ProductFeatureCategoryAppl
+func (ProductFeatureCategory) Edges() []ent.Edge {
+	return []ent.Edge{
+		edge.To("children", ProductFeatureCategory.Type).
+			From("parent").
+			// Bind the "parentCategoryId" field to this edge.
+			// Field("parent_category_id").
+			Unique().Annotations(entproto.Field(3)),
+		// m2o
+		edge.To("product_features", ProductFeature.Type).
+			Annotations(entproto.Field(4)),
+		// m2o
+		edge.To("child_product_feature_categories", ProductFeatureCategory.Type).
+			Annotations(entproto.Field(5)),
+	}
+}
+
+type ProductConfigItem struct {
+	ent.Schema
+}
+
+// Fields of the ProductConfigItem.
+// Unique-Indexes: configItemId
+func (ProductConfigItem) Fields() []ent.Field {
+	return []ent.Field{
+		field.Int("config_item_type_id").Optional().Annotations(entproto.Field(2)),
+		field.String("config_item_name").Optional().Annotations(entproto.Field(3)),
+		field.String("description").Optional().Annotations(entproto.Field(4)),
+		field.String("long_description").Optional().Annotations(entproto.Field(5)),
+		field.String("image_url").Optional().Annotations(entproto.Field(6)),
+	}
+}
+
+//* entproto annotations ??
+func (ProductConfigItem) Mixin() []ent.Mixin {
+	return []ent.Mixin{
+		mixin.Time{},
+		schemamixins.StringRefMixin{},
+	}
+}
+
+//*/
+
+/*
+ */
+
+func (ProductConfigItem) Annotations() []schema.Annotation {
+	return []schema.Annotation{
+		entproto.Message(),
+		entproto.Service(), // also generate a gRPC service definition
+	}
+}
+
+// Edges of the ProductConfigItem.
+//  many: ProdConfItemContent
+//  many: ConfigItemProductConfig
+//  many: ConfigItemProductConfigConfig
+//  many: ConfigItemProductConfigOption
+//  many: ConfigItemProductConfigOptionIactn
+//  many: ConfigItemToProductConfigOptionIactn
+//  many: ConfigItemProductConfigProduct
+func (ProductConfigItem) Edges() []ent.Edge {
+	return []ent.Edge{}
+}
+
 type ProductAssoc struct {
 	ent.Schema
 }
@@ -4574,202 +4770,5 @@ func (ProductAssoc) Edges() []ent.Edge {
 			// Bind the "estimateCalcMethod" field to this edge.
 			// Field("estimate_calc_method").
 			Unique().Annotations(entproto.Field(15)),
-	}
-}
-
-type ContentAssocType struct {
-	ent.Schema
-}
-
-// Fields of the ContentAssocType.
-// Unique-Indexes: contentAssocTypeId
-func (ContentAssocType) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ContentAssocType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ContentAssocType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ContentAssocType.
-//  many: ContentAssoc
-func (ContentAssocType) Edges() []ent.Edge {
-	return []ent.Edge{}
-}
-
-type ProductFeatureApplType struct {
-	ent.Schema
-}
-
-// Fields of the ProductFeatureApplType.
-// Unique-Indexes: productFeatureApplTypeId
-func (ProductFeatureApplType) Fields() []ent.Field {
-	return []ent.Field{
-		field.Enum("has_table").
-			Values("Yes", "No", "Unknown").Optional().Annotations(entproto.Field(2)),
-		field.String("description").Optional().Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (ProductFeatureApplType) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ProductFeatureApplType) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ProductFeatureApplType.
-//  one: ParentProductFeatureApplType
-//  many: ProductFeatureAppl
-//  many: ChildProductFeatureApplType
-func (ProductFeatureApplType) Edges() []ent.Edge {
-	return []ent.Edge{
-		edge.To("children", ProductFeatureApplType.Type).
-			From("parent").
-			// Bind the "parentTypeId" field to this edge.
-			// Field("parent_type_id").
-			Unique().Annotations(entproto.Field(4)),
-		// m2o
-		edge.To("child_product_feature_appl_types", ProductFeatureApplType.Type).
-			Annotations(entproto.Field(6)),
-	}
-}
-
-type ShipmentGatewayDhl struct {
-	ent.Schema
-}
-
-// Fields of the ShipmentGatewayDhl.
-// Unique-Indexes: shipmentGatewayConfigId
-func (ShipmentGatewayDhl) Fields() []ent.Field {
-	return []ent.Field{
-		field.String("connect_url").Optional().Annotations(entproto.Field(2)),
-		field.Int("connect_timeout").Optional().Annotations(entproto.Field(3)),
-		field.String("head_version").Optional().Annotations(entproto.Field(4)),
-		field.String("head_action").Optional().Annotations(entproto.Field(5)),
-		field.String("access_user_id").Optional().Annotations(entproto.Field(6)),
-		field.String("access_password").Optional().Annotations(entproto.Field(7)),
-		field.String("access_account_nbr").Optional().Annotations(entproto.Field(8)),
-		field.String("access_shipping_key").Optional().Annotations(entproto.Field(9)),
-		field.String("label_image_format").Optional().Annotations(entproto.Field(10)),
-		field.String("rate_estimate_template").Optional().Annotations(entproto.Field(11)),
-	}
-}
-
-//* entproto annotations ??
-func (ShipmentGatewayDhl) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
- */
-
-func (ShipmentGatewayDhl) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the ShipmentGatewayDhl.
-//  one: ShipmentGatewayConfig
-func (ShipmentGatewayDhl) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2o (nofk)
-		edge.From("shipment_gateway_config", ShipmentGatewayConfig.Type).
-			Ref("shipment_gateway_dhl").
-			// Bind the "shipmentGatewayConfigId" field to this edge.
-			// Field("shipment_gateway_config_id").
-			Unique().Annotations(entproto.Field(12)),
-	}
-}
-
-type OrderContactMech struct {
-	ent.Schema
-}
-
-// Fields of the OrderContactMech.
-// Unique-Indexes: orderId, contactMechPurposeTypeId, contactMechId
-func (OrderContactMech) Fields() []ent.Field {
-	return []ent.Field{
-		field.Int("contact_mech_purpose_type_id").Annotations(entproto.Field(2)),
-		field.Int("contact_mech_id").Annotations(entproto.Field(3)),
-	}
-}
-
-//* entproto annotations ??
-func (OrderContactMech) Mixin() []ent.Mixin {
-	return []ent.Mixin{
-		mixin.Time{},
-		schemamixins.StringRefMixin{},
-	}
-}
-
-//*/
-
-/*
-func (OrderContactMech) Indexes() []ent.Index {
-    return []ent.Index{
-        index.Fields("order_id", "contact_mech_purpose_type_id", "contact_mech_id").
-            Unique(),
-    }
-}
-
-*/
-
-func (OrderContactMech) Annotations() []schema.Annotation {
-	return []schema.Annotation{
-		entproto.Message(),
-		entproto.Service(), // also generate a gRPC service definition
-	}
-}
-
-// Edges of the OrderContactMech.
-//  one: OrderHeader
-//  one: ContactMech
-//  one: ContactMechPurposeType
-func (OrderContactMech) Edges() []ent.Edge {
-	return []ent.Edge{
-		// o2m
-		edge.From("order_header", OrderHeader.Type).Ref("order_contact_meches").
-			// Bind the "orderId" field to this edge.
-			// Field("order_id").
-			Unique().Annotations(entproto.Field(4)),
 	}
 }

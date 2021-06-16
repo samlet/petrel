@@ -49,19 +49,6 @@ func (iidu *InventoryItemDetailUpdate) ClearStringRef() *InventoryItemDetailUpda
 	return iidu
 }
 
-// SetInventoryItemID sets the "inventory_item_id" field.
-func (iidu *InventoryItemDetailUpdate) SetInventoryItemID(i int) *InventoryItemDetailUpdate {
-	iidu.mutation.ResetInventoryItemID()
-	iidu.mutation.SetInventoryItemID(i)
-	return iidu
-}
-
-// AddInventoryItemID adds i to the "inventory_item_id" field.
-func (iidu *InventoryItemDetailUpdate) AddInventoryItemID(i int) *InventoryItemDetailUpdate {
-	iidu.mutation.AddInventoryItemID(i)
-	return iidu
-}
-
 // SetInventoryItemDetailSeqID sets the "inventory_item_detail_seq_id" field.
 func (iidu *InventoryItemDetailUpdate) SetInventoryItemDetailSeqID(i int) *InventoryItemDetailUpdate {
 	iidu.mutation.ResetInventoryItemDetailSeqID()
@@ -700,20 +687,6 @@ func (iidu *InventoryItemDetailUpdate) sqlSave(ctx context.Context) (n int, err 
 			Column: inventoryitemdetail.FieldStringRef,
 		})
 	}
-	if value, ok := iidu.mutation.InventoryItemID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: inventoryitemdetail.FieldInventoryItemID,
-		})
-	}
-	if value, ok := iidu.mutation.AddedInventoryItemID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: inventoryitemdetail.FieldInventoryItemID,
-		})
-	}
 	if value, ok := iidu.mutation.InventoryItemDetailSeqID(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeInt,
@@ -1180,19 +1153,6 @@ func (iiduo *InventoryItemDetailUpdateOne) SetNillableStringRef(s *string) *Inve
 // ClearStringRef clears the value of the "string_ref" field.
 func (iiduo *InventoryItemDetailUpdateOne) ClearStringRef() *InventoryItemDetailUpdateOne {
 	iiduo.mutation.ClearStringRef()
-	return iiduo
-}
-
-// SetInventoryItemID sets the "inventory_item_id" field.
-func (iiduo *InventoryItemDetailUpdateOne) SetInventoryItemID(i int) *InventoryItemDetailUpdateOne {
-	iiduo.mutation.ResetInventoryItemID()
-	iiduo.mutation.SetInventoryItemID(i)
-	return iiduo
-}
-
-// AddInventoryItemID adds i to the "inventory_item_id" field.
-func (iiduo *InventoryItemDetailUpdateOne) AddInventoryItemID(i int) *InventoryItemDetailUpdateOne {
-	iiduo.mutation.AddInventoryItemID(i)
 	return iiduo
 }
 
@@ -1856,20 +1816,6 @@ func (iiduo *InventoryItemDetailUpdateOne) sqlSave(ctx context.Context) (_node *
 		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Column: inventoryitemdetail.FieldStringRef,
-		})
-	}
-	if value, ok := iiduo.mutation.InventoryItemID(); ok {
-		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: inventoryitemdetail.FieldInventoryItemID,
-		})
-	}
-	if value, ok := iiduo.mutation.AddedInventoryItemID(); ok {
-		_spec.Fields.Add = append(_spec.Fields.Add, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: inventoryitemdetail.FieldInventoryItemID,
 		})
 	}
 	if value, ok := iiduo.mutation.InventoryItemDetailSeqID(); ok {

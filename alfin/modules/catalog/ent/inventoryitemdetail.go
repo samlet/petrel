@@ -24,8 +24,6 @@ type InventoryItemDetail struct {
 	UpdateTime time.Time `json:"update_time,omitempty"`
 	// StringRef holds the value of the "string_ref" field.
 	StringRef string `json:"string_ref,omitempty"`
-	// InventoryItemID holds the value of the "inventory_item_id" field.
-	InventoryItemID int `json:"inventory_item_id,omitempty"`
 	// InventoryItemDetailSeqID holds the value of the "inventory_item_detail_seq_id" field.
 	InventoryItemDetailSeqID int `json:"inventory_item_detail_seq_id,omitempty"`
 	// EffectiveDate holds the value of the "effective_date" field.
@@ -117,7 +115,7 @@ func (*InventoryItemDetail) scanValues(columns []string) ([]interface{}, error) 
 		switch columns[i] {
 		case inventoryitemdetail.FieldQuantityOnHandDiff, inventoryitemdetail.FieldAvailableToPromiseDiff, inventoryitemdetail.FieldAccountingQuantityDiff, inventoryitemdetail.FieldUnitCost:
 			values[i] = new(sql.NullFloat64)
-		case inventoryitemdetail.FieldID, inventoryitemdetail.FieldInventoryItemID, inventoryitemdetail.FieldInventoryItemDetailSeqID, inventoryitemdetail.FieldOrderItemSeqID, inventoryitemdetail.FieldShipGroupSeqID, inventoryitemdetail.FieldShipmentID, inventoryitemdetail.FieldShipmentItemSeqID, inventoryitemdetail.FieldReturnID, inventoryitemdetail.FieldReturnItemSeqID, inventoryitemdetail.FieldWorkEffortID, inventoryitemdetail.FieldFixedAssetID, inventoryitemdetail.FieldMaintHistSeqID, inventoryitemdetail.FieldItemIssuanceID, inventoryitemdetail.FieldReceiptID, inventoryitemdetail.FieldPhysicalInventoryID:
+		case inventoryitemdetail.FieldID, inventoryitemdetail.FieldInventoryItemDetailSeqID, inventoryitemdetail.FieldOrderItemSeqID, inventoryitemdetail.FieldShipGroupSeqID, inventoryitemdetail.FieldShipmentID, inventoryitemdetail.FieldShipmentItemSeqID, inventoryitemdetail.FieldReturnID, inventoryitemdetail.FieldReturnItemSeqID, inventoryitemdetail.FieldWorkEffortID, inventoryitemdetail.FieldFixedAssetID, inventoryitemdetail.FieldMaintHistSeqID, inventoryitemdetail.FieldItemIssuanceID, inventoryitemdetail.FieldReceiptID, inventoryitemdetail.FieldPhysicalInventoryID:
 			values[i] = new(sql.NullInt64)
 		case inventoryitemdetail.FieldStringRef, inventoryitemdetail.FieldDescription:
 			values[i] = new(sql.NullString)
@@ -165,12 +163,6 @@ func (iid *InventoryItemDetail) assignValues(columns []string, values []interfac
 				return fmt.Errorf("unexpected type %T for field string_ref", values[i])
 			} else if value.Valid {
 				iid.StringRef = value.String
-			}
-		case inventoryitemdetail.FieldInventoryItemID:
-			if value, ok := values[i].(*sql.NullInt64); !ok {
-				return fmt.Errorf("unexpected type %T for field inventory_item_id", values[i])
-			} else if value.Valid {
-				iid.InventoryItemID = int(value.Int64)
 			}
 		case inventoryitemdetail.FieldInventoryItemDetailSeqID:
 			if value, ok := values[i].(*sql.NullInt64); !ok {
@@ -344,8 +336,6 @@ func (iid *InventoryItemDetail) String() string {
 	builder.WriteString(iid.UpdateTime.Format(time.ANSIC))
 	builder.WriteString(", string_ref=")
 	builder.WriteString(iid.StringRef)
-	builder.WriteString(", inventory_item_id=")
-	builder.WriteString(fmt.Sprintf("%v", iid.InventoryItemID))
 	builder.WriteString(", inventory_item_detail_seq_id=")
 	builder.WriteString(fmt.Sprintf("%v", iid.InventoryItemDetailSeqID))
 	builder.WriteString(", effective_date=")

@@ -64,12 +64,6 @@ func (iidc *InventoryItemDetailCreate) SetNillableStringRef(s *string) *Inventor
 	return iidc
 }
 
-// SetInventoryItemID sets the "inventory_item_id" field.
-func (iidc *InventoryItemDetailCreate) SetInventoryItemID(i int) *InventoryItemDetailCreate {
-	iidc.mutation.SetInventoryItemID(i)
-	return iidc
-}
-
 // SetInventoryItemDetailSeqID sets the "inventory_item_detail_seq_id" field.
 func (iidc *InventoryItemDetailCreate) SetInventoryItemDetailSeqID(i int) *InventoryItemDetailCreate {
 	iidc.mutation.SetInventoryItemDetailSeqID(i)
@@ -443,9 +437,6 @@ func (iidc *InventoryItemDetailCreate) check() error {
 	if _, ok := iidc.mutation.UpdateTime(); !ok {
 		return &ValidationError{Name: "update_time", err: errors.New("ent: missing required field \"update_time\"")}
 	}
-	if _, ok := iidc.mutation.InventoryItemID(); !ok {
-		return &ValidationError{Name: "inventory_item_id", err: errors.New("ent: missing required field \"inventory_item_id\"")}
-	}
 	if _, ok := iidc.mutation.InventoryItemDetailSeqID(); !ok {
 		return &ValidationError{Name: "inventory_item_detail_seq_id", err: errors.New("ent: missing required field \"inventory_item_detail_seq_id\"")}
 	}
@@ -499,14 +490,6 @@ func (iidc *InventoryItemDetailCreate) createSpec() (*InventoryItemDetail, *sqlg
 			Column: inventoryitemdetail.FieldStringRef,
 		})
 		_node.StringRef = value
-	}
-	if value, ok := iidc.mutation.InventoryItemID(); ok {
-		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{
-			Type:   field.TypeInt,
-			Value:  value,
-			Column: inventoryitemdetail.FieldInventoryItemID,
-		})
-		_node.InventoryItemID = value
 	}
 	if value, ok := iidc.mutation.InventoryItemDetailSeqID(); ok {
 		_spec.Fields = append(_spec.Fields, &sqlgraph.FieldSpec{

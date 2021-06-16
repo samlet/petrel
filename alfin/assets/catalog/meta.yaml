@@ -1,15 +1,67 @@
 edges:
-- name: OrderItemShipGrpInvRes
+- name: RoleType
+  relations:
+  - rel: RoleType
+    type: one
+  - rel: OrderRole
+    type: many
+  - rel: RoleType
+    type: many
+- name: QuantityBreakType
+  relations: []
+- name: OrderPaymentPreference
   relations:
   - rel: OrderHeader
-    type: one-nofk
-  - rel: OrderItem
     type: one
+  - rel: OrderItem
+    type: one-nofk
   - rel: OrderItemShipGroup
     type: one-nofk
-  - rel: OrderItemShipGroupAssoc
-    type: one-nofk
-  - rel: InventoryItemDetail
+  - rel: ProductPricePurpose
+    type: one
+  - rel: StatusItem
+    type: one
+  - rel: OrderStatus
+    type: many
+- name: ProductReview
+  relations:
+  - rel: ProductStore
+    type: one
+  - rel: Product
+    type: one
+  - rel: StatusItem
+    type: one
+- name: OrderContactMech
+  relations:
+  - rel: OrderHeader
+    type: one
+- name: ProductType
+  relations:
+  - rel: ProductType
+    type: one
+  - rel: Product
+    type: many
+  - rel: ProductType
+    type: many
+- name: StatusValidChange
+  relations:
+  - rel: StatusItem
+    type: one
+  - rel: StatusItem
+    type: one
+- name: RejectionReason
+  relations: []
+- name: ProductPriceType
+  relations:
+  - rel: ProductPrice
+    type: many
+- name: InventoryItemType
+  relations:
+  - rel: InventoryItemType
+    type: one
+  - rel: InventoryItemType
+    type: many
+  - rel: Product
     type: many
 - name: ProductStore
   relations:
@@ -41,129 +93,7 @@ edges:
     type: many
   - rel: ProductReview
     type: many
-- name: OrderRole
-  relations:
-  - rel: OrderHeader
-    type: one
-  - rel: RoleType
-    type: one-nofk
-  - rel: OrderItem
-    type: many
-- name: OrderPaymentPreference
-  relations:
-  - rel: OrderHeader
-    type: one
-  - rel: OrderItem
-    type: one-nofk
-  - rel: OrderItemShipGroup
-    type: one-nofk
-  - rel: ProductPricePurpose
-    type: one
-  - rel: StatusItem
-    type: one
-  - rel: OrderStatus
-    type: many
-- name: ShipmentGatewayConfig
-  relations:
-  - rel: ShipmentGatewayConfigType
-    type: one
-  - rel: ShipmentGatewayDhl
-    type: one-nofk
-  - rel: ShipmentGatewayFedex
-    type: one-nofk
-  - rel: ShipmentGatewayUps
-    type: one-nofk
-  - rel: ShipmentGatewayUsps
-    type: one-nofk
-- name: GoodIdentificationType
-  relations:
-  - rel: GoodIdentificationType
-    type: one
-  - rel: GoodIdentificationType
-    type: many
-- name: ProductType
-  relations:
-  - rel: ProductType
-    type: one
-  - rel: Product
-    type: many
-  - rel: ProductType
-    type: many
-- name: StatusType
-  relations:
-  - rel: StatusType
-    type: one
-  - rel: StatusItem
-    type: many
-  - rel: StatusType
-    type: many
-- name: ContentType
-  relations:
-  - rel: ContentType
-    type: one
-  - rel: ContentType
-    type: many
-- name: RejectionReason
-  relations: []
-- name: ShipmentGatewayConfigType
-  relations:
-  - rel: ShipmentGatewayConfigType
-    type: one
-  - rel: ShipmentGatewayConfigType
-    type: many
-  - rel: ShipmentGatewayConfig
-    type: many
-  - rel: ShipmentGatewayConfigType
-    type: many
-- name: QuantityBreakType
-  relations: []
-- name: OrderHeader
-  relations:
-  - rel: Enumeration
-    type: one
-  - rel: ProductStore
-    type: one
-  - rel: StatusItem
-    type: one
-  - rel: StatusItem
-    type: one
-  - rel: OrderAdjustment
-    type: many
-  - rel: OrderContactMech
-    type: many
-  - rel: OrderItem
-    type: many
-  - rel: OrderItemShipGroup
-    type: many
-  - rel: OrderItemShipGroupAssoc
-    type: many
-  - rel: OrderItemShipGrpInvRes
-    type: many
-  - rel: OrderPaymentPreference
-    type: many
-  - rel: OrderRole
-    type: many
-  - rel: OrderStatus
-    type: many
-- name: ProductContentType
-  relations:
-  - rel: ProductContentType
-    type: one
-  - rel: ProductContentType
-    type: many
-- name: OrderItemShipGroup
-  relations:
-  - rel: OrderHeader
-    type: one
-  - rel: OrderAdjustment
-    type: many
-  - rel: OrderItemShipGroupAssoc
-    type: many
-  - rel: OrderItemShipGrpInvRes
-    type: many
-  - rel: OrderPaymentPreference
-    type: many
-- name: ShipmentContactMechType
+- name: ContentAssocType
   relations: []
 - name: CustomMethodType
   relations:
@@ -179,59 +109,23 @@ edges:
     type: one
   - rel: ShipmentType
     type: many
-- name: ProductCategoryType
+- name: ShipmentGatewayConfigType
   relations:
-  - rel: ProductCategoryType
+  - rel: ShipmentGatewayConfigType
     type: one
-  - rel: ProductCategory
+  - rel: ShipmentGatewayConfigType
     type: many
-  - rel: ProductCategoryType
-    type: many
-- name: ProductCategory
-  relations:
-  - rel: ProductCategoryType
-    type: one
-  - rel: ProductCategory
-    type: one
-  - rel: ProductCategory
-    type: many
-  - rel: Product
-    type: many
-- name: ProductPriceActionType
-  relations: []
-- name: ShipmentGatewayDhl
-  relations:
   - rel: ShipmentGatewayConfig
-    type: one
-- name: SubscriptionType
+    type: many
+  - rel: ShipmentGatewayConfigType
+    type: many
+- name: ProductFeatureType
   relations:
-  - rel: SubscriptionType
+  - rel: ProductFeatureType
     type: one
-  - rel: SubscriptionType
+  - rel: ProductFeature
     type: many
-- name: InventoryItemType
-  relations:
-  - rel: InventoryItemType
-    type: one
-  - rel: InventoryItemType
-    type: many
-  - rel: Product
-    type: many
-- name: FacilityAssocType
-  relations: []
-- name: EnumerationType
-  relations:
-  - rel: EnumerationType
-    type: one
-  - rel: Enumeration
-    type: many
-  - rel: EnumerationType
-    type: many
-- name: ProductMaintType
-  relations:
-  - rel: ProductMaintType
-    type: one
-  - rel: ProductMaintType
+  - rel: ProductFeatureType
     type: many
 - name: StatusItem
   relations:
@@ -269,34 +163,106 @@ edges:
     type: many
   - rel: StatusValidChange
     type: many
-- name: ProductFeature
+- name: GoodIdentificationType
   relations:
-  - rel: ProductFeatureCategory
+  - rel: GoodIdentificationType
     type: one
-  - rel: ProductFeatureType
+  - rel: GoodIdentificationType
+    type: many
+- name: ProductAssocType
+  relations:
+  - rel: ProductAssocType
     type: one
+  - rel: ProductAssoc
+    type: many
+  - rel: ProductAssocType
+    type: many
+- name: ProductPrice
+  relations:
+  - rel: Product
+    type: one
+  - rel: ProductPriceType
+    type: one
+  - rel: ProductPricePurpose
+    type: one
+  - rel: ProductStoreGroup
+    type: one
+  - rel: CustomMethod
+    type: one
+- name: ProductStoreGroup
+  relations:
+  - rel: ProductStoreGroup
+    type: one
+  - rel: ProductPrice
+    type: many
+  - rel: ProductStore
+    type: many
 - name: ProdConfItemContentType
   relations:
   - rel: ProdConfItemContentType
     type: one
   - rel: ProdConfItemContentType
     type: many
-- name: ProductFeatureType
+- name: OrderAdjustment
   relations:
-  - rel: ProductFeatureType
+  - rel: OrderHeader
     type: one
-  - rel: ProductFeature
-    type: many
-  - rel: ProductFeatureType
-    type: many
+  - rel: OrderItem
+    type: one-nofk
+  - rel: OrderItemShipGroup
+    type: one-nofk
+  - rel: OrderItemShipGroupAssoc
+    type: one-nofk
+  - rel: OrderAdjustment
+    type: one-nofk
 - name: ProductFeatureApplType
   relations:
   - rel: ProductFeatureApplType
     type: one
   - rel: ProductFeatureApplType
     type: many
-- name: ProductConfigItem
+- name: ProductCategoryContentType
+  relations:
+  - rel: ProductCategoryContentType
+    type: one
+  - rel: ProductCategoryContentType
+    type: many
+- name: VarianceReason
   relations: []
+- name: InventoryItemDetail
+  relations:
+  - rel: OrderItemShipGrpInvRes
+    type: one-nofk
+  - rel: Enumeration
+    type: one
+- name: ProductFeatureCategory
+  relations:
+  - rel: ProductFeatureCategory
+    type: one
+  - rel: ProductFeature
+    type: many
+  - rel: ProductFeatureCategory
+    type: many
+- name: CustomMethod
+  relations:
+  - rel: CustomMethodType
+    type: one
+  - rel: ProductAssoc
+    type: many
+  - rel: ProductPrice
+    type: many
+- name: OrderItemShipGroupAssoc
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: OrderItem
+    type: one
+  - rel: OrderItemShipGroup
+    type: one
+  - rel: OrderAdjustment
+    type: many
+  - rel: OrderItemShipGrpInvRes
+    type: many
 - name: Enumeration
   relations:
   - rel: EnumerationType
@@ -319,90 +285,12 @@ edges:
     type: many
   - rel: ProductStore
     type: many
-- name: OrderItem
-  relations:
-  - rel: OrderHeader
-    type: one
-  - rel: Product
-    type: one
-  - rel: StatusItem
-    type: one
-  - rel: StatusValidChange
-    type: many
-  - rel: StatusItem
-    type: one
-  - rel: OrderAdjustment
-    type: many
-  - rel: OrderItemShipGroupAssoc
-    type: many
-  - rel: OrderItemShipGrpInvRes
-    type: many
-  - rel: OrderPaymentPreference
-    type: many
-  - rel: OrderStatus
-    type: many
-- name: OrderAdjustment
-  relations:
-  - rel: OrderHeader
-    type: one
-  - rel: OrderItem
-    type: one-nofk
-  - rel: OrderItemShipGroup
-    type: one-nofk
-  - rel: OrderItemShipGroupAssoc
-    type: one-nofk
-  - rel: OrderAdjustment
-    type: one-nofk
-- name: VarianceReason
-  relations: []
-- name: ProductPrice
-  relations:
-  - rel: Product
-    type: one
-  - rel: ProductPriceType
-    type: one
-  - rel: ProductPricePurpose
-    type: one
-  - rel: ProductStoreGroup
-    type: one
-  - rel: CustomMethod
-    type: one
-- name: CustomMethod
-  relations:
-  - rel: CustomMethodType
-    type: one
-  - rel: ProductAssoc
-    type: many
-  - rel: ProductPrice
-    type: many
-- name: ProductMeterType
-  relations: []
-- name: OrderItemShipGroupAssoc
-  relations:
-  - rel: OrderHeader
-    type: one
-  - rel: OrderItem
-    type: one
-  - rel: OrderItemShipGroup
-    type: one
-  - rel: OrderAdjustment
-    type: many
-  - rel: OrderItemShipGrpInvRes
-    type: many
 - name: ProdCatalogCategoryType
   relations:
   - rel: ProdCatalogCategoryType
     type: one
   - rel: ProdCatalogCategoryType
     type: many
-- name: FacilityGroupType
-  relations:
-  - rel: FacilityGroup
-    type: many
-- name: ShipmentGatewayUsps
-  relations:
-  - rel: ShipmentGatewayConfig
-    type: one
 - name: ProductAssoc
   relations:
   - rel: ProductAssocType
@@ -413,94 +301,62 @@ edges:
     type: one
   - rel: CustomMethod
     type: one
+- name: SupplierPrefOrder
+  relations: []
+- name: OrderItemShipGrpInvRes
+  relations:
+  - rel: OrderHeader
+    type: one-nofk
+  - rel: OrderItem
+    type: one
+  - rel: OrderItemShipGroup
+    type: one-nofk
+  - rel: OrderItemShipGroupAssoc
+    type: one-nofk
+  - rel: InventoryItemDetail
+    type: many
+- name: FacilityAssocType
+  relations: []
 - name: ProductPricePurpose
   relations:
   - rel: OrderPaymentPreference
     type: many
   - rel: ProductPrice
     type: many
-- name: FacilityGroup
-  relations:
-  - rel: FacilityGroupType
-    type: one
-  - rel: FacilityGroup
-    type: one
-- name: CostComponentType
-  relations:
-  - rel: CostComponentType
-    type: one
-  - rel: CostComponentType
-    type: many
-- name: SupplierPrefOrder
-  relations: []
-- name: FacilityType
-  relations:
-  - rel: FacilityType
-    type: one
-  - rel: FacilityType
-    type: many
-- name: ProductAssocType
-  relations:
-  - rel: ProductAssocType
-    type: one
-  - rel: ProductAssoc
-    type: many
-  - rel: ProductAssocType
-    type: many
-- name: ProductReview
-  relations:
-  - rel: ProductStore
-    type: one
-  - rel: Product
-    type: one
-  - rel: StatusItem
-    type: one
-- name: ContentAssocType
-  relations: []
-- name: RoleType
-  relations:
-  - rel: RoleType
-    type: one
-  - rel: OrderRole
-    type: many
-  - rel: RoleType
-    type: many
-- name: StatusValidChange
-  relations:
-  - rel: StatusItem
-    type: one
-  - rel: StatusItem
-    type: one
-- name: ProductStoreGroup
-  relations:
-  - rel: ProductStoreGroup
-    type: one
-  - rel: ProductPrice
-    type: many
-  - rel: ProductStore
-    type: many
-- name: ProductFeatureCategory
-  relations:
-  - rel: ProductFeatureCategory
-    type: one
-  - rel: ProductFeature
-    type: many
-  - rel: ProductFeatureCategory
-    type: many
-- name: OrderContactMech
+- name: OrderItemShipGroup
   relations:
   - rel: OrderHeader
     type: one
-- name: InventoryItemDetail
-  relations:
-  - rel: OrderItemShipGrpInvRes
-    type: one-nofk
-  - rel: Enumeration
-    type: one
-- name: ProductPriceType
-  relations:
-  - rel: ProductPrice
+  - rel: OrderAdjustment
     type: many
+  - rel: OrderItemShipGroupAssoc
+    type: many
+  - rel: OrderItemShipGrpInvRes
+    type: many
+  - rel: OrderPaymentPreference
+    type: many
+- name: OrderRole
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: RoleType
+    type: one-nofk
+  - rel: OrderItem
+    type: many
+- name: ShipmentGatewayUsps
+  relations:
+  - rel: ShipmentGatewayConfig
+    type: one
+- name: ProductCategoryType
+  relations:
+  - rel: ProductCategoryType
+    type: one
+  - rel: ProductCategory
+    type: many
+  - rel: ProductCategoryType
+    type: many
+- name: ProductPriceActionType
+  relations: []
 - name: Product
   relations:
   - rel: ProductType
@@ -525,20 +381,122 @@ edges:
     type: many
   - rel: ProductReview
     type: many
-- name: ShipmentGatewayUps
+- name: ProductFeatureIactnType
   relations:
-  - rel: ShipmentGatewayConfig
+  - rel: ProductFeatureIactnType
     type: one
-- name: ShipmentGatewayFedex
-  relations:
-  - rel: ShipmentGatewayConfig
-    type: one
-- name: ProductCategoryContentType
-  relations:
-  - rel: ProductCategoryContentType
-    type: one
-  - rel: ProductCategoryContentType
+  - rel: ProductFeatureIactnType
     type: many
+- name: FacilityGroupType
+  relations:
+  - rel: FacilityGroup
+    type: many
+- name: SubscriptionType
+  relations:
+  - rel: SubscriptionType
+    type: one
+  - rel: SubscriptionType
+    type: many
+- name: OrderItem
+  relations:
+  - rel: OrderHeader
+    type: one
+  - rel: Product
+    type: one
+  - rel: StatusItem
+    type: one
+  - rel: StatusValidChange
+    type: many
+  - rel: StatusItem
+    type: one
+  - rel: OrderAdjustment
+    type: many
+  - rel: OrderItemShipGroupAssoc
+    type: many
+  - rel: OrderItemShipGrpInvRes
+    type: many
+  - rel: OrderPaymentPreference
+    type: many
+  - rel: OrderStatus
+    type: many
+- name: EnumerationType
+  relations:
+  - rel: EnumerationType
+    type: one
+  - rel: Enumeration
+    type: many
+  - rel: EnumerationType
+    type: many
+- name: CostComponentType
+  relations:
+  - rel: CostComponentType
+    type: one
+  - rel: CostComponentType
+    type: many
+- name: ShipmentGatewayDhl
+  relations:
+  - rel: ShipmentGatewayConfig
+    type: one
+- name: ShipmentGatewayConfig
+  relations:
+  - rel: ShipmentGatewayConfigType
+    type: one
+  - rel: ShipmentGatewayDhl
+    type: one-nofk
+  - rel: ShipmentGatewayFedex
+    type: one-nofk
+  - rel: ShipmentGatewayUps
+    type: one-nofk
+  - rel: ShipmentGatewayUsps
+    type: one-nofk
+- name: OrderHeader
+  relations:
+  - rel: Enumeration
+    type: one
+  - rel: ProductStore
+    type: one
+  - rel: StatusItem
+    type: one
+  - rel: StatusItem
+    type: one
+  - rel: OrderAdjustment
+    type: many
+  - rel: OrderContactMech
+    type: many
+  - rel: OrderItem
+    type: many
+  - rel: OrderItemShipGroup
+    type: many
+  - rel: OrderItemShipGroupAssoc
+    type: many
+  - rel: OrderItemShipGrpInvRes
+    type: many
+  - rel: OrderPaymentPreference
+    type: many
+  - rel: OrderRole
+    type: many
+  - rel: OrderStatus
+    type: many
+- name: FacilityType
+  relations:
+  - rel: FacilityType
+    type: one
+  - rel: FacilityType
+    type: many
+- name: ProductFeature
+  relations:
+  - rel: ProductFeatureCategory
+    type: one
+  - rel: ProductFeatureType
+    type: one
+- name: FacilityGroup
+  relations:
+  - rel: FacilityGroupType
+    type: one
+  - rel: FacilityGroup
+    type: one
+- name: ProductConfigItem
+  relations: []
 - name: OrderStatus
   relations:
   - rel: StatusItem
@@ -549,11 +507,53 @@ edges:
     type: one-nofk
   - rel: OrderPaymentPreference
     type: one-nofk
-- name: ProductFeatureIactnType
+- name: ProductMaintType
   relations:
-  - rel: ProductFeatureIactnType
+  - rel: ProductMaintType
     type: one
-  - rel: ProductFeatureIactnType
+  - rel: ProductMaintType
+    type: many
+- name: ProductContentType
+  relations:
+  - rel: ProductContentType
+    type: one
+  - rel: ProductContentType
+    type: many
+- name: ProductCategory
+  relations:
+  - rel: ProductCategoryType
+    type: one
+  - rel: ProductCategory
+    type: one
+  - rel: ProductCategory
+    type: many
+  - rel: Product
+    type: many
+- name: ProductMeterType
+  relations: []
+- name: ShipmentContactMechType
+  relations: []
+- name: ContentType
+  relations:
+  - rel: ContentType
+    type: one
+  - rel: ContentType
+    type: many
+- name: ShipmentGatewayUps
+  relations:
+  - rel: ShipmentGatewayConfig
+    type: one
+- name: ShipmentGatewayFedex
+  relations:
+  - rel: ShipmentGatewayConfig
+    type: one
+- name: StatusType
+  relations:
+  - rel: StatusType
+    type: one
+  - rel: StatusItem
+    type: many
+  - rel: StatusType
     type: many
 entities:
   ContentAssocType: contentassoctype.json

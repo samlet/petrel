@@ -7,7 +7,8 @@ import (
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 	"github.com/samlet/petrel/alfin"
-	"github.com/samlet/petrel/alfin/modules/workeffort/seedcreators"
+	//catalog "github.com/samlet/petrel/alfin/modules/catalog/seedcreators"
+	//workeffort "github.com/samlet/petrel/alfin/modules/workeffort/seedcreators"
 	"os"
 	"strings"
 )
@@ -100,9 +101,13 @@ func CreateMod(modName string){
 	alfin.CreateMod(modName)
 }
 
-func LoadSeed(){
-	seedcreators.LoadSeeds(true)
-}
+//func LoadSeed(){
+//	workeffort.LoadSeeds(true)
+//}
+//
+//func LoadCatalog(){
+//	catalog.LoadSeeds(true)
+//}
 
 /**
 $ mage check

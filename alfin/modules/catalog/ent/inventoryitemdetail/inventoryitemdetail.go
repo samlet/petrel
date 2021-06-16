@@ -17,8 +17,6 @@ const (
 	FieldUpdateTime = "update_time"
 	// FieldStringRef holds the string denoting the string_ref field in the database.
 	FieldStringRef = "string_ref"
-	// FieldInventoryItemID holds the string denoting the inventory_item_id field in the database.
-	FieldInventoryItemID = "inventory_item_id"
 	// FieldInventoryItemDetailSeqID holds the string denoting the inventory_item_detail_seq_id field in the database.
 	FieldInventoryItemDetailSeqID = "inventory_item_detail_seq_id"
 	// FieldEffectiveDate holds the string denoting the effective_date field in the database.
@@ -85,7 +83,6 @@ var Columns = []string{
 	FieldCreateTime,
 	FieldUpdateTime,
 	FieldStringRef,
-	FieldInventoryItemID,
 	FieldInventoryItemDetailSeqID,
 	FieldEffectiveDate,
 	FieldQuantityOnHandDiff,

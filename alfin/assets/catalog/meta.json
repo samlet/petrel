@@ -3,83 +3,104 @@
   "package": "catalog",
   "total": 66,
   "entities": {
-    "OrderItemShipGrpInvRes": "orderitemshipgrpinvres.json",
-    "ProductStore": "productstore.json",
-    "OrderRole": "orderrole.json",
-    "OrderPaymentPreference": "orderpaymentpreference.json",
-    "ShipmentGatewayConfig": "shipmentgatewayconfig.json",
-    "GoodIdentificationType": "goodidentificationtype.json",
-    "ProductType": "producttype.json",
-    "StatusType": "statustype.json",
-    "ContentType": "contenttype.json",
-    "RejectionReason": "rejectionreason.json",
-    "ShipmentGatewayConfigType": "shipmentgatewayconfigtype.json",
+    "RoleType": "roletype.json",
     "QuantityBreakType": "quantitybreaktype.json",
-    "OrderHeader": "orderheader.json",
-    "ProductContentType": "productcontenttype.json",
-    "OrderItemShipGroup": "orderitemshipgroup.json",
-    "ShipmentContactMechType": "shipmentcontactmechtype.json",
+    "OrderPaymentPreference": "orderpaymentpreference.json",
+    "ProductReview": "productreview.json",
+    "OrderContactMech": "ordercontactmech.json",
+    "ProductType": "producttype.json",
+    "StatusValidChange": "statusvalidchange.json",
+    "RejectionReason": "rejectionreason.json",
+    "ProductPriceType": "productpricetype.json",
+    "InventoryItemType": "inventoryitemtype.json",
+    "ProductStore": "productstore.json",
+    "ContentAssocType": "contentassoctype.json",
     "CustomMethodType": "custommethodtype.json",
     "ShipmentType": "shipmenttype.json",
-    "ProductCategoryType": "productcategorytype.json",
-    "ProductCategory": "productcategory.json",
-    "ProductPriceActionType": "productpriceactiontype.json",
-    "ShipmentGatewayDhl": "shipmentgatewaydhl.json",
-    "SubscriptionType": "subscriptiontype.json",
-    "InventoryItemType": "inventoryitemtype.json",
-    "FacilityAssocType": "facilityassoctype.json",
-    "EnumerationType": "enumerationtype.json",
-    "ProductMaintType": "productmainttype.json",
-    "StatusItem": "statusitem.json",
-    "ProductFeature": "productfeature.json",
-    "ProdConfItemContentType": "prodconfitemcontenttype.json",
+    "ShipmentGatewayConfigType": "shipmentgatewayconfigtype.json",
     "ProductFeatureType": "productfeaturetype.json",
-    "ProductFeatureApplType": "productfeatureappltype.json",
-    "ProductConfigItem": "productconfigitem.json",
-    "Enumeration": "enumeration.json",
-    "OrderItem": "orderitem.json",
-    "OrderAdjustment": "orderadjustment.json",
-    "VarianceReason": "variancereason.json",
-    "ProductPrice": "productprice.json",
-    "CustomMethod": "custommethod.json",
-    "ProductMeterType": "productmetertype.json",
-    "OrderItemShipGroupAssoc": "orderitemshipgroupassoc.json",
-    "ProdCatalogCategoryType": "prodcatalogcategorytype.json",
-    "FacilityGroupType": "facilitygrouptype.json",
-    "ShipmentGatewayUsps": "shipmentgatewayusps.json",
-    "ProductAssoc": "productassoc.json",
-    "ProductPricePurpose": "productpricepurpose.json",
-    "FacilityGroup": "facilitygroup.json",
-    "CostComponentType": "costcomponenttype.json",
-    "SupplierPrefOrder": "supplierpreforder.json",
-    "FacilityType": "facilitytype.json",
+    "StatusItem": "statusitem.json",
+    "GoodIdentificationType": "goodidentificationtype.json",
     "ProductAssocType": "productassoctype.json",
-    "ProductReview": "productreview.json",
-    "ContentAssocType": "contentassoctype.json",
-    "RoleType": "roletype.json",
-    "StatusValidChange": "statusvalidchange.json",
+    "ProductPrice": "productprice.json",
     "ProductStoreGroup": "productstoregroup.json",
-    "ProductFeatureCategory": "productfeaturecategory.json",
-    "OrderContactMech": "ordercontactmech.json",
+    "ProdConfItemContentType": "prodconfitemcontenttype.json",
+    "OrderAdjustment": "orderadjustment.json",
+    "ProductFeatureApplType": "productfeatureappltype.json",
+    "ProductCategoryContentType": "productcategorycontenttype.json",
+    "VarianceReason": "variancereason.json",
     "InventoryItemDetail": "inventoryitemdetail.json",
-    "ProductPriceType": "productpricetype.json",
+    "ProductFeatureCategory": "productfeaturecategory.json",
+    "CustomMethod": "custommethod.json",
+    "OrderItemShipGroupAssoc": "orderitemshipgroupassoc.json",
+    "Enumeration": "enumeration.json",
+    "ProdCatalogCategoryType": "prodcatalogcategorytype.json",
+    "ProductAssoc": "productassoc.json",
+    "SupplierPrefOrder": "supplierpreforder.json",
+    "OrderItemShipGrpInvRes": "orderitemshipgrpinvres.json",
+    "FacilityAssocType": "facilityassoctype.json",
+    "ProductPricePurpose": "productpricepurpose.json",
+    "OrderItemShipGroup": "orderitemshipgroup.json",
+    "OrderRole": "orderrole.json",
+    "ShipmentGatewayUsps": "shipmentgatewayusps.json",
+    "ProductCategoryType": "productcategorytype.json",
+    "ProductPriceActionType": "productpriceactiontype.json",
     "Product": "product.json",
+    "ProductFeatureIactnType": "productfeatureiactntype.json",
+    "FacilityGroupType": "facilitygrouptype.json",
+    "SubscriptionType": "subscriptiontype.json",
+    "OrderItem": "orderitem.json",
+    "EnumerationType": "enumerationtype.json",
+    "CostComponentType": "costcomponenttype.json",
+    "ShipmentGatewayDhl": "shipmentgatewaydhl.json",
+    "ShipmentGatewayConfig": "shipmentgatewayconfig.json",
+    "OrderHeader": "orderheader.json",
+    "FacilityType": "facilitytype.json",
+    "ProductFeature": "productfeature.json",
+    "FacilityGroup": "facilitygroup.json",
+    "ProductConfigItem": "productconfigitem.json",
+    "OrderStatus": "orderstatus.json",
+    "ProductMaintType": "productmainttype.json",
+    "ProductContentType": "productcontenttype.json",
+    "ProductCategory": "productcategory.json",
+    "ProductMeterType": "productmetertype.json",
+    "ShipmentContactMechType": "shipmentcontactmechtype.json",
+    "ContentType": "contenttype.json",
     "ShipmentGatewayUps": "shipmentgatewayups.json",
     "ShipmentGatewayFedex": "shipmentgatewayfedex.json",
-    "ProductCategoryContentType": "productcategorycontenttype.json",
-    "OrderStatus": "orderstatus.json",
-    "ProductFeatureIactnType": "productfeatureiactntype.json"
+    "StatusType": "statustype.json"
   },
   "edges": [
     {
-      "name": "OrderItemShipGrpInvRes",
+      "name": "RoleType",
       "relations": [
         {
-          "type": "one-nofk",
+          "type": "one",
+          "rel": "RoleType"
+        },
+        {
+          "type": "many",
+          "rel": "OrderRole"
+        },
+        {
+          "type": "many",
+          "rel": "RoleType"
+        }
+      ]
+    },
+    {
+      "name": "QuantityBreakType",
+      "relations": []
+    },
+    {
+      "name": "OrderPaymentPreference",
+      "relations": [
+        {
+          "type": "one",
           "rel": "OrderHeader"
         },
         {
-          "type": "one",
+          "type": "one-nofk",
           "rel": "OrderItem"
         },
         {
@@ -87,12 +108,102 @@
           "rel": "OrderItemShipGroup"
         },
         {
-          "type": "one-nofk",
-          "rel": "OrderItemShipGroupAssoc"
+          "type": "one",
+          "rel": "ProductPricePurpose"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
         },
         {
           "type": "many",
-          "rel": "InventoryItemDetail"
+          "rel": "OrderStatus"
+        }
+      ]
+    },
+    {
+      "name": "ProductReview",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductStore"
+        },
+        {
+          "type": "one",
+          "rel": "Product"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        }
+      ]
+    },
+    {
+      "name": "OrderContactMech",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        }
+      ]
+    },
+    {
+      "name": "ProductType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductType"
+        },
+        {
+          "type": "many",
+          "rel": "Product"
+        },
+        {
+          "type": "many",
+          "rel": "ProductType"
+        }
+      ]
+    },
+    {
+      "name": "StatusValidChange",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        }
+      ]
+    },
+    {
+      "name": "RejectionReason",
+      "relations": []
+    },
+    {
+      "name": "ProductPriceType",
+      "relations": [
+        {
+          "type": "many",
+          "rel": "ProductPrice"
+        }
+      ]
+    },
+    {
+      "name": "InventoryItemType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "InventoryItemType"
+        },
+        {
+          "type": "many",
+          "rel": "InventoryItemType"
+        },
+        {
+          "type": "many",
+          "rel": "Product"
         }
       ]
     },
@@ -158,262 +269,7 @@
       ]
     },
     {
-      "name": "OrderRole",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "RoleType"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItem"
-        }
-      ]
-    },
-    {
-      "name": "OrderPaymentPreference",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "OrderItem"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "OrderItemShipGroup"
-        },
-        {
-          "type": "one",
-          "rel": "ProductPricePurpose"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "many",
-          "rel": "OrderStatus"
-        }
-      ]
-    },
-    {
-      "name": "ShipmentGatewayConfig",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ShipmentGatewayConfigType"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "ShipmentGatewayDhl"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "ShipmentGatewayFedex"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "ShipmentGatewayUps"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "ShipmentGatewayUsps"
-        }
-      ]
-    },
-    {
-      "name": "GoodIdentificationType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "GoodIdentificationType"
-        },
-        {
-          "type": "many",
-          "rel": "GoodIdentificationType"
-        }
-      ]
-    },
-    {
-      "name": "ProductType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductType"
-        },
-        {
-          "type": "many",
-          "rel": "Product"
-        },
-        {
-          "type": "many",
-          "rel": "ProductType"
-        }
-      ]
-    },
-    {
-      "name": "StatusType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "StatusType"
-        },
-        {
-          "type": "many",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "many",
-          "rel": "StatusType"
-        }
-      ]
-    },
-    {
-      "name": "ContentType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ContentType"
-        },
-        {
-          "type": "many",
-          "rel": "ContentType"
-        }
-      ]
-    },
-    {
-      "name": "RejectionReason",
-      "relations": []
-    },
-    {
-      "name": "ShipmentGatewayConfigType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ShipmentGatewayConfigType"
-        },
-        {
-          "type": "many",
-          "rel": "ShipmentGatewayConfigType"
-        },
-        {
-          "type": "many",
-          "rel": "ShipmentGatewayConfig"
-        },
-        {
-          "type": "many",
-          "rel": "ShipmentGatewayConfigType"
-        }
-      ]
-    },
-    {
-      "name": "QuantityBreakType",
-      "relations": []
-    },
-    {
-      "name": "OrderHeader",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "Enumeration"
-        },
-        {
-          "type": "one",
-          "rel": "ProductStore"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "many",
-          "rel": "OrderAdjustment"
-        },
-        {
-          "type": "many",
-          "rel": "OrderContactMech"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItem"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGroup"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGroupAssoc"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGrpInvRes"
-        },
-        {
-          "type": "many",
-          "rel": "OrderPaymentPreference"
-        },
-        {
-          "type": "many",
-          "rel": "OrderRole"
-        },
-        {
-          "type": "many",
-          "rel": "OrderStatus"
-        }
-      ]
-    },
-    {
-      "name": "ProductContentType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductContentType"
-        },
-        {
-          "type": "many",
-          "rel": "ProductContentType"
-        }
-      ]
-    },
-    {
-      "name": "OrderItemShipGroup",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "many",
-          "rel": "OrderAdjustment"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGroupAssoc"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGrpInvRes"
-        },
-        {
-          "type": "many",
-          "rel": "OrderPaymentPreference"
-        }
-      ]
-    },
-    {
-      "name": "ShipmentContactMechType",
+      "name": "ContentAssocType",
       "relations": []
     },
     {
@@ -447,117 +303,40 @@
       ]
     },
     {
-      "name": "ProductCategoryType",
+      "name": "ShipmentGatewayConfigType",
       "relations": [
         {
           "type": "one",
-          "rel": "ProductCategoryType"
+          "rel": "ShipmentGatewayConfigType"
         },
         {
           "type": "many",
-          "rel": "ProductCategory"
+          "rel": "ShipmentGatewayConfigType"
         },
         {
           "type": "many",
-          "rel": "ProductCategoryType"
-        }
-      ]
-    },
-    {
-      "name": "ProductCategory",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductCategoryType"
-        },
-        {
-          "type": "one",
-          "rel": "ProductCategory"
-        },
-        {
-          "type": "many",
-          "rel": "ProductCategory"
-        },
-        {
-          "type": "many",
-          "rel": "Product"
-        }
-      ]
-    },
-    {
-      "name": "ProductPriceActionType",
-      "relations": []
-    },
-    {
-      "name": "ShipmentGatewayDhl",
-      "relations": [
-        {
-          "type": "one",
           "rel": "ShipmentGatewayConfig"
+        },
+        {
+          "type": "many",
+          "rel": "ShipmentGatewayConfigType"
         }
       ]
     },
     {
-      "name": "SubscriptionType",
+      "name": "ProductFeatureType",
       "relations": [
         {
           "type": "one",
-          "rel": "SubscriptionType"
+          "rel": "ProductFeatureType"
         },
         {
           "type": "many",
-          "rel": "SubscriptionType"
-        }
-      ]
-    },
-    {
-      "name": "InventoryItemType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "InventoryItemType"
+          "rel": "ProductFeature"
         },
         {
           "type": "many",
-          "rel": "InventoryItemType"
-        },
-        {
-          "type": "many",
-          "rel": "Product"
-        }
-      ]
-    },
-    {
-      "name": "FacilityAssocType",
-      "relations": []
-    },
-    {
-      "name": "EnumerationType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "EnumerationType"
-        },
-        {
-          "type": "many",
-          "rel": "Enumeration"
-        },
-        {
-          "type": "many",
-          "rel": "EnumerationType"
-        }
-      ]
-    },
-    {
-      "name": "ProductMaintType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductMaintType"
-        },
-        {
-          "type": "many",
-          "rel": "ProductMaintType"
+          "rel": "ProductFeatureType"
         }
       ]
     },
@@ -635,15 +414,74 @@
       ]
     },
     {
-      "name": "ProductFeature",
+      "name": "GoodIdentificationType",
       "relations": [
         {
           "type": "one",
-          "rel": "ProductFeatureCategory"
+          "rel": "GoodIdentificationType"
+        },
+        {
+          "type": "many",
+          "rel": "GoodIdentificationType"
+        }
+      ]
+    },
+    {
+      "name": "ProductAssocType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductAssocType"
+        },
+        {
+          "type": "many",
+          "rel": "ProductAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "ProductAssocType"
+        }
+      ]
+    },
+    {
+      "name": "ProductPrice",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "Product"
         },
         {
           "type": "one",
-          "rel": "ProductFeatureType"
+          "rel": "ProductPriceType"
+        },
+        {
+          "type": "one",
+          "rel": "ProductPricePurpose"
+        },
+        {
+          "type": "one",
+          "rel": "ProductStoreGroup"
+        },
+        {
+          "type": "one",
+          "rel": "CustomMethod"
+        }
+      ]
+    },
+    {
+      "name": "ProductStoreGroup",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductStoreGroup"
+        },
+        {
+          "type": "many",
+          "rel": "ProductPrice"
+        },
+        {
+          "type": "many",
+          "rel": "ProductStore"
         }
       ]
     },
@@ -661,19 +499,27 @@
       ]
     },
     {
-      "name": "ProductFeatureType",
+      "name": "OrderAdjustment",
       "relations": [
         {
           "type": "one",
-          "rel": "ProductFeatureType"
+          "rel": "OrderHeader"
         },
         {
-          "type": "many",
-          "rel": "ProductFeature"
+          "type": "one-nofk",
+          "rel": "OrderItem"
         },
         {
-          "type": "many",
-          "rel": "ProductFeatureType"
+          "type": "one-nofk",
+          "rel": "OrderItemShipGroup"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderAdjustment"
         }
       ]
     },
@@ -691,8 +537,93 @@
       ]
     },
     {
-      "name": "ProductConfigItem",
+      "name": "ProductCategoryContentType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductCategoryContentType"
+        },
+        {
+          "type": "many",
+          "rel": "ProductCategoryContentType"
+        }
+      ]
+    },
+    {
+      "name": "VarianceReason",
       "relations": []
+    },
+    {
+      "name": "InventoryItemDetail",
+      "relations": [
+        {
+          "type": "one-nofk",
+          "rel": "OrderItemShipGrpInvRes"
+        },
+        {
+          "type": "one",
+          "rel": "Enumeration"
+        }
+      ]
+    },
+    {
+      "name": "ProductFeatureCategory",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductFeatureCategory"
+        },
+        {
+          "type": "many",
+          "rel": "ProductFeature"
+        },
+        {
+          "type": "many",
+          "rel": "ProductFeatureCategory"
+        }
+      ]
+    },
+    {
+      "name": "CustomMethod",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "CustomMethodType"
+        },
+        {
+          "type": "many",
+          "rel": "ProductAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "ProductPrice"
+        }
+      ]
+    },
+    {
+      "name": "OrderItemShipGroupAssoc",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItem"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItemShipGroup"
+        },
+        {
+          "type": "many",
+          "rel": "OrderAdjustment"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGrpInvRes"
+        }
+      ]
     },
     {
       "name": "Enumeration",
@@ -740,151 +671,6 @@
       ]
     },
     {
-      "name": "OrderItem",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "one",
-          "rel": "Product"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "many",
-          "rel": "StatusValidChange"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "many",
-          "rel": "OrderAdjustment"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGroupAssoc"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGrpInvRes"
-        },
-        {
-          "type": "many",
-          "rel": "OrderPaymentPreference"
-        },
-        {
-          "type": "many",
-          "rel": "OrderStatus"
-        }
-      ]
-    },
-    {
-      "name": "OrderAdjustment",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "OrderItem"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "OrderItemShipGroup"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "OrderItemShipGroupAssoc"
-        },
-        {
-          "type": "one-nofk",
-          "rel": "OrderAdjustment"
-        }
-      ]
-    },
-    {
-      "name": "VarianceReason",
-      "relations": []
-    },
-    {
-      "name": "ProductPrice",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "Product"
-        },
-        {
-          "type": "one",
-          "rel": "ProductPriceType"
-        },
-        {
-          "type": "one",
-          "rel": "ProductPricePurpose"
-        },
-        {
-          "type": "one",
-          "rel": "ProductStoreGroup"
-        },
-        {
-          "type": "one",
-          "rel": "CustomMethod"
-        }
-      ]
-    },
-    {
-      "name": "CustomMethod",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "CustomMethodType"
-        },
-        {
-          "type": "many",
-          "rel": "ProductAssoc"
-        },
-        {
-          "type": "many",
-          "rel": "ProductPrice"
-        }
-      ]
-    },
-    {
-      "name": "ProductMeterType",
-      "relations": []
-    },
-    {
-      "name": "OrderItemShipGroupAssoc",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "OrderHeader"
-        },
-        {
-          "type": "one",
-          "rel": "OrderItem"
-        },
-        {
-          "type": "one",
-          "rel": "OrderItemShipGroup"
-        },
-        {
-          "type": "many",
-          "rel": "OrderAdjustment"
-        },
-        {
-          "type": "many",
-          "rel": "OrderItemShipGrpInvRes"
-        }
-      ]
-    },
-    {
       "name": "ProdCatalogCategoryType",
       "relations": [
         {
@@ -894,24 +680,6 @@
         {
           "type": "many",
           "rel": "ProdCatalogCategoryType"
-        }
-      ]
-    },
-    {
-      "name": "FacilityGroupType",
-      "relations": [
-        {
-          "type": "many",
-          "rel": "FacilityGroup"
-        }
-      ]
-    },
-    {
-      "name": "ShipmentGatewayUsps",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ShipmentGatewayConfig"
         }
       ]
     },
@@ -937,6 +705,39 @@
       ]
     },
     {
+      "name": "SupplierPrefOrder",
+      "relations": []
+    },
+    {
+      "name": "OrderItemShipGrpInvRes",
+      "relations": [
+        {
+          "type": "one-nofk",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "OrderItem"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderItemShipGroup"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "InventoryItemDetail"
+        }
+      ]
+    },
+    {
+      "name": "FacilityAssocType",
+      "relations": []
+    },
+    {
       "name": "ProductPricePurpose",
       "relations": [
         {
@@ -950,180 +751,76 @@
       ]
     },
     {
-      "name": "FacilityGroup",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "FacilityGroupType"
-        },
-        {
-          "type": "one",
-          "rel": "FacilityGroup"
-        }
-      ]
-    },
-    {
-      "name": "CostComponentType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "CostComponentType"
-        },
-        {
-          "type": "many",
-          "rel": "CostComponentType"
-        }
-      ]
-    },
-    {
-      "name": "SupplierPrefOrder",
-      "relations": []
-    },
-    {
-      "name": "FacilityType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "FacilityType"
-        },
-        {
-          "type": "many",
-          "rel": "FacilityType"
-        }
-      ]
-    },
-    {
-      "name": "ProductAssocType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductAssocType"
-        },
-        {
-          "type": "many",
-          "rel": "ProductAssoc"
-        },
-        {
-          "type": "many",
-          "rel": "ProductAssocType"
-        }
-      ]
-    },
-    {
-      "name": "ProductReview",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductStore"
-        },
-        {
-          "type": "one",
-          "rel": "Product"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        }
-      ]
-    },
-    {
-      "name": "ContentAssocType",
-      "relations": []
-    },
-    {
-      "name": "RoleType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "RoleType"
-        },
-        {
-          "type": "many",
-          "rel": "OrderRole"
-        },
-        {
-          "type": "many",
-          "rel": "RoleType"
-        }
-      ]
-    },
-    {
-      "name": "StatusValidChange",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        },
-        {
-          "type": "one",
-          "rel": "StatusItem"
-        }
-      ]
-    },
-    {
-      "name": "ProductStoreGroup",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductStoreGroup"
-        },
-        {
-          "type": "many",
-          "rel": "ProductPrice"
-        },
-        {
-          "type": "many",
-          "rel": "ProductStore"
-        }
-      ]
-    },
-    {
-      "name": "ProductFeatureCategory",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductFeatureCategory"
-        },
-        {
-          "type": "many",
-          "rel": "ProductFeature"
-        },
-        {
-          "type": "many",
-          "rel": "ProductFeatureCategory"
-        }
-      ]
-    },
-    {
-      "name": "OrderContactMech",
+      "name": "OrderItemShipGroup",
       "relations": [
         {
           "type": "one",
           "rel": "OrderHeader"
-        }
-      ]
-    },
-    {
-      "name": "InventoryItemDetail",
-      "relations": [
+        },
         {
-          "type": "one-nofk",
+          "type": "many",
+          "rel": "OrderAdjustment"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "many",
           "rel": "OrderItemShipGrpInvRes"
         },
         {
-          "type": "one",
-          "rel": "Enumeration"
+          "type": "many",
+          "rel": "OrderPaymentPreference"
         }
       ]
     },
     {
-      "name": "ProductPriceType",
+      "name": "OrderRole",
       "relations": [
         {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "RoleType"
+        },
+        {
           "type": "many",
-          "rel": "ProductPrice"
+          "rel": "OrderItem"
         }
       ]
+    },
+    {
+      "name": "ShipmentGatewayUsps",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ShipmentGatewayConfig"
+        }
+      ]
+    },
+    {
+      "name": "ProductCategoryType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductCategoryType"
+        },
+        {
+          "type": "many",
+          "rel": "ProductCategory"
+        },
+        {
+          "type": "many",
+          "rel": "ProductCategoryType"
+        }
+      ]
+    },
+    {
+      "name": "ProductPriceActionType",
+      "relations": []
     },
     {
       "name": "Product",
@@ -1175,35 +872,248 @@
       ]
     },
     {
-      "name": "ShipmentGatewayUps",
+      "name": "ProductFeatureIactnType",
       "relations": [
         {
           "type": "one",
-          "rel": "ShipmentGatewayConfig"
-        }
-      ]
-    },
-    {
-      "name": "ShipmentGatewayFedex",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ShipmentGatewayConfig"
-        }
-      ]
-    },
-    {
-      "name": "ProductCategoryContentType",
-      "relations": [
-        {
-          "type": "one",
-          "rel": "ProductCategoryContentType"
+          "rel": "ProductFeatureIactnType"
         },
         {
           "type": "many",
-          "rel": "ProductCategoryContentType"
+          "rel": "ProductFeatureIactnType"
         }
       ]
+    },
+    {
+      "name": "FacilityGroupType",
+      "relations": [
+        {
+          "type": "many",
+          "rel": "FacilityGroup"
+        }
+      ]
+    },
+    {
+      "name": "SubscriptionType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "SubscriptionType"
+        },
+        {
+          "type": "many",
+          "rel": "SubscriptionType"
+        }
+      ]
+    },
+    {
+      "name": "OrderItem",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "OrderHeader"
+        },
+        {
+          "type": "one",
+          "rel": "Product"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "many",
+          "rel": "StatusValidChange"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "many",
+          "rel": "OrderAdjustment"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGrpInvRes"
+        },
+        {
+          "type": "many",
+          "rel": "OrderPaymentPreference"
+        },
+        {
+          "type": "many",
+          "rel": "OrderStatus"
+        }
+      ]
+    },
+    {
+      "name": "EnumerationType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "EnumerationType"
+        },
+        {
+          "type": "many",
+          "rel": "Enumeration"
+        },
+        {
+          "type": "many",
+          "rel": "EnumerationType"
+        }
+      ]
+    },
+    {
+      "name": "CostComponentType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "CostComponentType"
+        },
+        {
+          "type": "many",
+          "rel": "CostComponentType"
+        }
+      ]
+    },
+    {
+      "name": "ShipmentGatewayDhl",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ShipmentGatewayConfig"
+        }
+      ]
+    },
+    {
+      "name": "ShipmentGatewayConfig",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ShipmentGatewayConfigType"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "ShipmentGatewayDhl"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "ShipmentGatewayFedex"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "ShipmentGatewayUps"
+        },
+        {
+          "type": "one-nofk",
+          "rel": "ShipmentGatewayUsps"
+        }
+      ]
+    },
+    {
+      "name": "OrderHeader",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "Enumeration"
+        },
+        {
+          "type": "one",
+          "rel": "ProductStore"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "one",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "many",
+          "rel": "OrderAdjustment"
+        },
+        {
+          "type": "many",
+          "rel": "OrderContactMech"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItem"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroup"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGroupAssoc"
+        },
+        {
+          "type": "many",
+          "rel": "OrderItemShipGrpInvRes"
+        },
+        {
+          "type": "many",
+          "rel": "OrderPaymentPreference"
+        },
+        {
+          "type": "many",
+          "rel": "OrderRole"
+        },
+        {
+          "type": "many",
+          "rel": "OrderStatus"
+        }
+      ]
+    },
+    {
+      "name": "FacilityType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "FacilityType"
+        },
+        {
+          "type": "many",
+          "rel": "FacilityType"
+        }
+      ]
+    },
+    {
+      "name": "ProductFeature",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductFeatureCategory"
+        },
+        {
+          "type": "one",
+          "rel": "ProductFeatureType"
+        }
+      ]
+    },
+    {
+      "name": "FacilityGroup",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "FacilityGroupType"
+        },
+        {
+          "type": "one",
+          "rel": "FacilityGroup"
+        }
+      ]
+    },
+    {
+      "name": "ProductConfigItem",
+      "relations": []
     },
     {
       "name": "OrderStatus",
@@ -1227,15 +1137,105 @@
       ]
     },
     {
-      "name": "ProductFeatureIactnType",
+      "name": "ProductMaintType",
       "relations": [
         {
           "type": "one",
-          "rel": "ProductFeatureIactnType"
+          "rel": "ProductMaintType"
         },
         {
           "type": "many",
-          "rel": "ProductFeatureIactnType"
+          "rel": "ProductMaintType"
+        }
+      ]
+    },
+    {
+      "name": "ProductContentType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductContentType"
+        },
+        {
+          "type": "many",
+          "rel": "ProductContentType"
+        }
+      ]
+    },
+    {
+      "name": "ProductCategory",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ProductCategoryType"
+        },
+        {
+          "type": "one",
+          "rel": "ProductCategory"
+        },
+        {
+          "type": "many",
+          "rel": "ProductCategory"
+        },
+        {
+          "type": "many",
+          "rel": "Product"
+        }
+      ]
+    },
+    {
+      "name": "ProductMeterType",
+      "relations": []
+    },
+    {
+      "name": "ShipmentContactMechType",
+      "relations": []
+    },
+    {
+      "name": "ContentType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ContentType"
+        },
+        {
+          "type": "many",
+          "rel": "ContentType"
+        }
+      ]
+    },
+    {
+      "name": "ShipmentGatewayUps",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ShipmentGatewayConfig"
+        }
+      ]
+    },
+    {
+      "name": "ShipmentGatewayFedex",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "ShipmentGatewayConfig"
+        }
+      ]
+    },
+    {
+      "name": "StatusType",
+      "relations": [
+        {
+          "type": "one",
+          "rel": "StatusType"
+        },
+        {
+          "type": "many",
+          "rel": "StatusItem"
+        },
+        {
+          "type": "many",
+          "rel": "StatusType"
         }
       ]
     }

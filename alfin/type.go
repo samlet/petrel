@@ -95,7 +95,7 @@ func (t ModelEntity) Indexes() string {
 func (t ModelEntity) NormalFields() []*ModelField {
 	result := []*ModelField{}
 	for _, f := range t.Fields {
-		if !f.AutoCreatedInternal && !t.isRelationField(f.Name) {
+		if !f.AutoCreatedInternal && !t.isRelationField(f.Name) && f.Name!=t.Pks[0]{
 			result = append(result, f)
 		}
 	}
@@ -143,6 +143,10 @@ func (t ModelField) SetterName() string{
 	name:= "Set"+strcase.ToCamel(t.Name)
 	if strings.HasSuffix(name, "Id"){
 		name=strings.TrimRight(name, "Id")+"ID"
+	}else if strings.HasSuffix(name, "Url"){
+		name=strings.TrimRight(name, "Url")+"URL"
+	}else if strings.Contains(name, "Url"){
+		name=strings.ReplaceAll(name, "Url","URL")
 	}
 	return name
 }
@@ -264,7 +268,8 @@ func (t ModelRelation) AdderName() string{
 
 func (t ModelRelation) SetterName() string{
 	if t.SelfRelation{
-		if strings.HasPrefix(t.Name, "Parent"){
+		if strings.HasPrefix(t.Name, "Parent") ||
+			strings.HasPrefix(t.Name, "PrimaryParent"){
 			return "SetParent"
 		}
 	}

@@ -9,7 +9,7 @@ import (
 )
 
 func CreateProduct(ctx context.Context) error {
-	log.Println("creator", common.Version)
+	log.Println("Product creator", common.Version)
 	client := ent.FromContext(ctx)
 	cache := cachecomp.FromContext(ctx)
 
@@ -19,8 +19,8 @@ func CreateProduct(ctx context.Context) error {
 	c, err = client.Product.Create().SetStringRef("demoproduct__product").
 		SetInternalName("Test Product").
 		SetProductName("Demo Product").
-		SetIsVirtual("Y").
-		SetIsVariant("N").
+		SetIsVirtual("Yes").
+		SetIsVariant("No").
 		SetCreatedDate(common.ParseDateTime("2006-03-23 23:05:32.915")).
 		Save(ctx)
 	if err != nil {
@@ -31,8 +31,8 @@ func CreateProduct(ctx context.Context) error {
 
 	c, err = client.Product.Create().SetStringRef("demoproduct-1__product").
 		SetProductName("Demo Product 1").
-		SetIsVirtual("N").
-		SetIsVariant("Y").
+		SetIsVirtual("No").
+		SetIsVariant("Yes").
 		SetCreatedDate(common.ParseDateTime("2006-03-23 23:05:32.915")).
 		Save(ctx)
 	if err != nil {
@@ -44,8 +44,8 @@ func CreateProduct(ctx context.Context) error {
 	c, err = client.Product.Create().SetStringRef("demoproduct-2__product").
 		SetSalesDiscontinuationDate(common.ParseDateTime("2007-03-23 23:05:32.915")).
 		SetProductName("Demo Product 2").
-		SetIsVirtual("N").
-		SetIsVariant("Y").
+		SetIsVirtual("No").
+		SetIsVariant("Yes").
 		SetCreatedDate(common.ParseDateTime("2006-03-23 23:05:32.915")).
 		Save(ctx)
 	if err != nil {
@@ -56,8 +56,8 @@ func CreateProduct(ctx context.Context) error {
 
 	c, err = client.Product.Create().SetStringRef("demoproduct-3__product").
 		SetProductName("Demo Product 3").
-		SetIsVirtual("N").
-		SetIsVariant("Y").
+		SetIsVirtual("No").
+		SetIsVariant("Yes").
 		SetCreatedDate(common.ParseDateTime("2006-03-23 23:05:32.915")).
 		Save(ctx)
 	if err != nil {

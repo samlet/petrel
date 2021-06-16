@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateSecurityGroupPermission(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 
 	var err error
 	var c *ent.SecurityGroupPermission
+	failures := 0
 
 	c = cache.Get("super__partymgr_admin__989755200__securitygrouppermission").(*ent.SecurityGroupPermission)
 	c, err = c.Update().
@@ -23,6 +26,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update super__partymgr_admin__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("super__partymgr_admin__989755200__securitygrouppermission", c)
 	}
@@ -35,6 +39,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update super__security_admin__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("super__security_admin__989755200__securitygrouppermission", c)
 	}
@@ -47,6 +52,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__projectmgr_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__projectmgr_view__989755200__securitygrouppermission", c)
 	}
@@ -59,6 +65,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__projectmgr_role_timesheet_create__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__projectmgr_role_timesheet_create__989755200__securitygrouppermission", c)
 	}
@@ -71,6 +78,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update viewadmin__projectmgr_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("viewadmin__projectmgr_view__989755200__securitygrouppermission", c)
 	}
@@ -83,6 +91,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update viewadmin__projectmgr_role_timesheet_create__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("viewadmin__projectmgr_role_timesheet_create__989755200__securitygrouppermission", c)
 	}
@@ -95,6 +104,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update bizadmin__projectmgr_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("bizadmin__projectmgr_view__989755200__securitygrouppermission", c)
 	}
@@ -107,6 +117,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update bizadmin__projectmgr_role_timesheet_create__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("bizadmin__projectmgr_role_timesheet_create__989755200__securitygrouppermission", c)
 	}
@@ -119,6 +130,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update fulladmin__workeffortmgr_admin__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fulladmin__workeffortmgr_admin__989755200__securitygrouppermission", c)
 	}
@@ -131,6 +143,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__workeffortmgr_create__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__workeffortmgr_create__989755200__securitygrouppermission", c)
 	}
@@ -143,6 +156,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__workeffortmgr_delete__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__workeffortmgr_delete__989755200__securitygrouppermission", c)
 	}
@@ -155,6 +169,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__workeffortmgr_update__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__workeffortmgr_update__989755200__securitygrouppermission", c)
 	}
@@ -167,6 +182,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__workeffortmgr_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__workeffortmgr_view__989755200__securitygrouppermission", c)
 	}
@@ -179,6 +195,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__workeffortmgr_role_create__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__workeffortmgr_role_create__989755200__securitygrouppermission", c)
 	}
@@ -191,6 +208,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__workeffortmgr_role_update__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__workeffortmgr_role_update__989755200__securitygrouppermission", c)
 	}
@@ -203,6 +221,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update flexadmin__workeffortmgr_role_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("flexadmin__workeffortmgr_role_view__989755200__securitygrouppermission", c)
 	}
@@ -215,6 +234,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update viewadmin__workeffortmgr_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("viewadmin__workeffortmgr_view__989755200__securitygrouppermission", c)
 	}
@@ -227,6 +247,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update bizadmin__workeffortmgr_admin__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("bizadmin__workeffortmgr_admin__989755200__securitygrouppermission", c)
 	}
@@ -240,6 +261,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update workeffort_user__workeffortmgr_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffort_user__workeffortmgr_view__989755200__securitygrouppermission", c)
 	}
@@ -253,6 +275,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update workeffort_user__workeffortmgr_role_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffort_user__workeffortmgr_role_view__989755200__securitygrouppermission", c)
 	}
@@ -266,6 +289,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update workeffort_user__workeffortmgr_role_create__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffort_user__workeffortmgr_role_create__989755200__securitygrouppermission", c)
 	}
@@ -279,6 +303,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update workeffort_user__workeffortmgr_role_update__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffort_user__workeffortmgr_role_update__989755200__securitygrouppermission", c)
 	}
@@ -292,6 +317,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update workeffort_user__workeffortmgr_role_delete__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffort_user__workeffortmgr_role_delete__989755200__securitygrouppermission", c)
 	}
@@ -305,6 +331,7 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update workeffort_user__ofbtools_view__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffort_user__ofbtools_view__989755200__securitygrouppermission", c)
 	}
@@ -318,9 +345,13 @@ func UpdateSecurityGroupPermission(ctx context.Context) error {
 		log.Printf("fail to update workeffortadmin__workeffortmgr_admin__989755200__securitygrouppermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffortadmin__workeffortmgr_admin__989755200__securitygrouppermission", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

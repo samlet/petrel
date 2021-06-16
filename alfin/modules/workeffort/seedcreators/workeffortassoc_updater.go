@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateWorkEffortAssoc(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 
 	var err error
 	var c *ent.WorkEffortAssoc
+	failures := 0
 
 	c = cache.Get("9002__9003__work_eff_dependency__946684800__workeffortassoc").(*ent.WorkEffortAssoc)
 	c, err = c.Update().
@@ -27,6 +30,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update 9002__9003__work_eff_dependency__946684800__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9002__9003__work_eff_dependency__946684800__workeffortassoc", c)
 	}
@@ -43,6 +47,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update 9003__9005__work_eff_dependency__946684800__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9003__9005__work_eff_dependency__946684800__workeffortassoc", c)
 	}
@@ -59,6 +64,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update 9005__9006__work_eff_dependency__946684800__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9005__9006__work_eff_dependency__946684800__workeffortassoc", c)
 	}
@@ -75,6 +81,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update 9102__9103__work_eff_dependency__946684800__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9102__9103__work_eff_dependency__946684800__workeffortassoc", c)
 	}
@@ -91,6 +98,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update 9103__9105__work_eff_dependency__946684800__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9103__9105__work_eff_dependency__946684800__workeffortassoc", c)
 	}
@@ -107,6 +115,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update 9105__9106__work_eff_dependency__946684800__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9105__9106__work_eff_dependency__946684800__workeffortassoc", c)
 	}
@@ -122,6 +131,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update calendar_pub_demo__staff_mtg__work_eff_dependency__1199145600__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("calendar_pub_demo__staff_mtg__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
@@ -137,6 +147,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update project_pub_demo__oneoffmeeting__work_eff_dependency__1199145600__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_pub_demo__oneoffmeeting__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
@@ -152,6 +163,7 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update project_pub_demo__privatedemoemployee1__work_eff_dependency__1199145600__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_pub_demo__privatedemoemployee1__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
@@ -167,9 +179,13 @@ func UpdateWorkEffortAssoc(ctx context.Context) error {
 		log.Printf("fail to update project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_pub_demo__publicevent__work_eff_dependency__1199145600__workeffortassoc", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

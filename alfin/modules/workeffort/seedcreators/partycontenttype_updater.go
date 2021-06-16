@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyContentType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyContentType(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyContentType
+	failures := 0
 
 	c = cache.Get("internal__partycontenttype").(*ent.PartyContentType)
 	c, err = c.Update().
@@ -23,6 +26,7 @@ func UpdatePartyContentType(ctx context.Context) error {
 		log.Printf("fail to update internal__partycontenttype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("internal__partycontenttype", c)
 	}
@@ -35,6 +39,7 @@ func UpdatePartyContentType(ctx context.Context) error {
 		log.Printf("fail to update userdef__partycontenttype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("userdef__partycontenttype", c)
 	}
@@ -47,6 +52,7 @@ func UpdatePartyContentType(ctx context.Context) error {
 		log.Printf("fail to update lgoimgurl__partycontenttype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("lgoimgurl__partycontenttype", c)
 	}
@@ -59,9 +65,13 @@ func UpdatePartyContentType(ctx context.Context) error {
 		log.Printf("fail to update vndshpinf__partycontenttype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("vndshpinf__partycontenttype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyType(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyType
+	failures := 0
 
 	c = cache.Get("automated_agent__partytype").(*ent.PartyType)
 	c, err = c.Update().
@@ -24,6 +27,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update automated_agent__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("automated_agent__partytype", c)
 	}
@@ -45,6 +49,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update person__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("person__partytype", c)
 	}
@@ -60,6 +65,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update party_group__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_group__partytype", c)
 	}
@@ -78,6 +84,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update informal_group__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("informal_group__partytype", c)
 	}
@@ -94,6 +101,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update family__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("family__partytype", c)
 	}
@@ -110,6 +118,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update team__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("team__partytype", c)
 	}
@@ -128,6 +137,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update legal_organization__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("legal_organization__partytype", c)
 	}
@@ -144,6 +154,7 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update corporation__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("corporation__partytype", c)
 	}
@@ -160,9 +171,13 @@ func UpdatePartyType(ctx context.Context) error {
 		log.Printf("fail to update government_agency__partytype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("government_agency__partytype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

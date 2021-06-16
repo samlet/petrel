@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateSkillType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateSkillType(ctx context.Context) error {
 
 	var err error
 	var c *ent.SkillType
+	failures := 0
 
 	c = cache.Get("9000__skilltype").(*ent.SkillType)
 	c, err = c.Update().
@@ -32,6 +35,7 @@ func UpdateSkillType(ctx context.Context) error {
 		log.Printf("fail to update 9000__skilltype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9000__skilltype", c)
 	}
@@ -44,6 +48,7 @@ func UpdateSkillType(ctx context.Context) error {
 		log.Printf("fail to update 9001__skilltype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9001__skilltype", c)
 	}
@@ -56,6 +61,7 @@ func UpdateSkillType(ctx context.Context) error {
 		log.Printf("fail to update 9002__skilltype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9002__skilltype", c)
 	}
@@ -68,6 +74,7 @@ func UpdateSkillType(ctx context.Context) error {
 		log.Printf("fail to update 9003__skilltype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9003__skilltype", c)
 	}
@@ -80,6 +87,7 @@ func UpdateSkillType(ctx context.Context) error {
 		log.Printf("fail to update 9004__skilltype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9004__skilltype", c)
 	}
@@ -92,6 +100,7 @@ func UpdateSkillType(ctx context.Context) error {
 		log.Printf("fail to update 9005__skilltype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9005__skilltype", c)
 	}
@@ -104,9 +113,13 @@ func UpdateSkillType(ctx context.Context) error {
 		log.Printf("fail to update _na___skilltype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("_na___skilltype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

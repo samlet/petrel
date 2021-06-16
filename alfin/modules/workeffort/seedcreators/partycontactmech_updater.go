@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyContactMech(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyContactMech
+	failures := 0
 
 	c = cache.Get("demoemployee__9020__946720908__partycontactmech").(*ent.PartyContactMech)
 	c, err = c.Update().
@@ -27,6 +30,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__9020__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__9020__946720908__partycontactmech", c)
 	}
@@ -43,6 +47,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__9001__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__9001__946720908__partycontactmech", c)
 	}
@@ -59,6 +64,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__9023__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__9023__946720908__partycontactmech", c)
 	}
@@ -76,6 +82,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__9020__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__9020__946720908__partycontactmech", c)
 	}
@@ -93,6 +100,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__9001__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__9001__946720908__partycontactmech", c)
 	}
@@ -110,6 +118,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__9023__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__9023__946720908__partycontactmech", c)
 	}
@@ -127,6 +136,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__9020__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__9020__946720908__partycontactmech", c)
 	}
@@ -144,6 +154,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__9001__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__9001__946720908__partycontactmech", c)
 	}
@@ -161,6 +172,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__9023__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__9023__946720908__partycontactmech", c)
 	}
@@ -178,6 +190,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__9020__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__9020__946720908__partycontactmech", c)
 	}
@@ -195,6 +208,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__9001__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__9001__946720908__partycontactmech", c)
 	}
@@ -212,6 +226,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__9023__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__9023__946720908__partycontactmech", c)
 	}
@@ -228,6 +243,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__9020__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__9020__946720908__partycontactmech", c)
 	}
@@ -244,6 +260,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__9001__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__9001__946720908__partycontactmech", c)
 	}
@@ -260,6 +277,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__9023__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__9023__946720908__partycontactmech", c)
 	}
@@ -276,6 +294,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__9020__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__9020__946720908__partycontactmech", c)
 	}
@@ -292,6 +311,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__9001__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__9001__946720908__partycontactmech", c)
 	}
@@ -308,6 +328,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__9023__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__9023__946720908__partycontactmech", c)
 	}
@@ -324,6 +345,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__9020__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__9020__946720908__partycontactmech", c)
 	}
@@ -340,6 +362,7 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__9001__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__9001__946720908__partycontactmech", c)
 	}
@@ -356,9 +379,13 @@ func UpdatePartyContactMech(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__9023__946720908__partycontactmech: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__9023__946720908__partycontactmech", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

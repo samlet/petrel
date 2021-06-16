@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 
 	var err error
 	var c *ent.CommunicationEventPrpTyp
+	failures := 0
 
 	c = cache.Get("activity_request__communicationeventprptyp").(*ent.CommunicationEventPrpTyp)
 	c, err = c.Update().
@@ -24,6 +27,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update activity_request__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("activity_request__communicationeventprptyp", c)
 	}
@@ -37,6 +41,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update conference__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("conference__communicationeventprptyp", c)
 	}
@@ -50,6 +55,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update customer_service_cal__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("customer_service_cal__communicationeventprptyp", c)
 	}
@@ -63,6 +69,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update inquiry__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inquiry__communicationeventprptyp", c)
 	}
@@ -76,6 +83,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update meeting__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("meeting__communicationeventprptyp", c)
 	}
@@ -89,6 +97,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update sales_follow_up__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("sales_follow_up__communicationeventprptyp", c)
 	}
@@ -102,6 +111,7 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update seminar__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("seminar__communicationeventprptyp", c)
 	}
@@ -115,9 +125,13 @@ func UpdateCommunicationEventPrpTyp(ctx context.Context) error {
 		log.Printf("fail to update support_call__communicationeventprptyp: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("support_call__communicationeventprptyp", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateUserLogin(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateUserLogin(ctx context.Context) error {
 
 	var err error
 	var c *ent.UserLogin
+	failures := 0
 
 	c = cache.Get("demoemployee__userlogin").(*ent.UserLogin)
 	c, err = c.Update().
@@ -24,6 +27,7 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__userlogin", c)
 	}
@@ -38,6 +42,7 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__userlogin", c)
 	}
@@ -52,6 +57,7 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__userlogin", c)
 	}
@@ -66,6 +72,7 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__userlogin", c)
 	}
@@ -79,6 +86,7 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__userlogin", c)
 	}
@@ -92,6 +100,7 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__userlogin", c)
 	}
@@ -105,6 +114,7 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__userlogin", c)
 	}
@@ -119,9 +129,13 @@ func UpdateUserLogin(ctx context.Context) error {
 		log.Printf("fail to update workeffortuser__userlogin: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffortuser__userlogin", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

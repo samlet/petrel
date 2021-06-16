@@ -128,6 +128,7 @@ import (
 	cachecomp "github.com/samlet/petrel/alfin/cache"
 	"github.com/samlet/petrel/alfin/modules/%s/ent"
 	"log"
+	"github.com/fatih/color"
 )
 
 func LoadSeeds(execUpdaters bool) {
@@ -182,12 +183,18 @@ func GeneratePackage(pkg string) error{
 	`, entName))
 	}
 
-	buf.WriteString("if execUpdaters {")
+	buf.WriteString(`if execUpdaters {
+	prompt := color.New(color.FgGreen).PrintfFunc()
+	warn := color.New(color.FgRed).PrintfFunc()
+`)
 	for _,entName := range mani.EntityNames() {
 		buf.WriteString(f(`if err := Update%s(ctx); err != nil {
-		log.Fatal(err)
+		log.Println(err)
+		warn("Update %s fail: %%v\n", err)
+	}else{
+		prompt("Update %s ok.\n")
 	}
-	`, entName))
+	`, entName, entName, entName))
 	}
 	buf.WriteString("}")
 

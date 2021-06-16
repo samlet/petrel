@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateTemporalExpression(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateTemporalExpression(ctx context.Context) error {
 
 	var err error
 	var c *ent.TemporalExpression
+	failures := 0
 
 	c = cache.Get("staff_mtg__temporalexpression").(*ent.TemporalExpression)
 	c, err = c.Update().
@@ -28,9 +31,13 @@ func UpdateTemporalExpression(ctx context.Context) error {
 		log.Printf("fail to update staff_mtg__temporalexpression: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("staff_mtg__temporalexpression", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateStatusItem(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateStatusItem(ctx context.Context) error {
 
 	var err error
 	var c *ent.StatusItem
+	failures := 0
 
 	c = cache.Get("party_enabled__statusitem").(*ent.StatusItem)
 	c, err = c.Update().
@@ -47,6 +50,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__statusitem", c)
 	}
@@ -64,6 +68,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update party_disabled__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_disabled__statusitem", c)
 	}
@@ -84,6 +89,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_pending__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_pending__statusitem", c)
 	}
@@ -105,6 +111,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_entered__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_entered__statusitem", c)
 	}
@@ -125,6 +132,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_in_progress__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_in_progress__statusitem", c)
 	}
@@ -143,6 +151,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_unknown_party__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_unknown_party__statusitem", c)
 	}
@@ -166,6 +175,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_complete__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_complete__statusitem", c)
 	}
@@ -183,6 +193,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_resolved__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_resolved__statusitem", c)
 	}
@@ -200,6 +211,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_referred__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_referred__statusitem", c)
 	}
@@ -217,6 +229,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_bounced__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_bounced__statusitem", c)
 	}
@@ -239,6 +252,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_cancelled__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_cancelled__statusitem", c)
 	}
@@ -256,6 +270,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_role_created__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_role_created__statusitem", c)
 	}
@@ -273,6 +288,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_role_read__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_role_read__statusitem", c)
 	}
@@ -290,6 +306,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update com_role_completed__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_role_completed__statusitem", c)
 	}
@@ -306,6 +323,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update partyrel_created__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partyrel_created__statusitem", c)
 	}
@@ -322,6 +340,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update partyrel_expired__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partyrel_expired__statusitem", c)
 	}
@@ -341,6 +360,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update partyinv_sent__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partyinv_sent__statusitem", c)
 	}
@@ -359,6 +379,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update partyinv_pending__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partyinv_pending__statusitem", c)
 	}
@@ -376,6 +397,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update partyinv_accepted__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partyinv_accepted__statusitem", c)
 	}
@@ -392,6 +414,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update partyinv_declined__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partyinv_declined__statusitem", c)
 	}
@@ -409,6 +432,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update partyinv_cancelled__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partyinv_cancelled__statusitem", c)
 	}
@@ -438,6 +462,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pas_assigned__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pas_assigned__statusitem", c)
 	}
@@ -454,6 +479,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pas_completed__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pas_completed__statusitem", c)
 	}
@@ -482,6 +508,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pts_created__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pts_created__statusitem", c)
 	}
@@ -497,6 +524,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pts_created_ua__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pts_created_ua__statusitem", c)
 	}
@@ -512,6 +540,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pts_created_as__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pts_created_as__statusitem", c)
 	}
@@ -527,6 +556,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pts_created_ip__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pts_created_ip__statusitem", c)
 	}
@@ -543,6 +573,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pts_completed__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pts_completed__statusitem", c)
 	}
@@ -560,6 +591,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pts_on_hold__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pts_on_hold__statusitem", c)
 	}
@@ -576,6 +608,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update pts_cancelled__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pts_cancelled__statusitem", c)
 	}
@@ -592,6 +625,7 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update prj_active__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("prj_active__statusitem", c)
 	}
@@ -609,9 +643,13 @@ func UpdateStatusItem(ctx context.Context) error {
 		log.Printf("fail to update prj_closed__statusitem: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("prj_closed__statusitem", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

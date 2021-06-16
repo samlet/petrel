@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateParty(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateParty(ctx context.Context) error {
 
 	var err error
 	var c *ent.Party
+	failures := 0
 
 	c = cache.Get("demoemployee__party").(*ent.Party)
 	c, err = c.Update().
@@ -32,6 +35,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__party", c)
 	}
@@ -61,6 +65,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__party", c)
 	}
@@ -86,6 +91,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__party", c)
 	}
@@ -111,6 +117,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__party", c)
 	}
@@ -133,6 +140,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__party", c)
 	}
@@ -155,6 +163,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__party", c)
 	}
@@ -178,6 +187,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__party", c)
 	}
@@ -193,6 +203,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update workeffortuser__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffortuser__party", c)
 	}
@@ -221,6 +232,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__party", c)
 	}
@@ -245,6 +257,7 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__party", c)
 	}
@@ -269,9 +282,13 @@ func UpdateParty(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__party: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__party", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

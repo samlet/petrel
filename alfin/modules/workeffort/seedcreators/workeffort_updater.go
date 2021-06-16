@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateWorkEffort(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 
 	var err error
 	var c *ent.WorkEffort
+	failures := 0
 
 	c = cache.Get("9000__workeffort").(*ent.WorkEffort)
 	c, err = c.Update().
@@ -33,6 +36,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9000__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9000__workeffort", c)
 	}
@@ -51,6 +55,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9001__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9001__workeffort", c)
 	}
@@ -73,6 +78,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9002__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9002__workeffort", c)
 	}
@@ -95,6 +101,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9003__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9003__workeffort", c)
 	}
@@ -113,6 +120,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9004__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9004__workeffort", c)
 	}
@@ -135,6 +143,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9005__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9005__workeffort", c)
 	}
@@ -156,6 +165,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9006__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9006__workeffort", c)
 	}
@@ -178,6 +188,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9100__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9100__workeffort", c)
 	}
@@ -196,6 +207,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9101__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9101__workeffort", c)
 	}
@@ -217,6 +229,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9102__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9102__workeffort", c)
 	}
@@ -239,6 +252,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9103__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9103__workeffort", c)
 	}
@@ -257,6 +271,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9104__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9104__workeffort", c)
 	}
@@ -279,6 +294,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9105__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9105__workeffort", c)
 	}
@@ -300,6 +316,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9106__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9106__workeffort", c)
 	}
@@ -319,6 +336,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9200__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9200__workeffort", c)
 	}
@@ -335,6 +353,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9201__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9201__workeffort", c)
 	}
@@ -354,6 +373,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update 9202__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9202__workeffort", c)
 	}
@@ -377,6 +397,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update staff_mtg__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("staff_mtg__workeffort", c)
 	}
@@ -392,6 +413,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update calendar_pub_demo__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("calendar_pub_demo__workeffort", c)
 	}
@@ -409,6 +431,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update project_pub_demo__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_pub_demo__workeffort", c)
 	}
@@ -429,6 +452,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update oneoffmeeting__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("oneoffmeeting__workeffort", c)
 	}
@@ -447,6 +471,7 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update privatedemoemployee1__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("privatedemoemployee1__workeffort", c)
 	}
@@ -465,9 +490,13 @@ func UpdateWorkEffort(ctx context.Context) error {
 		log.Printf("fail to update publicevent__workeffort: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("publicevent__workeffort", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateWorkEffortFixedAssetAssign(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateWorkEffortFixedAssetAssign(ctx context.Context) error {
 
 	var err error
 	var c *ent.WorkEffortFixedAssetAssign
+	failures := 0
 
 	c = cache.Get("staff_mtg__demo_projector__1199145600__workeffortfixedassetassign").(*ent.WorkEffortFixedAssetAssign)
 	c, err = c.Update().
@@ -25,9 +28,13 @@ func UpdateWorkEffortFixedAssetAssign(ctx context.Context) error {
 		log.Printf("fail to update staff_mtg__demo_projector__1199145600__workeffortfixedassetassign: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("staff_mtg__demo_projector__1199145600__workeffortfixedassetassign", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

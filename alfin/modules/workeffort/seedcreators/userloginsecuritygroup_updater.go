@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateUserLoginSecurityGroup(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 
 	var err error
 	var c *ent.UserLoginSecurityGroup
+	failures := 0
 
 	c = cache.Get("demoemployee__projectadmin__946684800__userloginsecuritygroup").(*ent.UserLoginSecurityGroup)
 	c, err = c.Update().
@@ -24,6 +27,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__projectadmin__946684800__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__projectadmin__946684800__userloginsecuritygroup", c)
 	}
@@ -37,6 +41,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__projectadmin__946684800__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__projectadmin__946684800__userloginsecuritygroup", c)
 	}
@@ -50,6 +55,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__projectuser__946684800__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__projectuser__946684800__userloginsecuritygroup", c)
 	}
@@ -63,6 +69,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__projectuser__946684800__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__projectuser__946684800__userloginsecuritygroup", c)
 	}
@@ -76,6 +83,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__projectuser__946684800__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__projectuser__946684800__userloginsecuritygroup", c)
 	}
@@ -89,6 +97,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__projectuser__946684800__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__projectuser__946684800__userloginsecuritygroup", c)
 	}
@@ -102,6 +111,7 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__projectuser__946684800__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__projectuser__946684800__userloginsecuritygroup", c)
 	}
@@ -122,9 +132,13 @@ func UpdateUserLoginSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update workeffortuser__workeffort_user__1293840000__userloginsecuritygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffortuser__workeffort_user__1293840000__userloginsecuritygroup", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

@@ -7,6 +7,7 @@ import (
 	"github.com/magefile/mage/mg"
 	"github.com/magefile/mage/sh"
 	"github.com/samlet/petrel/alfin"
+	"github.com/samlet/petrel/alfin/modules/workeffort/seedcreators"
 	"os"
 	"strings"
 )
@@ -99,6 +100,10 @@ func CreateMod(modName string){
 	alfin.CreateMod(modName)
 }
 
+func LoadSeed(){
+	seedcreators.LoadSeeds(true)
+}
+
 /**
 $ mage check
 $ mage build
@@ -107,4 +112,6 @@ $ mage gen example
 	or $ mage genrelations example
 $ mage WriteSchemas workload
 $ mage OnlyWriteSchemas workeffort
+$ mage -v LoadSeed  # print logs
+$ mage LoadSeed
 */

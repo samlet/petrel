@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateWorkEffortSkillStandard(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 
 	var err error
 	var c *ent.WorkEffortSkillStandard
+	failures := 0
 
 	c = cache.Get("9002__9000__workeffortskillstandard").(*ent.WorkEffortSkillStandard)
 	c, err = c.Update().
@@ -25,6 +28,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9002__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9002__9000__workeffortskillstandard", c)
 	}
@@ -39,6 +43,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9003__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9003__9000__workeffortskillstandard", c)
 	}
@@ -53,6 +58,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9005__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9005__9000__workeffortskillstandard", c)
 	}
@@ -67,6 +73,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9006__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9006__9000__workeffortskillstandard", c)
 	}
@@ -81,6 +88,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9102__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9102__9000__workeffortskillstandard", c)
 	}
@@ -95,6 +103,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9103__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9103__9000__workeffortskillstandard", c)
 	}
@@ -109,6 +118,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9105__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9105__9000__workeffortskillstandard", c)
 	}
@@ -123,6 +133,7 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9106__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9106__9000__workeffortskillstandard", c)
 	}
@@ -137,9 +148,13 @@ func UpdateWorkEffortSkillStandard(ctx context.Context) error {
 		log.Printf("fail to update 9202__9000__workeffortskillstandard: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("9202__9000__workeffortskillstandard", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

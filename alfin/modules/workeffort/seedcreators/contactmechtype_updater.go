@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateContactMechType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateContactMechType(ctx context.Context) error {
 
 	var err error
 	var c *ent.ContactMechType
+	failures := 0
 
 	c = cache.Get("electronic_address__contactmechtype").(*ent.ContactMechType)
 	c, err = c.Update().
@@ -30,6 +33,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update electronic_address__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("electronic_address__contactmechtype", c)
 	}
@@ -52,6 +56,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update postal_address__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("postal_address__contactmechtype", c)
 	}
@@ -83,6 +88,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update telecom_number__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("telecom_number__contactmechtype", c)
 	}
@@ -105,6 +111,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update email_address__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("email_address__contactmechtype", c)
 	}
@@ -119,6 +126,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update ip_address__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ip_address__contactmechtype", c)
 	}
@@ -133,6 +141,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update domain_name__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("domain_name__contactmechtype", c)
 	}
@@ -152,6 +161,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update web_address__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("web_address__contactmechtype", c)
 	}
@@ -167,6 +177,7 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update internal_partyid__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("internal_partyid__contactmechtype", c)
 	}
@@ -182,9 +193,13 @@ func UpdateContactMechType(ctx context.Context) error {
 		log.Printf("fail to update ftp_address__contactmechtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ftp_address__contactmechtype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

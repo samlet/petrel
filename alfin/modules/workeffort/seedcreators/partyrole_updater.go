@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyRole(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyRole(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyRole
+	failures := 0
 
 	c = cache.Get("demoemployee__employee__partyrole").(*ent.PartyRole)
 	c, err = c.Update().
@@ -27,6 +30,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__employee__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__employee__partyrole", c)
 	}
@@ -40,6 +44,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__provider_analyst__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__provider_analyst__partyrole", c)
 	}
@@ -53,6 +58,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee__project_team__partyrole", c)
 	}
@@ -70,6 +76,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__employee__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__employee__partyrole", c)
 	}
@@ -87,6 +94,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__provider_manager__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__provider_manager__partyrole", c)
 	}
@@ -101,6 +109,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__project_team__partyrole", c)
 	}
@@ -116,6 +125,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__provider_analyst__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__provider_analyst__partyrole", c)
 	}
@@ -133,6 +143,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__employee__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__employee__partyrole", c)
 	}
@@ -147,6 +158,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__project_team__partyrole", c)
 	}
@@ -163,6 +175,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__provider_analyst__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__provider_analyst__partyrole", c)
 	}
@@ -180,6 +193,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__employee__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__employee__partyrole", c)
 	}
@@ -194,6 +208,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__project_team__partyrole", c)
 	}
@@ -210,6 +225,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__customer__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__customer__partyrole", c)
 	}
@@ -224,6 +240,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__client_manager__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__client_manager__partyrole", c)
 	}
@@ -237,6 +254,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer1__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer1__project_team__partyrole", c)
 	}
@@ -253,6 +271,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__customer__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__customer__partyrole", c)
 	}
@@ -267,6 +286,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__client_manager__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__client_manager__partyrole", c)
 	}
@@ -280,6 +300,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer2__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer2__project_team__partyrole", c)
 	}
@@ -296,6 +317,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__customer__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__customer__partyrole", c)
 	}
@@ -311,6 +333,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__client_billing__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__client_billing__partyrole", c)
 	}
@@ -324,6 +347,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustomer3__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustomer3__project_team__partyrole", c)
 	}
@@ -336,6 +360,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update admin__project_team__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("admin__project_team__partyrole", c)
 	}
@@ -351,6 +376,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update admin__provider_manager__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("admin__provider_manager__partyrole", c)
 	}
@@ -364,6 +390,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update democustcompany__client_billing__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("democustcompany__client_billing__partyrole", c)
 	}
@@ -377,6 +404,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update admin__cal_owner__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("admin__cal_owner__partyrole", c)
 	}
@@ -391,6 +419,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update admin__cal_attendee__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("admin__cal_attendee__partyrole", c)
 	}
@@ -409,6 +438,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee1__cal_owner__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee1__cal_owner__partyrole", c)
 	}
@@ -425,6 +455,7 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee2__cal_attendee__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee2__cal_attendee__partyrole", c)
 	}
@@ -440,9 +471,13 @@ func UpdatePartyRole(ctx context.Context) error {
 		log.Printf("fail to update demoemployee3__cal_attendee__partyrole: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("demoemployee3__cal_attendee__partyrole", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

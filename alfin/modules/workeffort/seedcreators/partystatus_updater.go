@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyStatus(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyStatus
+	failures := 0
 
 	c = cache.Get("party_enabled__demoemployee__978350400__partystatus").(*ent.PartyStatus)
 	c, err = c.Update().
@@ -25,6 +28,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__demoemployee__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__demoemployee__978350400__partystatus", c)
 	}
@@ -40,6 +44,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__demoemployee1__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__demoemployee1__978350400__partystatus", c)
 	}
@@ -55,6 +60,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__demoemployee2__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__demoemployee2__978350400__partystatus", c)
 	}
@@ -70,6 +76,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__demoemployee3__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__demoemployee3__978350400__partystatus", c)
 	}
@@ -84,6 +91,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__democustomer1__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__democustomer1__978350400__partystatus", c)
 	}
@@ -98,6 +106,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__democustomer2__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__democustomer2__978350400__partystatus", c)
 	}
@@ -112,6 +121,7 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__democustomer3__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__democustomer3__978350400__partystatus", c)
 	}
@@ -126,9 +136,13 @@ func UpdatePartyStatus(ctx context.Context) error {
 		log.Printf("fail to update party_enabled__workeffortuser__978350400__partystatus: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_enabled__workeffortuser__978350400__partystatus", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

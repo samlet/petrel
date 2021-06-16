@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateTermType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateTermType(ctx context.Context) error {
 
 	var err error
 	var c *ent.TermType
+	failures := 0
 
 	c = cache.Get("financial_term__termtype").(*ent.TermType)
 	c, err = c.Update().
@@ -30,6 +33,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update financial_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("financial_term__termtype", c)
 	}
@@ -47,6 +51,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_payment_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_payment_term__termtype", c)
 	}
@@ -61,6 +66,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_pay_netdays_1__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_pay_netdays_1__termtype", c)
 	}
@@ -75,6 +81,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_pay_netdays_2__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_pay_netdays_2__termtype", c)
 	}
@@ -89,6 +96,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_pay_netdays_3__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_pay_netdays_3__termtype", c)
 	}
@@ -103,6 +111,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_payment_disc__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_payment_disc__termtype", c)
 	}
@@ -117,6 +126,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_payment_fixday__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_payment_fixday__termtype", c)
 	}
@@ -131,6 +141,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_late_fee_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_late_fee_term__termtype", c)
 	}
@@ -145,6 +156,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_collect_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_collect_term__termtype", c)
 	}
@@ -159,6 +171,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_nortn_item_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_nortn_item_term__termtype", c)
 	}
@@ -172,6 +185,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update incentive__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("incentive__termtype", c)
 	}
@@ -185,6 +199,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update legal_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("legal_term__termtype", c)
 	}
@@ -198,6 +213,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update threshold__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("threshold__termtype", c)
 	}
@@ -211,6 +227,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update clause_for_renewal__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("clause_for_renewal__termtype", c)
 	}
@@ -224,6 +241,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update agreement_terminatio__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("agreement_terminatio__termtype", c)
 	}
@@ -237,6 +255,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update indemnification__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("indemnification__termtype", c)
 	}
@@ -250,6 +269,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update non_compete__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("non_compete__termtype", c)
 	}
@@ -263,6 +283,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update exclusive_relationsh__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("exclusive_relationsh__termtype", c)
 	}
@@ -280,6 +301,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update commission_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("commission_term__termtype", c)
 	}
@@ -294,6 +316,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_comm_fixed__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_comm_fixed__termtype", c)
 	}
@@ -308,6 +331,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_comm_variable__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_comm_variable__termtype", c)
 	}
@@ -322,6 +346,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_comm_min__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_comm_min__termtype", c)
 	}
@@ -336,6 +361,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fin_comm_max__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fin_comm_max__termtype", c)
 	}
@@ -352,6 +378,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term__termtype", c)
 	}
@@ -376,6 +403,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020__termtype", c)
 	}
@@ -389,6 +417,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_exw__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_exw__termtype", c)
 	}
@@ -402,6 +431,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_fca__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_fca__termtype", c)
 	}
@@ -415,6 +445,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_fas__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_fas__termtype", c)
 	}
@@ -428,6 +459,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_fob__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_fob__termtype", c)
 	}
@@ -441,6 +473,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_cpt__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_cpt__termtype", c)
 	}
@@ -454,6 +487,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_cfr__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_cfr__termtype", c)
 	}
@@ -467,6 +501,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_cif__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_cif__termtype", c)
 	}
@@ -480,6 +515,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_cip__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_cip__termtype", c)
 	}
@@ -493,6 +529,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_dpu__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_dpu__termtype", c)
 	}
@@ -506,6 +543,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_dap__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_dap__termtype", c)
 	}
@@ -519,6 +557,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2020_ddp__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2020_ddp__termtype", c)
 	}
@@ -541,6 +580,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2010__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2010__termtype", c)
 	}
@@ -554,6 +594,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update exw__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("exw__termtype", c)
 	}
@@ -567,6 +608,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fca__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fca__termtype", c)
 	}
@@ -580,6 +622,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fas__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fas__termtype", c)
 	}
@@ -593,6 +636,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update fob__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fob__termtype", c)
 	}
@@ -606,6 +650,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update cfr__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cfr__termtype", c)
 	}
@@ -619,6 +664,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update cif__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cif__termtype", c)
 	}
@@ -632,6 +678,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update cpt__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cpt__termtype", c)
 	}
@@ -645,6 +692,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update cip__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cip__termtype", c)
 	}
@@ -658,6 +706,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update ddp__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ddp__termtype", c)
 	}
@@ -675,6 +724,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update inco_term_2000__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("inco_term_2000__termtype", c)
 	}
@@ -688,6 +738,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update daf__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("daf__termtype", c)
 	}
@@ -701,6 +752,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update des__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("des__termtype", c)
 	}
@@ -714,6 +766,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update deq__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("deq__termtype", c)
 	}
@@ -727,6 +780,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update ddu__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ddu__termtype", c)
 	}
@@ -741,6 +795,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update purchasing__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("purchasing__termtype", c)
 	}
@@ -754,6 +809,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update purch_vendor_id__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("purch_vendor_id__termtype", c)
 	}
@@ -767,6 +823,7 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update purch_freight__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("purch_freight__termtype", c)
 	}
@@ -780,9 +837,13 @@ func UpdateTermType(ctx context.Context) error {
 		log.Printf("fail to update other_term__termtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("other_term__termtype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

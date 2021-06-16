@@ -85,7 +85,11 @@ import (
 	"github.com/samlet/petrel/alfin/modules/%s/ent"
 	"github.com/samlet/petrel/alfin/common"
 	"log"
-)`, pkg)
+`, pkg)
+	if t.Phrase==UpdatePhrase{
+		t.WriteLine(`"fmt"`)
+	}
+	t.WriteLine(")")
 }
 
 func (t SeedProcessor) WriteFunctionHeader(ent *ModelEntity) {
@@ -107,13 +111,24 @@ func (t SeedProcessor) WriteFunctionHeader(ent *ModelEntity) {
 
 	var err error
 	var c *ent.%s
+	failures:=0
 `, ent.Name, ent.Name, ent.Name)
 	}
 }
 
 func (t SeedProcessor) WriteFunctionFooter() {
-	t.WriteLine(`return nil
+	switch t.Phrase {
+	case CreatePhrase:
+		t.WriteLine(`return nil
 }`)
+	case UpdatePhrase:
+		t.WriteLine(`
+	if failures!=0{
+		return fmt.Errorf("occurs %%d failtures", failures)
+	}
+	return nil
+}`)
+	}
 }
 
 func (t SeedProcessor) Printf(format string, a ...interface{}) {
@@ -216,6 +231,7 @@ cache.Put("%s", c)
 	log.Printf("fail to %s %s: %%v", err)
 	// return err 
 	// skip update failure
+	failures=failures+1
 } else {
 	cache.Put("%s", c)
 }

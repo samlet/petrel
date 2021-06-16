@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateRoleType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateRoleType(ctx context.Context) error {
 
 	var err error
 	var c *ent.RoleType
+	failures := 0
 
 	c = cache.Get("main_role__roletype").(*ent.RoleType)
 	c, err = c.Update().
@@ -26,6 +29,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update main_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("main_role__roletype", c)
 	}
@@ -39,6 +43,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update account_lead__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("account_lead__roletype", c)
 	}
@@ -53,6 +58,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update admin__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("admin__roletype", c)
 	}
@@ -66,6 +72,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update agent__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("agent__roletype", c)
 	}
@@ -79,6 +86,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update automated_agent_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("automated_agent_role__roletype", c)
 	}
@@ -97,6 +105,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update calendar_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("calendar_role__roletype", c)
 	}
@@ -110,6 +119,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update client__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("client__roletype", c)
 	}
@@ -127,6 +137,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update commevent_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("commevent_role__roletype", c)
 	}
@@ -140,6 +151,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update consumer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("consumer__roletype", c)
 	}
@@ -153,6 +165,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update contractor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("contractor__roletype", c)
 	}
@@ -184,6 +197,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update customer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("customer__roletype", c)
 	}
@@ -198,6 +212,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update distribution_channel__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("distribution_channel__roletype", c)
 	}
@@ -211,6 +226,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update isp__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("isp__roletype", c)
 	}
@@ -224,6 +240,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update hosting_server__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("hosting_server__roletype", c)
 	}
@@ -237,6 +254,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update manufacturer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("manufacturer__roletype", c)
 	}
@@ -250,6 +268,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update _na___roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("_na___roletype", c)
 	}
@@ -276,6 +295,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update organization_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("organization_role__roletype", c)
 	}
@@ -289,6 +309,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update owner__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("owner__roletype", c)
 	}
@@ -302,6 +323,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update prospect__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("prospect__roletype", c)
 	}
@@ -322,6 +344,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update person_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("person_role__roletype", c)
 	}
@@ -335,6 +358,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update referrer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("referrer__roletype", c)
 	}
@@ -352,6 +376,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update request_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("request_role__roletype", c)
 	}
@@ -366,6 +391,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update req_manager__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("req_manager__roletype", c)
 	}
@@ -380,6 +406,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update req_requester__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("req_requester__roletype", c)
 	}
@@ -394,6 +421,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update req_taker__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("req_taker__roletype", c)
 	}
@@ -408,6 +436,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update req_respond__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("req_respond__roletype", c)
 	}
@@ -425,6 +454,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update sfa_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("sfa_role__roletype", c)
 	}
@@ -438,6 +468,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update shareholder__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("shareholder__roletype", c)
 	}
@@ -451,6 +482,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update subscriber__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("subscriber__roletype", c)
 	}
@@ -466,6 +498,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update vendor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("vendor__roletype", c)
 	}
@@ -479,6 +512,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update visitor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("visitor__roletype", c)
 	}
@@ -492,6 +526,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update web_master__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("web_master__roletype", c)
 	}
@@ -506,6 +541,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update workflow_role__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workflow_role__roletype", c)
 	}
@@ -519,6 +555,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update accountant__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("accountant__roletype", c)
 	}
@@ -533,6 +570,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update account__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("account__roletype", c)
 	}
@@ -547,6 +585,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update addressee__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("addressee__roletype", c)
 	}
@@ -561,6 +600,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update association__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("association__roletype", c)
 	}
@@ -575,6 +615,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update bill_from_vendor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("bill_from_vendor__roletype", c)
 	}
@@ -589,6 +630,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update bill_to_customer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("bill_to_customer__roletype", c)
 	}
@@ -603,6 +645,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update bcc__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("bcc__roletype", c)
 	}
@@ -617,6 +660,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update bulk_customer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("bulk_customer__roletype", c)
 	}
@@ -639,6 +683,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update cal_attendee__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cal_attendee__roletype", c)
 	}
@@ -653,6 +698,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update cal_delegate__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cal_delegate__roletype", c)
 	}
@@ -667,6 +713,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update cal_host__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cal_host__roletype", c)
 	}
@@ -681,6 +728,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update cal_organizer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cal_organizer__roletype", c)
 	}
@@ -702,6 +750,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update cal_owner__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cal_owner__roletype", c)
 	}
@@ -716,6 +765,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update carrier__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("carrier__roletype", c)
 	}
@@ -730,6 +780,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update competitor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("competitor__roletype", c)
 	}
@@ -744,6 +795,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update contact__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("contact__roletype", c)
 	}
@@ -758,6 +810,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update cc__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cc__roletype", c)
 	}
@@ -772,6 +825,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update originator__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("originator__roletype", c)
 	}
@@ -786,6 +840,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update distributor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("distributor__roletype", c)
 	}
@@ -826,6 +881,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update employee__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("employee__roletype", c)
 	}
@@ -840,6 +896,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update end_user_customer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("end_user_customer__roletype", c)
 	}
@@ -854,6 +911,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update household__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("household__roletype", c)
 	}
@@ -872,6 +930,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update internal_organizatio__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("internal_organizatio__roletype", c)
 	}
@@ -886,6 +945,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update lead__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("lead__roletype", c)
 	}
@@ -900,6 +960,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update ltd_admin__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ltd_admin__roletype", c)
 	}
@@ -919,6 +980,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update organization_unit__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("organization_unit__roletype", c)
 	}
@@ -933,6 +995,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update partner__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partner__roletype", c)
 	}
@@ -947,6 +1010,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update placing_customer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("placing_customer__roletype", c)
 	}
@@ -961,6 +1025,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update regulatory_agency__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("regulatory_agency__roletype", c)
 	}
@@ -976,6 +1041,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update sales_rep__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("sales_rep__roletype", c)
 	}
@@ -990,6 +1056,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update ship_from_vendor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ship_from_vendor__roletype", c)
 	}
@@ -1004,6 +1071,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update ship_to_customer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ship_to_customer__roletype", c)
 	}
@@ -1018,6 +1086,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update sponsor__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("sponsor__roletype", c)
 	}
@@ -1032,6 +1101,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update spouse__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("spouse__roletype", c)
 	}
@@ -1046,6 +1116,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update supplier_agent__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("supplier_agent__roletype", c)
 	}
@@ -1060,6 +1131,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update supplier__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("supplier__roletype", c)
 	}
@@ -1074,6 +1146,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update tax_authority__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("tax_authority__roletype", c)
 	}
@@ -1088,6 +1161,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update union__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("union__roletype", c)
 	}
@@ -1102,6 +1176,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update wf_owner__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("wf_owner__roletype", c)
 	}
@@ -1116,6 +1191,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update gov_agency__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("gov_agency__roletype", c)
 	}
@@ -1130,6 +1206,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update affiliate__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("affiliate__roletype", c)
 	}
@@ -1144,6 +1221,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update buyer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("buyer__roletype", c)
 	}
@@ -1158,6 +1236,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update cashier__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cashier__roletype", c)
 	}
@@ -1172,6 +1251,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update department__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("department__roletype", c)
 	}
@@ -1186,6 +1266,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update division__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("division__roletype", c)
 	}
@@ -1200,6 +1281,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update family_member__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("family_member__roletype", c)
 	}
@@ -1214,6 +1296,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update manager__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("manager__roletype", c)
 	}
@@ -1228,6 +1311,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update order_clerk__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("order_clerk__roletype", c)
 	}
@@ -1242,6 +1326,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update other_internal_organ__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("other_internal_organ__roletype", c)
 	}
@@ -1256,6 +1341,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update other_organization_u__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("other_organization_u__roletype", c)
 	}
@@ -1270,6 +1356,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update parent_organization__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("parent_organization__roletype", c)
 	}
@@ -1284,6 +1371,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update packer__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("packer__roletype", c)
 	}
@@ -1298,6 +1386,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update picker__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("picker__roletype", c)
 	}
@@ -1312,6 +1401,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update receiver__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("receiver__roletype", c)
 	}
@@ -1326,6 +1416,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update shipment_clerk__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("shipment_clerk__roletype", c)
 	}
@@ -1340,6 +1431,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update stocker__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("stocker__roletype", c)
 	}
@@ -1354,6 +1446,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update subsidiary__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("subsidiary__roletype", c)
 	}
@@ -1368,6 +1461,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update worker__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("worker__roletype", c)
 	}
@@ -1382,6 +1476,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update email_admin__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("email_admin__roletype", c)
 	}
@@ -1412,6 +1507,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update project_team__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_team__roletype", c)
 	}
@@ -1430,6 +1526,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update client_manager__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("client_manager__roletype", c)
 	}
@@ -1444,6 +1541,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update client_analyst__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("client_analyst__roletype", c)
 	}
@@ -1463,6 +1561,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update client_billing__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("client_billing__roletype", c)
 	}
@@ -1485,6 +1584,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update provider_manager__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("provider_manager__roletype", c)
 	}
@@ -1499,6 +1599,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update provider_accounting__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("provider_accounting__roletype", c)
 	}
@@ -1519,6 +1620,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update provider_analyst__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("provider_analyst__roletype", c)
 	}
@@ -1533,6 +1635,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update provider_validator__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("provider_validator__roletype", c)
 	}
@@ -1547,6 +1650,7 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update provider_functional__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("provider_functional__roletype", c)
 	}
@@ -1561,9 +1665,13 @@ func UpdateRoleType(ctx context.Context) error {
 		log.Printf("fail to update provider_tester__roletype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("provider_tester__roletype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

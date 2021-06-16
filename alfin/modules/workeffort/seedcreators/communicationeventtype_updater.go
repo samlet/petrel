@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateCommunicationEventType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 
 	var err error
 	var c *ent.CommunicationEventType
+	failures := 0
 
 	c = cache.Get("email_communication__communicationeventtype").(*ent.CommunicationEventType)
 	c, err = c.Update().
@@ -25,6 +28,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update email_communication__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("email_communication__communicationeventtype", c)
 	}
@@ -38,6 +42,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update face_to_face_communi__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("face_to_face_communi__communicationeventtype", c)
 	}
@@ -52,6 +57,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update fax_communication__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fax_communication__communicationeventtype", c)
 	}
@@ -66,6 +72,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update letter_correspondenc__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("letter_correspondenc__communicationeventtype", c)
 	}
@@ -80,6 +87,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update phone_communication__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_communication__communicationeventtype", c)
 	}
@@ -94,6 +102,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update web_site_communicati__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("web_site_communicati__communicationeventtype", c)
 	}
@@ -108,6 +117,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update comment_note__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("comment_note__communicationeventtype", c)
 	}
@@ -122,6 +132,7 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update auto_email_comm__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("auto_email_comm__communicationeventtype", c)
 	}
@@ -136,9 +147,13 @@ func UpdateCommunicationEventType(ctx context.Context) error {
 		log.Printf("fail to update file_transfer_comm__communicationeventtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("file_transfer_comm__communicationeventtype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

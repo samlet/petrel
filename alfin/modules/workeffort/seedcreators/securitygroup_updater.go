@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateSecurityGroup(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateSecurityGroup(ctx context.Context) error {
 
 	var err error
 	var c *ent.SecurityGroup
+	failures := 0
 
 	c = cache.Get("workeffort_user__securitygroup").(*ent.SecurityGroup)
 	c, err = c.Update().
@@ -31,6 +34,7 @@ func UpdateSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update workeffort_user__securitygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffort_user__securitygroup", c)
 	}
@@ -45,9 +49,13 @@ func UpdateSecurityGroup(ctx context.Context) error {
 		log.Printf("fail to update workeffortadmin__securitygroup: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("workeffortadmin__securitygroup", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

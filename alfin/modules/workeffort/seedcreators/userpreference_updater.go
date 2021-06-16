@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateUserPreference(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateUserPreference(ctx context.Context) error {
 
 	var err error
 	var c *ent.UserPreference
+	failures := 0
 
 	c = cache.Get("_na___organization_party__userpreference").(*ent.UserPreference)
 	c, err = c.Update().
@@ -25,9 +28,13 @@ func UpdateUserPreference(ctx context.Context) error {
 		log.Printf("fail to update _na___organization_party__userpreference: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("_na___organization_party__userpreference", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

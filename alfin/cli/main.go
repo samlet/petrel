@@ -15,6 +15,7 @@ import (
 )
 
 /**
+$ just cli run loader
 $ just cli -l debug meta workeffort WorkEffort
 $ just cli meta --show-fields workeffort WorkEffort
 $ just cli meta --all-ents workeffort
@@ -105,6 +106,12 @@ type RunCmd struct {
 }
 
 func (cmd *RunCmd) Run(globals *Globals) error {
+	switch cmd.Arg {
+	case "loader":
+		//seedcreators.LoadSeeds(true)
+	default:
+		println("Unknown command", cmd.Arg)
+	}
 	return nil
 }
 

@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyQualType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyQualType(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyQualType
+	failures := 0
 
 	c = cache.Get("experience__partyqualtype").(*ent.PartyQualType)
 	c, err = c.Update().
@@ -24,6 +27,7 @@ func UpdatePartyQualType(ctx context.Context) error {
 		log.Printf("fail to update experience__partyqualtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("experience__partyqualtype", c)
 	}
@@ -37,6 +41,7 @@ func UpdatePartyQualType(ctx context.Context) error {
 		log.Printf("fail to update certification__partyqualtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("certification__partyqualtype", c)
 	}
@@ -50,9 +55,13 @@ func UpdatePartyQualType(ctx context.Context) error {
 		log.Printf("fail to update degree__partyqualtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("degree__partyqualtype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

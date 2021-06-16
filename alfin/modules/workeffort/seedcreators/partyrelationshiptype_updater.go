@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyRelationshipType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyRelationshipType
+	failures := 0
 
 	c = cache.Get("agent__partyrelationshiptype").(*ent.PartyRelationshipType)
 	c, err = c.Update().
@@ -24,6 +27,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update agent__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("agent__partyrelationshiptype", c)
 	}
@@ -37,6 +41,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update child__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("child__partyrelationshiptype", c)
 	}
@@ -50,6 +55,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update contact_rel__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("contact_rel__partyrelationshiptype", c)
 	}
@@ -63,6 +69,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update lead_rel__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("lead_rel__partyrelationshiptype", c)
 	}
@@ -76,6 +83,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update lead_owner__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("lead_owner__partyrelationshiptype", c)
 	}
@@ -90,6 +98,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update customer_rel__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("customer_rel__partyrelationshiptype", c)
 	}
@@ -103,6 +112,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update distribution_channel__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("distribution_channel__partyrelationshiptype", c)
 	}
@@ -116,6 +126,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update employment__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("employment__partyrelationshiptype", c)
 	}
@@ -129,6 +140,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update friend__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("friend__partyrelationshiptype", c)
 	}
@@ -142,6 +154,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update group_rollup__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("group_rollup__partyrelationshiptype", c)
 	}
@@ -155,6 +168,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update host_server_visitor__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("host_server_visitor__partyrelationshiptype", c)
 	}
@@ -168,6 +182,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update visitor_isp__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("visitor_isp__partyrelationshiptype", c)
 	}
@@ -181,6 +196,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update manager__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("manager__partyrelationshiptype", c)
 	}
@@ -194,6 +210,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update parent__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("parent__partyrelationshiptype", c)
 	}
@@ -207,6 +224,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update partnership__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partnership__partyrelationshiptype", c)
 	}
@@ -220,6 +238,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update sales_affiliate__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("sales_affiliate__partyrelationshiptype", c)
 	}
@@ -233,6 +252,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update spouse__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("spouse__partyrelationshiptype", c)
 	}
@@ -246,6 +266,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update supplier_rel__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("supplier_rel__partyrelationshiptype", c)
 	}
@@ -259,6 +280,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update web_master_assignmen__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("web_master_assignmen__partyrelationshiptype", c)
 	}
@@ -272,6 +294,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update account__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("account__partyrelationshiptype", c)
 	}
@@ -285,6 +308,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update assistant__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("assistant__partyrelationshiptype", c)
 	}
@@ -298,6 +322,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update owner__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("owner__partyrelationshiptype", c)
 	}
@@ -311,6 +336,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update parent_account__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("parent_account__partyrelationshiptype", c)
 	}
@@ -324,6 +350,7 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update reports_to__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("reports_to__partyrelationshiptype", c)
 	}
@@ -337,9 +364,13 @@ func UpdatePartyRelationshipType(ctx context.Context) error {
 		log.Printf("fail to update lead_own_grp_member__partyrelationshiptype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("lead_own_grp_member__partyrelationshiptype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateSecurityPermission(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 
 	var err error
 	var c *ent.SecurityPermission
+	failures := 0
 
 	c = cache.Get("partymgr_view__securitypermission").(*ent.SecurityPermission)
 	c, err = c.Update().
@@ -23,6 +26,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_view__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_view__securitypermission", c)
 	}
@@ -35,6 +39,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_create__securitypermission", c)
 	}
@@ -47,6 +52,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_update__securitypermission", c)
 	}
@@ -59,6 +65,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_delete__securitypermission", c)
 	}
@@ -72,6 +79,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_admin__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_admin__securitypermission", c)
 	}
@@ -84,6 +92,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_note__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_note__securitypermission", c)
 	}
@@ -96,6 +105,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_sts_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_sts_update__securitypermission", c)
 	}
@@ -108,6 +118,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_grp_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_grp_update__securitypermission", c)
 	}
@@ -120,6 +131,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_rel_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_rel_create__securitypermission", c)
 	}
@@ -132,6 +144,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_rel_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_rel_update__securitypermission", c)
 	}
@@ -144,6 +157,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_rel_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_rel_delete__securitypermission", c)
 	}
@@ -156,6 +170,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_role_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_role_create__securitypermission", c)
 	}
@@ -168,6 +183,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_role_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_role_delete__securitypermission", c)
 	}
@@ -180,6 +196,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_pcm_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_pcm_create__securitypermission", c)
 	}
@@ -192,6 +209,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_pcm_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_pcm_update__securitypermission", c)
 	}
@@ -204,6 +222,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_pcm_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_pcm_delete__securitypermission", c)
 	}
@@ -216,6 +235,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_src_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_src_create__securitypermission", c)
 	}
@@ -228,6 +248,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_qal_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_qal_create__securitypermission", c)
 	}
@@ -240,6 +261,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_qal_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_qal_update__securitypermission", c)
 	}
@@ -252,6 +274,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_qal_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_qal_delete__securitypermission", c)
 	}
@@ -264,6 +287,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_cme_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_cme_create__securitypermission", c)
 	}
@@ -276,6 +300,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_cme_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_cme_update__securitypermission", c)
 	}
@@ -288,6 +313,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_cme_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_cme_delete__securitypermission", c)
 	}
@@ -300,6 +326,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_cme-email_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_cme-email_create__securitypermission", c)
 	}
@@ -312,6 +339,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_cme-email_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_cme-email_update__securitypermission", c)
 	}
@@ -324,6 +352,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_cme-email_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_cme-email_delete__securitypermission", c)
 	}
@@ -336,6 +365,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update partymgr_cme-note_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("partymgr_cme-note_create__securitypermission", c)
 	}
@@ -348,6 +378,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update security_view__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("security_view__securitypermission", c)
 	}
@@ -360,6 +391,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update security_create__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("security_create__securitypermission", c)
 	}
@@ -372,6 +404,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update security_update__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("security_update__securitypermission", c)
 	}
@@ -384,6 +417,7 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update security_delete__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("security_delete__securitypermission", c)
 	}
@@ -397,9 +431,13 @@ func UpdateSecurityPermission(ctx context.Context) error {
 		log.Printf("fail to update security_admin__securitypermission: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("security_admin__securitypermission", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

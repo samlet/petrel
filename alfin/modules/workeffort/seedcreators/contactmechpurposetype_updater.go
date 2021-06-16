@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateContactMechPurposeType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 
 	var err error
 	var c *ent.ContactMechPurposeType
+	failures := 0
 
 	c = cache.Get("shipping_location__contactmechpurposetype").(*ent.ContactMechPurposeType)
 	c, err = c.Update().
@@ -25,6 +28,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update shipping_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("shipping_location__contactmechpurposetype", c)
 	}
@@ -39,6 +43,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update ship_orig_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("ship_orig_location__contactmechpurposetype", c)
 	}
@@ -53,6 +58,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update billing_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("billing_location__contactmechpurposetype", c)
 	}
@@ -67,6 +73,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update payment_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("payment_location__contactmechpurposetype", c)
 	}
@@ -81,6 +88,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update general_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("general_location__contactmechpurposetype", c)
 	}
@@ -95,6 +103,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update pur_ret_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pur_ret_location__contactmechpurposetype", c)
 	}
@@ -109,6 +118,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update primary_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("primary_location__contactmechpurposetype", c)
 	}
@@ -123,6 +133,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update previous_location__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("previous_location__contactmechpurposetype", c)
 	}
@@ -137,6 +148,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_shipping__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_shipping__contactmechpurposetype", c)
 	}
@@ -151,6 +163,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_ship_orig__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_ship_orig__contactmechpurposetype", c)
 	}
@@ -165,6 +178,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_billing__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_billing__contactmechpurposetype", c)
 	}
@@ -179,6 +193,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_did__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_did__contactmechpurposetype", c)
 	}
@@ -193,6 +208,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_payment__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_payment__contactmechpurposetype", c)
 	}
@@ -207,6 +223,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_home__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_home__contactmechpurposetype", c)
 	}
@@ -221,6 +238,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_work__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_work__contactmechpurposetype", c)
 	}
@@ -235,6 +253,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_work_sec__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_work_sec__contactmechpurposetype", c)
 	}
@@ -249,6 +268,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update fax_number__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fax_number__contactmechpurposetype", c)
 	}
@@ -263,6 +283,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update fax_number_sec__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fax_number_sec__contactmechpurposetype", c)
 	}
@@ -277,6 +298,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update fax_shipping__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fax_shipping__contactmechpurposetype", c)
 	}
@@ -291,6 +313,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update fax_billing__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("fax_billing__contactmechpurposetype", c)
 	}
@@ -305,6 +328,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_mobile__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_mobile__contactmechpurposetype", c)
 	}
@@ -319,6 +343,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_assistant__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_assistant__contactmechpurposetype", c)
 	}
@@ -333,6 +358,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update primary_phone__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("primary_phone__contactmechpurposetype", c)
 	}
@@ -347,6 +373,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update phone_quick__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("phone_quick__contactmechpurposetype", c)
 	}
@@ -361,6 +388,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update marketing_email__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("marketing_email__contactmechpurposetype", c)
 	}
@@ -375,6 +403,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update primary_email__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("primary_email__contactmechpurposetype", c)
 	}
@@ -389,6 +418,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update billing_email__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("billing_email__contactmechpurposetype", c)
 	}
@@ -403,6 +433,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update payment_email__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("payment_email__contactmechpurposetype", c)
 	}
@@ -417,6 +448,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update other_email__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("other_email__contactmechpurposetype", c)
 	}
@@ -430,6 +462,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update support_email__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("support_email__contactmechpurposetype", c)
 	}
@@ -444,6 +477,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update order_email__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("order_email__contactmechpurposetype", c)
 	}
@@ -458,6 +492,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update primary_web_url__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("primary_web_url__contactmechpurposetype", c)
 	}
@@ -472,6 +507,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update twitter_url__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("twitter_url__contactmechpurposetype", c)
 	}
@@ -486,6 +522,7 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update facebook_url__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("facebook_url__contactmechpurposetype", c)
 	}
@@ -500,9 +537,13 @@ func UpdateContactMechPurposeType(ctx context.Context) error {
 		log.Printf("fail to update linkedin_url__contactmechpurposetype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("linkedin_url__contactmechpurposetype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

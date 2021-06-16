@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdatePartyIdentificationType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdatePartyIdentificationType(ctx context.Context) error {
 
 	var err error
 	var c *ent.PartyIdentificationType
+	failures := 0
 
 	c = cache.Get("party_import__partyidentificationtype").(*ent.PartyIdentificationType)
 	c, err = c.Update().
@@ -23,9 +26,13 @@ func UpdatePartyIdentificationType(ctx context.Context) error {
 		log.Printf("fail to update party_import__partyidentificationtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_import__partyidentificationtype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

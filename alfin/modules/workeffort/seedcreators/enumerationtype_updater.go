@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateEnumerationType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateEnumerationType(ctx context.Context) error {
 
 	var err error
 	var c *ent.EnumerationType
+	failures := 0
 
 	c = cache.Get("employ_stts__enumerationtype").(*ent.EnumerationType)
 	c, err = c.Update().
@@ -31,6 +34,7 @@ func UpdateEnumerationType(ctx context.Context) error {
 		log.Printf("fail to update employ_stts__enumerationtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("employ_stts__enumerationtype", c)
 	}
@@ -45,6 +49,7 @@ func UpdateEnumerationType(ctx context.Context) error {
 		log.Printf("fail to update marital_status__enumerationtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("marital_status__enumerationtype", c)
 	}
@@ -62,6 +67,7 @@ func UpdateEnumerationType(ctx context.Context) error {
 		log.Printf("fail to update pty_resid_stts__enumerationtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("pty_resid_stts__enumerationtype", c)
 	}
@@ -85,6 +91,7 @@ func UpdateEnumerationType(ctx context.Context) error {
 		log.Printf("fail to update party_email__enumerationtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_email__enumerationtype", c)
 	}
@@ -99,6 +106,7 @@ func UpdateEnumerationType(ctx context.Context) error {
 		log.Printf("fail to update user_pref_groups__enumerationtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("user_pref_groups__enumerationtype", c)
 	}
@@ -115,9 +123,13 @@ func UpdateEnumerationType(ctx context.Context) error {
 		log.Printf("fail to update global_preferences__enumerationtype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("global_preferences__enumerationtype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

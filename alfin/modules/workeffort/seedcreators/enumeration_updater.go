@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateEnumeration(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateEnumeration(ctx context.Context) error {
 
 	var err error
 	var c *ent.Enumeration
+	failures := 0
 
 	c = cache.Get("emps_fulltime__enumeration").(*ent.Enumeration)
 	c, err = c.Update().
@@ -26,6 +29,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update emps_fulltime__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("emps_fulltime__enumeration", c)
 	}
@@ -41,6 +45,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update emps_parttime__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("emps_parttime__enumeration", c)
 	}
@@ -56,6 +61,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update emps_self__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("emps_self__enumeration", c)
 	}
@@ -71,6 +77,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update emps_house__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("emps_house__enumeration", c)
 	}
@@ -86,6 +93,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update emps_retired__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("emps_retired__enumeration", c)
 	}
@@ -101,6 +109,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update emps_student__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("emps_student__enumeration", c)
 	}
@@ -116,6 +125,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update emps_unemp__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("emps_unemp__enumeration", c)
 	}
@@ -130,6 +140,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update single__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("single__enumeration", c)
 	}
@@ -144,6 +155,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update married__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("married__enumeration", c)
 	}
@@ -159,6 +171,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update press_own__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("press_own__enumeration", c)
 	}
@@ -174,6 +187,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update press_pvt_tenant__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("press_pvt_tenant__enumeration", c)
 	}
@@ -189,6 +203,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update press_pub_tenant__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("press_pub_tenant__enumeration", c)
 	}
@@ -204,6 +219,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update press_parents__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("press_parents__enumeration", c)
 	}
@@ -219,6 +235,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update party_regis_confirm__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_regis_confirm__enumeration", c)
 	}
@@ -234,6 +251,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update upd_prsnl_inf_cnfrm__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("upd_prsnl_inf_cnfrm__enumeration", c)
 	}
@@ -249,6 +267,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update prds_email_verify__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("prds_email_verify__enumeration", c)
 	}
@@ -264,6 +283,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update prds_partyinv_email__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("prds_partyinv_email__enumeration", c)
 	}
@@ -279,6 +299,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update cont_noti_email__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cont_noti_email__enumeration", c)
 	}
@@ -294,6 +315,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update prds_cust_activated__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("prds_cust_activated__enumeration", c)
 	}
@@ -309,6 +331,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update unsub_cont_list_noti__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("unsub_cont_list_noti__enumeration", c)
 	}
@@ -324,6 +347,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update sub_cont_list_noti__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("sub_cont_list_noti__enumeration", c)
 	}
@@ -339,6 +363,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update unsub_cont_list_veri__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("unsub_cont_list_veri__enumeration", c)
 	}
@@ -354,6 +379,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update cont_email_template__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("cont_email_template__enumeration", c)
 	}
@@ -368,6 +394,7 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update organization_party__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("organization_party__enumeration", c)
 	}
@@ -382,9 +409,13 @@ func UpdateEnumeration(ctx context.Context) error {
 		log.Printf("fail to update visual_theme__enumeration: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("visual_theme__enumeration", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

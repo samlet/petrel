@@ -6,6 +6,8 @@ import (
 	"github.com/samlet/petrel/alfin/common"
 	"github.com/samlet/petrel/alfin/modules/workeffort/ent"
 	"log"
+
+	"fmt"
 )
 
 func UpdateStatusType(ctx context.Context) error {
@@ -14,6 +16,7 @@ func UpdateStatusType(ctx context.Context) error {
 
 	var err error
 	var c *ent.StatusType
+	failures := 0
 
 	c = cache.Get("party_status__statustype").(*ent.StatusType)
 	c, err = c.Update().
@@ -26,6 +29,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update party_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_status__statustype", c)
 	}
@@ -39,6 +43,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update case_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("case_status__statustype", c)
 	}
@@ -62,6 +67,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update com_event_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_event_status__statustype", c)
 	}
@@ -79,6 +85,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update com_event_rol_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("com_event_rol_status__statustype", c)
 	}
@@ -94,6 +101,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update party_rel_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_rel_status__statustype", c)
 	}
@@ -112,6 +120,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update party_inv_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("party_inv_status__statustype", c)
 	}
@@ -128,6 +137,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update project__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project__statustype", c)
 	}
@@ -144,6 +154,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update project_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_status__statustype", c)
 	}
@@ -165,6 +176,7 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update project_task_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_task_status__statustype", c)
 	}
@@ -181,9 +193,13 @@ func UpdateStatusType(ctx context.Context) error {
 		log.Printf("fail to update project_assgn_status__statustype: %v", err)
 		// return err
 		// skip update failure
+		failures = failures + 1
 	} else {
 		cache.Put("project_assgn_status__statustype", c)
 	}
 
+	if failures != 0 {
+		return fmt.Errorf("occurs %d failtures", failures)
+	}
 	return nil
 }

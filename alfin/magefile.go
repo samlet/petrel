@@ -117,6 +117,4 @@ $ mage gen example
 	or $ mage genrelations example
 $ mage WriteSchemas workload
 $ mage OnlyWriteSchemas workeffort
-$ mage -v LoadSeed  # print logs
-$ mage LoadSeed
 */

@@ -196,13 +196,29 @@ func TestParseFuncs(t *testing.T) {
 		if fn, isFn := d.(*ast.FuncDecl); isFn {
 			funcs = append(funcs, fn)
 
-			println(fn.Name.Name)
+			if fn.Recv!=nil{
+				println(fn.Name.Name, fn.Recv.List[0].Names[0].Name)
+			}else {
+				println(fn.Name.Name)
+			}
 
 			// parameters
 			print("\t")
 			for _, v := range fn.Type.Params.List {
-				fmt.Printf("%s: %s, ", v.Names[0].Name, v.Type)
-				//fmt.Printf("%s: ", v.Names[0].Name)
+				//fmt.Printf("%s: %s, ", v.Names[0].Name, v.Type)
+				fmt.Printf("%s: ", v.Names[0].Name)
+				switch n := v.Type.(type) {
+				case *ast.MapType:
+					kt, vt := HandleMapKeyValue(n)
+					fmt.Printf("map(%s:%s), ", kt, vt)
+					ast.Print(fset, n)
+				case *ast.Ident:
+					print(n.Name, ", ")
+				case *ast.InterfaceType:
+					print("interface{}, ")
+				default:
+					// ...
+				}
 			}
 			println()
 

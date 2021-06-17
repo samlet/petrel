@@ -2,9 +2,43 @@ package dummy
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/go-redis/redis"
 	"github.com/samlet/petrel/alfin/cache"
 	"time"
 )
+
+type ValueProcs struct{
+	client *redis.Client
+}
+
+// SetData
+// @serial 1
+// @message "Cannot execute task {{.Name}}"
+// @when:
+// 	key LIKE "data_*"
+func (t ValueProcs) SetData(key string, valueList interface{}) error {
+	valueList, err := json.Marshal(valueList)
+	if err != nil {
+		return fmt.Errorf("cannot marshal value: %w", err)
+	}
+	err = t.client.Set(key, valueList, 0).Err()
+	if err != nil {
+		return fmt.Errorf("cannot store value: %w", err)
+	}
+	return nil
+}
+
+// SetValue
+// @serial 1
+// @message "Cannot execute task {{.Name}}"
+// @when:
+// 	key LIKE "state_*"
+func SetValue(ctx context.Context, key string, value string) {
+	store:=cache.FromContext(ctx)
+	store.Put(key, value)
+}
 
 // GetValue get a key's value
 // @timeout 12s
@@ -14,15 +48,6 @@ func GetValue(ctx context.Context, key string) string {
 	return store.Get(key).(string)
 }
 
-// SetValue
-// @serial 2
-// @message "Cannot execute task {{.Name}}"
-// @when:
-// 	key LIKE "state_*"
-func SetValue(ctx context.Context, key string, value string) {
-	store:=cache.FromContext(ctx)
-	store.Put(key, value)
-}
 
 // SetPrice
 // @serial 1.1
@@ -37,7 +62,7 @@ func SetPrice(ctx context.Context, key string, price int64) {
 }
 
 // GetPrice
-// @serial 1.1
+// @serial 3
 // @message "Cannot execute task {{.Name}}"
 // @when:
 // 	key LIKE "price_*"

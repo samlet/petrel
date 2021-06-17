@@ -171,3 +171,52 @@ func HandleMapKeyValue(n *ast.MapType) (string, string) {
 	}
 	return keyType, valueType
 }
+
+func TestParseTasksSource(t *testing.T) {
+	gofile := "dummy/tasks.go"
+	fset := token.NewFileSet()
+	f, err := parser.ParseFile(fset, gofile, nil, parser.ParseComments)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Print the AST.
+	ast.Print(fset, f)
+}
+
+func TestParseFuncs(t *testing.T) {
+	gofile := "dummy/tasks.go"
+	fset := token.NewFileSet()
+	packs, err := parser.ParseFile(fset, gofile, nil, parser.ParseComments)
+	if err != nil {
+		log.Fatal(err)
+	}
+	funcs := []*ast.FuncDecl{}
+	for _, d := range packs.Decls {
+		if fn, isFn := d.(*ast.FuncDecl); isFn {
+			funcs = append(funcs, fn)
+
+			println(fn.Name.Name)
+
+			// parameters
+			print("\t")
+			for _, v := range fn.Type.Params.List {
+				fmt.Printf("%s: %s, ", v.Names[0].Name, v.Type)
+				//fmt.Printf("%s: ", v.Names[0].Name)
+			}
+			println()
+
+			// comment
+			print("\t** ")
+			var comments []string
+			if fn.Doc != nil {
+				for _, comm := range fn.Doc.List {
+					comments = append(comments, comm.Text[3:])
+				}
+				println(strings.Join(comments, "\n\t"))
+			} else {
+				println()
+			}
+		}
+	}
+}

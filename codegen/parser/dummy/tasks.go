@@ -9,8 +9,8 @@ import (
 	"time"
 )
 
-type ValueProcs struct{
-	client *redis.Client
+type ValueProcs struct {
+	client *redis.Client `init:"redisClient"`
 }
 
 // SetData
@@ -36,7 +36,7 @@ func (t ValueProcs) SetData(key string, valueList interface{}) error {
 // @when:
 // 	key LIKE "state_*"
 func SetValue(ctx context.Context, key string, value string) {
-	store:=cache.FromContext(ctx)
+	store := cache.FromContext(ctx)
 	store.Put(key, value)
 }
 
@@ -44,10 +44,9 @@ func SetValue(ctx context.Context, key string, value string) {
 // @timeout 12s
 // @serial 2
 func GetValue(ctx context.Context, key string) string {
-	store:=cache.FromContext(ctx)
+	store := cache.FromContext(ctx)
 	return store.Get(key).(string)
 }
-
 
 // SetPrice
 // @serial 1.1
@@ -56,7 +55,7 @@ func GetValue(ctx context.Context, key string) string {
 // 	key LIKE "price_*"
 // 	price BETWEEN 1 AND 1000
 func SetPrice(ctx context.Context, key string, price int64) {
-	store:=cache.FromContext(ctx)
+	store := cache.FromContext(ctx)
 	store.Put(key, price)
 	store.Put(key+"_ts", time.Now())
 }
@@ -71,8 +70,7 @@ func SetPrice(ctx context.Context, key string, price int64) {
 //		result._1 > 0
 // 		result._2 < now()
 // 	)
-func GetPrice(ctx context.Context, key string) (int64, time.Time){
-	store:=cache.FromContext(ctx)
-	return store.Get(key).(int64), store.Get(key+"_ts").(time.Time)
+func GetPrice(ctx context.Context, key string) (int64, time.Time) {
+	store := cache.FromContext(ctx)
+	return store.Get(key).(int64), store.Get(key + "_ts").(time.Time)
 }
-

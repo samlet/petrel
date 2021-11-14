@@ -28,4 +28,7 @@ pulsar-produce topic msg:
 es:
     elasticsearch
 
+hbase-shell:
+    hbase shell
+    
     

@@ -41,3 +41,6 @@ seed-gen pkg:
 	go run cli/main.go seed-gen {{pkg}}
 	go fmt modules/{{pkg}}/seedcreators/*.go
 
+secas srv:
+	python -m sagas.ofbiz.secas get_secas {{srv}} json
+

@@ -1,0 +1,1 @@
+hbase: /usr/local/opt/hbase/bin/hbase --config /usr/local/opt/hbase/libexec/conf master start

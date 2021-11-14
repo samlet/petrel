@@ -12,8 +12,10 @@ import (
 $ just run events -s movies
 $ just run events -s queryMovies
 $ just run events -s produce
+	$ kafka-console-consumer --bootstrap-server localhost:9092 --topic my-topic --from-beginning
 $ just run events -s consume
 $ just run events -s topics
+	$ kafka-topics --list --bootstrap-server localhost:9092
 */
 
 func main() {

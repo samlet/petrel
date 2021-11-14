@@ -41,7 +41,7 @@ class XmlCollector(object):
             return(ElementTree.tostring(self.xml_data).decode('utf-8'))
         return ""
 
-def collect_data(seed_path, f):
+def collect_data(seed_path:str, f:str):
     rs=[]
     xml_path=join(seed_path, f)
     tree = ET.parse(xml_path)

@@ -73,7 +73,8 @@ func parseUrls(url string, ch chan bool) {
 
 	response, err := bulkRequest.Do(ctx) // 每页的25个文档一次性写入到es
 	if err != nil {
-		panic(err)
+		//panic(err)
+		fmt.Println("fail: ", err.Error())
 	}
 	failed := response.Failed()
 	l := len(failed)

@@ -1,0 +1,6 @@
+createExample: 创建新的样品
+sendProposalToHub: 将样品提案发送到hub
+receiveConfirmationFromHub: 从hub上接收确认消息
+manualProc: 查看提案是否通过
+createExampleStatus: 根据结果设定状态
+

@@ -1,0 +1,10 @@
+receiveOrderFromHub: 从hub上收到订单
+storeOrder: 保存订单
+checkInventoryAvailability: 检查库存
+sendConfirmationToHub: 发送确认信息
+receivePaymentFromHub
+createShipment
+createShipmentPackages
+createShipmentReceipt
+sendShipmentReceiptToHub: 发送快递回执
+

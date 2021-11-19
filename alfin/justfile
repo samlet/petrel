@@ -44,3 +44,9 @@ seed-gen pkg:
 secas srv:
 	python -m sagas.ofbiz.secas get_secas {{srv}} json
 
+meta ent:
+	python -m entity_meta entity_abi {{ent}} json ~/sagas/projs/hubs-common/asset/meta
+
+write-all:
+	python -m entity_meta write_all_abi ~/sagas/projs/hubs-common/asset/meta
+

@@ -1,0 +1,21 @@
+prepare createPerson
+    main lastName(姓), firstName(名), birthDate(出生日期)
+prepare createPartyRole
+    list roleTypeId(角色类型, parentTypeId="PERSON_ROLE")
+receiveEvent(evCreatePerson)
+createPerson
+createPartyRole
+setPartyStatus
+
+# 联系方式
+prepare createContactMech
+    list contactMechTypeId(联系方式类型)
+    main infoString(联系串)
+receiveEvent(evCreateContactMech)
+createContactMech
+
+# 企业
+prepare createPartyRelationship
+    list partyIdTo(所属公司)
+    list roleTypeIdFrom(职位角色)
+

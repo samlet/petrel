@@ -1,0 +1,6 @@
+receiveProposalFromHub: 从hub上接收样品提案
+createExample: 将样品数据存入库中
+manualProc: 人工审核
+sendConfirmationToHub: 发送确认信息到hub上, 通过或拒绝都会发送
+createExampleStatus: 根据审核结果设置样品记录状态
+

@@ -78,6 +78,8 @@ def filter_params(model, prec):
                "overrideOptional": param.isOverrideOptional(),
                "entity": param.getEntityName(),
                "mode": param.getMode(),
+               "formDisplay": param.isFormDisplay(),
+               "formLabel": param.getFormLabel(),
                "internal": param.isInternal()
                } for param in model.getModelParamList()
               if prec(param.getMode())]
@@ -102,6 +104,31 @@ class ServiceMeta(object):
 
         return result
 
+    def service_types(self):
+        """
+        $ python service_meta.py service_types
+        :param srv_type:
+        :return:
+        """
+        services = oc.all_service_names()
+        result = {}
+        for serv_name in services:
+            model_serv = oc.service_model(serv_name)
+            eng_name=model_serv.getEngineName()
+            srv_desc=f"{serv_name}({model_serv.getDefaultEntityName()})"
+            if eng_name not in result:
+                result[eng_name]=[srv_desc]
+            else:
+                result[eng_name].append(srv_desc)
+
+        auto_srvs=len(result['entity-auto'])
+        print(result['entity-auto'])
+        print(f"auto-services has {auto_srvs}, the others total is {len(services)-auto_srvs}")
+
+        # print(f"total: {len(result)}/{len(services)}")
+        for k,v in result.items():
+            print(f"engine {k} has {len(v)} services")
+
     def abi(self, service):
         """
         $ python service_meta.py abi createPerson
@@ -121,10 +148,10 @@ class ServiceMeta(object):
 
         return service_def
 
-    def write_abi(self, service: str, tpl=None, display=True):
+    def write_abi(self, service: str, tpl=None, display_json=True, display_code=True):
         """
         $ python service_meta.py write_abi createPerson
-        $ python service_meta.py write_abi createPerson digest
+        $ python service_meta.py write_abi createPerson digest False True
 
         * 如果.env文件中定义了SERVICE_META变量, 则会输出到该目录下
         $ python service_meta.py write_abi updatePerson agent
@@ -134,21 +161,22 @@ class ServiceMeta(object):
         """
         from template_helper import render
         meta = self.abi(service)
-        if display:
+        if display_json:
             cnt = json.dumps(meta, ensure_ascii=False, indent=2)
             print(cnt)
 
         # bind templates
         if tpl is not None:
             cnt = render(templates[tpl], srv=meta)
-            if display:
+            if display_code:
                 print(cnt)
 
-            srv_meta_dir=os.getenv("SERVICE_META")
-            if srv_meta_dir is not None:
-                file=f"{srv_meta_dir}/{meta['className']}Meta.java"
-                io_utils.write_to_file(file, cnt)
-                print('write to', file)
+            if tpl=='agent':
+                srv_meta_dir=os.getenv("SERVICE_META")
+                if srv_meta_dir is not None:
+                    file=f"{srv_meta_dir}/{meta['className']}Meta.java"
+                    io_utils.write_to_file(file, cnt)
+                    print('write to', file)
 
     def write_all_abi(self, cfg_file:str):
         """
@@ -162,7 +190,7 @@ class ServiceMeta(object):
         names=[n.strip() for n in names]
         print(names)
         for srv in names:
-            self.write_abi(srv, 'agent', display=False)
+            self.write_abi(srv, 'agent', display_json=False, display_code=False)
 
     def entity_abi(self, ent, extra_services: List[str] = None):
         """

@@ -1,0 +1,31 @@
+# 搜索
+$ python -m sagas.ofbiz.tools search_service order
+$ python -m sagas.ofbiz.tools search_entity order
+
+# 服务模型
+$ python -m service_meta write_abi changeOrderStatus digest False True
+$ python -m sagas.ofbiz.tools service_model changeOrderStatus
+$ python -m sagas.ofbiz.tools service_model quickReturnOrder
+
+# 服务调用栈
+$ python -m sagas.ofbiz.secas get_secas storeOrder
+$ python -m sagas.ofbiz.secas get_secas changeOrderStatus
+
+# 实体模型
+$ python -m entity_meta entity_abi OrderHeader simple
+$ python -m entity_meta entity_abi OrderItem simple
+$ python -m entity_meta entity_abi OrderStatus simple
+
+# 实体触发器
+$ python -m sagas.ofbiz.eecas all_eecas
+
+# 实体数据
+$ python -m sagas.ofbiz.tools entity-data OrderStatus 1000
+$ python -m sagas.ofbiz.tools entity-data OrderHeader 100
+
+# 状态数据
+$ python -m sagas.ofbiz.tools entity-data StatusItem 1000
+$ python -m query_tool status_types csv
+$ python -m query_tool status_items ORDER_STATUS | json
+$ python -m query_tool status_items ORDER_ITEM_STATUS | json
+

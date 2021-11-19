@@ -1,0 +1,9 @@
+# processCreditReturn
+# processCrossShipReplacementReturn
+# processRefundImmediatelyReturn
+# getReturnItemInitialCost
+# processRefundReturn
+# processReplacementReturn
+# processReplaceImmediatelyReturn
+createReturnHeader
+updateReturnHeader

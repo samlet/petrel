@@ -1,0 +1,10 @@
+storeOrder: 创建订单
+sendOrderToHub(OrderHeaderAndItems): 发送订单
+receiveConfirmationFromHub(evOrderApproved): 从hub上接收确认消息
+createPayment
+createPaymentApplication
+receiveConfirmationFromHub(evPaymentApproved): 从hub上接收确认消息
+receiveConfirmationFromHub(evShipment): 从hub上接收确认消息
+createShipmentReceipt
+receiveInventoryProduct
+

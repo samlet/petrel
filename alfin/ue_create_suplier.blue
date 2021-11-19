@@ -1,0 +1,30 @@
+# ref: createAffiliate
+prepare createPartyGroup
+# Create the Contact Person
+prepare createPerson
+
+prepare createPartyRole
+prepare setPartyStatus
+
+# prepare createContactMech
+# 创建联系地址和信用卡
+prepare createPostalAddress
+prepare createCreditCardAndAddress
+prepare createPartyContactMechPurpose
+
+prepare createTelecomNumber
+prepare createPartyContactMechPurpose
+
+prepare createEmailAddress
+prepare createPartyContactMechPurpose
+
+prepare createUserLogin
+
+# Person card identification number
+prepare createPartyIdentification
+
+/*
+编写一个比较复杂的create服务, 接受一个大dto, 只需要为这个dto创建表单就可以了;
+而各实体可以独立更新, 所以更新服务可以用生成的方式.
+*/
+

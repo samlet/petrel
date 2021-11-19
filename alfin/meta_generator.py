@@ -54,6 +54,10 @@ def collect_data(seed_path:str, f:str):
             rs.append({c.tag:c.attrib})
     return rs
 
+def get_field_type(ent, f):
+    type = oc.delegator.getEntityFieldType(ent, f.getType())
+    return type
+
 def get_entity_abi(ent: str):
     from sagas.ofbiz.entities import entity
     entity_meta=entity(ent)
@@ -61,22 +65,31 @@ def get_entity_abi(ent: str):
     fields=[{"name":f.getName(), "type":f.getType(), "col":f.getColName(),
              "pk":f.getIsPk(), "notNull":f.getIsNotNull(), "encrypt":f.getEncrypt(),
              "autoCreatedInternal": f.getIsAutoCreatedInternal(),
+             "javaType": get_field_type(model, f).getJavaType(),
+             "sqlType": get_field_type(model, f).getSqlType(),
+             "stringLength": get_field_type(model, f).stringLength(),
              "validators":[v for v in f.getValidators()]
              }
             for f in model.getFieldsIterator()]
     relations=[{"name":rel.getCombinedName(), "type": rel.getType(),
                 "relEntityName": rel.getRelEntityName(),
                 "fkName": rel.getFkName(),
+                "title": rel.getTitle(),
                 "keymaps": keymaps(rel),
                 "autoRelation": rel.isAutoRelation(),
                 }
                for rel in model.getRelations()]
     abi={
         "name": model.getEntityName(),
+        "title": model.getTitle(),
+        "description": model.getDescription(),
+        "tableName": model.getTableName("default"),
         "fields": fields,
         "relations": relations,
         "pksSize": model.getPksSize(),
         "pks": [f for f in model.getPkFieldNames()],
+        'uniqueKey': ', '.join([f for f in model.getPkFieldNames()]),
+        'combine': len(model.getPkFieldNames())>1,
         "isView": entity_meta.is_view()
     }
     return abi
